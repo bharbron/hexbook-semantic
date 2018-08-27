@@ -1,0 +1,109 @@
+template = {
+	????
+}
+
+How templates should work:
+
+Book template -> (is made of) -> Table template[s] -> (is made of) -> Entry template -> (is made of) -> Line template[s] -> (is made of) -> Block template[s] -> (references something about a table, e.g. summary, detail, summary+detail)
+
+Templates should only operate on "final" contents of tables. i.e. If we have a template that will print all 100 entries of the NPC table, it will query the "raw" summary/details of each entry
+
+Table entries can reference entry temp
+
+# Book template
+* Book size (A5, letter, etc.)
+* Table templates to include
+* How to display titles of tables
+* Automatically adds <div class="BOOK_TEMPLATE_NAME">
+
+# Table template
+* Margins, columns, etc.
+* Layout of each entry: whitespace between them, etc.
+* Automatically adds <div class="TABLE_TEMPLATE_NAME">
+
+# Entry template
+* Line templates to include
+* Automatically adds <div class="ENTRY_TEMPLATE_NAME">
+* Maybe go no lower than this? i.e. The entry template defines everything that is lower, possibly in HTML
+* Example:
+
+<h1>{{id}}</h1>
+<p><strong>{{extra.landmark.summary}}</strong>{{extra.landmark.extra.perplexity.summary}}<mark>{{extra.landmark.extra.perplexity.details}}</mark></p>
+<p>{{extra.encounter.summary}}<mark>{{extra.encounter.details}}</mark>{{extra.encounter.extra.goal.summary}}
+
+Maybe "assume" the "extra" in our DSL?
+Maybe "assume" the "summary" as well?
+
+# Line template
+* Block templates to include
+* Typographic type (h1, h2, p, etc.) to assign to the line
+* Automatically adds <div class="LINE_TEMPLATE_NAME">
+
+# Block template
+* Table entry details to include
+* Styling (strong, small, em, etc.) to assign to the block
+* Additional plain text that goes with the table entry
+* Should have exception handling that will simply exclude this block if the referenced table entry doesn't exist, e.g. don't print Landmark #2 if Landmark #2 doesn't exist for this hex
+* Automatically adds <span class="BLOCK_TEMPLATE_NAME">
+
+
+
+
+table = {
+	"name": "", //unique name for the table, e.g. ENCOUNTERS, HEXES, NPCS, MAGIC_ITEMS
+	"long_name": "" //prettier, print-ready version of the name: "Random Encounters", "Named NPCs", "Items Magical and Wonderous"
+	"entries": [], //list of entries contained in this table
+	"is_static": false, //whether text for entries are recursively parsed only once (i.e. generate details once, they remain the same everytime the entry is selected) or parsed everytime (new random details everytime the entry is selected)
+	"entry_generator": {"text": "", index_texts: [], max_occurences: ""}, //template string for auto-generating a new entry. If this exists, it will be used when all current entries have hit their "max_occurence". If it doesn't exist, "max_occurences" is incremented for all entries and we roll again.
+	"desired_number": "" //minimum number of entries we want this table to have. The first time the table gets called, if we aren't at the desired number, use the entry_generator to build up to that number
+	"comment": "" //notes about purpose of table, intended use, etc. Not related to any rolling, but maybe have option for printing this if we opt to print the table
+}
+table.increment_max_occurrences() //increment max_occurrences of all entries (that have one) by one
+table.has_available_entries() {return bool} //returns false if all entries have reached their max_occurrences
+table.roll(referrer, filter_chain=[]) //randomly return an entry from the table, filtering based on tags in the filter-chain. Increment occurrences, set references, etc.
+
+entry = {
+	"id": "", //unique ID code for this entry
+	"text": "", //name or short, basic description of the entry. This is the text that is returned when this table is rolled on. Only styling tags (<em>, <strong>, <small>, etc.) are allowed. Not <p>, <h1>, </br>, etc.
+	"index_texts": [
+		"Landmark 1 of hex contents",
+		"Encounter 1 of hex contents",
+		"Landmark 2 of hex contents",
+		"Encounter 2 of hex contents",
+		"Full details on a Guest",
+		"etc."
+	], //additional lines of text that will only be used if we include an index/listing of this table in the notebook. Does not get returned to any requests to roll on this table. Only styling tags (<em>, <strong>, <small>, etc.) are allowed. Not <p>, <h1>, </br>, etc.
+	"references": [], //other entries this entry references, format "table_name.entry_id"
+	"referenced_by": [], //other entries this entry is referenced by, format "table_name.entry_id"
+	"add_tags": [], //tags this entry adds to the filter-chain for any subtable calls
+	"remove_tags": [], //tags this entry will remove from the filter-chain for any subtable calls, "ALL" means drop the entire filter-chain
+	"weights": { //the entries weighting according to different tags in the filter-chain. effective weighting based on sum of DEFAULT and all applicable tags. If any tags is 0, entry is filtered out. If any tag is non-existent, just ignore it.
+			"DEFAULT": "",
+			"forest": "",
+			"garden": "",
+			"mountain": "",
+			"colorless": "",
+			"heart": "",
+			"pale": "",
+			"red": "",
+			"night": "",
+			"intelligent": ""
+	},
+	"max_occurrences": "", //the maximum number of times, if any, that this entry can be selected
+	"occurrences": "", //the number of times this entry has been selected
+}
+entry.is_available() {return bool} //returns false if occurrences >= max_occurrences
+entry.get_weight(filter_chain=[]) //return the total weight for the entry, which is 0 if any tags in the filter-chain have weight 0. Otherwise, sum of DEFAULT weight and weights of the tags
+entry.get_entry(static) //return summary + details. Recursively parse both. If "static == true", overwrite this.summary and this.details with the result, so they don't get changed again.
+entry.get_summary(static) //return summary. Recursively parse the text of summary. If "static == true", overwrite this.summary with the parsed result, so it never gets changed again.
+entry.get_raw_summary() //return the summary, without doing any recursive parsing.
+entry.get_details(static) //returns details of this entry. Recursively parse the details. If "static == true", overwrite this.details with the parsed result, so it never gets changed again.
+entry.get_raw_details() //return the details, without doing any recursive parsing.
+
+tags = [] //global list of all tags that have been created in tables
+
+
+
+
+
+
