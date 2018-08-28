@@ -50,13 +50,14 @@ Maybe "assume" the "summary" as well?
 
 
 table = {
-	"name": "", //unique name for the table, e.g. ENCOUNTERS, HEXES, NPCS, MAGIC_ITEMS
-	"long_name": "" //prettier, print-ready version of the name: "Random Encounters", "Named NPCs", "Items Magical and Wonderous"
+	"code": "", //unique name for the table, e.g. ENCOUNTERS, HEXES, NPCS, MAGIC_ITEMS
+	"name": "" //prettier, print-ready version of the name: "Random Encounters", "Named NPCs", "Items Magical and Wonderous"
 	"entries": [], //list of entries contained in this table
-	"is_static": false, //whether text for entries are recursively parsed only once (i.e. generate details once, they remain the same everytime the entry is selected) or parsed everytime (new random details everytime the entry is selected)
-	"entry_generator": {"text": "", index_texts: [], max_occurences: ""}, //template string for auto-generating a new entry. If this exists, it will be used when all current entries have hit their "max_occurence". If it doesn't exist, "max_occurences" is incremented for all entries and we roll again.
+	"static": false, //whether text for entries are recursively parsed only once (i.e. generate details once, they remain the same everytime the entry is selected) or parsed everytime (new random details everytime the entry is selected)
+	"generator": {"text": "", index_texts: [], max_occurences: ""}, //template string for auto-generating a new entry. If this exists, it will be used when all current entries have hit their "max_occurence". If it doesn't exist, "max_occurences" is incremented for all entries and we roll again.
 	"desired_number": "" //minimum number of entries we want this table to have. The first time the table gets called, if we aren't at the desired number, use the entry_generator to build up to that number
-	"comment": "" //notes about purpose of table, intended use, etc. Not related to any rolling, but maybe have option for printing this if we opt to print the table
+	// ^^^ Maybe move 'desired_number' out of here. Make it the responsibility of the template to choose "print what's there" or "use the generator to generate up to X number"
+	"description": "" //notes about purpose of table, intended use, etc. Not related to any rolling, but maybe have option for printing this if we opt to print the table
 }
 table.increment_max_occurrences() //increment max_occurrences of all entries (that have one) by one
 table.has_available_entries() {return bool} //returns false if all entries have reached their max_occurrences
@@ -75,8 +76,8 @@ entry = {
 	], //additional lines of text that will only be used if we include an index/listing of this table in the notebook. Does not get returned to any requests to roll on this table. Only styling tags (<em>, <strong>, <small>, etc.) are allowed. Not <p>, <h1>, </br>, etc.
 	"references": [], //other entries this entry references, format "table_name.entry_id"
 	"referenced_by": [], //other entries this entry is referenced by, format "table_name.entry_id"
-	"add_tags": [], //tags this entry adds to the filter-chain for any subtable calls
-	"remove_tags": [], //tags this entry will remove from the filter-chain for any subtable calls, "ALL" means drop the entire filter-chain
+	"add_tags": [], //tags this entry adds to the filter-chain for any subtable calls -- UPDATE: probably have this done in syntax when referencing a table, e.g. {{ENCOUNTER:+intelligent,+romantic,-animal}}
+	"remove_tags": [], //tags this entry will remove from the filter-chain for any subtable calls, "ALL" means drop the entire filter-chain -- UPDATE: probably have this done in syntax when referencing a table, e.g. {{ENCOUNTER:+intelligent,+romantic,-animal,-ALL}}
 	"weights": { //the entries weighting according to different tags in the filter-chain. effective weighting based on sum of DEFAULT and all applicable tags. If any tags is 0, entry is filtered out. If any tag is non-existent, just ignore it.
 			"DEFAULT": "",
 			"forest": "",

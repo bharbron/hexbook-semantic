@@ -5,12 +5,11 @@ import {
   Checkbox,
   Divider,
   Grid,
-  Header,
   Icon,
+  Input,
   Menu,
   Popup,
   Segment,
-  Sticky,
   Table
 } from 'semantic-ui-react'
 import './App.css'
@@ -26,8 +25,8 @@ class App extends Component {
               <Grid.Row>
                 <Segment basic>
                   <Popup trigger={<Button primary content='Add Table' icon='add' labelPosition='left' />} content='Create a new table' />
-                  <Popup trigger={<Button content='Import' icon='download' labelPosition='left' />} content='Import table[s]' />
-                  <Popup trigger={<Button content='Export' icon='upload' labelPosition='left' />} content='Export selected table[s] to file or clipboard' />
+                  <Popup trigger={<Button content='Import' icon='download' />} content='Import table[s]' />
+                  <Popup trigger={<Button content='Export' icon='upload' />} content='Export selected table[s] to file or clipboard' />
                   <Popup trigger={<Button basic circular icon='trash alternate' negative floated='right'/>} content='Delete selected table[s]' />
                 </Segment>
               </Grid.Row>
@@ -101,7 +100,7 @@ class App extends Component {
                           <Table.Cell collapsing><Checkbox /></Table.Cell>
                           <Table.Cell>FOOBAR</Table.Cell>
                           <Table.Cell>Foobar</Table.Cell>
-                          <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
+                          <Table.Cell><Input fluid /></Table.Cell>
                           <Table.Cell>-</Table.Cell>
                           <Table.Cell>15</Table.Cell>
                           <Table.Cell>-</Table.Cell>
