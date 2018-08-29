@@ -11,7 +11,8 @@ import {
   Segment,
   Table
 } from 'semantic-ui-react';
-import { TablesWorkspace } from './Project/Tables'
+import { TablesControls, TablesWorkspace } from './Project/Tables';
+import { TagsControls, TagsWorkspace } from './Project/Tags';
 import './Project.css';
 
 class Workspace extends Component {
@@ -40,11 +41,10 @@ class WorkspaceControls extends Component {
           <Breadcrumb.Section active>Tables</Breadcrumb.Section>
         </Breadcrumb>
         <Divider hidden/>
-          <Popup trigger={<Button primary content='Add Table' icon='add' labelPosition='left' />} content='Create a new table' />
-          <Popup trigger={<Button content='Import' icon='download' />} content='Import table[s]' />
-          <Popup trigger={<Button content='Export' icon='upload' />} content='Export selected table[s] to file or clipboard' />
-          <Popup trigger={<Button basic circular icon='trash alternate' negative floated='right'/>} content='Delete selected table[s]' />
+          <Route exact path='/project/tags' component={TagsControls} />
+          <Route exact path='/project/tables' component={TablesControls} />
         <Segment basic id='WorkspaceControlsSegmentScroll'>
+          <Route exact path='/project/tags' component={TagsWorkspace} />
           <Route exact path='/project/tables' component={TablesWorkspace} />
         </Segment>  
       </div>

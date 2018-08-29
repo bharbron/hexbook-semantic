@@ -12,6 +12,19 @@ import {
 } from 'semantic-ui-react';
 import './Tables.css';
 
+class TablesControls extends Component {
+  render() {
+    return (
+      <div id='TablesControls'>
+        <Popup trigger={<Button primary content='Add Table' icon='add' labelPosition='left' />} content='Create a new table' />
+        <Popup trigger={<Button content='Import' icon='download' />} content='Import table[s]' />
+        <Popup trigger={<Button content='Export' icon='upload' />} content='Export selected table[s] to file or clipboard' />
+        <Popup trigger={<Button basic circular icon='trash alternate' negative floated='right'/>} content='Delete selected table[s]' />
+      </div>
+    );
+  };
+};
+
 class TablesWorkspace extends Component {
   render() {
     return (
@@ -542,4 +555,4 @@ class TablesHelp extends Component {
   };
 }
 
-export { TablesWorkspace, TablesHelp };
+export { TablesControls, TablesWorkspace, TablesHelp };
