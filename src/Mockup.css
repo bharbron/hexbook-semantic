@@ -1,0 +1,16 @@
+.App {
+	height: inherit;
+}
+
+#AppGrid {
+	height: inherit;
+}
+
+#AppGridRowWorkspace { 
+	margin-left: 6.7rem;
+	height: inherit;
+}
+
+#AppGridLeftWorkspace {
+	height: 100%;
+}
