@@ -1,3 +1,22 @@
+@font-face {
+  font-family: 'IM Fell English';
+  font-style: italic;
+  font-weight: 400;
+  src: local('IM FELL English Italic'), local('IM_FELL_English_Italic'), url(./fonts/IM_Fell_English/IMFeENit28P.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'IM Fell English';
+  font-style: normal;
+  font-weight: 400;
+  src: local('IM FELL English Roman'), local('IM_FELL_English_Roman'), url(./fonts/IM_Fell_English/IMFeENrm28P.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'IM Fell English SC';
+  font-style: normal;
+  font-weight: 400;
+  src: local('IM FELL English SC'), local('IM_FELL_English_SC'), url(./fonts/IM_Fell_English_SC/IMFeENsc28P.ttf) format('truetype');
+}
+
 body {
 	height: 100%;
 	overflow: hidden;

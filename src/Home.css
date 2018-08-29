@@ -1,0 +1,8 @@
+#Home {
+	height: inherit;
+}
+
+#HomeSegmentScroll {
+	height: 100%;
+	overflow: auto;
+}

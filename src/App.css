@@ -1,0 +1,29 @@
+.App {
+	height: inherit;
+}
+
+#AppGrid {
+	height: inherit;
+}
+
+#AppGridRowWorkspace { 
+	margin-left: 6.7rem;
+	height: inherit;
+}
+
+#AppGridColumnWorkspace {
+	height: inherit;
+}
+
+#AppHelp {
+	height: 100%;
+}
+
+#AppHelpSegment {
+	height: 100%;
+	overflow: auto;
+}
+
+#AppMenuItemHexpop {
+	margin-top: 1rem;
+}
