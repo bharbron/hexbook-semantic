@@ -1,0 +1,17 @@
+#TablesWorkspace {
+	height: inherit;
+}
+
+#TablesWorkspaceTableScroll {
+	height: calc(100% - 7.15rem);
+	overflow: auto;
+}
+
+#TablesHelp {
+	height: 100%;
+}
+
+#TablesHelpSegment {
+	height: 100%;
+	overflow: auto;
+}
