@@ -17,11 +17,8 @@
   src: local('IM FELL English SC'), local('IM_FELL_English_SC'), url(./fonts/IM_Fell_English_SC/IMFeENsc28P.ttf) format('truetype');
 }
 
-body {
+body, #root {
 	height: 100%;
 	overflow: hidden;
-}
-
-#root {
-	height: inherit;
+  background: #f7f7f7
 }
