@@ -1,17 +1,3 @@
-#TagsWorkspace {
+#TagsLeftWorkspace {
 	height: inherit;
-}
-
-#TagsWorkspaceSegmentScroll {
-	height: calc(100% - 7.15rem);
-	overflow: auto;
-}
-
-#TagsHelp {
-	height: 100%;
-}
-
-#TagsHelpSegment {
-	height: 100%;
-	overflow: auto;
 }

@@ -9,6 +9,7 @@ import {
   Input,
   Label,
   List,
+  Menu,
   Popup,
   Segment,
   Table
@@ -26,49 +27,39 @@ class TagsControls extends Component {
   };
 };
 
-class TagsWorkspace extends Component {
+class TagsLeftWorkspace extends Component {
   render() {
     return (
-      <div id='TagsWorkspace'>
+      <div id='TagsLeftWorkspace'>
         <Card.Group itemsPerRow='1'>
 
           <Card>
+            <Card.Content header='Terrain Tags' meta='Type of terrain in a given hex. Typically used to determine random encounters.' />
             <Card.Content>
-              <Card.Header>Terrain Tags</Card.Header>
-              <Card.Meta>Type of terrain in a given hex. Typically used to determine random encounters.</Card.Meta>
               <Card.Description>
                 <Label.Group tag color='green'>
-                  <Label>grasslands<Icon name='delete' /></Label>
-                  <Label>forest<Icon name='delete' /></Label>
-                  <Label>hills<Icon name='delete' /></Label>
-                  <Label>mountains<Icon name='delete' /></Label>
-                  <Label>desert<Icon name='delete' /></Label>
-                  <Label>swamp<Icon name='delete' /></Label>
+                  <Label>grasslands</Label>
+                  <Label>forest</Label>
+                  <Label>hills</Label>
+                  <Label>mountains</Label>
+                  <Label>desert</Label>
+                  <Label>swamp</Label>
                 </Label.Group>
               </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <Input icon={<Icon name='plus' inverted circular link />} placeholder='tag' />
-              <Popup trigger={<Button as='a' size='tiny' basic circular icon='trash alternate' negative inverted floated='right'/>} content='Delete all terrain tags' />
             </Card.Content>
           </Card>
 
           <Card>
+            <Card.Content header='Territory Tags' meta='Group that holds influence in a given hex. Typically used to determine adventure hooks and themes.' />
             <Card.Content>
-              <Card.Header>Territory Tags</Card.Header>
-              <Card.Meta>Group that holds influence in a given hex. Typically used to determine adventure hooks and themes.</Card.Meta>
               <Card.Description>
                 <Label.Group tag color='orange'>
-                  <Label>goblins<Icon name='delete' /></Label>
-                  <Label>dwarves<Icon name='delete' /></Label>
-                  <Label>imperial<Icon name='delete' /></Label>
-                  <Label>fae<Icon name='delete' /></Label>
+                  <Label>goblins</Label>
+                  <Label>dwarves</Label>
+                  <Label>imperial</Label>
+                  <Label>fae</Label>
                 </Label.Group>
               </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <Input icon={<Icon name='plus' inverted circular link />} placeholder='tag' />
-              <Popup trigger={<Button as='a' size='tiny' basic circular icon='trash alternate' negative inverted floated='right'/>} content='Delete all territory tags' />
             </Card.Content>
           </Card>
 
@@ -76,6 +67,8 @@ class TagsWorkspace extends Component {
             <Card.Content>
               <Card.Header>Other Tags</Card.Header>
               <Card.Meta>Any other tags that table rolls may by filtered by.</Card.Meta>
+            </Card.Content>
+            <Card.Content>
               <Card.Description>
                 <Label.Group tag color='teal'>
                   <Label>intelligent<Icon name='delete' /></Label>
@@ -83,12 +76,9 @@ class TagsWorkspace extends Component {
                   <Label>unintelligent<Icon name='delete' /></Label>
                   <Label>romantic<Icon name='delete' /></Label>
                   <Label>edible<Icon name='delete' /></Label>
+                  <Icon name='plus' />
                 </Label.Group>
               </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <Input icon={<Icon name='plus' inverted circular link />} placeholder='tag' />
-              <Popup trigger={<Button as='a' size='tiny' basic circular icon='trash alternate' negative inverted floated='right'/>} content='Delete all other tags' />
             </Card.Content>
           </Card>
 
@@ -98,15 +88,17 @@ class TagsWorkspace extends Component {
   };
 };
 
-class TagsHelp extends Component {
+class TagsRightWorkspaceMenu extends Component {
   render() {
     return (
-      <div id='TagsHelp'>
-        <h2>Tags</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      </div>
-    )
+      <Menu pointing id='TagsRightWorkspaceMenu'>
+        <Menu.Item color='blue' icon='plus' active='true' />
+        <Menu.Item icon='code' />
+        <Menu.Item icon='download' />
+        <Menu.Item icon='upload' />
+      </Menu>
+    );
   };
-}
+};
 
-export { TagsControls, TagsWorkspace, TagsHelp };
+export { TagsLeftWorkspace, TagsRightWorkspaceMenu };

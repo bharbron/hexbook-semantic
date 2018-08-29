@@ -11,6 +11,7 @@ import {
   Icon,
   Input,
   Label,
+  List,
   Menu,
   Segment,
   TextArea
@@ -34,6 +35,13 @@ class App extends Component {
             <Grid.Row id='AppGridRowWorkspace'>
               <Grid.Column width='10' id='AppGridLeftWorkspace'>
                 <Segment basic style={{ height: '100%', overflow: 'auto' }}>
+                <Segment>
+  <div>
+    <Segment vertical><Label circular>10</Label> Te eum [[DOMING]] eirmod, nominati pertinacia argumentum ad his. Te eum doming eirmod, nominati pertinacia argumentum ad his. Te eum doming eirmod, nominati pertinacia argumentum ad his. Te eum doming eirmod, nominati pertinacia argumentum ad his. Te eum doming eirmod, nominati pertinacia argumentum ad his. Te eum doming eirmod, nominati pertinacia argumentum ad his. Te eum doming eirmod, nominati pertinacia argumentum ad his. Te eum doming eirmod, nominati pertinacia argumentum ad his. Te eum doming eirmod, nominati pertinacia argumentum ad his. Te eum doming eirmod, nominati pertinacia argumentum ad his. <List> <Label tag>grassland</Label><Label tag invertedl>forest</Label></List></Segment>
+    <Segment vertical>Pellentesque habitant morbi tristique senectus.</Segment>
+    <Segment vertical>Eu quo homero blandit intellegebat. Incorrupte consequuntur mei id.</Segment>
+  </div>
+  </Segment>
                   <Card.Group itemsPerRow='1'>
                     <Card>
                       <Card.Content>

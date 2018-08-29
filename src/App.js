@@ -7,13 +7,7 @@ import {
   Menu,
   Segment
 } from 'semantic-ui-react';
-import { Home, HomeHelp } from './Home';
-import { Workspace, WorkspaceControls } from './Project';
-import { HexesHelp } from './Project/Hexes'
-import { TagsHelp } from './Project/Tags'
-import { TablesHelp } from './Project/Tables'
-import { TemplatesHelp } from './Project/Templates'
-import { BooksHelp } from './Project/Books'
+import { LeftWorkspace, RightWorkspace } from './Project'
 import './App.css';
 
 class App extends Component {
@@ -24,23 +18,11 @@ class App extends Component {
 
           <Grid padded id='AppGrid'>
             <Grid.Row id='AppGridRowWorkspace'>
-              <Grid.Column width='13' id='AppGridColumnWorkspace'>
-                <Route exact path='/' component={Home} />
-                <Route exact path='/project/tags' component={WorkspaceControls} />
-                <Route exact path='/project/tables' component={WorkspaceControls} />
-                <Route exact path='/project/templates' component={WorkspaceControls} />
-                <Route exact path='/project/hexes' component={WorkspaceControls} />
-                <Route exact path='/project/books' component={Workspace} />
+              <Grid.Column width='10' id='AppGridLeftWorkspace'>
+                <Route path='/project/' component={LeftWorkspace} />
               </Grid.Column>
-              <Grid.Column width='3' stretched id='AppHelp'>
-                <Segment tertiary id='AppHelpSegment'>
-                  <Route exact path='/' component={HomeHelp} />
-                  <Route exact path='/project/tags' component={TagsHelp} />
-                  <Route exact path='/project/tables' component={TablesHelp} />
-                  <Route exact path='/project/templates' component={TemplatesHelp} />
-                  <Route exact path='/project/hexes' component={HexesHelp} />
-                  <Route exact path='/project/books' component={BooksHelp} />
-                </Segment>
+              <Grid.Column width='6' stretched id='AppGridRightWorkspace'>
+                <Route path='/project/' component={RightWorkspace} />
               </Grid.Column>
             </Grid.Row>
           </Grid>

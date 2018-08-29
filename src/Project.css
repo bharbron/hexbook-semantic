@@ -1,3 +1,19 @@
+#ProjectLeftWorkspaceSegment {
+	height: 100%;
+	overflow: auto;
+}
+
+#ProjectRightWorkspace {
+	height: 100%;
+}
+
+#ProjectRightWorkspaceMenu
+
+#ProjectRightWorkspaceSegment {
+	max-height: calc(100% - 5rem);
+	overflow: auto;
+}
+
 #Workspace {
 	height: inherit;
 }
