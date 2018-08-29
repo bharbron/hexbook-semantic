@@ -11,11 +11,11 @@ class AppMenu extends Component {
     return (
       <div>
         <Divider inverted />
-        <Menu.Item as='a'><Icon name='tags' />Tags</Menu.Item>
-        <Menu.Item as='a' active='true'><Icon name='list' />Tables</Menu.Item>
-        <Menu.Item as='a'><Icon name='puzzle piece' />Templates</Menu.Item>
-        <Menu.Item as='a'><Icon name='globe' />Hexes</Menu.Item>
-        <Menu.Item as='a'><Icon name='book' />Books</Menu.Item>
+        <Menu.Item as='a' href='/workspace/tags'><Icon name='tags' />Tags</Menu.Item>
+        <Menu.Item as='a' href='/workspace/tables' active='true'><Icon name='list' />Tables</Menu.Item>
+        <Menu.Item as='a' href='/workspace/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
+        <Menu.Item as='a' href='/workspace/hexes'><Icon name='globe' />Hexes</Menu.Item>
+        <Menu.Item as='a' href='/workspace/books'><Icon name='book' />Books</Menu.Item>
       </div>
     )
   };

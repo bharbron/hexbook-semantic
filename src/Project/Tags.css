@@ -1,17 +1,17 @@
-#TablesWorkspace {
+#TagsWorkspace {
 	height: inherit;
 }
 
-#TablesWorkspaceTableScroll {
+#TagsWorkspaceSegmentScroll {
 	height: calc(100% - 7.15rem);
 	overflow: auto;
 }
 
-#TablesHelp {
+#TagsHelp {
 	height: 100%;
 }
 
-#TablesHelpSegment {
+#TagsHelpSegment {
 	height: 100%;
 	overflow: auto;
 }
