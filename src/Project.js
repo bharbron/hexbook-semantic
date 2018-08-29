@@ -14,6 +14,7 @@ import {
 import { HexesControls, HexesWorkspace } from './Project/Hexes'
 import { TablesControls, TablesWorkspace } from './Project/Tables';
 import { TagsControls, TagsWorkspace } from './Project/Tags';
+import { TemplatesControls, TemplatesWorkspace } from './Project/Templates';
 import './Project.css';
 
 class Workspace extends Component {
@@ -45,10 +46,12 @@ class WorkspaceControls extends Component {
           <Route exact path='/project/hexes' component={HexesControls} />
           <Route exact path='/project/tags' component={TagsControls} />
           <Route exact path='/project/tables' component={TablesControls} />
+          <Route exact path='/project/templates' component={TemplatesControls} />
         <Segment basic id='WorkspaceControlsSegmentScroll'>
           <Route exact path='/project/hexes' component={HexesWorkspace} />
           <Route exact path='/project/tags' component={TagsWorkspace} />
           <Route exact path='/project/tables' component={TablesWorkspace} />
+          <Route exact path='/project/templates' component={TemplatesWorkspace} />
         </Segment>  
       </div>
     );
