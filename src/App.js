@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { HashRouter as Router, Route, Link } from 'react-router-dom';
 import {
   Divider,
   Grid,
@@ -7,10 +7,13 @@ import {
   Menu,
   Segment
 } from 'semantic-ui-react';
-import { Home } from './Home';
+import { Home, HomeHelp } from './Home';
 import { Workspace, WorkspaceControls } from './Project';
+import { HexesHelp } from './Project/Hexes'
 import { TagsHelp } from './Project/Tags'
 import { TablesHelp } from './Project/Tables'
+import { TemplatesHelp } from './Project/Templates'
+import { BooksHelp } from './Project/Books'
 import './App.css';
 
 class App extends Component {
@@ -31,8 +34,12 @@ class App extends Component {
               </Grid.Column>
               <Grid.Column width='3' stretched id='AppHelp'>
                 <Segment tertiary id='AppHelpSegment'>
+                  <Route exact path='/' component={HomeHelp} />
                   <Route exact path='/project/tags' component={TagsHelp} />
                   <Route exact path='/project/tables' component={TablesHelp} />
+                  <Route exact path='/project/templates' component={TemplatesHelp} />
+                  <Route exact path='/project/hexes' component={HexesHelp} />
+                  <Route exact path='/project/books' component={BooksHelp} />
                 </Segment>
               </Grid.Column>
             </Grid.Row>
@@ -41,10 +48,10 @@ class App extends Component {
           <Menu borderless compact fixed='left' inverted pointing icon='labeled' vertical>
             <Menu.Item as={Link} to='/' id='AppMenuItemHexpop'><Icon name='map marker alternate' />HexPop!</Menu.Item>
             <Divider inverted />
+            <Menu.Item as={Link} to='/project/hexes'><Icon name='globe' />Hexes</Menu.Item>
             <Menu.Item as={Link} to='/project/tags'><Icon name='tags' />Tags</Menu.Item>
             <Menu.Item as={Link} to='/project/tables' active='true'><Icon name='list' />Tables</Menu.Item>
             <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
-            <Menu.Item as={Link} to='/project/hexes'><Icon name='globe' />Hexes</Menu.Item>
             <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
           </Menu>
 
