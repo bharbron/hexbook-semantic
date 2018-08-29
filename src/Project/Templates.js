@@ -34,7 +34,7 @@ class TemplatesWorkspace extends Component {
 
           <Card color='grey'>
 		    <Card.Content header='Hexes' meta='Template for printing the list of hexes' />
-		    <Card.Content description>
+		    <Card.Content description className='templateCard'>
 		    	<List>
 			      <List.Item><h3>Lorem ipsum [[DOLLAR]] sit amet, consectetur</h3></List.Item>
 			      <List.Item><p>[[CONSECTETUR]] adipiscing elit</p></List.Item>
@@ -54,7 +54,7 @@ class TemplatesWorkspace extends Component {
 
           <Card>
 		    <Card.Content header='Key NPCs' meta='Template for printing the list of important NPCs' />
-		    <Card.Content description>
+		    <Card.Content description className='templateCard'>
 		    	<List>
 			      <List.Item><h2>Lorem ipsum [[DOLLAR]] sit amet, consectetur</h2></List.Item>
 			      <List.Item><p>[[CONSECTETUR]] adipiscing elit</p></List.Item>
@@ -70,7 +70,7 @@ class TemplatesWorkspace extends Component {
 
           <Card>
 		    <Card.Content header='Magic Items' meta='Template for printing an index of magic items' />
-		    <Card.Content description>
+		    <Card.Content description className='templateCard'>
 		    	<List>
 			      <List.Item><h3>Lorem ipsum [[DOLLAR]] sit amet, consectetur</h3></List.Item>
 			      <List.Item><p>[[CONSECTETUR]] adipiscing elit</p></List.Item>
@@ -86,7 +86,7 @@ class TemplatesWorkspace extends Component {
 
           <Card>
 		    <Card.Content header='Foobars' meta='Template for printing an index of foobars' />
-		    <Card.Content description>
+		    <Card.Content description className='templateCard'>
 		    	<List>
 			      <List.Item><h4>Lorem ipsum [[DOLLAR]] sit amet, consectetur</h4></List.Item>
 			      <List.Item><p>[[CONSECTETUR]] adipiscing elit</p></List.Item>
@@ -101,7 +101,7 @@ class TemplatesWorkspace extends Component {
 
           <Card>
 		    <Card.Content header='Foobars' meta='Template for printing an index of foobars' />
-		    <Card.Content description>
+		    <Card.Content description className='templateCard'>
 		    	<List>
 			      <List.Item><h4>Lorem ipsum [[DOLLAR]] sit amet, consectetur</h4></List.Item>
 			      <List.Item><p>[[CONSECTETUR]] adipiscing elit</p></List.Item>
