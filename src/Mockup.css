@@ -6,6 +6,10 @@
 	height: inherit;
 }
 
+#AppGridRow1Workspace { 
+	margin-left: 6.7rem;
+}
+
 #AppGridRowWorkspace { 
 	margin-left: 6.7rem;
 	height: inherit;

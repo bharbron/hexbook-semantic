@@ -22,7 +22,7 @@ import { TagsHelp } from './Project/Tags'
 import { TablesHelp } from './Project/Tables'
 import { TemplatesHelp } from './Project/Templates'
 import { BooksHelp } from './Project/Books'
-import './App.css';
+import './Mockup.css';
 
 class App extends Component {
   render() {
@@ -370,13 +370,13 @@ class App extends Component {
                 </Segment>
               </Grid.Column>
               <Grid.Column width='6' id='AppGridRightWorkspace'>
-              <Menu pointing>
-                <Menu.Item color='blue' icon='plus' active='true' />
-                <Menu.Item icon='code' />
-                <Menu.Item icon='download' />
-                <Menu.Item icon='upload' />
-              </Menu>
-                <Segment style={{ height: `calc(100% - 5rem` }}>
+                <Menu pointing id='buttonmenu'>
+                  <Menu.Item color='blue' icon='plus' active='true' />
+                  <Menu.Item icon='code' />
+                  <Menu.Item icon='download' />
+                  <Menu.Item icon='upload' />
+                </Menu>
+                <Segment style={{ maxHeight: 'calc(100% - 5rem)', overflow: 'auto' }}>
                   <Header as='h1'>Add Table</Header>
                   <Form>
                     <Form.Field>
