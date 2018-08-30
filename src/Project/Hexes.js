@@ -328,8 +328,8 @@ class HexesHelp extends Component {
         <h2>Hexes</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </div>
-    )
+    );
   };
-}
+};
 
 export { HexesControls, HexesWorkspace, HexesHelp };

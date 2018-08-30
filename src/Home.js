@@ -14,7 +14,6 @@ import './Home.css';
 class Home extends Component {
   render() {
     return (
-      <div id='Home'>
         <Segment basic textAlign='center' id='HomeSegmentScroll'>
           <Header as='h1' icon>
             <Icon name='map marker alternate' />
@@ -24,7 +23,6 @@ class Home extends Component {
           <Divider hidden />
           <Button positive as={Link} to='/project/hexes'>New Project</Button>
         </Segment>  
-      </div>
     );
   };
 };

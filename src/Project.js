@@ -13,8 +13,8 @@ import {
   Table
 } from 'semantic-ui-react';
 import { HexesWorkspace } from './Project/Hexes'
-import { TablesWorkspace } from './Project/Tables';
-import { TagsLeftWorkspace, TagsRightWorkspaceMenu } from './Project/Tags';
+import { TablesLeftWorkspace, TablesRightWorkspace } from './Project/Tables';
+import { TagsLeftWorkspace, TagsRightWorkspace } from './Project/Tags';
 import { TemplatesWorkspace } from './Project/Templates';
 import './Project.css';
 
@@ -24,7 +24,7 @@ class LeftWorkspace extends Component {
       <Segment basic id='ProjectLeftWorkspaceSegment'>
         <Route exact path='/project/hexes' component={HexesWorkspace} />
         <Route exact path='/project/tags' component={TagsLeftWorkspace} />
-        <Route exact path='/project/tables' component={TablesWorkspace} />
+        <Route exact path='/project/tables' component={TablesLeftWorkspace} />
         <Route exact path='/project/templates' component={TemplatesWorkspace} />
       </Segment>
     );
@@ -35,10 +35,8 @@ class RightWorkspace extends Component {
   render() {
     return (
       <div id='ProjectRightWorkspace'>
-        <Route exact path='/project/tags' component={TagsRightWorkspaceMenu} />
-        <Segment id='ProjectRightWorkspaceSegment'>
-          ProjectRightWorkspaceSegment
-        </Segment>
+        <Route exact path='/project/tags' component={TagsRightWorkspace} />
+        <Route exact path='/project/tables' component={TablesRightWorkspace} />
       </div>
     );
   };

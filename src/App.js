@@ -7,7 +7,9 @@ import {
   Menu,
   Segment
 } from 'semantic-ui-react';
+import { Home } from './Home'
 import { LeftWorkspace, RightWorkspace } from './Project'
+
 import './App.css';
 
 class App extends Component {
@@ -19,9 +21,10 @@ class App extends Component {
           <Grid padded id='AppGrid'>
             <Grid.Row id='AppGridRowWorkspace'>
               <Grid.Column width='10' id='AppGridLeftWorkspace'>
+                <Route exact path='/' component={Home} />
                 <Route path='/project/' component={LeftWorkspace} />
               </Grid.Column>
-              <Grid.Column width='6' stretched id='AppGridRightWorkspace'>
+              <Grid.Column width='6' id='AppGridRightWorkspace'>
                 <Route path='/project/' component={RightWorkspace} />
               </Grid.Column>
             </Grid.Row>

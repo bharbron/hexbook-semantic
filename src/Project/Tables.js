@@ -1,539 +1,388 @@
 import React, { Component } from 'react';
 import {
-  Breadcrumb,
   Button,
+  Card,
   Checkbox,
   Divider,
+  Form,
+  Header,
   Icon,
   Input,
+  Label,
+  Menu,
   Popup,
   Segment,
-  Table
+  Tab,
+  TextArea
 } from 'semantic-ui-react';
 import './Tables.css';
 
-class TablesControls extends Component {
+class TablesLeftWorkspace extends Component {
   render() {
     return (
-      <div id='TablesControls'>
-        <Popup trigger={<Button primary content='Add Table' icon='add' labelPosition='left' />} content='Create a new table' />
-        <Popup trigger={<Button content='Import' icon='download' />} content='Import table[s]' />
-        <Popup trigger={<Button content='Export' icon='upload' />} content='Export selected table[s] to file or clipboard' />
-        <Popup trigger={<Button basic circular icon='trash alternate' negative floated='right'/>} content='Delete selected table[s]' />
+      <div id='TablesLeftWorkspace'>
+        <Card.Group itemsPerRow='1'>
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Encounters</Card.Header>
+              <Card.Meta>ENCOUNTERS</Card.Meta>
+              <Card.Description>Table for any case where an encounter or NPC needs to be chosen at random.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>50</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Treasure</Card.Header>
+              <Card.Meta>TREASURE</Card.Meta>
+              <Card.Description>List of random valuable items.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>12</Label>
+                <Label color='grey'>Static</Label>
+                <Label color='green'>Generator</Label>
+                <Label color='blue'>Desired<Label.Detail>50</Label.Detail></Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Magic Iterms</Card.Header>
+              <Card.Meta>MAGIC_ITEMS</Card.Meta>
+              <Card.Description>Items that hold some kind of magic power.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>10</Label>
+                <Label color='grey'>Static</Label>
+                <Label color='green'>Generator</Label>
+                <Label color='blue'>Desired<Label.Detail>40</Label.Detail></Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+          <Card>
+            <Card.Content>
+              <Card.Header>Random Foobar</Card.Header>
+              <Card.Meta>FOOBAR</Card.Meta>
+              <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+              <Label.Group>
+                <Label circular>15</Label>
+              </Label.Group>
+            </Card.Content>
+          </Card>
+
+        </Card.Group> 
       </div>
     );
   };
 };
 
-class TablesWorkspace extends Component {
+class TablesRightWorkspace extends Component {
   render() {
-    return (
-      <div id='TablesWorkspace'>
-        <Table selectable striped compact>
-          <Table.Header fullWidth>
-            <Table.Row>
-              <Table.HeaderCell collapsing><Checkbox /></Table.HeaderCell>
-              <Table.HeaderCell>Code</Table.HeaderCell>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Description</Table.HeaderCell>
-              <Table.HeaderCell>Static</Table.HeaderCell>
-              <Table.HeaderCell>No. of Entries</Table.HeaderCell>
-              <Table.HeaderCell>Generator</Table.HeaderCell>
-              <Table.HeaderCell>Desired #</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>ENCOUNTERS</Table.Cell>
-              <Table.Cell>Random Encounters</Table.Cell>
-              <Table.Cell>Table for any case where an encounter or NPC needs to be chosen at random.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>50</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>TREASURE</Table.Cell>
-              <Table.Cell>Treasures</Table.Cell>
-              <Table.Cell>List of random valuable items.</Table.Cell>
-              <Table.Cell>✔︎</Table.Cell>
-              <Table.Cell>12</Table.Cell>
-              <Table.Cell>✔︎</Table.Cell>
-              <Table.Cell>100</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>MAGIC_ITEMS</Table.Cell>
-              <Table.Cell>Magic Items</Table.Cell>
-              <Table.Cell>Items that hold some kind of magic power.</Table.Cell>
-              <Table.Cell>✔︎</Table.Cell>
-              <Table.Cell>10</Table.Cell>
-              <Table.Cell>✔︎</Table.Cell>
-              <Table.Cell>40</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell><Input fluid /></Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell collapsing><Checkbox /></Table.Cell>
-              <Table.Cell>FOOBAR</Table.Cell>
-              <Table.Cell>Foobar</Table.Cell>
-              <Table.Cell>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>15</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-              <Table.Cell>-</Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
+    const plusContent =
+      <div>
+        <Header as='h1'>Add Table</Header>
+        <Form>
+          <Form.Field>
+            <label>Name</label>
+            <input placeholder='Name' />
+          </Form.Field>
+          <Form.Field>
+            <label>Reference Code</label>
+            <input placeholder='CODE' />
+          </Form.Field>
+          <Form.Field control={TextArea} label='Description' placeholder='Describe the purpose of this table...' />
+          <Form.Field>
+            <Checkbox label='I agree to the Terms and Conditions' />
+          </Form.Field>
+          <Button primary type='submit'>Add</Button>
+        </Form>
       </div>
-    );
-  };
-};
 
-class TablesHelp extends Component {
-  render() {
-    return (
-      <div id='TablesHelp'>
+    const helpContent = 
+      <div>
         <h2>Random Tables</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
         <h3>Code</h3>
@@ -551,8 +400,19 @@ class TablesHelp extends Component {
         <h3>Desired #</h3>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </div>
-    )
+
+    const panes = [
+      { menuItem: { icon: 'plus' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>{plusContent}</Tab.Pane> },
+      { menuItem: { icon: 'code' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 2 Content</Tab.Pane> },
+      { menuItem: { icon: 'download' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 3 Content</Tab.Pane> },
+      { menuItem: { icon: 'upload' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 4 Content</Tab.Pane> },
+      { menuItem: { icon: 'help' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>{helpContent}</Tab.Pane> },
+    ];
+
+    return (
+      <Tab menu={{ pointing: true }} panes={panes} className='workspace_tab'/>
+    );
   };
 }
 
-export { TablesControls, TablesWorkspace, TablesHelp };
+export { TablesLeftWorkspace, TablesRightWorkspace };

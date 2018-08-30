@@ -22,3 +22,12 @@
 #AppMenuItemHexpop {
 	margin-top: 1rem;
 }
+
+.workspace_tab {
+	height: 100%
+}
+
+.workspace_tab_pane {
+	max-height: calc(100% - 4rem);
+	overflow: auto;
+}
