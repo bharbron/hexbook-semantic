@@ -20,27 +20,28 @@ class TemplatesLeftWorkspace extends Component {
   render() {
     return (
       <div id='TagsWorkspace'>
-        <Card.Group itemsPerRow='1'>
+        <Card.Group fluid itemsPerRow='1'>
 
-          <Card color='grey'>
-		    <Card.Content header='Hexes' meta='Template for printing the list of hexes' />
-		    <Card.Content description className='templateCard'>
-		    	<List>
-			      <List.Item><h3>Lorem ipsum [[DOLLAR]] sit amet, consectetur</h3></List.Item>
-			      <List.Item><p>[[CONSECTETUR]] adipiscing elit</p></List.Item>
-			      <List.Item><h4>sed do eiusmod [[TEMPOR]] incididunt</h4></List.Item>
-			      <List.Item><p>See: [[REFERENCES]]</p></List.Item>
-			    </List>
-		    </Card.Content>
+          <Card color='olive'>
+    		    <Card.Content header='Hexes' meta='Template for printing the list of hexes' />
+    		    <Card.Content description className='templateCard'>
+    		    	<List>
+    			      <List.Item><h3>Lorem ipsum [[DOLLAR]] sit amet, consectetur</h3></List.Item>
+    			      <List.Item><p>[[CONSECTETUR]] adipiscing elit</p></List.Item>
+    			      <List.Item><h4>sed do eiusmod [[TEMPOR]] incididunt</h4></List.Item>
+    			      <List.Item><p>See: [[REFERENCES]]</p></List.Item>
+    			    </List>
+    		    </Card.Content>
             <Card.Content extra>
-              <Popup trigger={<Icon name='pencil' link />} content='Edit' />
-              <Popup trigger={<Icon name='upload' link />} content='Export' />
+              <Label color='grey'>[[]]<Label.Detail>HEX</Label.Detail></Label>
+              <Label color='blue'>Columns<Label.Detail>2</Label.Detail></Label>
+              <Label color='teal'>Whitespace<Label.Detail>4</Label.Detail></Label>
             </Card.Content>
-		  </Card>
+    		  </Card>
 
 		 </Card.Group> 
 
-		 <Card.Group itemsPerRow='2'>
+		 <Card.Group fluid itemsPerRow='2'>
 
           <Card>
 		    <Card.Content header='Key NPCs' meta='Template for printing the list of important NPCs' />
@@ -52,9 +53,8 @@ class TemplatesLeftWorkspace extends Component {
 			    </List>
 		    </Card.Content>
             <Card.Content extra>
-              <Popup trigger={<Icon name='pencil' link />} content='Edit' />
-              <Popup trigger={<Icon name='upload' link />} content='Export' />
-              <Popup trigger={<Icon name='trash alternate' color='red' link floated='right'/>} content='Delete all territory tags' />
+              <Label color='grey'>[[]]<Label.Detail>KEY_NPC</Label.Detail></Label>
+              <Label color='teal'>Whitespace<Label.Detail>4</Label.Detail></Label>
             </Card.Content>
           </Card>
 
@@ -68,9 +68,7 @@ class TemplatesLeftWorkspace extends Component {
 			    </List>
 		    </Card.Content>
             <Card.Content extra>
-              <Popup trigger={<Icon name='pencil' link />} content='Edit' />
-              <Popup trigger={<Icon name='upload' link />} content='Export' />
-              <Popup trigger={<Icon name='trash alternate' color='red' link floated='right'/>} content='Delete all territory tags' />
+              <Label color='grey'>[[]]<Label.Detail>MAGIC_ITEM</Label.Detail></Label>
             </Card.Content>
           </Card>
 
@@ -83,9 +81,7 @@ class TemplatesLeftWorkspace extends Component {
 			    </List>
 		    </Card.Content>
             <Card.Content extra>
-              <Popup trigger={<Icon name='pencil' link />} content='Edit' />
-              <Popup trigger={<Icon name='upload' link />} content='Export' />
-              <Popup trigger={<Icon name='trash alternate' color='red' link floated='right'/>} content='Delete all territory tags' />
+              <Label color='grey'>[[]]<Label.Detail>FOOBAR</Label.Detail></Label>
             </Card.Content>
           </Card>
 

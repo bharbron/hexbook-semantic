@@ -11,6 +11,7 @@ import {
   Label,
   Menu,
   Popup,
+  Radio,
   Segment,
   Tab,
   TextArea
@@ -21,7 +22,7 @@ class TablesLeftWorkspace extends Component {
   render() {
     return (
       <div id='TablesLeftWorkspace'>
-        <Card.Group itemsPerRow='1'>
+        <Card.Group itemsPerRow='3'>
           <Card>
             <Card.Content>
               <Card.Header>Random Encounters</Card.Header>
@@ -45,8 +46,7 @@ class TablesLeftWorkspace extends Component {
               <Label.Group>
                 <Label circular>12</Label>
                 <Label color='grey'>Static</Label>
-                <Label color='green'>Generator</Label>
-                <Label color='blue'>Desired<Label.Detail>50</Label.Detail></Label>
+                <Label color='green'>Generator<Label.Detail>50</Label.Detail></Label>
               </Label.Group>
             </Card.Content>
           </Card>
@@ -61,8 +61,7 @@ class TablesLeftWorkspace extends Component {
               <Label.Group>
                 <Label circular>10</Label>
                 <Label color='grey'>Static</Label>
-                <Label color='green'>Generator</Label>
-                <Label color='blue'>Desired<Label.Detail>40</Label.Detail></Label>
+                <Label color='green'>Generator<Label.Detail>40</Label.Detail></Label>
               </Label.Group>
             </Card.Content>
           </Card>
@@ -102,6 +101,7 @@ class TablesLeftWorkspace extends Component {
             <Card.Content extra>
               <Label.Group>
                 <Label circular>15</Label>
+                <Label color='green'>Generator<Label.Detail>30</Label.Detail></Label>
               </Label.Group>
             </Card.Content>
           </Card>
@@ -371,12 +371,20 @@ class TablesRightWorkspace extends Component {
           </Form.Field>
           <Form.Field>
             <label>Reference Code</label>
-            <input placeholder='CODE' />
+            <Input placeholder='CODE' label={{ color: 'grey', content: '[[]]' }} />
           </Form.Field>
-          <Form.Field control={TextArea} label='Description' placeholder='Describe the purpose of this table...' />
+          <Form.Field control={TextArea} autoHeight label='Description' placeholder='Describe the purpose of this table...' />
           <Form.Field>
-            <Checkbox label='I agree to the Terms and Conditions' />
+            <Radio toggle label='Static Results' />
           </Form.Field>
+          <Form.Field>
+            <Radio toggle label='Generate New Entries' />
+          </Form.Field>
+          <Form.Field control={TextArea} disabled autoHeight label='Generator Text' placeholder='Text to generate new entries with...' />
+          <Form.Field>
+            <input disabled label='Quantity' placeholder='Auto generate entries until this number is reached.' />
+          </Form.Field>
+          <Divider hidden />
           <Button primary type='submit'>Add</Button>
         </Form>
       </div>

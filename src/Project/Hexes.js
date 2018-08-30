@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import {
   Button,
+  Card,
   Checkbox,
   Divider,
   Icon,
   Input,
+  Label,
+  List,
   Popup,
   Segment,
   Table,
@@ -16,13 +19,27 @@ class HexesLeftWorkspace extends Component {
   render() {
     return (
       <div id='HexesLeftWorkspace'>
-        <Table selectable compact striped fixed singleLine>
+        <Card fluid>
+          <Card.Content header='Hex Contents' meta='Definition of what information should be randomly generated for each hex.' />
+          <Card.Content description>
+            <List bulleted>
+              <List.Item>Lorem ipsum [[DOLLAR]] sit amet, consectetur</List.Item>
+              <List.Item>[[CONSECTETUR]] adipiscing elit</List.Item>
+              <List.Item>sed do eiusmod [[TEMPOR]] incididunt</List.Item>
+            </List>
+          </Card.Content>
+          <Card.Content extra>
+            <Label color='grey'>[[]]<Label.Detail>HEX</Label.Detail></Label>
+          </Card.Content>
+        </Card>
+
+        <Table selectable compact='very' color='olive' striped fixed singleLine>
           <Table.Header fullWidth>
             <Table.Row>
               <Table.HeaderCell>Coordinates</Table.HeaderCell>
               <Table.HeaderCell>Terrain</Table.HeaderCell>
               <Table.HeaderCell>Territory</Table.HeaderCell>
-              <Table.HeaderCell>Override</Table.HeaderCell>
+              <Table.HeaderCell>Override Contents</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
