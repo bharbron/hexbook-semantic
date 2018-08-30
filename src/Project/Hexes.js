@@ -7,27 +7,15 @@ import {
   Input,
   Popup,
   Segment,
-  Table
+  Table,
+  Tab
 } from 'semantic-ui-react';
 import './Hexes.css';
 
-class HexesControls extends Component {
+class HexesLeftWorkspace extends Component {
   render() {
     return (
-      <div id='HexesControls'>
-        <Popup trigger={<Button primary content='Import' icon='download' />} content='Import hexes from file or clipboard' />
-        <Popup trigger={<Button icon='upload' />} content='Export hexes to file or clipboard' />
-        <Input icon={<Icon name='plus' inverted circular link />} placeholder='Coordinate, terrain, territory' style={{ width: '40%' }} />
-        <Popup trigger={<Button basic circular icon='trash alternate' negative floated='right'/>} content='Delete all hexes' />
-      </div>
-    );
-  };
-};
-
-class HexesWorkspace extends Component {
-  render() {
-    return (
-      <div id='HexesWorkspace'>
+      <div id='HexesLeftWorkspace'>
         <Table selectable compact striped fixed singleLine>
           <Table.Header fullWidth>
             <Table.Row>
@@ -321,15 +309,28 @@ class HexesWorkspace extends Component {
   };
 };
 
-class HexesHelp extends Component {
+class HexesRightWorkspace extends Component {
   render() {
-    return (
-      <div id='HexesHelp'>
+    const plusContent = 'Tab 1 Content'
+
+    const helpContent = 
+      <div>
         <h2>Hexes</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </div>
+
+    const panes = [
+      { menuItem: { icon: 'plus' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>{plusContent}</Tab.Pane> },
+      { menuItem: { icon: 'code' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 2 Content</Tab.Pane> },
+      { menuItem: { icon: 'download' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 3 Content</Tab.Pane> },
+      { menuItem: { icon: 'upload' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 4 Content</Tab.Pane> },
+      { menuItem: { icon: 'help' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>{helpContent}</Tab.Pane> },
+    ];
+
+    return (
+      <Tab menu={{ pointing: true }} panes={panes} className='workspace_tab'/>
     );
   };
 };
 
-export { HexesControls, HexesWorkspace, HexesHelp };
+export { HexesLeftWorkspace, HexesRightWorkspace };

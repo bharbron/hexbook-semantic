@@ -11,22 +11,12 @@ import {
   List,
   Popup,
   Segment,
-  Table
+  Table,
+  Tab
 } from 'semantic-ui-react';
 import './Templates.css';
 
-class TemplatesControls extends Component {
-  render() {
-    return (
-      <div id='TemplatesControls'>
-        <Popup trigger={<Button primary content='Import' icon='download' />} content='Import template[s]' />
-        <Popup trigger={<Button icon='upload' />} content='Export all templates to file or clipboard' />
-      </div>
-    );
-  };
-};
-
-class TemplatesWorkspace extends Component {
+class TemplatesLeftWorkspace extends Component {
   render() {
     return (
       <div id='TagsWorkspace'>
@@ -120,15 +110,28 @@ class TemplatesWorkspace extends Component {
   };
 };
 
-class TemplatesHelp extends Component {
+class TemplatesRightWorkspace extends Component {
   render() {
-    return (
-      <div id='TemplatesHelp'>
+    const plusContent = 'Tab 1 Content'
+
+    const helpContent = 
+      <div>
         <h2>Templates</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
       </div>
-    )
-  };
-}
 
-export { TemplatesControls, TemplatesWorkspace, TemplatesHelp };
+    const panes = [
+      { menuItem: { icon: 'plus' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>{plusContent}</Tab.Pane> },
+      { menuItem: { icon: 'code' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 2 Content</Tab.Pane> },
+      { menuItem: { icon: 'download' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 3 Content</Tab.Pane> },
+      { menuItem: { icon: 'upload' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 4 Content</Tab.Pane> },
+      { menuItem: { icon: 'help' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>{helpContent}</Tab.Pane> },
+    ];
+
+    return (
+      <Tab menu={{ pointing: true }} panes={panes} className='workspace_tab'/>
+    );
+  };
+};
+
+export { TemplatesLeftWorkspace, TemplatesRightWorkspace };
