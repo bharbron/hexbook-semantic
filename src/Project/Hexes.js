@@ -23,7 +23,11 @@ import {
 import './Hexes.css';
 
 class HexesWorkspace extends Component {
+  state = { modal_open: false }
+
   render() {
+    const { modal_open } = this.state
+
     return (
       <div id='HexesWorkspace'>
         <Segment.Group>
@@ -63,331 +67,93 @@ class HexesWorkspace extends Component {
                 <Table.HeaderCell>Coordinates</Table.HeaderCell>
                 <Table.HeaderCell>Terrain</Table.HeaderCell>
                 <Table.HeaderCell>Territory</Table.HeaderCell>
-                <Table.HeaderCell>Override Definition</Table.HeaderCell>
+                <Table.HeaderCell>Definition Override</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
               <Table.Row>
                 <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
+                <Table.Cell onClick={() => this.setState({ modal_open: true })}>0101</Table.Cell>
+                <Table.Cell onClick={() => this.setState({ modal_open: true })}>forest</Table.Cell>
+                <Table.Cell onClick={() => this.setState({ modal_open: true })}>hearts</Table.Cell>
+                <Table.Cell onClick={() => this.setState({ modal_open: true })}></Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell><Checkbox /></Table.Cell>
                 <Table.Cell>0102</Table.Cell>
                 <Table.Cell>forest</Table.Cell>
                 <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
+                <Table.Cell></Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell><Checkbox /></Table.Cell>
                 <Table.Cell>0103</Table.Cell>
                 <Table.Cell>forest</Table.Cell>
                 <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox checked /></Table.Cell>
+                <Table.Cell><Icon color='yellow' name='flag' /> sed do eiusmod [[TEMPOR]] incididunt</Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell><Checkbox /></Table.Cell>
                 <Table.Cell>0104</Table.Cell>
                 <Table.Cell>garden</Table.Cell>
                 <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
+                <Table.Cell></Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell><Checkbox /></Table.Cell>
                 <Table.Cell>0105</Table.Cell>
                 <Table.Cell>forest</Table.Cell>
                 <Table.Cell>pale</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
+                <Table.Cell></Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell><Checkbox /></Table.Cell>
                 <Table.Cell>0106</Table.Cell>
                 <Table.Cell>mountain</Table.Cell>
                 <Table.Cell>pale</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
+                <Table.Cell></Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell><Checkbox /></Table.Cell>
                 <Table.Cell>0107</Table.Cell>
                 <Table.Cell>forest</Table.Cell>
                 <Table.Cell>red</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
+                <Table.Cell></Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell><Checkbox /></Table.Cell>
                 <Table.Cell>0108</Table.Cell>
                 <Table.Cell>forest</Table.Cell>
-                <Table.Cell><Input fluid /></Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
+                <Table.Cell>red</Table.Cell>
+                <Table.Cell></Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell><Checkbox /></Table.Cell>
                 <Table.Cell>0110</Table.Cell>
                 <Table.Cell>forest</Table.Cell>
                 <Table.Cell>red</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
+                <Table.Cell></Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell><Checkbox /></Table.Cell>
                 <Table.Cell>0201</Table.Cell>
                 <Table.Cell>forest</Table.Cell>
                 <Table.Cell>colorless</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
+                <Table.Cell></Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell><Checkbox /></Table.Cell>
                 <Table.Cell>0202</Table.Cell>
                 <Table.Cell>forest</Table.Cell>
                 <Table.Cell>colorless</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
+                <Table.Cell></Table.Cell>
               </Table.Row>
               <Table.Row>
                 <Table.Cell><Checkbox /></Table.Cell>
                 <Table.Cell>0203</Table.Cell>
                 <Table.Cell>forest</Table.Cell>
                 <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
-              </Table.Row>
-              <Table.Row>
-                <Table.Cell><Checkbox /></Table.Cell>
-                <Table.Cell>0101</Table.Cell>
-                <Table.Cell>forest</Table.Cell>
-                <Table.Cell>hearts</Table.Cell>
-                <Table.Cell><Checkbox /></Table.Cell>
+                <Table.Cell></Table.Cell>
               </Table.Row>
             </Table.Body>
           </Table>
@@ -400,6 +166,13 @@ class HexesWorkspace extends Component {
             </Dropdown.Menu>
           </Dropdown>
         </Segment>
+
+        <Modal size='small' dimmer='inverted' centered={false} open={modal_open} onClose={() => this.setState({ modal_open: false })}>
+          <Modal.Header>New Hex Definition</Modal.Header>
+          <Modal.Actions>
+            <Input fluid placeholder='Lorem ipsum [[DOLOR]] sit amet' action={<Button color='green'>Add</Button>} />
+          </Modal.Actions>
+        </Modal>
       </div>
     );
   };
