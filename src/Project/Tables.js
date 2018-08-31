@@ -381,12 +381,12 @@ class TablesControls extends Component {
       <div>
         <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '1rem' }} >
             <Dropdown.Menu direction='left'>
-              <Dropdown.Item icon='download' text='Import' />
-              <Dropdown.Item icon='upload' text='Export' />
-              <Dropdown.Item icon='trash alternate' text='Clear Items' />
+              <Dropdown.Item text='Import table[s] ...' />
+              <Dropdown.Item text='Export tables ...' />
+              <Dropdown.Item text='Delete all tables' />
             </Dropdown.Menu>
           </Dropdown>
-        <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+        <Button circular color='google plus' size='massive' icon='plus' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
       </div>
     );
   };

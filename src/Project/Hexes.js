@@ -40,8 +40,8 @@ class HexesWorkspace extends Component {
           </Segment>
           <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
             <Dropdown.Menu direction='left'>
-              <Dropdown.Item text='Import' />
-              <Dropdown.Item text='Export' />
+              <Dropdown.Item text='Import definition ...' />
+              <Dropdown.Item text='Export definition ...' />
             </Dropdown.Menu>
           </Dropdown>
         </Segment.Group>
@@ -385,7 +385,9 @@ class HexesWorkspace extends Component {
           </Table>
           <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
             <Dropdown.Menu direction='left'>
-              <Dropdown.Item text='Edit selected hex[es]' />
+              <Dropdown.Item text='Import hex[es] ...' />
+              <Dropdown.Item text='Export hexes ...' />
+              <Dropdown.Item text='Edit selected hex[es] ...' />
               <Dropdown.Item text='Delete selected hex[es]' />
             </Dropdown.Menu>
           </Dropdown>
@@ -413,14 +415,7 @@ class HexesControls extends Component {
   render() {
     return (
       <div>
-        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '1rem' }} >
-          <Dropdown.Menu direction='left'>
-            <Dropdown.Item icon='download' text='Import Hex Map' />
-            <Dropdown.Item icon='upload' text='Export Hex Map' />
-            <Dropdown.Item icon='trash alternate' text='Delete Hex Map' />
-          </Dropdown.Menu>
-        </Dropdown>
-        <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+        <Button circular color='google plus' size='massive' icon='plus' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
       </div>
     );
   };

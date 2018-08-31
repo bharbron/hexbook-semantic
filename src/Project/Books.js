@@ -112,14 +112,8 @@ class BooksControls extends Component {
   render() {
     return (
       <div>
-        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '1rem' }} >
-            <Dropdown.Menu direction='left'>
-              <Dropdown.Item icon='download' text='Import' />
-              <Dropdown.Item icon='upload' text='Export' />
-              <Dropdown.Item icon='trash alternate' text='Clear Items' />
-            </Dropdown.Menu>
-          </Dropdown>
-        <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+        <Button circular color='blue' size='massive' icon='play' style={{ position: 'fixed', bottom: '8rem', right: '2rem' }} />
+        <Button circular color='google plus' size='massive' icon='plus' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
       </div>
     );
   };

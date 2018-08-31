@@ -27,30 +27,27 @@ class TagsWorkspace extends Component {
 
         <Segment.Group>
           <Segment>
-            <Header content='Terrain Tags' subheader='Generated via the hex map. Type of terrain in a given hex. Typically used to determine random encounters.' />
+            <Header content='Terrain Tags' subheader='Automatically generated and tagged by the hex map. Type of terrain in a given hex. Typically used by random encounter tables.' />
           </Segment>
           <Segment>
             <Label.Group tag color='olive'>
-              <Label>grasslands</Label>
               <Label>forest</Label>
-              <Label>hills</Label>
-              <Label>mountains</Label>
-              <Label>desert</Label>
-              <Label>swamp</Label>
+              <Label>garden</Label>
+              <Label>mountain</Label>
             </Label.Group>
           </Segment>
         </Segment.Group>
 
         <Segment.Group>
           <Segment>
-            <Header content='Territory Tags' subheader='Generated via the hex map. Group that holds influence in a given hex. Typically used to determine adventure hooks and themes.' />
+            <Header content='Territory Tags' subheader='Automatically generated and tagged by the hex map. Group that holds influence in a given hex. Typically used by adventure hook and theme tables.' />
           </Segment>
           <Segment>
             <Label.Group tag color='orange'>
-              <Label>goblins</Label>
-              <Label>dwarves</Label>
-              <Label>imperial</Label>
-              <Label>fae</Label>
+              <Label>colorless</Label>
+              <Label>hearts</Label>
+              <Label>pale</Label>
+              <Label>red</Label>
             </Label.Group>
           </Segment>
         </Segment.Group>
@@ -61,19 +58,23 @@ class TagsWorkspace extends Component {
           </Segment>
           <Segment>
             <Label.Group tag color='teal'>
-              <Label>intelligent<Icon name='delete' /></Label>
               <Label>animal<Icon name='delete' /></Label>
-              <Label>unintelligent<Icon name='delete' /></Label>
-              <Label>romantic<Icon name='delete' /></Label>
+              <Label>day<Icon name='delete' /></Label>
               <Label>edible<Icon name='delete' /></Label>
+              <Label>intelligent<Icon name='delete' /></Label>
+              <Label>interior<Icon name='delete' /></Label>
+              <Label>monarch<Icon name='delete' /></Label>
+              <Label>night<Icon name='delete' /></Label>
+              <Label>romantic<Icon name='delete' /></Label>
+              <Label>unintelligent<Icon name='delete' /></Label>
               <Icon link size='large' name='plus circle' color='grey' />
             </Label.Group>
           </Segment>
           <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
             <Dropdown.Menu direction='left'>
-              <Dropdown.Item text='Import' />
-              <Dropdown.Item text='Export' />
-              <Dropdown.Item text='Delete Tags' />
+              <Dropdown.Item text='Import tag[s] ...' />
+              <Dropdown.Item text='Export tags ...' />
+              <Dropdown.Item text='Delete all tags' />
             </Dropdown.Menu>
           </Dropdown>
         </Segment.Group>
@@ -101,14 +102,6 @@ class TagsControls extends Component {
   render() {
     return (
       <div>
-        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '1rem' }} >
-            <Dropdown.Menu direction='left'>
-              <Dropdown.Item icon='download' text='Import' />
-              <Dropdown.Item icon='upload' text='Export' />
-              <Dropdown.Item icon='trash alternate' text='Clear Items' />
-            </Dropdown.Menu>
-          </Dropdown>
-        <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
       </div>
     );
   };
