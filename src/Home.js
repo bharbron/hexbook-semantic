@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Breadcrumb,
   Button,
-  Checkbox,
   Divider,
   Header,
   Icon,
+  Menu,
   Segment
 } from 'semantic-ui-react';
 import './Home.css';
 
-class Home extends Component {
+class HomeWorkspace extends Component {
   render() {
     return (
-      <div id='Home'>
         <Segment basic textAlign='center' id='HomeSegmentScroll'>
           <Header as='h1' icon>
             <Icon name='map marker alternate' />
@@ -24,20 +22,30 @@ class Home extends Component {
           <Divider hidden />
           <Button positive as={Link} to='/project/hexes'>New Project</Button>
         </Segment>  
+    );
+  };
+};
+
+class HomeMenu extends Component {
+  render() {
+    return (
+      <div>
+        <Menu.Item as={Link} to='/project/hexes'><Icon name='cube' />Hexes</Menu.Item>
+        <Menu.Item as={Link} to='/project/tags'><Icon name='tags' />Tags</Menu.Item>
+        <Menu.Item as={Link} to='/project/tables'><Icon name='list' />Tables</Menu.Item>
+        <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
+        <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
       </div>
     );
   };
 };
 
-class HomeHelp extends Component {
+class HomeControls extends Component {
   render() {
     return (
-      <div id='HomeHelp'>
-        <h2>HexPop!</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      </div>
-    )
+      <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+    );
   };
-}
+};
 
-export { Home, HomeHelp };
+export { HomeWorkspace, HomeMenu, HomeControls };

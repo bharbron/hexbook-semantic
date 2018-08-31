@@ -3,17 +3,18 @@ import { HashRouter as Router, Route, Link } from 'react-router-dom';
 import {
   Divider,
   Grid,
+  Header,
   Icon,
-  Menu,
-  Segment
+  List,
+  Menu
 } from 'semantic-ui-react';
-import { Home, HomeHelp } from './Home';
-import { Workspace, WorkspaceControls } from './Project';
-import { HexesHelp } from './Project/Hexes'
-import { TagsHelp } from './Project/Tags'
-import { TablesHelp } from './Project/Tables'
-import { TemplatesHelp } from './Project/Templates'
-import { BooksHelp } from './Project/Books'
+import { HomeWorkspace, HomeMenu, HomeControls } from './Home'
+import { HexesWorkspace, HexesMenu, HexesControls } from './Project/Hexes'
+import { TagsWorkspace, TagsMenu, TagsControls } from './Project/Tags'
+import { TablesWorkspace, TablesMenu, TablesControls } from './Project/Tables'
+import { TemplatesWorkspace, TemplatesMenu, TemplatesControls } from './Project/Templates'
+import { BooksWorkspace, BooksMenu, BooksControls } from './Project/Books'
+
 import './App.css';
 
 class App extends Component {
@@ -21,39 +22,46 @@ class App extends Component {
     return (
       <Router>
         <div className='App'>
-
           <Grid padded id='AppGrid'>
-            <Grid.Row id='AppGridRowWorkspace'>
-              <Grid.Column width='13' id='AppGridColumnWorkspace'>
-                <Route exact path='/' component={Home} />
-                <Route exact path='/project/tags' component={WorkspaceControls} />
-                <Route exact path='/project/tables' component={WorkspaceControls} />
-                <Route exact path='/project/templates' component={WorkspaceControls} />
-                <Route exact path='/project/hexes' component={WorkspaceControls} />
-                <Route exact path='/project/books' component={Workspace} />
+            <Grid.Row id='AppGridRow'>
+              <Grid.Column />
+              <Grid.Column width={14} id='AppGridRowColum'>
+                <Route exact path='/' component={HomeWorkspace} />
+                <Route exact path='/Project/Hexes' component={HexesWorkspace} />
+                <Route exact path='/Project/Tags' component={TagsWorkspace} />
+                <Route exact path='/Project/Tables' component={TablesWorkspace} />
+                <Route exact path='/Project/Templates' component={TemplatesWorkspace} />
+                <Route exact path='/Project/Books' component={BooksWorkspace} />
               </Grid.Column>
-              <Grid.Column width='3' stretched id='AppHelp'>
-                <Segment tertiary id='AppHelpSegment'>
-                  <Route exact path='/' component={HomeHelp} />
-                  <Route exact path='/project/tags' component={TagsHelp} />
-                  <Route exact path='/project/tables' component={TablesHelp} />
-                  <Route exact path='/project/templates' component={TemplatesHelp} />
-                  <Route exact path='/project/hexes' component={HexesHelp} />
-                  <Route exact path='/project/books' component={BooksHelp} />
-                </Segment>
-              </Grid.Column>
+              <Grid.Column />
             </Grid.Row>
           </Grid>
 
-          <Menu borderless compact fixed='left' inverted pointing icon='labeled' vertical>
-            <Menu.Item as={Link} to='/' id='AppMenuItemHexpop'><Icon name='map marker alternate' />HexPop!</Menu.Item>
-            <Divider inverted />
-            <Menu.Item as={Link} to='/project/hexes'><Icon name='globe' />Hexes</Menu.Item>
-            <Menu.Item as={Link} to='/project/tags'><Icon name='tags' />Tags</Menu.Item>
-            <Menu.Item as={Link} to='/project/tables' active='true'><Icon name='list' />Tables</Menu.Item>
-            <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
-            <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
+          <Menu secondary pointing color='red' size='large' fixed='left' vertical style={{ width: '14rem' }}>
+            <Menu.Item as={Link} to='/' id='AppMenuItemHexpop'>
+              <Header as='h2' textAlign='center' icon inverted color='grey'>
+                <Icon name='cubes' />
+                HexPop!
+              </Header>
+            </Menu.Item>
+            <Route exact path='/' component={HomeMenu} />
+            <Route exact path='/Project/Hexes' component={HexesMenu} />
+            <Route exact path='/Project/Tags' component={TagsMenu} />
+            <Route exact path='/Project/Tables' component={TablesMenu} />
+            <Route exact path='/Project/Templates' component={TemplatesMenu} />
+            <Route exact path='/Project/Books' component={BooksMenu} />
+            <Divider />
+              <List.Item style={{ fontSize: '10pt', color: 'lightgrey' }}><span style={{ fontSize: '12pt', fontFamily: 'courier', color: 'darkgrey' }}>[[CODE]]</span> Randomly roll on table CODE and insert result here</List.Item>
+              <List.Item style={{ fontSize: '10pt', color: 'lightgrey' }}><span style={{ fontSize: '12pt', fontFamily: 'courier', color: 'darkgrey' }}>[[CODE:+tag1,-tag2]]</span> Add tag1 to the tag chain, remove tag2, roll on CODE, insert result</List.Item>
+              <List.Item style={{ fontSize: '10pt', color: 'lightgrey' }}><span style={{ fontSize: '12pt', fontFamily: 'courier', color: 'darkgrey' }}>[[CODE:-ALL,+tag1]]</span> Remove all tags from the chain, add tag1, roll on CODE, insert result</List.Item>
           </Menu>
+        
+        <Route exact path='/' component={HomeControls} />
+        <Route exact path='/Project/Hexes' component={HexesControls} />
+        <Route exact path='/Project/Tags' component={TagsControls} />
+        <Route exact path='/Project/Tables' component={TablesControls} />
+        <Route exact path='/Project/Templates' component={TemplatesControls} />
+        <Route exact path='/Project/Books' component={BooksControls} />
 
         </div>
       </Router>

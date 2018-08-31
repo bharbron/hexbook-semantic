@@ -1,35 +1,29 @@
 import React, { Component } from 'react';
+import { HashRouter as Router, Route, Link } from 'react-router-dom';
 import {
-  Breadcrumb,
   Button,
   Card,
-  Checkbox,
   Divider,
+  Grid,
+  Header,
   Icon,
   Label,
-  Popup,
-  Segment,
-  Table
+  Menu,
+  Segment
 } from 'semantic-ui-react';
-import './Tags.css';
 
-class TagsControls extends Component {
+import './Mockup.css';
+
+class App extends Component {
   render() {
     return (
-      <div id='TagsControls'>
-        <Popup trigger={<Button content='Import' icon='download' />} content='Import tags[s]' />
-        <Popup trigger={<Button content='Export' icon='upload' />} content='Export all tags to file or clipboard' />
-        <Popup trigger={<Button basic circular icon='trash alternate' negative floated='right'/>} content='Delete selected tag[s]' />
-      </div>
-    );
-  };
-};
-
-class TagsWorkspace extends Component {
-  render() {
-    return (
-      <div id='TagsWorkspace'>
-        <Card.Group itemsPerRow='1'>
+      <Router>
+        <div className='App'>
+          <Grid padded id='AppGrid'>
+            <Grid.Row id='AppGridRow'>
+              <Grid.Column />
+              <Grid.Column width={14} color='teal' id='AppGridRowColum'>
+              <Card.Group centered>
           <Card>
             <Card.Content>
               <Card.Header>Random Encounters</Card.Header>
@@ -53,8 +47,7 @@ class TagsWorkspace extends Component {
               <Label.Group>
                 <Label circular>12</Label>
                 <Label color='grey'>Static</Label>
-                <Label color='green'>Generator</Label>
-                <Label color='blue'>Desired<Label.Detail>50</Label.Detail></Label>
+                <Label color='olive'>Generator<Label.Detail>50</Label.Detail></Label>
               </Label.Group>
             </Card.Content>
           </Card>
@@ -69,8 +62,7 @@ class TagsWorkspace extends Component {
               <Label.Group>
                 <Label circular>10</Label>
                 <Label color='grey'>Static</Label>
-                <Label color='green'>Generator</Label>
-                <Label color='blue'>Desired<Label.Detail>40</Label.Detail></Label>
+                <Label color='olive'>Generator<Label.Detail>40</Label.Detail></Label>
               </Label.Group>
             </Card.Content>
           </Card>
@@ -110,6 +102,7 @@ class TagsWorkspace extends Component {
             <Card.Content extra>
               <Label.Group>
                 <Label circular>15</Label>
+                <Label color='olive'>Generator<Label.Detail>30</Label.Detail></Label>
               </Label.Group>
             </Card.Content>
           </Card>
@@ -362,20 +355,31 @@ class TagsWorkspace extends Component {
           </Card>
 
         </Card.Group> 
-      </div>
-    );
-  };
-};
+              </Grid.Column>
+              <Grid.Column />
+            </Grid.Row>
+          </Grid>
 
-class TagsHelp extends Component {
-  render() {
-    return (
-      <div id='TagsHelp'>
-        <h2>Tags</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      </div>
-    )
-  };
+          <Menu borderless fixed='left' inverted pointing vertical style={{ width: '12rem' }}>
+            <Menu.Item as={Link} to='/' id='AppMenuItemHexpop'>
+              <Header as='h2' textAlign='center' icon inverted color='grey'>
+                <Icon name='cubes' />
+                HexPop!
+              </Header>
+            </Menu.Item>
+            <Menu.Item as={Link} to='/project/hexes'><Icon name='cube' />Hexes</Menu.Item>
+            <Menu.Item as={Link} to='/project/tags'><Icon name='tags' />Tags</Menu.Item>
+            <Menu.Item as={Link} to='/project/tables' active='true'><Icon name='list' />Tables</Menu.Item>
+            <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
+            <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
+          </Menu>
+        
+        <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+
+        </div>
+      </Router>
+    );
+  }
 }
 
-export { TagsControls, TagsWorkspace, TagsHelp };
+export default App;

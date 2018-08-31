@@ -1,7 +1,7 @@
-#HexesWorkspace {
-	height: inherit;
+#HexesLeftWorkspace {
+	height: 100%;
 }
 
-#HexesHelp {
+#HexesRightWorkspace {
 	height: 100%;
 }

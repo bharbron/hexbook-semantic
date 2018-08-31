@@ -1,29 +1,19 @@
 .App {
-	height: inherit;
 }
 
 #AppGrid {
-	height: inherit;
 }
 
-#AppGridRowWorkspace { 
-	margin-left: 6.7rem;
-	height: inherit;
+#AppGridRow {
+	margin-left: 14rem;
 }
 
-#AppGridColumnWorkspace {
-	height: inherit;
+#AppGridRowColumn {
 }
 
-#AppHelp {
-	height: 100%;
+#Workspace {
 }
 
-#AppHelpSegment {
-	height: 100%;
-	overflow: auto;
-}
-
-#AppMenuItemHexpop {
-	margin-top: 1rem;
+#AppMenuItemHexpop h2 {
+	font-family: 'IM Fell English SC';
 }
