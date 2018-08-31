@@ -48,7 +48,7 @@ class HexesWorkspace extends Component {
           </Card>
         </Card.Group>
 
-        <Table selectable compact='very' color='olive' striped fixed singleLine>
+        <Table selectable compact='very' striped fixed singleLine>
           <Table.Header>
             <Table.Row>
               <Table.HeaderCell>Coordinates</Table.HeaderCell>

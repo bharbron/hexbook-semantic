@@ -41,7 +41,7 @@ class App extends Component {
             </Grid.Row>
           </Grid>
 
-          <Menu borderless fixed='left' inverted pointing vertical style={{ width: '12rem' }}>
+          <Menu secondary pointing color='red' size='big' fixed='left' vertical style={{ width: '12rem' }}>
             <Menu.Item as={Link} to='/' id='AppMenuItemHexpop'>
               <Header as='h2' textAlign='center' icon inverted color='grey'>
                 <Icon name='cubes' />
