@@ -55,7 +55,7 @@ class TablesWorkspace extends Component {
 
           <Card link>
             <Card.Content>
-              <Card.Header>Magic Iterms</Card.Header>
+              <Card.Header>Magic Items</Card.Header>
               <Card.Meta>MAGIC_ITEMS</Card.Meta>
               <Card.Description>Items that hold some kind of magic power.</Card.Description>
             </Card.Content>
