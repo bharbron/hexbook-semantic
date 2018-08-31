@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Breadcrumb,
   Button,
   Card,
   Checkbox,
   Divider,
+  Dropdown,
+  Header,
   Icon,
   Input,
   Label,
@@ -17,87 +20,91 @@ import {
 } from 'semantic-ui-react';
 import './Tags.css';
 
-class TagsLeftWorkspace extends Component {
+class TagsWorkspace extends Component {
   render() {
     return (
-      <div id='TagsLeftWorkspace'>
-        <Card.Group itemsPerRow='1'>
+      <div id='TagsWorkspace'>
 
-          <Card>
-            <Card.Content header='Terrain Tags' meta='Type of terrain in a given hex. Typically used to determine random encounters.' />
-            <Card.Content>
-              <Card.Description>
-                <Label.Group tag color='green'>
-                  <Label>grasslands</Label>
-                  <Label>forest</Label>
-                  <Label>hills</Label>
-                  <Label>mountains</Label>
-                  <Label>desert</Label>
-                  <Label>swamp</Label>
-                </Label.Group>
-              </Card.Description>
-            </Card.Content>
-          </Card>
+        <Segment.Group>
+          <Segment>
+            <Header content='Terrain Tags' subheader='Automatically generated and tagged by the hex map. Type of terrain in a given hex. Typically used by random encounter tables.' />
+          </Segment>
+          <Segment>
+            <Label.Group tag color='olive'>
+              <Label>forest</Label>
+              <Label>garden</Label>
+              <Label>mountain</Label>
+            </Label.Group>
+          </Segment>
+        </Segment.Group>
 
-          <Card>
-            <Card.Content header='Territory Tags' meta='Group that holds influence in a given hex. Typically used to determine adventure hooks and themes.' />
-            <Card.Content>
-              <Card.Description>
-                <Label.Group tag color='orange'>
-                  <Label>goblins</Label>
-                  <Label>dwarves</Label>
-                  <Label>imperial</Label>
-                  <Label>fae</Label>
-                </Label.Group>
-              </Card.Description>
-            </Card.Content>
-          </Card>
+        <Segment.Group>
+          <Segment>
+            <Header content='Territory Tags' subheader='Automatically generated and tagged by the hex map. Group that holds influence in a given hex. Typically used by adventure hook and theme tables.' />
+          </Segment>
+          <Segment>
+            <Label.Group tag color='orange'>
+              <Label>colorless</Label>
+              <Label>hearts</Label>
+              <Label>pale</Label>
+              <Label>red</Label>
+            </Label.Group>
+          </Segment>
+        </Segment.Group>
 
-          <Card>
-            <Card.Content>
-              <Card.Header>Other Tags</Card.Header>
-              <Card.Meta>Any other tags that table rolls may by filtered by.</Card.Meta>
-            </Card.Content>
-            <Card.Content>
-              <Card.Description>
-                <Label.Group tag color='teal'>
-                  <Label>intelligent<Icon name='delete' /></Label>
-                  <Label>animal<Icon name='delete' /></Label>
-                  <Label>unintelligent<Icon name='delete' /></Label>
-                  <Label>romantic<Icon name='delete' /></Label>
-                  <Label>edible<Icon name='delete' /></Label>
-                  <Icon size='large' name='plus circle' />
-                </Label.Group>
-              </Card.Description>
-            </Card.Content>
-          </Card>
+        <Segment.Group>
+          <Segment>
+            <Header content='Other Tags' subheader='Any other user-defined tags that table rolls may by filtered by.' />
+          </Segment>
+          <Segment>
+            <Label.Group tag color='teal'>
+              <Label>animal<Icon name='delete' /></Label>
+              <Label>day<Icon name='delete' /></Label>
+              <Label>edible<Icon name='delete' /></Label>
+              <Label>intelligent<Icon name='delete' /></Label>
+              <Label>interior<Icon name='delete' /></Label>
+              <Label>monarch<Icon name='delete' /></Label>
+              <Label>night<Icon name='delete' /></Label>
+              <Label>romantic<Icon name='delete' /></Label>
+              <Label>unintelligent<Icon name='delete' /></Label>
+              <Icon link size='large' name='plus circle' color='grey' />
+            </Label.Group>
+          </Segment>
+          <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
+            <Dropdown.Menu direction='left'>
+              <Dropdown.Item text='Import tag[s] ...' />
+              <Dropdown.Item text='Export tags ...' />
+              <Dropdown.Item text='Delete all tags' />
+            </Dropdown.Menu>
+          </Dropdown>
+        </Segment.Group>
 
-        </Card.Group> 
       </div>
     );
   };
 };
 
-class TagsRightWorkspace extends Component {
+class TagsMenu extends Component {
   render() {
-    const helpContent = 
+    return (
       <div>
-        <h2>Tags</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <Menu.Item as={Link} to='/project/hexes'><Icon name='cube' />Hexes</Menu.Item>
+        <Menu.Item as={Link} to='/project/tags' active={true}><Icon name='tags' />Tags</Menu.Item>
+        <Menu.Item as={Link} to='/project/tables'><Icon name='list' />Tables</Menu.Item>
+        <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
+        <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
       </div>
-
-    const panes = [
-      { menuItem: { icon: 'plus' }, render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane> },
-      { menuItem: { icon: 'code' }, render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane> },
-      { menuItem: { icon: 'download' }, render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
-      { menuItem: { icon: 'upload' }, render: () => <Tab.Pane attached={false}>Tab 4 Content</Tab.Pane> },
-      { menuItem: { icon: 'help' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>{helpContent}</Tab.Pane> },
-    ];
-
-    return (
-      <Tab menu={{ pointing: true }} panes={panes} className='workspace_tab' />
     );
   };
 };
 
-export { TagsLeftWorkspace, TagsRightWorkspace };
+class TagsControls extends Component {
+  render() {
+    return (
+      <div>
+      </div>
+    );
+  };
+};
+
+export { TagsWorkspace, TagsMenu, TagsControls };
