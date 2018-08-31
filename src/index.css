@@ -18,5 +18,11 @@
 }
 
 body, #root {
-  background: #f7f7f7
+  background: #f7f7f7!important;
+}
+
+/* To make color='red' equivalent to color='google plus' in Semantic UI menus */
+.ui.menu .red.active.item, .ui.red.menu .active.item {
+    border-color: #dd4b3a!important;
+    color: #dd4b3a!important;
 }

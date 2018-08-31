@@ -102,7 +102,7 @@ class BooksMenu extends Component {
         <Menu.Item as={Link} to='/project/tags'><Icon name='tags' />Tags</Menu.Item>
         <Menu.Item as={Link} to='/project/tables'><Icon name='list' />Tables</Menu.Item>
         <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
-        <Menu.Item as={Link} to='/project/books' active='true'><Icon name='book' />Books</Menu.Item>
+        <Menu.Item as={Link} to='/project/books' active={true}><Icon name='book' />Books</Menu.Item>
       </div>
     );
   };

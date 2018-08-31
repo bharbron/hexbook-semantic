@@ -367,7 +367,7 @@ class TablesMenu extends Component {
       <div>
         <Menu.Item as={Link} to='/project/hexes'><Icon name='cube' />Hexes</Menu.Item>
         <Menu.Item as={Link} to='/project/tags'><Icon name='tags' />Tags</Menu.Item>
-        <Menu.Item as={Link} to='/project/tables' active='true'><Icon name='list' />Tables</Menu.Item>
+        <Menu.Item as={Link} to='/project/tables' active={true}><Icon name='list' />Tables</Menu.Item>
         <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
         <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
       </div>

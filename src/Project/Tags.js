@@ -27,7 +27,7 @@ class TagsWorkspace extends Component {
 
         <Segment.Group>
           <Segment>
-            <Header content='Terrain Tags' subheader='Type of terrain in a given hex. Typically used to determine random encounters.' />
+            <Header content='Terrain Tags' subheader='Generated via the hex map. Type of terrain in a given hex. Typically used to determine random encounters.' />
           </Segment>
           <Segment>
             <Label.Group tag color='olive'>
@@ -43,7 +43,7 @@ class TagsWorkspace extends Component {
 
         <Segment.Group>
           <Segment>
-            <Header content='Territory Tags' subheader='Group that holds influence in a given hex. Typically used to determine adventure hooks and themes.' />
+            <Header content='Territory Tags' subheader='Generated via the hex map. Group that holds influence in a given hex. Typically used to determine adventure hooks and themes.' />
           </Segment>
           <Segment>
             <Label.Group tag color='orange'>
@@ -57,7 +57,7 @@ class TagsWorkspace extends Component {
 
         <Segment.Group>
           <Segment>
-            <Header content='Other Tags' subheader='Any other tags that table rolls may by filtered by.' />
+            <Header content='Other Tags' subheader='Any other user-defined tags that table rolls may by filtered by.' />
           </Segment>
           <Segment>
             <Label.Group tag color='teal'>
@@ -88,7 +88,7 @@ class TagsMenu extends Component {
     return (
       <div>
         <Menu.Item as={Link} to='/project/hexes'><Icon name='cube' />Hexes</Menu.Item>
-        <Menu.Item as={Link} to='/project/tags' active='true'><Icon name='tags' />Tags</Menu.Item>
+        <Menu.Item as={Link} to='/project/tags' active={true}><Icon name='tags' />Tags</Menu.Item>
         <Menu.Item as={Link} to='/project/tables'><Icon name='list' />Tables</Menu.Item>
         <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
         <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
