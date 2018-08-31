@@ -6,6 +6,7 @@ import {
   Card,
   Checkbox,
   Divider,
+  Dropdown,
   Icon,
   Input,
   Label,
@@ -22,9 +23,9 @@ class TemplatesWorkspace extends Component {
   render() {
     return (
       <div id='TagsWorkspace'>
-        <Card.Group itemsPerRow='1'>
+        <Card.Group itemsPerRow='2' doubling>
 
-          <Card raised>
+          <Card link>
     		    <Card.Content header='Hexes' meta='Template for printing the list of hexes' />
     		    <Card.Content description className='templateCard'>
     		    	<List>
@@ -45,7 +46,7 @@ class TemplatesWorkspace extends Component {
 
     		 <Card.Group itemsPerRow='2' doubling>
 
-          <Card>
+          <Card link>
     		    <Card.Content header='Key NPCs' meta='Template for printing the list of important NPCs' />
     		    <Card.Content description className='templateCard'>
     		    	<List>
@@ -61,7 +62,7 @@ class TemplatesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
     		    <Card.Content header='Magic Items' meta='Template for printing an index of magic items' />
     		    <Card.Content description className='templateCard'>
     		    	<List>
@@ -76,7 +77,7 @@ class TemplatesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
     		    <Card.Content header='Foobars' meta='Template for printing an index of foobars' />
     		    <Card.Content description className='templateCard'>
     		    	<List>
@@ -114,7 +115,16 @@ class TemplatesMenu extends Component {
 class TemplatesControls extends Component {
   render() {
     return (
-      <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+      <div>
+        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '2rem' }} >
+            <Dropdown.Menu direction='left'>
+              <Dropdown.Item icon='download' text='Import' />
+              <Dropdown.Item icon='upload' text='Export' />
+              <Dropdown.Item icon='trash alternate' text='Clear Items' />
+            </Dropdown.Menu>
+          </Dropdown>
+        <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+      </div>
     );
   };
 };

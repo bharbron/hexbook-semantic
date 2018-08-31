@@ -6,6 +6,7 @@ import {
   Card,
   Checkbox,
   Divider,
+  Dropdown,
   Header,
   Icon,
   Input,
@@ -24,7 +25,8 @@ class BooksWorkspace extends Component {
     return (
       <div id='TagsWorkspace'>
         <Card.Group itemsPerRow='2' doubling>
-          <Card>
+
+          <Card raised>
             <Card.Content>
               <Card.Header>Book 1</Card.Header>
               <Card.Description>
@@ -35,12 +37,20 @@ class BooksWorkspace extends Component {
             </Card.Content>
             <Card.Content>
               <List size='large'>
-                <List.Item icon='puzzle' header='Hexes' content='Template for printing the list of hexes' />
+                <List.Item>
+                  <List.Icon name='puzzle' size='big' />
+                  <List.Content>
+                    <List.Header>Hexes</List.Header>
+                    <List.Description>Template for printing the list of hexes <Icon link name='minus circle' color='grey' /></List.Description>
+                  </List.Content>
+                </List.Item>
               </List>
+              <Icon link name='plus circle' size='large' color='grey' />
             </Card.Content>
+            <Icon link name='pencil' color='grey' style={{ position: 'absolute', top: '1rem', right: '1rem' }} />
           </Card>
 
-          <Card>
+          <Card raised>
             <Card.Content>
               <Card.Header>Book 2</Card.Header>
               <Card.Description>
@@ -51,11 +61,31 @@ class BooksWorkspace extends Component {
             </Card.Content>
             <Card.Content>
               <List size='large'>
-                <List.Item icon='puzzle' header='Key NPCs' content='Template for printing the list of important NPCs' />
-                <List.Item icon='puzzle' header='Random NPCs' content='Template for printing additional random NPCs' />
-                <List.Item icon='puzzle' header='Magic Items' content='Template for printing an index of magic items' />
+                <List.Item>
+                  <List.Icon name='puzzle' size='big' />
+                  <List.Content>
+                    <List.Header>Key NPCs</List.Header>
+                    <List.Description>Template for printing the list of important NPCs <Icon link name='minus circle' color='grey' /></List.Description>
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Icon name='puzzle' size='big' />
+                  <List.Content>
+                    <List.Header>Random NPCs</List.Header>
+                    <List.Description>Template for printing additional random NPCs <Icon link name='minus circle' color='grey' /></List.Description>
+                  </List.Content>
+                </List.Item>
+                <List.Item>
+                  <List.Icon name='puzzle' size='big' />
+                  <List.Content>
+                    <List.Header>Magic Items</List.Header>
+                    <List.Description>Template for printing an index of magic items <Icon link name='minus circle' color='grey' /></List.Description>
+                  </List.Content>
+                </List.Item>
               </List>
+              <Icon link name='plus circle' size='large' color='grey' />
             </Card.Content>
+            <Icon link name='pencil' color='grey' style={{ position: 'absolute', top: '1rem', right: '1rem' }} />
           </Card>
 
          </Card.Group> 
@@ -81,7 +111,16 @@ class BooksMenu extends Component {
 class BooksControls extends Component {
   render() {
     return (
-      <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+      <div>
+        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '2rem' }} >
+            <Dropdown.Menu direction='left'>
+              <Dropdown.Item icon='download' text='Import' />
+              <Dropdown.Item icon='upload' text='Export' />
+              <Dropdown.Item icon='trash alternate' text='Clear Items' />
+            </Dropdown.Menu>
+          </Dropdown>
+        <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+      </div>
     );
   };
 };

@@ -5,6 +5,7 @@ import {
   Card,
   Checkbox,
   Divider,
+  Dropdown,
   Form,
   Header,
   Icon,
@@ -24,7 +25,7 @@ class TablesWorkspace extends Component {
     return (
       <div id='TablesWorkspace'>
         <Card.Group>
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Encounters</Card.Header>
               <Card.Meta>ENCOUNTERS</Card.Meta>
@@ -37,7 +38,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Treasure</Card.Header>
               <Card.Meta>TREASURE</Card.Meta>
@@ -52,7 +53,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Magic Iterms</Card.Header>
               <Card.Meta>MAGIC_ITEMS</Card.Meta>
@@ -67,7 +68,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -80,7 +81,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -93,7 +94,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -107,7 +108,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -120,7 +121,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -133,7 +134,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -146,7 +147,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -159,7 +160,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -172,7 +173,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -185,7 +186,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -198,7 +199,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -211,7 +212,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -224,7 +225,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -237,7 +238,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -250,7 +251,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -263,7 +264,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -276,7 +277,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -289,7 +290,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -302,7 +303,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -315,7 +316,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -328,7 +329,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -341,7 +342,7 @@ class TablesWorkspace extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -377,7 +378,16 @@ class TablesMenu extends Component {
 class TablesControls extends Component {
   render() {
     return (
-      <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+      <div>
+        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '2rem' }} >
+            <Dropdown.Menu direction='left'>
+              <Dropdown.Item icon='download' text='Import' />
+              <Dropdown.Item icon='upload' text='Export' />
+              <Dropdown.Item icon='trash alternate' text='Clear Items' />
+            </Dropdown.Menu>
+          </Dropdown>
+        <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+      </div>
     );
   };
 };

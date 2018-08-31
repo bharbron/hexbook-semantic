@@ -56,14 +56,6 @@ class App extends Component {
             <Route exact path='/Project/Books' component={BooksMenu} />
           </Menu>
         
-
-        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '2rem' }} >
-          <Dropdown.Menu direction='left'>
-            <Dropdown.Item icon='download' text='Import' />
-            <Dropdown.Item icon='upload' text='Export' />
-            <Dropdown.Item icon='trash alternate' text='Clear Items' />
-          </Dropdown.Menu>
-        </Dropdown>
         <Route exact path='/' component={HomeControls} />
         <Route exact path='/Project/Hexes' component={HexesControls} />
         <Route exact path='/Project/Tags' component={TagsControls} />
