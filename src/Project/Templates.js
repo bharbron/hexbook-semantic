@@ -116,7 +116,7 @@ class TemplatesControls extends Component {
   render() {
     return (
       <div>
-        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '2rem' }} >
+        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '1rem' }} >
             <Dropdown.Menu direction='left'>
               <Dropdown.Item icon='download' text='Import' />
               <Dropdown.Item icon='upload' text='Export' />

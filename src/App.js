@@ -9,6 +9,7 @@ import {
   Header,
   Icon,
   Label,
+  List,
   Menu,
   Segment
 } from 'semantic-ui-react';
@@ -41,7 +42,7 @@ class App extends Component {
             </Grid.Row>
           </Grid>
 
-          <Menu secondary pointing color='red' size='big' fixed='left' vertical style={{ width: '12rem' }}>
+          <Menu secondary pointing color='red' size='big' fixed='left' vertical style={{ width: '14rem' }}>
             <Menu.Item as={Link} to='/' id='AppMenuItemHexpop'>
               <Header as='h2' textAlign='center' icon inverted color='grey'>
                 <Icon name='cubes' />
@@ -54,6 +55,10 @@ class App extends Component {
             <Route exact path='/Project/Tables' component={TablesMenu} />
             <Route exact path='/Project/Templates' component={TemplatesMenu} />
             <Route exact path='/Project/Books' component={BooksMenu} />
+            <Divider />
+              <List.Item style={{ fontSize: '10pt', color: 'lightgrey' }}><span style={{ fontSize: '12pt', fontFamily: 'courier' }}>[[CODE]]</span> Randomly roll on table CODE and insert result here</List.Item>
+              <List.Item style={{ fontSize: '10pt', color: 'lightgrey' }}><span style={{ fontSize: '12pt', fontFamily: 'courier' }}>[[CODE:+tag1,-tag2]]</span> Add tag1 to the tag chain, remove tag2, roll on CODE, insert result</List.Item>
+              <List.Item style={{ fontSize: '10pt', color: 'lightgrey' }}><span style={{ fontSize: '12pt', fontFamily: 'courier' }}>[[CODE:-ALL,+tag1]]</span> Remove all tags from the tag chain, add tag1, roll on CODE, insert result</List.Item>
           </Menu>
         
         <Route exact path='/' component={HomeControls} />

@@ -6,6 +6,7 @@ import {
   Checkbox,
   Divider,
   Dropdown,
+  Header,
   Icon,
   Input,
   Label,
@@ -22,31 +23,28 @@ class HexesWorkspace extends Component {
   render() {
     return (
       <div id='HexesWorkspace'>
-        <Card.Group itemsPerRow='2' doubling>
-          <Card raised>
-            <Card.Content>
-              <Card.Header>Hex Definition</Card.Header>
-              <Card.Meta>What information should be randomly generated for each hex.</Card.Meta>
-            </Card.Content>
-            <Card.Content description>
-              <List bulleted size='large'>
-                <List.Item>Lorem ipsum [[DOLLAR]] sit amet, consectetur <Icon link name='minus circle' color='grey' /></List.Item>
-                <List.Item>[[CONSECTETUR]] adipiscing elit <Icon link name='minus circle' color='grey' /></List.Item>
-                <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
-              </List>
-              <Icon link name='plus circle' size='large' color='grey' />
-            </Card.Content>
-            <Card.Content extra>
-              <Label color='grey'>[[]]<Label.Detail>HEX</Label.Detail></Label>
-            </Card.Content>
-            <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
-              <Dropdown.Menu direction='left'>
-                <Dropdown.Item text='Import' />
-                <Dropdown.Item text='Export' />
-              </Dropdown.Menu>
-            </Dropdown>
-          </Card>
-        </Card.Group>
+        <Segment.Group>
+          <Segment>
+            <Header content='Hex Definition' subheader='What information should be randomly generated for each hex.' />
+          </Segment>
+          <Segment>
+            <List bulleted size='large'>
+              <List.Item>Lorem ipsum [[DOLLAR]] sit amet, consectetur <Icon link name='minus circle' color='grey' /></List.Item>
+              <List.Item>[[CONSECTETUR]] adipiscing elit <Icon link name='minus circle' color='grey' /></List.Item>
+              <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
+            </List>
+            <Icon link name='plus circle' size='large' color='grey' />
+          </Segment>
+          <Segment>
+            <Label color='grey'>[[]]<Label.Detail>HEX</Label.Detail></Label>
+          </Segment>
+          <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
+            <Dropdown.Menu direction='left'>
+              <Dropdown.Item text='Import' />
+              <Dropdown.Item text='Export' />
+            </Dropdown.Menu>
+          </Dropdown>
+        </Segment.Group>
 
         <Table selectable compact='very' striped fixed singleLine>
           <Table.Header>
@@ -359,7 +357,7 @@ class HexesControls extends Component {
   render() {
     return (
       <div>
-        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '2rem' }} >
+        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '1rem' }} >
           <Dropdown.Menu direction='left'>
             <Dropdown.Item icon='download' text='Import' />
             <Dropdown.Item icon='upload' text='Export' />
