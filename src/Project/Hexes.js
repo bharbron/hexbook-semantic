@@ -6,16 +6,19 @@ import {
   Checkbox,
   Divider,
   Dropdown,
+  Form,
   Header,
   Icon,
   Input,
   Label,
   List,
   Menu,
+  Modal,
   Popup,
   Segment,
   Table,
-  Tab
+  Tab,
+  TextArea
 } from 'semantic-ui-react';
 import './Hexes.css';
 
@@ -33,7 +36,12 @@ class HexesWorkspace extends Component {
               <List.Item>[[CONSECTETUR]] adipiscing elit <Icon link name='minus circle' color='grey' /></List.Item>
               <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
             </List>
-            <Icon link name='plus circle' size='large' color='grey' />
+            <Modal size='small' dimmer='inverted' centered={false} trigger={<Icon link name='plus circle' size='large' color='grey' />}>
+              <Modal.Header>New Hex Definition</Modal.Header>
+              <Modal.Actions>
+                <Input fluid placeholder='Lorem ipsum [[DOLOR]] sit amet' action={<Button color='green'>Add</Button>} />
+              </Modal.Actions>
+            </Modal>
           </Segment>
           <Segment>
             <Label color='grey'>[[]]<Label.Detail>HEX</Label.Detail></Label>
@@ -415,7 +423,34 @@ class HexesControls extends Component {
   render() {
     return (
       <div>
-        <Button circular color='google plus' size='massive' icon='plus' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+        <Modal
+          size='tiny'
+          centered={false}
+          closeIcon
+          closeOnDimmerClick={false}
+          dimmer='inverted'
+          trigger={
+            <Button
+              circular
+              color='google plus'
+              size='massive'
+              icon='plus'
+              style={{ position: 'fixed', bottom: '2rem', right: '2rem' }}
+            />
+          }
+        >
+          <Modal.Content>
+            <Form>
+              <Header content='Add New Hex[es]' subheader='Enter one hex per line, all lowercase, no spaces' />
+              <label style={{ fontFamily: 'courier' }}>coordinate,terrain,territory</label>
+              <TextArea autoHeight style={{ minHeight: '20rem', fontFamily: 'courier' }} />
+            </Form>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button>Cancel</Button>
+            <Button color='green'>Add</Button>
+          </Modal.Actions>
+        </Modal>
       </div>
     );
   };
