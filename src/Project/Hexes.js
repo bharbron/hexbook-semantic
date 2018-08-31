@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Button,
-  Card,
   Checkbox,
-  Divider,
   Dropdown,
   Form,
   Header,
@@ -14,10 +12,8 @@ import {
   List,
   Menu,
   Modal,
-  Popup,
   Segment,
   Table,
-  Tab,
   TextArea
 } from 'semantic-ui-react';
 import './Hexes.css';

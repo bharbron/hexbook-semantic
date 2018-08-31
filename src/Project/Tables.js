@@ -3,20 +3,10 @@ import { Link } from 'react-router-dom';
 import {
   Button,
   Card,
-  Checkbox,
-  Divider,
   Dropdown,
-  Form,
-  Header,
   Icon,
-  Input,
   Label,
-  Menu,
-  Popup,
-  Radio,
-  Segment,
-  Tab,
-  TextArea
+  Menu
 } from 'semantic-ui-react';
 import './Tables.css';
 

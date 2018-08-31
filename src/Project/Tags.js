@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Breadcrumb,
-  Button,
-  Card,
-  Checkbox,
-  Divider,
   Dropdown,
   Header,
   Icon,
-  Input,
   Label,
-  List,
   Menu,
-  Popup,
-  Segment,
-  Table,
-  Tab
+  Segment
 } from 'semantic-ui-react';
 import './Tags.css';
 

@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import { HashRouter as Router, Route, Link } from 'react-router-dom';
 import {
-  Button,
-  Card,
   Divider,
-  Dropdown,
   Grid,
   Header,
   Icon,
-  Label,
   List,
-  Menu,
-  Segment
+  Menu
 } from 'semantic-ui-react';
 import { HomeWorkspace, HomeMenu, HomeControls } from './Home'
 import { HexesWorkspace, HexesMenu, HexesControls } from './Project/Hexes'

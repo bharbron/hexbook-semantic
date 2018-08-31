@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Breadcrumb,
   Button,
-  Checkbox,
   Divider,
   Header,
   Icon,
