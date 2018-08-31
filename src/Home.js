@@ -7,11 +7,12 @@ import {
   Divider,
   Header,
   Icon,
+  Menu,
   Segment
 } from 'semantic-ui-react';
 import './Home.css';
 
-class Home extends Component {
+class HomeWorkspace extends Component {
   render() {
     return (
         <Segment basic textAlign='center' id='HomeSegmentScroll'>
@@ -27,15 +28,26 @@ class Home extends Component {
   };
 };
 
-class HomeHelp extends Component {
+class HomeMenu extends Component {
   render() {
     return (
-      <div id='HomeHelp'>
-        <h2>HexPop!</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <div>
+        <Menu.Item as={Link} to='/project/hexes'><Icon name='cube' />Hexes</Menu.Item>
+        <Menu.Item as={Link} to='/project/tags'><Icon name='tags' />Tags</Menu.Item>
+        <Menu.Item as={Link} to='/project/tables'><Icon name='list' />Tables</Menu.Item>
+        <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
+        <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
       </div>
-    )
+    );
   };
-}
+};
 
-export { Home, HomeHelp };
+class HomeControls extends Component {
+  render() {
+    return (
+      <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+    );
+  };
+};
+
+export { HomeWorkspace, HomeMenu, HomeControls };

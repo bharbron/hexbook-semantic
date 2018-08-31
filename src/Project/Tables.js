@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Button,
   Card,
@@ -18,11 +19,11 @@ import {
 } from 'semantic-ui-react';
 import './Tables.css';
 
-class TablesLeftWorkspace extends Component {
+class TablesWorkspace extends Component {
   render() {
     return (
-      <div id='TablesLeftWorkspace'>
-        <Card.Group itemsPerRow='3'>
+      <div id='TablesWorkspace'>
+        <Card.Group>
           <Card>
             <Card.Content>
               <Card.Header>Random Encounters</Card.Header>
@@ -46,7 +47,7 @@ class TablesLeftWorkspace extends Component {
               <Label.Group>
                 <Label circular>12</Label>
                 <Label color='grey'>Static</Label>
-                <Label color='green'>Generator<Label.Detail>50</Label.Detail></Label>
+                <Label color='olive'>Generator<Label.Detail>50</Label.Detail></Label>
               </Label.Group>
             </Card.Content>
           </Card>
@@ -61,7 +62,7 @@ class TablesLeftWorkspace extends Component {
               <Label.Group>
                 <Label circular>10</Label>
                 <Label color='grey'>Static</Label>
-                <Label color='green'>Generator<Label.Detail>40</Label.Detail></Label>
+                <Label color='olive'>Generator<Label.Detail>40</Label.Detail></Label>
               </Label.Group>
             </Card.Content>
           </Card>
@@ -101,7 +102,7 @@ class TablesLeftWorkspace extends Component {
             <Card.Content extra>
               <Label.Group>
                 <Label circular>15</Label>
-                <Label color='green'>Generator<Label.Detail>30</Label.Detail></Label>
+                <Label color='olive'>Generator<Label.Detail>30</Label.Detail></Label>
               </Label.Group>
             </Card.Content>
           </Card>
@@ -359,68 +360,26 @@ class TablesLeftWorkspace extends Component {
   };
 };
 
-class TablesRightWorkspace extends Component {
+class TablesMenu extends Component {
   render() {
-    const plusContent =
-      <div>
-        <Header as='h1'>Add Table</Header>
-        <Form>
-          <Form.Field>
-            <label>Name</label>
-            <input placeholder='Name' />
-          </Form.Field>
-          <Form.Field>
-            <label>Reference Code</label>
-            <Input placeholder='CODE' label={{ color: 'grey', content: '[[]]' }} />
-          </Form.Field>
-          <Form.Field control={TextArea} autoHeight label='Description' placeholder='Describe the purpose of this table...' />
-          <Form.Field>
-            <Radio toggle label='Static Results' />
-          </Form.Field>
-          <Form.Field>
-            <Radio toggle label='Generate New Entries' />
-          </Form.Field>
-          <Form.Field control={TextArea} disabled autoHeight label='Generator Text' placeholder='Text to generate new entries with...' />
-          <Form.Field>
-            <input disabled label='Quantity' placeholder='Auto generate entries until this number is reached.' />
-          </Form.Field>
-          <Divider hidden />
-          <Button primary type='submit'>Add</Button>
-        </Form>
-      </div>
-
-    const helpContent = 
-      <div>
-        <h2>Random Tables</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <h3>Code</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <h3>Name</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <h3>Description</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <h3>Static</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <h3>No. of Entries</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <h3>Generator</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-        <h3>Desired #</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      </div>
-
-    const panes = [
-      { menuItem: { icon: 'plus' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>{plusContent}</Tab.Pane> },
-      { menuItem: { icon: 'code' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 2 Content</Tab.Pane> },
-      { menuItem: { icon: 'download' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 3 Content</Tab.Pane> },
-      { menuItem: { icon: 'upload' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 4 Content</Tab.Pane> },
-      { menuItem: { icon: 'help' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>{helpContent}</Tab.Pane> },
-    ];
-
     return (
-      <Tab menu={{ pointing: true }} panes={panes} className='workspace_tab'/>
+      <div>
+        <Menu.Item as={Link} to='/project/hexes'><Icon name='cube' />Hexes</Menu.Item>
+        <Menu.Item as={Link} to='/project/tags'><Icon name='tags' />Tags</Menu.Item>
+        <Menu.Item as={Link} to='/project/tables' active='true'><Icon name='list' />Tables</Menu.Item>
+        <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
+        <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
+      </div>
     );
   };
-}
+};
 
-export { TablesLeftWorkspace, TablesRightWorkspace };
+class TablesControls extends Component {
+  render() {
+    return (
+      <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+    );
+  };
+};
+
+export { TablesWorkspace, TablesMenu, TablesControls };

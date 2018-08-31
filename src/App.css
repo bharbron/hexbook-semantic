@@ -1,33 +1,15 @@
 .App {
-	height: 100%;
 }
 
 #AppGrid {
-	height: 100%;
 }
 
-#AppGridRowWorkspace { 
-	margin-left: 6.7rem;
-	height: 100%;
+#AppGridRow {
+	margin-left: 12rem;
 }
 
-#AppGridLeftWorkspace {
-	height: 100%;
+#AppGridRowColumn {
 }
 
-#AppGridRightWorkspace {
-	height: 100%;
-}
-
-#AppMenuItemHexpop {
-	margin-top: 1rem;
-}
-
-.workspace_tab {
-	height: 100%
-}
-
-.workspace_tab_pane {
-	max-height: calc(100% - 4rem);
-	overflow: auto;
+#Workspace {
 }

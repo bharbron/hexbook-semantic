@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Breadcrumb,
   Button,
@@ -17,17 +18,17 @@ import {
 } from 'semantic-ui-react';
 import './Tags.css';
 
-class TagsLeftWorkspace extends Component {
+class TagsWorkspace extends Component {
   render() {
     return (
-      <div id='TagsLeftWorkspace'>
+      <div id='TagsWorkspace'>
         <Card.Group itemsPerRow='1'>
 
           <Card>
             <Card.Content header='Terrain Tags' meta='Type of terrain in a given hex. Typically used to determine random encounters.' />
             <Card.Content>
               <Card.Description>
-                <Label.Group tag color='green'>
+                <Label.Group tag color='olive'>
                   <Label>grasslands</Label>
                   <Label>forest</Label>
                   <Label>hills</Label>
@@ -78,26 +79,26 @@ class TagsLeftWorkspace extends Component {
   };
 };
 
-class TagsRightWorkspace extends Component {
+class TagsMenu extends Component {
   render() {
-    const helpContent = 
-      <div>
-        <h2>Tags</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      </div>
-
-    const panes = [
-      { menuItem: { icon: 'plus' }, render: () => <Tab.Pane attached={false}>Tab 1 Content</Tab.Pane> },
-      { menuItem: { icon: 'code' }, render: () => <Tab.Pane attached={false}>Tab 2 Content</Tab.Pane> },
-      { menuItem: { icon: 'download' }, render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
-      { menuItem: { icon: 'upload' }, render: () => <Tab.Pane attached={false}>Tab 4 Content</Tab.Pane> },
-      { menuItem: { icon: 'help' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>{helpContent}</Tab.Pane> },
-    ];
-
     return (
-      <Tab menu={{ pointing: true }} panes={panes} className='workspace_tab' />
+      <div>
+        <Menu.Item as={Link} to='/project/hexes'><Icon name='cube' />Hexes</Menu.Item>
+        <Menu.Item as={Link} to='/project/tags' active='true'><Icon name='tags' />Tags</Menu.Item>
+        <Menu.Item as={Link} to='/project/tables'><Icon name='list' />Tables</Menu.Item>
+        <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
+        <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
+      </div>
     );
   };
 };
 
-export { TagsLeftWorkspace, TagsRightWorkspace };
+class TagsControls extends Component {
+  render() {
+    return (
+      <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+    );
+  };
+};
+
+export { TagsWorkspace, TagsMenu, TagsControls };

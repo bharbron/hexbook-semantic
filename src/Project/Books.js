@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Breadcrumb,
   Button,
@@ -10,6 +11,7 @@ import {
   Input,
   Label,
   List,
+  Menu,
   Popup,
   Segment,
   Table,
@@ -17,11 +19,11 @@ import {
 } from 'semantic-ui-react';
 import './Books.css';
 
-class BooksLeftWorkspace extends Component {
+class BooksWorkspace extends Component {
   render() {
     return (
       <div id='TagsWorkspace'>
-        <Card.Group fluid itemsPerRow='1'>
+        <Card.Group itemsPerRow='2' doubling>
           <Card>
             <Card.Content>
               <Card.Header>Book 1</Card.Header>
@@ -62,28 +64,26 @@ class BooksLeftWorkspace extends Component {
   };
 };
 
-class BooksRightWorkspace extends Component {
+class BooksMenu extends Component {
   render() {
-    const plusContent = 'Tab 1 Content'
-
-    const helpContent = 
-      <div>
-        <h2>Books</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      </div>
-
-    const panes = [
-      { menuItem: { icon: 'plus' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>{plusContent}</Tab.Pane> },
-      { menuItem: { icon: 'code' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 2 Content</Tab.Pane> },
-      { menuItem: { icon: 'download' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 3 Content</Tab.Pane> },
-      { menuItem: { icon: 'upload' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>Tab 4 Content</Tab.Pane> },
-      { menuItem: { icon: 'help' }, render: () => <Tab.Pane attached={false} className='workspace_tab_pane'>{helpContent}</Tab.Pane> },
-    ];
-
     return (
-      <Tab menu={{ pointing: true }} panes={panes} className='workspace_tab'/>
+      <div>
+        <Menu.Item as={Link} to='/project/hexes'><Icon name='cube' />Hexes</Menu.Item>
+        <Menu.Item as={Link} to='/project/tags'><Icon name='tags' />Tags</Menu.Item>
+        <Menu.Item as={Link} to='/project/tables'><Icon name='list' />Tables</Menu.Item>
+        <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
+        <Menu.Item as={Link} to='/project/books' active='true'><Icon name='book' />Books</Menu.Item>
+      </div>
     );
   };
 };
 
-export { BooksLeftWorkspace, BooksRightWorkspace };
+class BooksControls extends Component {
+  render() {
+    return (
+      <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+    );
+  };
+};
+
+export { BooksWorkspace, BooksMenu, BooksControls };
