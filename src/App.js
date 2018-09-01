@@ -52,8 +52,8 @@ class App extends Component {
             <Route exact path='/Project/Books' component={BooksMenu} />
             <Divider />
               <List.Item style={{ fontSize: '10pt', color: 'lightgrey' }}><span style={{ fontSize: '12pt', fontFamily: 'courier', color: 'darkgrey' }}>[[CODE]]</span> Randomly roll on table CODE and insert result here</List.Item>
-              <List.Item style={{ fontSize: '10pt', color: 'lightgrey' }}><span style={{ fontSize: '12pt', fontFamily: 'courier', color: 'darkgrey' }}>[[CODE:+tag1,-tag2]]</span> Add tag1 to the tag chain, remove tag2, roll on CODE, insert result</List.Item>
-              <List.Item style={{ fontSize: '10pt', color: 'lightgrey' }}><span style={{ fontSize: '12pt', fontFamily: 'courier', color: 'darkgrey' }}>[[CODE:-ALL,+tag1]]</span> Remove all tags from the chain, add tag1, roll on CODE, insert result</List.Item>
+              <List.Item style={{ fontSize: '10pt', color: 'lightgrey' }}><span style={{ fontSize: '12pt', fontFamily: 'courier', color: 'darkgrey' }}>[[CODE:+tag1,-tag2]]</span> Add tag1 to the filter, remove tag2, roll on CODE, insert result</List.Item>
+              <List.Item style={{ fontSize: '10pt', color: 'lightgrey' }}><span style={{ fontSize: '12pt', fontFamily: 'courier', color: 'darkgrey' }}>[[CODE:-ALL,+tag1]]</span> Remove all tags from the filter, add tag1, roll on CODE, insert result</List.Item>
           </Menu>
         
         <Route exact path='/' component={HomeControls} />
