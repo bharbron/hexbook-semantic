@@ -1,0 +1,17 @@
+#WorkspaceGrid {}
+
+#WorkspaceGridRow {
+	margin-left: 14rem;
+}
+
+#WorkspaceGridRowColumn {}
+
+#AppMenu {
+	width: 14rem;
+}
+
+#AppMenuHexPopLogo {}
+
+#AppMenuSyntaxHelp {}
+
+#Controls {}

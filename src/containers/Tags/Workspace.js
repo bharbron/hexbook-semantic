@@ -10,7 +10,7 @@ import {
   Segment
 } from 'semantic-ui-react';
 
-import './Workspace.css';
+import './Tags.css';
 
 class TagsWorkspace extends Component {
   render() {

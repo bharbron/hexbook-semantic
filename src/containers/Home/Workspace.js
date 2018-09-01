@@ -10,7 +10,7 @@ import {
   Menu,
   Segment
 } from 'semantic-ui-react';
-import './Workspace.css';
+import './Home.css';
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   changePage: () => push('/Hexes')

@@ -9,7 +9,7 @@ import {
   Menu
 } from 'semantic-ui-react';
 
-import './Workspace.css';
+import './Tables.css';
 
 class TablesWorkspace extends Component {
   render() {

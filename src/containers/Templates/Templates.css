@@ -1,5 +1,5 @@
 .templateCard table {
-	font-family: 'IM Fell English', serif;
+  font-family: 'IM Fell English', serif;
 }
 
 .templateCard table {
@@ -32,5 +32,8 @@
 .templateCard h4,
 .templateCard h5,
 .templateCard p {
-	font-family: 'IM Fell English', serif;
+  font-family: 'IM Fell English', serif;
+}
+
+#TemplatesWorkspace {
 }

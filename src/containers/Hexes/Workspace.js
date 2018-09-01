@@ -17,7 +17,7 @@ import {
   TextArea
 } from 'semantic-ui-react';
 
-import './Workspace.css';
+import './Hexes.css';
 
 class HexesWorkspace extends Component {
   state = { modal_open: false }

@@ -15,7 +15,7 @@ import {
 } from 'semantic-ui-react';
 import routes from '../constants/routes.json'
 
-import './AppMenu.css';
+import './containers.css';
 
 const mapStateToProps = state => ({
   pathname: state.router.location.pathname,

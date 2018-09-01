@@ -11,7 +11,7 @@ import TemplatesWorkspace from './Templates/Workspace'
 import BooksWorkspace from './Books/Workspace'
 import routes from '../constants/routes.json'
 
-import './Workspace.css'
+import './containers.css'
 
 class Workspace extends Component {
   render () {

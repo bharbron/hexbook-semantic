@@ -10,7 +10,7 @@ import {
   Menu
 } from 'semantic-ui-react';
 
-import './Workspace.css';
+import './Templates.css';
 
 class TemplatesWorkspace extends Component {
   render() {
