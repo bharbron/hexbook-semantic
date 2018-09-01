@@ -178,11 +178,11 @@ class HexesMenu extends Component {
   render() {
     return (
       <div>
-        <Menu.Item as={Link} to='/project/hexes' active={true}><Icon name='cube' />Hexes</Menu.Item>
-        <Menu.Item as={Link} to='/project/tags'><Icon name='tags' />Tags</Menu.Item>
-        <Menu.Item as={Link} to='/project/tables'><Icon name='list' />Tables</Menu.Item>
-        <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
-        <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
+        <Menu.Item as={Link} to='/hexes' active={true}><Icon name='cube' />Hexes</Menu.Item>
+        <Menu.Item as={Link} to='/tags'><Icon name='tags' />Tags</Menu.Item>
+        <Menu.Item as={Link} to='/tables'><Icon name='list' />Tables</Menu.Item>
+        <Menu.Item as={Link} to='/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
+        <Menu.Item as={Link} to='/books'><Icon name='book' />Books</Menu.Item>
       </div>
     );
   };

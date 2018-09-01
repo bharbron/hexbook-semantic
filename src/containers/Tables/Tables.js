@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
-import { HashRouter as Router, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   Button,
   Card,
-  Divider,
-  Grid,
-  Header,
+  Dropdown,
   Icon,
   Label,
-  Menu,
-  Segment
+  Menu
 } from 'semantic-ui-react';
+import './Tables.css';
 
-import './Mockup.css';
-
-class App extends Component {
+class TablesWorkspace extends Component {
   render() {
     return (
-      <Router>
-        <div className='App'>
-          <Grid padded id='AppGrid'>
-            <Grid.Row id='AppGridRow'>
-              <Grid.Column />
-              <Grid.Column width={14} color='teal' id='AppGridRowColum'>
-              <Card.Group centered>
-          <Card>
+      <div id='TablesWorkspace'>
+        <Card.Group>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Encounters</Card.Header>
               <Card.Meta>ENCOUNTERS</Card.Meta>
@@ -37,7 +28,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Treasure</Card.Header>
               <Card.Meta>TREASURE</Card.Meta>
@@ -52,9 +43,9 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
-              <Card.Header>Magic Iterms</Card.Header>
+              <Card.Header>Magic Items</Card.Header>
               <Card.Meta>MAGIC_ITEMS</Card.Meta>
               <Card.Description>Items that hold some kind of magic power.</Card.Description>
             </Card.Content>
@@ -67,7 +58,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -80,7 +71,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -93,7 +84,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -107,7 +98,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -120,7 +111,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -133,7 +124,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -146,7 +137,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -159,7 +150,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -172,7 +163,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -185,7 +176,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -198,7 +189,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -211,7 +202,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -224,7 +215,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -237,7 +228,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -250,7 +241,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -263,7 +254,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -276,7 +267,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -289,7 +280,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -302,7 +293,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -315,7 +306,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -328,7 +319,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -341,7 +332,7 @@ class App extends Component {
             </Card.Content>
           </Card>
 
-          <Card>
+          <Card link>
             <Card.Content>
               <Card.Header>Random Foobar</Card.Header>
               <Card.Meta>FOOBAR</Card.Meta>
@@ -355,31 +346,40 @@ class App extends Component {
           </Card>
 
         </Card.Group> 
-              </Grid.Column>
-              <Grid.Column />
-            </Grid.Row>
-          </Grid>
-
-          <Menu borderless fixed='left' inverted pointing vertical style={{ width: '12rem' }}>
-            <Menu.Item as={Link} to='/' id='AppMenuItemHexpop'>
-              <Header as='h2' textAlign='center' icon inverted color='grey'>
-                <Icon name='cubes' />
-                HexPop!
-              </Header>
-            </Menu.Item>
-            <Menu.Item as={Link} to='/project/hexes'><Icon name='cube' />Hexes</Menu.Item>
-            <Menu.Item as={Link} to='/project/tags'><Icon name='tags' />Tags</Menu.Item>
-            <Menu.Item as={Link} to='/project/tables' active='true'><Icon name='list' />Tables</Menu.Item>
-            <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
-            <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
-          </Menu>
-        
-        <Button circular color='google plus' size='massive' icon='pencil' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
-
-        </div>
-      </Router>
+      </div>
     );
-  }
-}
+  };
+};
 
-export default App;
+class TablesMenu extends Component {
+  render() {
+    return (
+      <div>
+        <Menu.Item as={Link} to='/hexes'><Icon name='cube' />Hexes</Menu.Item>
+        <Menu.Item as={Link} to='/tags'><Icon name='tags' />Tags</Menu.Item>
+        <Menu.Item as={Link} to='/tables' active={true}><Icon name='list' />Tables</Menu.Item>
+        <Menu.Item as={Link} to='/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
+        <Menu.Item as={Link} to='/books'><Icon name='book' />Books</Menu.Item>
+      </div>
+    );
+  };
+};
+
+class TablesControls extends Component {
+  render() {
+    return (
+      <div>
+        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '1rem' }} >
+            <Dropdown.Menu direction='left'>
+              <Dropdown.Item text='Import table[s] ...' />
+              <Dropdown.Item text='Export tables ...' />
+              <Dropdown.Item text='Delete all tables' />
+            </Dropdown.Menu>
+          </Dropdown>
+        <Button circular color='google plus' size='massive' icon='plus' style={{ position: 'fixed', bottom: '2rem', right: '2rem' }} />
+      </div>
+    );
+  };
+};
+
+export { TablesWorkspace, TablesMenu, TablesControls };
