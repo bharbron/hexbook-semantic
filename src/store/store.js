@@ -6,7 +6,10 @@ import rootReducer from '../reducers'
 
 export const history = createHistory()
 
-const initialState = {}
+const initialState = {
+  currentPage: '/'
+}
+
 const enhancers = []
 const middleware = [
   thunk,

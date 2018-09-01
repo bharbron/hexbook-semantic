@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { push } from 'connected-react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom';
 import {
   Button,
   Divider,
