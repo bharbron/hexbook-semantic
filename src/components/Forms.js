@@ -9,7 +9,7 @@ import './components.css';
 class SingleLineAdder extends Component {
   static defaultProps = {
     size: 'large',
-  }
+  };
 
   render () {
     return (
@@ -18,7 +18,9 @@ class SingleLineAdder extends Component {
           <Form.Input
             name={this.props.name}
             icon={
-              <Icon name='circle plus' link onClick={this.props.onSubmit} />
+              <Icon 
+                name='circle plus'
+                link onClick={this.props.onSubmit} />
             }
             iconPosition='left'
             transparent
