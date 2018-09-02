@@ -17,6 +17,7 @@ import {
   Table
 } from 'semantic-ui-react';
 import { WideColumnWorkspace } from '../components/Workspaces'
+import { SingleLineAdder } from '../components/Forms'
 import { FloatingActionButton } from '../components/FloatingControls'
 import { TextAreaInputModal } from '../components/Modals'
 
@@ -72,6 +73,7 @@ class HexesWorkspace extends Component {
     return (
       <div id='HexesWorkspace'>
         <WideColumnWorkspace>
+
           <Segment.Group>
             <Segment>
               <Header content='Hex Definition' subheader='What information should be randomly generated for each hex.' />
@@ -82,22 +84,13 @@ class HexesWorkspace extends Component {
                 <List.Item>[[CONSECTETUR]] adipiscing elit <Icon link name='minus circle' color='grey' /></List.Item>
                 <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
               </List>
-              <Form onSubmit={() => this.handleSubmit_hexDefinitionInput()}>
-                <Form.Field>
-                  <Form.Input
-                    name='hex_definition'
-                    icon={<Icon name='circle plus' link onClick={() => this.handleSubmit_hexDefinitionInput()} />}
-                    iconPosition='left'
-                    transparent
-                    fluid
-                    size='large'
-                    placeholder='Enter [[NEW]] hex definition...'
-                    id='HexDefinitionInput'
-                    value={this.state.value_hexDefinitionInput}
-                    onChange={this.handleChange_hexDefinitionInput}
-                  />
-                </Form.Field>
-              </Form>
+              <SingleLineAdder
+                onSubmit={() => this.handleSubmit_hexDefinitionInput()}
+                name='hex_definition'
+                placeholder='Enter [[NEW]] hex definition...'
+                value={this.state.value_hexDefinitionInput}
+                onChange={this.handleChange_hexDefinitionInput}
+              />
             </Segment>
             <Segment>
               <Label color='grey'>[[]]<Label.Detail>HEX</Label.Detail></Label>
@@ -217,14 +210,12 @@ class HexesWorkspace extends Component {
                 <Dropdown.Item text='Delete selected hex[es]' />
               </Dropdown.Menu>
             </Dropdown>
-            <Input
-              icon={<Icon name='circle plus' link />}
-              iconPosition='left'
-              transparent
-              fluid
-              size='large'
+            <SingleLineAdder
+              onSubmit={null}
+              name='hex'
               placeholder='coordinate,terrain,territory'
-              id='HexInput'
+              value={null}
+              onChange={null}
             />
           </Segment>
 
