@@ -16,7 +16,7 @@ import {
   Table,
   TextArea
 } from 'semantic-ui-react';
-import FloatingActionButton from '../../components/FloatingActionButton'
+import { FloatingActionButton } from '../../components/FloatingControls'
 import './Hexes.css';
 
 class HexesControls extends Component {
@@ -30,7 +30,7 @@ class HexesControls extends Component {
           closeOnDimmerClick={false}
           dimmer='inverted'
           trigger={
-            <FloatingActionButton />
+            <FloatingActionButton icon='plus' color='google plus' />
           }
         >
           <Modal.Content>

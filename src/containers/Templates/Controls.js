@@ -9,7 +9,7 @@ import {
   List,
   Menu
 } from 'semantic-ui-react';
-import FloatingActionButton from '../../components/FloatingActionButton'
+import { FloatingActionButton, FloatingWorkspaceMenu } from '../../components/FloatingControls'
 
 import './Templates.css';
 
@@ -17,14 +17,12 @@ class TemplatesControls extends Component {
   render() {
     return (
       <div>
-        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '1rem' }} >
-            <Dropdown.Menu direction='left'>
-              <Dropdown.Item text='Import template[s] ...' />
-              <Dropdown.Item text='Export templates ...' />
-              <Dropdown.Item text='Delete all templates' />
-            </Dropdown.Menu>
-          </Dropdown>
-        <FloatingActionButton />
+        <FloatingWorkspaceMenu>
+          <Dropdown.Item text='Import template[s] ...' />
+          <Dropdown.Item text='Export templates ...' />
+          <Dropdown.Item text='Delete all templates' />
+        </FloatingWorkspaceMenu>
+        <FloatingActionButton icon='plus' color='google plus' />
       </div>
     );
   };
