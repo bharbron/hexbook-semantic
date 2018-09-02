@@ -28,6 +28,11 @@
 	font-family: 'IM Fell English SC';
 }
 
+#AppMenu > h2.AppLogo {
+  font-family: 'IM Fell English SC';
+  padding-top: 1rem;
+}
+
 #AppMenuSyntaxHelp {}
 
 #Controls {}

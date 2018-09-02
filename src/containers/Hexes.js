@@ -33,23 +33,23 @@ class HexesWorkspace extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value_hexDefinitionInput: '',
+      value_hexDetailInput: '',
       open_hexMapInputModal: false,
     };
 
-    this.handleChange_hexDefinitionInput = this.handleChange_hexDefinitionInput.bind(this)
+    this.handleChange_hexDetailInput = this.handleChange_hexDetailInput.bind(this)
   };
 
-  handleChange_hexDefinitionInput(event) {
+  handleChange_hexDetailInput(event) {
     // can probably attach typing autosuggestion here, e.g. if [[ is at end of string, suggest TABLES_CODES
     // can probably also do live validation of input, print an error message on the input, disable submit if bad data has been entered
-    this.setState({value_hexDefinitionInput: event.target.value})
+    this.setState({value_hexDetailInput: event.target.value})
   }
 
-  handleSubmit_hexDefinitionInput() {
+  handleSubmit_hexDetailInput() {
     // no value is sent on submit. instead, whatever the last value from onChange was
-    const value = this.state.value_hexDefinitionInput
-    this.setState({ value_hexDefinitionInput: '' })
+    const value = this.state.value_hexDetailInput
+    this.setState({ value_hexDetailInput: '' })
     // here's where we probably dispatch {value} to the Redux store
   }
 
@@ -76,7 +76,7 @@ class HexesWorkspace extends Component {
 
           <Segment.Group>
             <Segment>
-              <Header content='Hex Definition' subheader='What information should be randomly generated for each hex.' />
+              <Header content='Hex Definition' subheader='What details should be randomly generated for each hex.' />
             </Segment>
             <Segment>
               <List bulleted size='large'>
@@ -85,11 +85,11 @@ class HexesWorkspace extends Component {
                 <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
               </List>
               <SingleLineAdder
-                onSubmit={() => this.handleSubmit_hexDefinitionInput()}
+                onSubmit={() => this.handleSubmit_hexDetailInput()}
                 name='hex_definition'
-                placeholder='Enter [[NEW]] hex definition...'
-                value={this.state.value_hexDefinitionInput}
-                onChange={this.handleChange_hexDefinitionInput}
+                placeholder='Enter [[NEW]] hex detail...'
+                value={this.state.value_hexDetailInput}
+                onChange={this.handleChange_hexDetailInput}
               />
             </Segment>
             <Segment>

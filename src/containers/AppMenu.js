@@ -8,7 +8,8 @@ import {
   Header,
   Icon,
   List,
-  Menu
+  Menu,
+  Segment
 } from 'semantic-ui-react';
 import routes from '../constants/routes.json'
 
@@ -32,12 +33,10 @@ class AppMenu extends Component {
   render () {
     return (
       <Menu secondary pointing size='large' fixed='left' vertical id='AppMenu'>
-        <Menu.Item as={Link} to={routes.HOME} id='AppMenuHexPopLogo'>
-          <Header as='h2' textAlign='center' icon inverted color='grey'>
-            <Icon name='cubes' />
-            HexPop!
-          </Header>
-        </Menu.Item>
+        <Header as='h2' textAlign='center' icon inverted color='grey' className='AppLogo'>
+          <Icon name='cubes' />
+          HexPop!
+        </Header>
         <Menu.Item active={ this.isActive(routes.HEXES) } onClick={() => this.props.changePage(routes.HEXES)}><Icon name='cube' className='left' />Hexes</Menu.Item>
         <Menu.Item active={ this.isActive(routes.TAGS) } onClick={() => this.props.changePage(routes.TAGS)}><Icon name='tags' className='left' />Tags</Menu.Item>
         <Menu.Item active={ this.isActive(routes.TABLES) } onClick={() => this.props.changePage(routes.TABLES)}><Icon name='list' className='left' />Tables</Menu.Item>
