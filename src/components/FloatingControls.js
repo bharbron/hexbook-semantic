@@ -2,14 +2,20 @@ import React, { Component } from 'react';
 import {
   Button,
   Dropdown,
-  Icon
+  Icon,
+  Transition
 } from 'semantic-ui-react';
 
 import './components.css';
 
 class FloatingActionButton extends Component {
+  constructor (props) {
+    super(props)
+  }
+
   render () {
     return (
+      <Transition animation='fly left' transitionOnMount='true'>
       <Button
         className='FloatingActionButton'
         circular
@@ -17,6 +23,7 @@ class FloatingActionButton extends Component {
         size='huge'
         icon={this.props.icon}
         onClick={this.props.onClick} />
+      </Transition>
     )
   }
 }

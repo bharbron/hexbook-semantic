@@ -9,9 +9,13 @@ import './components.css';
 class SingleLineAdder extends Component {
   static defaultProps = {
     size: 'large',
+    value: ''
   };
 
   render () {
+    const iconColor = (this.props.value == '') ? null : 'blue'
+    const isLink = (this.props.value == '') ? false : true
+
     return (
       <Form onSubmit={this.props.onSubmit}>
         <Form.Field>
@@ -20,7 +24,9 @@ class SingleLineAdder extends Component {
             icon={
               <Icon 
                 name='circle plus'
-                link onClick={this.props.onSubmit} />
+                color={iconColor}
+                link={isLink}
+                onClick={this.props.onSubmit} />
             }
             iconPosition='left'
             transparent

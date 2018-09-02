@@ -14,7 +14,8 @@ import {
   List,
   Modal,
   Segment,
-  Table
+  Table,
+  Transition,
 } from 'semantic-ui-react';
 import { WideColumnWorkspace } from '../components/Workspaces'
 import { SingleLineAdder } from '../components/Forms'
