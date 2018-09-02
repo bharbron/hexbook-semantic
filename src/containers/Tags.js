@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
 import {
   Dropdown,
   Header,
@@ -10,6 +13,12 @@ import {
 import { WideColumnWorkspace } from '../components/Workspaces'
 
 import './containers.css';
+
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+}, dispatch)
 
 class TagsWorkspace extends Component {
   render() {
@@ -85,4 +94,4 @@ class TagsWorkspace extends Component {
   };
 };
 
-export default TagsWorkspace
+export default connect(mapStateToProps, mapDispatchToProps)(TagsWorkspace)

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
 import {
   Card,
   Dropdown,
@@ -9,6 +12,12 @@ import { WideColumnWorkspace } from '../components/Workspaces'
 import { FloatingActionButton, FloatingWorkspaceMenu } from '../components/FloatingControls'
 
 import './containers.css';
+
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+}, dispatch)
 
 class TemplatesWorkspace extends Component {
   render() {
@@ -102,4 +111,4 @@ class TemplatesWorkspace extends Component {
   };
 };
 
-export default TemplatesWorkspace;
+export default connect(mapStateToProps, mapDispatchToProps)(TemplatesWorkspace);

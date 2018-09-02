@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
 import {
   Button,
   Card,
@@ -12,6 +15,12 @@ import { WideColumnWorkspace } from '../components/Workspaces'
 import { FloatingActionButton } from '../components/FloatingControls'
 
 import './containers.css';
+
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+}, dispatch)
 
 class BooksWorkspace extends Component {
   render() {
@@ -112,4 +121,4 @@ class BooksWorkspace extends Component {
   };
 };
 
-export default BooksWorkspace;
+export default connect(mapStateToProps, mapDispatchToProps)(BooksWorkspace);

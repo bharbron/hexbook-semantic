@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { push } from 'connected-react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+
 import {
   Button,
   Divider,
@@ -12,6 +13,9 @@ import {
 import { WideColumnWorkspace } from '../components/Workspaces'
 
 import './containers.css';
+
+const mapStateToProps = state => ({
+})
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   changePage: () => push('/Hexes')
@@ -37,7 +41,4 @@ class HomeWorkspace extends Component {
   };
 };
 
-export default connect(
-  null, 
-  mapDispatchToProps
-)(HomeWorkspace)
+export default connect(mapStateToProps, mapDispatchToProps)(HomeWorkspace)

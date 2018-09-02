@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+
 import {
   Button,
   Checkbox,
@@ -16,6 +19,12 @@ import { WideColumnWorkspace } from '../components/Workspaces'
 import { FloatingActionButton } from '../components/FloatingControls'
 
 import './containers.css';
+
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+}, dispatch)
 
 class HexesWorkspace extends Component {
   state = { modal_open: false }
@@ -190,4 +199,4 @@ class HexesWorkspace extends Component {
   };
 };
 
-export default HexesWorkspace
+export default connect(mapStateToProps, mapDispatchToProps)(HexesWorkspace)
