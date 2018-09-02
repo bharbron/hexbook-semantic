@@ -5,17 +5,14 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import {
   Divider,
-  Dropdown,
   Header,
   Icon,
-  Label,
   List,
-  Menu,
-  Segment
+  Menu
 } from 'semantic-ui-react';
 import routes from '../constants/routes.json'
 
-import './containers.css';
+require('./containers.css')
 
 const mapStateToProps = state => ({
   pathname: state.router.location.pathname,

@@ -165,6 +165,15 @@ class HexesWorkspace extends Component {
               <Dropdown.Item text='Delete selected hex[es]' />
             </Dropdown.Menu>
           </Dropdown>
+          <Input
+            icon={<Icon name='circle plus' link />}
+            iconPosition='left'
+            transparent
+            fluid
+            size='large'
+            placeholder='coordinate,terrain,territory'
+            id='HexInput'
+          />
         </Segment>
 
         <Modal size='small' dimmer='inverted' centered={false} open={modal_open} onClose={() => this.setState({ modal_open: false })}>

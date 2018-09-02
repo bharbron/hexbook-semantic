@@ -4,10 +4,13 @@ import {
   Button,
   Card,
   Dropdown,
+  Header,
   Icon,
   List,
   Menu,
-  Select
+  Progress,
+  Select,
+  Segment
 } from 'semantic-ui-react';
 
 import './Books.css';
@@ -90,7 +93,17 @@ class BooksWorkspace extends Component {
             </Dropdown>
           </Card>
 
-         </Card.Group> 
+          <Card raised>
+            <Card.Content>
+              <Card.Header>Finalize</Card.Header>
+              <Card.Description>
+                <Button circular icon='play' color='blue' size='large' />
+              </Card.Description>
+            </Card.Content>
+            <Progress percent={70} indicating attached='bottom' />
+          </Card>
+
+        </Card.Group>
       </div>
     );
   };
