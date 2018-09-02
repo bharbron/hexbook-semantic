@@ -9,6 +9,7 @@
 #AppMenu {
 	width: 14rem;
   border-right: 0px;
+  padding-top: 1rem;
 }
 
 #AppMenu a.item {
@@ -24,9 +25,11 @@
 
 #AppMenuHexPopLogo {}
 
-#AppMenu > h2.AppLogo {
+#AppMenu > h1.AppLogo {
   font-family: 'IM Fell English SC';
-  padding-top: 1rem;
+  position: absolute;
+  bottom: 1rem;
+  left: 3rem;
 }
 
 #AppMenuSyntaxHelp {}
