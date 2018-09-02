@@ -1,3 +1,15 @@
 body, #root {
-  background: #f7f7f7!important;
+  /*background: #f7f7f7!important;*/
+  background: #f1f1f1!important; /*matches Google+*/
+}
+
+/* Make the dimmer match with Google+ */
+body > div.ui.page.modals.dimmer.transition.visible.active {
+	background-color: rgba(0,0,0,.12);
+}
+
+/* Icons to the left of text in the vertical app menu */
+.ui.vertical.menu .item > i.icon.left {
+    float: none;
+    margin: 0rem 1rem 0rem 0rem;
 }
