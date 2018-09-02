@@ -37,7 +37,6 @@ class HexesWorkspace extends Component {
     };
 
     this.handleChange_hexDefinitionInput = this.handleChange_hexDefinitionInput.bind(this)
-    this.handleSubmit_hexDefinitionInput = this.handleSubmit_hexDefinitionInput.bind(this)
   };
 
   handleChange_hexDefinitionInput(event) {
@@ -47,7 +46,8 @@ class HexesWorkspace extends Component {
   }
 
   handleSubmit_hexDefinitionInput() {
-    value = this.state.value_hexDefinitionInput
+    // no value is sent on submit. instead, whatever the last value from onChange was
+    const value = this.state.value_hexDefinitionInput
     this.setState({ value_hexDefinitionInput: '' })
     // here's where we probably dispatch {value} to the Redux store
   }
@@ -69,8 +69,6 @@ class HexesWorkspace extends Component {
   };
 
   render() {
-    const { submittedValue, value_hexDefinitionInput } = this.state
-
     return (
       <div id='HexesWorkspace'>
         <WideColumnWorkspace>
@@ -84,13 +82,11 @@ class HexesWorkspace extends Component {
                 <List.Item>[[CONSECTETUR]] adipiscing elit <Icon link name='minus circle' color='grey' /></List.Item>
                 <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
               </List>
-              <p>value: {value_hexDefinitionInput}</p>
-              <p>submittedValue: {submittedValue}</p>
-              <Form onSubmit={this.handleSubmit_hexDefinitionInput}>
+              <Form onSubmit={() => this.handleSubmit_hexDefinitionInput()}>
                 <Form.Field>
                   <Form.Input
                     name='hex_definition'
-                    icon={<Icon name='circle plus' link />}
+                    icon={<Icon name='circle plus' link onClick={() => this.handleSubmit_hexDefinitionInput()} />}
                     iconPosition='left'
                     transparent
                     fluid
