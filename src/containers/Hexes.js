@@ -6,6 +6,7 @@ import {
   Button,
   Checkbox,
   Dropdown,
+  Form,
   Header,
   Icon,
   Input,
@@ -31,9 +32,25 @@ class HexesWorkspace extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      value_hexDefinitionInput: '',
       open_hexMapInputModal: false,
     };
+
+    this.handleChange_hexDefinitionInput = this.handleChange_hexDefinitionInput.bind(this)
+    this.handleSubmit_hexDefinitionInput = this.handleSubmit_hexDefinitionInput.bind(this)
   };
+
+  handleChange_hexDefinitionInput(event) {
+    // can probably attach typing autosuggestion here, e.g. if [[ is at end of string, suggest TABLES_CODES
+    // can probably also do live validation of input, print an error message on the input, disable submit if bad data has been entered
+    this.setState({value_hexDefinitionInput: event.target.value})
+  }
+
+  handleSubmit_hexDefinitionInput() {
+    value = this.state.value_hexDefinitionInput
+    this.setState({ value_hexDefinitionInput: '' })
+    // here's where we probably dispatch {value} to the Redux store
+  }
 
   handleClose_hexMapInputModal() {
     this.setState({open_hexMapInputModal: false})
@@ -52,6 +69,8 @@ class HexesWorkspace extends Component {
   };
 
   render() {
+    const { submittedValue, value_hexDefinitionInput } = this.state
+
     return (
       <div id='HexesWorkspace'>
         <WideColumnWorkspace>
@@ -65,15 +84,24 @@ class HexesWorkspace extends Component {
                 <List.Item>[[CONSECTETUR]] adipiscing elit <Icon link name='minus circle' color='grey' /></List.Item>
                 <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
               </List>
-              <Input
-                icon={<Icon name='circle plus' link />}
-                iconPosition='left'
-                transparent
-                fluid
-                size='large'
-                placeholder='Enter [[NEW]] hex definition...'
-                id='HexDefinitionInput'
-              />
+              <p>value: {value_hexDefinitionInput}</p>
+              <p>submittedValue: {submittedValue}</p>
+              <Form onSubmit={this.handleSubmit_hexDefinitionInput}>
+                <Form.Field>
+                  <Form.Input
+                    name='hex_definition'
+                    icon={<Icon name='circle plus' link />}
+                    iconPosition='left'
+                    transparent
+                    fluid
+                    size='large'
+                    placeholder='Enter [[NEW]] hex definition...'
+                    id='HexDefinitionInput'
+                    value={this.state.value_hexDefinitionInput}
+                    onChange={this.handleChange_hexDefinitionInput}
+                  />
+                </Form.Field>
+              </Form>
             </Segment>
             <Segment>
               <Label color='grey'>[[]]<Label.Detail>HEX</Label.Detail></Label>
@@ -101,10 +129,10 @@ class HexesWorkspace extends Component {
               <Table.Body>
                 <Table.Row>
                   <Table.Cell><Checkbox /></Table.Cell>
-                  <Table.Cell onClick={() => this.setState({ modal_open: true })}>0101</Table.Cell>
-                  <Table.Cell onClick={() => this.setState({ modal_open: true })}>forest</Table.Cell>
-                  <Table.Cell onClick={() => this.setState({ modal_open: true })}>hearts</Table.Cell>
-                  <Table.Cell onClick={() => this.setState({ modal_open: true })}></Table.Cell>
+                  <Table.Cell>0101</Table.Cell>
+                  <Table.Cell>forest</Table.Cell>
+                  <Table.Cell>hearts</Table.Cell>
+                  <Table.Cell></Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell><Checkbox /></Table.Cell>
