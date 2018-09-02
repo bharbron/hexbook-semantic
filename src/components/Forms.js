@@ -13,12 +13,12 @@ class SingleLineAdder extends Component {
 
   render () {
     return (
-      <Form onSubmit={() => this.props.onSubmit()}>
+      <Form onSubmit={this.props.onSubmit}>
         <Form.Field>
           <Form.Input
             name={this.props.name}
             icon={
-              <Icon name='circle plus' link onClick={() => this.props.onSubmit()} />
+              <Icon name='circle plus' link onClick={this.props.onSubmit} />
             }
             iconPosition='left'
             transparent

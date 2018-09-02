@@ -38,6 +38,11 @@ class HexesWorkspace extends Component {
     };
 
     this.handleChange_hexDetailInput = this.handleChange_hexDetailInput.bind(this)
+    this.handleSubmit_hexDetailInput = this.handleSubmit_hexDetailInput.bind(this)
+    this.handleClose_hexMapInputModal = this.handleClose_hexMapInputModal.bind(this)
+    this.handleCancelClick_hexMapInputModal = this.handleCancelClick_hexMapInputModal.bind(this)
+    this.handleSaveClick_hexMapInputModal = this.handleSaveClick_hexMapInputModal.bind(this)
+    this.handleClick_addToHexMapButton = this.handleClick_addToHexMapButton.bind(this)
   };
 
   handleChange_hexDetailInput(event) {
@@ -85,7 +90,7 @@ class HexesWorkspace extends Component {
                 <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
               </List>
               <SingleLineAdder
-                onSubmit={() => this.handleSubmit_hexDetailInput()}
+                onSubmit={this.handleSubmit_hexDetailInput}
                 name='hex_definition'
                 placeholder='Enter [[NEW]] hex detail...'
                 value={this.state.value_hexDetailInput}
@@ -224,14 +229,14 @@ class HexesWorkspace extends Component {
             subheader='One hex per line, no spaces, all lowercase' 
             placeholder='coordinate,terrain,territory'
             open={this.state.open_hexMapInputModal}
-            onClose={() => this.handleClose_hexMapInputModal()}
-            onCancelClick={() => this.handleCancelClick_hexMapInputModal()}
-            onSaveClick={() => this.handleSaveClick_hexMapInputModal()}
+            onClose={this.handleClose_hexMapInputModal}
+            onCancelClick={this.handleCancelClick_hexMapInputModal}
+            onSaveClick={this.handleSaveClick_hexMapInputModal}
           />
 
         </WideColumnWorkspace>
 
-        <FloatingActionButton icon='plus' color='google plus' onClick={() => this.handleClick_addToHexMapButton()} />
+        <FloatingActionButton icon='plus' color='google plus' onClick={this.handleClick_addToHexMapButton} />
         
       </div>
     );

@@ -16,7 +16,7 @@ class FloatingActionButton extends Component {
         color={this.props.color}
         size='huge'
         icon={this.props.icon}
-        onClick={() => this.props.onClick()} />
+        onClick={this.props.onClick} />
     )
   }
 }

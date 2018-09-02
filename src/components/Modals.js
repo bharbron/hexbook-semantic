@@ -11,12 +11,13 @@ import './components.css';
 
 class TextAreaInputModal extends Component {
   static defaultProps = {
+    open: false,
     addDisabled: true,
   }
 
   render () {
     return (
-      <Modal size='tiny' open={this.props.open} onClose={() => this.props.onClose()} className='TextAreaInputModal'>
+      <Modal size='tiny' open={this.props.open} onClose={this.props.onClose} className='TextAreaInputModal'>
         <Modal.Header style={{ borderBottom: '0px' }}>
           <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
         </Modal.Header>
@@ -28,8 +29,8 @@ class TextAreaInputModal extends Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button id='TextAreaInputModalCancel' onClick={() => this.props.onCancelClick()}>CANCEL</Button>
-          <Button id='TextAreaInputModalSave' primary disabled={this.props.addDisabled} onClick={() => this.props.onSaveClick()}>ADD</Button>
+          <Button id='TextAreaInputModalCancel' onClick={this.props.onCancelClick}>CANCEL</Button>
+          <Button id='TextAreaInputModalSave' primary disabled={this.props.addDisabled} onClick={this.props.onSaveClick}>ADD</Button>
         </Modal.Actions>
       </Modal>
     )
