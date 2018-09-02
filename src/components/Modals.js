@@ -10,6 +10,10 @@ import {
 import './components.css';
 
 class TextAreaInputModal extends Component {
+  static defaultProps = {
+    addDisabled: true,
+  }
+
   render () {
     return (
       <Modal size='tiny' open={this.props.open} onClose={() => this.props.onClose()} className='TextAreaInputModal'>
@@ -25,7 +29,7 @@ class TextAreaInputModal extends Component {
         </Modal.Content>
         <Modal.Actions>
           <Button id='TextAreaInputModalCancel' onClick={() => this.props.onCancelClick()}>CANCEL</Button>
-          <Button primary id='TextAreaInputModalSave' onClick={() => this.props.onSaveClick()}>ADD</Button>
+          <Button id='TextAreaInputModalSave' primary disabled={this.props.addDisabled} onClick={() => this.props.onSaveClick()}>ADD</Button>
         </Modal.Actions>
       </Modal>
     )
