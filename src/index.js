@@ -9,6 +9,8 @@ import 'semantic-ui-css/semantic.min.css';
 
 import './index.css';
 
+
+
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>

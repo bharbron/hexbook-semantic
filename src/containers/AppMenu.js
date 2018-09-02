@@ -34,7 +34,7 @@ class AppMenu extends Component {
 
   render () {
     return (
-      <Menu secondary pointing color='red' size='large' fixed='left' vertical id='AppMenu'>
+      <Menu secondary pointing size='large' fixed='left' vertical id='AppMenu'>
         <Menu.Item as={Link} to={routes.HOME} id='AppMenuHexPopLogo'>
           <Header as='h2' textAlign='center' icon inverted color='grey'>
             <Icon name='cubes' />

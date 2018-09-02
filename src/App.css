@@ -17,15 +17,5 @@
   src: local('IM FELL English SC'), local('IM_FELL_English_SC'), url(./fonts/IM_Fell_English_SC/IMFeENsc28P.ttf) format('truetype');
 }
 
-/* To make color='red' equivalent to color='google plus' in Semantic UI menus */
-.ui.menu .red.active.item, .ui.red.menu .active.item {
-    border-color: #dd4b3a!important;
-    color: #dd4b3a!important;
-}
-
 .App {
-}
-
-#AppMenuItemHexpop h2 {
-	font-family: 'IM Fell English SC';
 }
