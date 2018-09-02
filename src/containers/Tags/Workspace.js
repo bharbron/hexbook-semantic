@@ -4,10 +4,12 @@ import {
   Dropdown,
   Header,
   Icon,
+  Input,
   Label,
   Menu,
   Segment
 } from 'semantic-ui-react';
+
 import './Tags.css';
 
 class TagsWorkspace extends Component {
@@ -57,7 +59,15 @@ class TagsWorkspace extends Component {
               <Label>night<Icon name='delete' /></Label>
               <Label>romantic<Icon name='delete' /></Label>
               <Label>unintelligent<Icon name='delete' /></Label>
-              <Icon link size='large' name='plus circle' color='grey' />
+              <Input
+                icon={<Icon name='circle plus' link />}
+                iconPosition='left'
+                transparent
+                fluid
+                size='large'
+                placeholder='enter new tag...'
+                id='OtherTagsInput'
+              />
             </Label.Group>
           </Segment>
           <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
@@ -74,27 +84,4 @@ class TagsWorkspace extends Component {
   };
 };
 
-class TagsMenu extends Component {
-  render() {
-    return (
-      <div>
-        <Menu.Item as={Link} to='/project/hexes'><Icon name='cube' />Hexes</Menu.Item>
-        <Menu.Item as={Link} to='/project/tags' active={true}><Icon name='tags' />Tags</Menu.Item>
-        <Menu.Item as={Link} to='/project/tables'><Icon name='list' />Tables</Menu.Item>
-        <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
-        <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
-      </div>
-    );
-  };
-};
-
-class TagsControls extends Component {
-  render() {
-    return (
-      <div>
-      </div>
-    );
-  };
-};
-
-export { TagsWorkspace, TagsMenu, TagsControls };
+export default TagsWorkspace

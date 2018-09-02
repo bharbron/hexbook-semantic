@@ -16,6 +16,7 @@ import {
   Table,
   TextArea
 } from 'semantic-ui-react';
+
 import './Hexes.css';
 
 class HexesWorkspace extends Component {
@@ -36,12 +37,15 @@ class HexesWorkspace extends Component {
               <List.Item>[[CONSECTETUR]] adipiscing elit <Icon link name='minus circle' color='grey' /></List.Item>
               <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
             </List>
-            <Modal size='small' dimmer='inverted' centered={false} trigger={<Icon link name='plus circle' size='large' color='grey' />}>
-              <Modal.Header>New Hex Definition</Modal.Header>
-              <Modal.Actions>
-                <Input fluid placeholder='Lorem ipsum [[DOLOR]] sit amet' action={<Button color='green'>Add</Button>} />
-              </Modal.Actions>
-            </Modal>
+            <Input
+              icon={<Icon name='circle plus' link />}
+              iconPosition='left'
+              transparent
+              fluid
+              size='large'
+              placeholder='Enter [[NEW]] hex definition...'
+              id='HexDefinitionInput'
+            />
           </Segment>
           <Segment>
             <Label color='grey'>[[]]<Label.Detail>HEX</Label.Detail></Label>
@@ -161,6 +165,15 @@ class HexesWorkspace extends Component {
               <Dropdown.Item text='Delete selected hex[es]' />
             </Dropdown.Menu>
           </Dropdown>
+          <Input
+            icon={<Icon name='circle plus' link />}
+            iconPosition='left'
+            transparent
+            fluid
+            size='large'
+            placeholder='coordinate,terrain,territory'
+            id='HexInput'
+          />
         </Segment>
 
         <Modal size='small' dimmer='inverted' centered={false} open={modal_open} onClose={() => this.setState({ modal_open: false })}>
@@ -174,55 +187,4 @@ class HexesWorkspace extends Component {
   };
 };
 
-class HexesMenu extends Component {
-  render() {
-    return (
-      <div>
-        <Menu.Item as={Link} to='/project/hexes' active={true}><Icon name='cube' />Hexes</Menu.Item>
-        <Menu.Item as={Link} to='/project/tags'><Icon name='tags' />Tags</Menu.Item>
-        <Menu.Item as={Link} to='/project/tables'><Icon name='list' />Tables</Menu.Item>
-        <Menu.Item as={Link} to='/project/templates'><Icon name='puzzle piece' />Templates</Menu.Item>
-        <Menu.Item as={Link} to='/project/books'><Icon name='book' />Books</Menu.Item>
-      </div>
-    );
-  };
-};
-
-class HexesControls extends Component {
-  render() {
-    return (
-      <div>
-        <Modal
-          size='tiny'
-          centered={false}
-          closeIcon
-          closeOnDimmerClick={false}
-          dimmer='inverted'
-          trigger={
-            <Button
-              circular
-              color='google plus'
-              size='massive'
-              icon='plus'
-              style={{ position: 'fixed', bottom: '2rem', right: '2rem' }}
-            />
-          }
-        >
-          <Modal.Content>
-            <Form>
-              <Header content='Add New Hex[es]' subheader='Enter one hex per line, all lowercase, no spaces' />
-              <label style={{ fontFamily: 'courier' }}>coordinate,terrain,territory</label>
-              <TextArea autoHeight style={{ minHeight: '20rem', fontFamily: 'courier' }} />
-            </Form>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button>Cancel</Button>
-            <Button color='green'>Add</Button>
-          </Modal.Actions>
-        </Modal>
-      </div>
-    );
-  };
-};
-
-export { HexesWorkspace, HexesMenu, HexesControls };
+export default HexesWorkspace

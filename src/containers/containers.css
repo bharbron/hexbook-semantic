@@ -1,0 +1,27 @@
+#WorkspaceGrid {}
+
+#WorkspaceGridRow {
+	margin-left: 14rem;
+}
+
+#WorkspaceGridRowColumn {}
+
+#AppMenu {
+	width: 14rem;
+}
+
+/* To make menu more equivalent to Google Plus colors */
+#AppMenu a.active.item {
+    border-color: #e06155!important;
+    color: #e06155!important;
+}
+
+#AppMenuHexPopLogo {}
+
+#AppMenuHexPopLogo h2 {
+	font-family: 'IM Fell English SC';
+}
+
+#AppMenuSyntaxHelp {}
+
+#Controls {}
