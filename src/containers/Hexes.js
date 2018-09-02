@@ -17,6 +17,7 @@ import {
 } from 'semantic-ui-react';
 import { WideColumnWorkspace } from '../components/Workspaces'
 import { FloatingActionButton } from '../components/FloatingControls'
+import { TextAreaInputModal } from '../components/Modals'
 
 import './containers.css';
 
@@ -27,11 +28,26 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 class HexesWorkspace extends Component {
-  state = { modal_open: false }
+  constructor(props) {
+    super(props);
+    this.state = {
+      open_hexMapInputModal: false,
+    };
+  }
+
+  handleClose_hexMapInputModal() {
+    this.setState({open_hexMapInputModal: false})
+  }
+
+  handleCancelClick_hexMapInputModal() {
+    this.setState({open_hexMapInputModal: false})
+  }
+
+  handleSaveClick_hexMapInputModal() {
+    this.setState({open_hexMapInputModal: false})
+  }
 
   render() {
-    const { modal_open } = this.state
-
     return (
       <div id='HexesWorkspace'>
         <WideColumnWorkspace>
@@ -184,12 +200,17 @@ class HexesWorkspace extends Component {
             />
           </Segment>
 
-          <Modal size='small' dimmer='inverted' centered={false} open={modal_open} onClose={() => this.setState({ modal_open: false })}>
-            <Modal.Header>New Hex Definition</Modal.Header>
-            <Modal.Actions>
-              <Input fluid placeholder='Lorem ipsum [[DOLOR]] sit amet' action={<Button color='green'>Add</Button>} />
-            </Modal.Actions>
-          </Modal>
+          <TextAreaInputModal
+            header='Add to Hex Map'
+            secondary='One hex per line, no spaces, all lowercase' 
+            placeholder='coordinate,terrain,territory'
+            open={this.state.open_hexMapInputModal}
+            onClose={() => this.handleClose_hexMapInputModal()}
+            onCancelClick={() => this.handleCancelClick_hexMapInputModal()}
+            onSaveClick={() => this.handleSaveClick_hexMapInputModal()}
+          />
+          <Button onClick={() => this.setState({open_hexMapInputModal: true})}>Open Modal</Button>
+
         </WideColumnWorkspace>
 
         <FloatingActionButton icon='plus' color='google plus' />
