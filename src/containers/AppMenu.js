@@ -38,11 +38,11 @@ class AppMenu extends Component {
             HexPop!
           </Header>
         </Menu.Item>
-        <Menu.Item active={ this.isActive(routes.HEXES) } onClick={() => this.props.changePage(routes.HEXES)}><Icon name='cube' />Hexes</Menu.Item>
-        <Menu.Item active={ this.isActive(routes.TAGS) } onClick={() => this.props.changePage(routes.TAGS)}><Icon name='tags' />Tags</Menu.Item>
-        <Menu.Item active={ this.isActive(routes.TABLES) } onClick={() => this.props.changePage(routes.TABLES)}><Icon name='list' />Tables</Menu.Item>
-        <Menu.Item active={ this.isActive(routes.TEMPLATES) } onClick={() => this.props.changePage(routes.TEMPLATES)}><Icon name='puzzle piece' />Templates</Menu.Item>
-        <Menu.Item active={ this.isActive(routes.BOOKS) } onClick={() => this.props.changePage(routes.BOOKS)}><Icon name='book' />Books</Menu.Item>
+        <Menu.Item active={ this.isActive(routes.HEXES) } onClick={() => this.props.changePage(routes.HEXES)}><Icon name='cube' className='left' />Hexes</Menu.Item>
+        <Menu.Item active={ this.isActive(routes.TAGS) } onClick={() => this.props.changePage(routes.TAGS)}><Icon name='tags' className='left' />Tags</Menu.Item>
+        <Menu.Item active={ this.isActive(routes.TABLES) } onClick={() => this.props.changePage(routes.TABLES)}><Icon name='list' className='left' />Tables</Menu.Item>
+        <Menu.Item active={ this.isActive(routes.TEMPLATES) } onClick={() => this.props.changePage(routes.TEMPLATES)}><Icon name='puzzle piece' className='left' />Templates</Menu.Item>
+        <Menu.Item active={ this.isActive(routes.BOOKS) } onClick={() => this.props.changePage(routes.BOOKS)}><Icon name='book' className='left' />Books</Menu.Item>
         <Divider />
         <List id='AppMenuSyntaxHelp'>
           <List.Item style={{ fontSize: '10pt', color: 'lightgrey' }}><span style={{ fontSize: '12pt', fontFamily: 'courier', color: 'darkgrey' }}>[[CODE]]</span> Randomly roll on table CODE and insert result here</List.Item>
