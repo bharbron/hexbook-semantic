@@ -17,4 +17,22 @@
 
 #TextAreaInputModalCancel {}
 
+#TextAreaInputModalCancel.button {
+	background-color: inherit;
+}
+
 #TextAreaInputModalSave {}
+
+.TextAreaInputModal div.scrolling.content {
+	padding: 0rem 1rem 0rem 1rem!important;
+}
+
+.TextAreaInputModal div.scrolling.content form div textarea {
+	min-height: 15rem;
+	border: 0px;
+	padding: 0px;
+}
+
+.ui.modal.TextAreaInputModal>.actions {
+	background: inherit;
+}

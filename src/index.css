@@ -1,3 +1,9 @@
 body, #root {
-  background: #f7f7f7!important;
+  /*background: #f7f7f7!important;*/
+  background: #f1f1f1!important; /*matches Google+*/
+}
+
+/* Make the dimmer match with Google+ */
+body > div.ui.page.modals.dimmer.transition.visible.active {
+	background-color: rgba(0,0,0,.12);
 }

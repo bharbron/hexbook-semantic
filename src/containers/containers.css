@@ -8,12 +8,18 @@
 
 #AppMenu {
 	width: 14rem;
+  border-right: 0px;
+}
+
+#AppMenu a.item {
+  border-right: 0px;
 }
 
 /* To make menu more equivalent to Google Plus colors */
 #AppMenu a.active.item {
-    border-color: #e06155!important;
-    color: #e06155!important;
+  border-color: #e06155!important;
+  color: #e06155!important;
+  border-right: 0px;
 }
 
 #AppMenuHexPopLogo {}

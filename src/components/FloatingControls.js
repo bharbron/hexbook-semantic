@@ -10,7 +10,13 @@ import './components.css';
 class FloatingActionButton extends Component {
   render () {
     return (
-      <Button className='FloatingActionButton' circular color={this.props.color} size='huge' icon={this.props.icon} />
+      <Button
+        className='FloatingActionButton'
+        circular
+        color={this.props.color}
+        size='huge'
+        icon={this.props.icon}
+        onClick={() => this.props.onClick()} />
     )
   }
 }

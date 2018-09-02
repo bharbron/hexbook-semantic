@@ -33,19 +33,23 @@ class HexesWorkspace extends Component {
     this.state = {
       open_hexMapInputModal: false,
     };
-  }
+  };
 
   handleClose_hexMapInputModal() {
     this.setState({open_hexMapInputModal: false})
-  }
+  };
 
   handleCancelClick_hexMapInputModal() {
     this.setState({open_hexMapInputModal: false})
-  }
+  };
 
   handleSaveClick_hexMapInputModal() {
     this.setState({open_hexMapInputModal: false})
-  }
+  };
+
+  handleClick_addToHexMapButton() {
+    this.setState({open_hexMapInputModal: true})
+  };
 
   render() {
     return (
@@ -202,18 +206,17 @@ class HexesWorkspace extends Component {
 
           <TextAreaInputModal
             header='Add to Hex Map'
-            secondary='One hex per line, no spaces, all lowercase' 
+            subheader='One hex per line, no spaces, all lowercase' 
             placeholder='coordinate,terrain,territory'
             open={this.state.open_hexMapInputModal}
             onClose={() => this.handleClose_hexMapInputModal()}
             onCancelClick={() => this.handleCancelClick_hexMapInputModal()}
             onSaveClick={() => this.handleSaveClick_hexMapInputModal()}
           />
-          <Button onClick={() => this.setState({open_hexMapInputModal: true})}>Open Modal</Button>
 
         </WideColumnWorkspace>
 
-        <FloatingActionButton icon='plus' color='google plus' />
+        <FloatingActionButton icon='plus' color='google plus' onClick={() => this.handleClick_addToHexMapButton()} />
         
       </div>
     );
