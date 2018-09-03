@@ -15,14 +15,14 @@ class FloatingActionButton extends Component {
 
   render () {
     return (
-      <Transition animation='fly left' transitionOnMount='true'>
-      <Button
-        className='FloatingActionButton'
-        circular
-        color={this.props.color}
-        size='huge'
-        icon={this.props.icon}
-        onClick={this.props.onClick} />
+      <Transition animation='drop' transitionOnMount='true'>
+        <Button
+          className='FloatingActionButton'
+          circular
+          color={this.props.color}
+          size='huge'
+          icon={this.props.icon}
+          onClick={this.props.onClick} />
       </Transition>
     )
   }
@@ -31,10 +31,12 @@ class FloatingActionButton extends Component {
 class FloatingWorkspaceMenu extends Component {
   render () {
     return (
-      <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '1rem' }} >
-        <Dropdown.Menu direction='left' children={this.props.children}>
-        </Dropdown.Menu>
-      </Dropdown>
+      <Transition animation='drop' transitionOnMount='true'>
+        <Dropdown icon={<Icon name='ellipsis vertical' size='big' color='grey' />} style={{ position: 'fixed', top: '2rem', right: '1rem' }} >
+          <Dropdown.Menu direction='left' children={this.props.children}>
+          </Dropdown.Menu>
+        </Dropdown>
+      </Transition>
     )
   }
 }

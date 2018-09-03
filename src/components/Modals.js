@@ -22,7 +22,7 @@ class TextAreaInputModal extends Component {
     const primaryDisabled = ( this.props.value == '' ) ? true : false;
 
     return (
-      <Transition animation='fly up' mountOnShow unmountOnHide='true' visible={this.props.open}>
+      <Transition animation='fade up' mountOnShow unmountOnHide='true' visible={this.props.open}>
         <Modal size='tiny' open={true} onClose={this.props.onClose} className='TextAreaInputModal'>
           <Modal.Header style={{ borderBottom: '0px' }}>
             <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
