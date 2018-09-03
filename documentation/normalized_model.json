@@ -1,0 +1,105 @@
+/* Redux State Version */
+
+"tables": {
+	"1": {
+		"id": "1",
+		"code": "HEX",
+		"name": "Hex Map",
+		"description": "Mapping of hex coordinates to terrain and territory",
+		"static": "false",
+		"generator": "",
+		"target_num": "",
+		"templated_table": "true",
+		"entries": ["123", "314", "..."]
+	}
+}
+
+"table_entries": {
+	"123": {
+		"id": "123",
+		"text": "0101", /* Hex coordinates for HEX table, "short text" for everything else */
+		"inherited_template_texts": "true", /* Used in HEX table to tell which entries are using the default Hex Definition */
+		"template_texts": ["432", "54", "..."],
+		"add_tags": ["82", "12"],
+		"remove_tags": ["32", "53"],
+		"weight": "3",
+		"tag_weights": {
+			"82": "1",
+			"12": "3"
+		},
+		"max_occurrences": "12"
+	}
+}
+
+"template_texts": {
+	"432": {
+		"id": "432",
+		"text": "Ipsum lorem [[DOLOR]] sit amet"
+	}
+}
+
+"tags": {
+	"82": {
+		"id": "82",
+		"text": "garden",
+		"type": "terrain|territory|other"
+	}
+}
+
+
+/* Final Processed Version */
+
+"tables": {
+	"1": {
+		"id": "1",
+		"code": "HEX",
+		"name": "Hex Map",
+		"description": "Mapping of hex coordinates to terrain and territory",
+		"static": "false",
+		"generator": "",
+		"target_num": "",
+		"templated_table": "true",
+		"entries": ["123", "314", "..."]
+	}
+}
+
+"table_entries": {
+	"123": {
+		"id": "123",
+		"text": "0101", /* Hex coordinates for HEX table, "short text" for everything else */
+		"inherited_template_texts": "true", /* Used in HEX table to tell which entries are using the default Hex Definition */
+		"template_texts": ["432", "54", "..."],
+		"add_tags": ["82", "12"],
+		"remove_tags": ["32", "53"],
+		"weight": "3",
+		"tag_weights": {
+			"82": "1",
+			"12": "3"
+		},
+		"occurrences": "3",
+		"max_occurrences": "12",
+		"references": { /* Only record references from "templated_table[s]" */
+			"table_id": ["table_entry_id_1", "table_entry_id_2", "..."],
+			"1": ["314", "912"]
+		},
+		"referenced_by": { /* Only record references from "templated_table[s]" */
+			"table_id": ["table_entry_id_1", "table_entry_id_2", "..."],
+			"1": ["314", "912"]
+		}
+	}
+}
+
+"template_texts": {
+	"432": {
+		"id": "432",
+		"text": "Ipsum lorem [[DOLOR]] sit amet"
+	}
+}
+
+"tags": {
+	"82": {
+		"id": "82",
+		"text": "garden",
+		"type": "terrain|territory|other"
+	}
+}
