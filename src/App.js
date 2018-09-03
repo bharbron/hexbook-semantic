@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import routes from './constants/routes.json'
 
+import {
+  Transition,
+} from 'semantic-ui-react';
+
 import HomeWorkspace from './containers/Home'
 import HexesWorkspace from './containers/Hexes'
 import TagsWorkspace from './containers/Tags'
