@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
 import { ADD_HEX_DETAIL } from '../actions/actions'
-import nextIntegerId from '../helpers'
+import { nextIntegerId } from '../helpers'
 
-function tableReducer(state=null, action) {
+function dataReducer(state=null, action) {
   switch (action.type) {
     case ADD_HEX_DETAIL:
+      console.log(state)
+      console.log(action)
       const hex_detail_id = nextIntegerId(state.entry_details.allIds)
       /* Make copy of the state so we don't mutate existing state */
       const new_state = Object.assign({}, state)
@@ -19,4 +21,4 @@ function tableReducer(state=null, action) {
   }
 }
 
-export default combineReducers({tableReducer})
+export default combineReducers({data: dataReducer})

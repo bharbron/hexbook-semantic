@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-
+import { addHexDetail } from '../actions/actions'
 import {
   Button,
   Checkbox,
@@ -24,10 +24,15 @@ import { TextAreaInputModal } from '../components/Modals'
 
 import './containers.css';
 
-const mapStateToProps = state => ({
-})
+function mapStateToProps(state) {
+  return({
+    tables: state.data.tables,
+    entry_details: state.data.entry_details
+  })
+}
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  addHexDetail
 }, dispatch)
 
 class HexesWorkspace extends Component {
@@ -56,7 +61,7 @@ class HexesWorkspace extends Component {
     // no value is sent on submit. instead, whatever the last value from onChange was
     const value = this.state.value_hexDetailInput
     this.setState({ value_hexDetailInput: '' })
-    // here's where we probably dispatch {value} to the Redux store
+    this.props.addHexDetail(value)
   }
 
   handleClose_hexMapInputModal() {
@@ -85,11 +90,17 @@ class HexesWorkspace extends Component {
               <Header content='Hex Definition' subheader='What details should be randomly generated for each hex.' />
             </Segment>
             <Segment>
+              { /*}
               <List bulleted size='large'>
                 <List.Item>Lorem ipsum [[DOLLAR]] sit amet, consectetur <Icon link name='minus circle' color='grey' /></List.Item>
                 <List.Item>[[CONSECTETUR]] adipiscing elit <Icon link name='minus circle' color='grey' /></List.Item>
                 <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
               </List>
+              */ }
+              <List bulleted size='large'>
+                { this.props.entry_details.allIds.map((id) => <List.Item>{ this.props.entry_details.byId[id].text }</List.Item>) }
+              </List>
+              { console.log(this.props.entry_details) }
               <SingleLineAdder
                 onSubmit={this.handleSubmit_hexDetailInput}
                 name='hex_definition'

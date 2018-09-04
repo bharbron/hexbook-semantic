@@ -44,128 +44,154 @@
 	}
 }
 
-/* Redux State Version */
+/* Redux store example */
 
 {
 	"tables": {
-		"1": {
-			"id": "1",
-			"code": "HEX",
-			"name": "Hex Map",
-			"description": "Mapping of hex coordinates to terrain and territory",
-			"static_entries": "false",
-			"generator": "",
-			"target_num": "",
-			"templates": ["1"],
-			"entries": ["123", "314", "..."],
-			"global_entry_details": [] /* Global detais used by any table entries set to inherrit it. Mostly used for HEX table. */
-		}
+		"byId": {
+			"HEX": {
+				"id": "HEX",
+				"code": "HEX",
+				"name": "Hex Map",
+				"description": "Mapping of hex coordinates to terrain and territory",
+				"static_entries": "false",
+				"generator": "",
+				"target_num": "",
+				"templates": ["1"],
+				"entries": [],
+				"global_entry_details": []
+			}
+		},
+		"allIds": ["HEX"]
 	},
 	"table_entries": {
-		"123": {
-			"id": "123",
-			"text": "0101", /* Hex coordinates for HEX table, "short text" for everything else */
-			"inherited_details": "true", /* Used in HEX table to tell which entries are using the default Hex Definition */
-			"entry_details": ["432", "54", "..."],
-			"add_tags": ["82", "12"],
-			"remove_tags": ["32", "53"],
-			"weight": "3",
-			"tag_weights": {
-				"82": "1",
-				"12": "3"
-			},
-			"max_occurrences": "12"
-		}
+		"byId": {
+			"123": {
+				"id": "123",
+				"text": "0101", /* Hex coordinates for HEX table, "short text" for everything else */
+				"inherited_details": "true", /* Used in HEX table to tell which entries are using the default Hex Definition */
+				"entry_details": ["432", "54", "..."],
+				"add_tags": ["82", "12"],
+				"remove_tags": ["32", "53"],
+				"weight": "3",
+				"tag_weights": {
+					"82": "1",
+					"12": "3"
+				},
+				"max_occurrences": "12"
+			}
+		},
+		"allIds": ["123"]
 	},
 	"entry_details": {
-		"432": {
-			"id": "432",
-			"text": "Ipsum lorem [[DOLOR]] sit amet"
-		}
+		"byId": {
+			"432": {
+				"id": "432",
+				"text": "Ipsum lorem [[DOLOR]] sit amet"
+			}
+		},
+		"allIds": ["432"]
 	},
 	"tags": {
-		"82": {
-			"id": "82",
-			"text": "garden",
-			"type": "terrain|territory|other"
-		}
+		"byId": {
+			"82": {
+				"id": "82",
+				"text": "garden",
+				"type": "terrain|territory|other"
+			}
+		},
+		"allIds": ["82"]
 	},
 	"templates": {
-		"1": {
-			"id": "1",
-			"name": "Hexes",
-			"description": "Template for printing the list of hexes",
-			"table": "1",
-			"other_template_stuff": "foobar"
-		}
-	}
-}
-
-
-/* Final Processed Version */
-
-"tables": {
-	"1": {
-		"id": "1",
-		"code": "HEX",
-		"name": "Hex Map",
-		"description": "Mapping of hex coordinates to terrain and territory",
-		"static_entries": "false",
-		"generator": "",
-		"target_num": "",
-			"templates": ["1"], /* IDs of templates that are attached to this table. HEX table always has a default "Hexes" template */
-		"entries": ["123", "314", "..."],
-		"global_entry_details": ["432"] /* Global detais used by any table entries set to inherrit it. Mostly used for HEX table. */
-	}
-}
-
-"table_entries": {
-	"123": {
-		"id": "123",
-		"text": "0101", /* Hex coordinates for HEX table, "short text" for everything else */
-		"inherited_details": "true", /* Used in HEX table to tell which entries are using the default Hex Definition */
-		"entry_details": ["432", "54", "..."],
-		"add_tags": ["82", "12"],
-		"remove_tags": ["32", "53"],
-		"weight": "3",
-		"tag_weights": {
-			"82": "1",
-			"12": "3"
+		"byId": {
+			"Hexes": {
+				"id": "Hexes",
+				"name": "Hexes",
+				"description": "Template for printing the list of hexes",
+				"table": "1",
+				"other_template_stuff": ""
+			}
 		},
-		"occurrences": "3",
-		"max_occurrences": "12",
-		"references": { /* Only record references from "templated table[s]" */
-			"table_id": ["table_entry_id_1", "table_entry_id_2", "..."],
-			"1": ["314", "912"]
+		"allIds": ["Hexes"]
+	}
+}
+
+/* Final Process Copy */
+
+{
+	"tables": {
+		"byId": {
+			"HEX": {
+				"id": "HEX",
+				"code": "HEX",
+				"name": "Hex Map",
+				"description": "Mapping of hex coordinates to terrain and territory",
+				"static_entries": "false",
+				"generator": "",
+				"target_num": "",
+				"templates": ["1"],
+				"entries": [],
+				"global_entry_details": []
+			}
 		},
-		"referenced_by": { /* Only record references from "templated table[s]" */
-			"table_id": ["table_entry_id_1", "table_entry_id_2", "..."],
-			"1": ["314", "912"]
-		}
-	}
-}
-
-"entry_details": {
-	"432": {
-		"id": "432",
-		"text": "Ipsum lorem [[DOLOR]] sit amet"
-	}
-}
-
-"tags": {
-	"82": {
-		"id": "82",
-		"text": "garden",
-		"type": "terrain|territory|other"
-	}
-}
-
-"templates": {
-	"1": {
-		"id": "1",
-		"name": "Hexes",
-		"description": "Template for printing the list of hexes",
-		"table": "1", /* id of the table this template is attached to */
-		"other_template_stuff": "foobar"
+		"allIds": ["HEX"]
+	},
+	"table_entries": {
+		"byId": {
+			"123": {
+				"id": "123",
+				"text": "0101", /* Hex coordinates for HEX table, "short text" for everything else */
+				"inherited_details": "true", /* Used in HEX table to tell which entries are using the default Hex Definition */
+				"entry_details": ["432", "54", "..."],
+				"add_tags": ["82", "12"],
+				"remove_tags": ["32", "53"],
+				"weight": "3",
+				"tag_weights": {
+					"82": "1",
+					"12": "3"
+				},
+				"max_occurrences": "12",
+				"references": { /* Only record references from "templated table[s]" */
+					"table_id": ["table_entry_id_1", "table_entry_id_2", "..."],
+					"1": ["314", "912"]
+				},
+				"referenced_by": { /* Only record references from "templated table[s]" */
+					"table_id": ["table_entry_id_1", "table_entry_id_2", "..."],
+					"1": ["314", "912"]
+				}
+			}
+		},
+		"allIds": ["123"]
+	},
+	"entry_details": {
+		"byId": {
+			"432": {
+				"id": "432",
+				"text": "Ipsum lorem [[DOLOR]] sit amet"
+			}
+		},
+		"allIds": ["432"]
+	},
+	"tags": {
+		"byId": {
+			"82": {
+				"id": "82",
+				"text": "garden",
+				"type": "terrain|territory|other"
+			}
+		},
+		"allIds": ["82"]
+	},
+	"templates": {
+		"byId": {
+			"Hexes": {
+				"id": "Hexes",
+				"name": "Hexes",
+				"description": "Template for printing the list of hexes",
+				"table": "1",
+				"other_template_stuff": ""
+			}
+		},
+		"allIds": ["Hexes"]
 	}
 }

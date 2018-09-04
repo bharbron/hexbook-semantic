@@ -25,6 +25,6 @@ export function changePage(url) {
   return { type: CHANGE_PAGE, url }
 }
 
-export function addHexDetail(hex_detail) {
-  return { type: ADD_HEX_DETAIL, hex_detail }
+export function addHexDetail(text) {
+  return { type: ADD_HEX_DETAIL, text }
 }
