@@ -18,8 +18,7 @@ class ListWithDeletableItems extends Component {
 
   render () {
     return (
-      <List size={this.props.size} bulleted={this.props.bulleted}>
-        <Transition.Group>
+      <Transition.Group as={List} size={this.props.size} bulleted={this.props.bulleted}>
         { this.props.items.map(({id, header, description, content}) => 
           <List.Item>
             { this.props.icon && <List.Icon name={this.props.icon} size={this.props.icon_size} /> }
@@ -31,8 +30,7 @@ class ListWithDeletableItems extends Component {
             </List.Content>
           </List.Item>
         )}
-        </Transition.Group>
-      </List>
+      </Transition.Group>
     )
   }
 }
