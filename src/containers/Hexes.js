@@ -21,6 +21,7 @@ import { WideColumnWorkspace } from '../components/Workspaces'
 import { SingleLineAdder } from '../components/Forms'
 import { FloatingActionButton } from '../components/FloatingControls'
 import { TextAreaInputModal } from '../components/Modals'
+import { ListWithDeletableItems } from '../components/Lists'
 
 import './containers.css';
 
@@ -97,10 +98,12 @@ class HexesWorkspace extends Component {
                 <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
               </List>
               */ }
+              { /*}
               <List bulleted size='large'>
                 { this.props.entry_details.allIds.map((id) => <List.Item>{ this.props.entry_details.byId[id].text }</List.Item>) }
               </List>
-              { console.log(this.props.entry_details) }
+              */ }
+              <ListWithDeletableItems bulleted='true' items={ this.props.entry_details.allIds.map((id) => ({'id': id, content: this.props.entry_details.byId[id].text})) } />
               <SingleLineAdder
                 onSubmit={this.handleSubmit_hexDetailInput}
                 name='hex_definition'

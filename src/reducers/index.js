@@ -5,10 +5,8 @@ import { nextIntegerId } from '../helpers'
 function dataReducer(state=null, action) {
   switch (action.type) {
     case ADD_HEX_DETAIL:
-      console.log(state)
-      console.log(action)
       const hex_detail_id = nextIntegerId(state.entry_details.allIds)
-      /* Make copy of the state so we don't mutate existing state */
+      /* Make copy of the state so we don't mutate existing state. Redux hates that. */
       const new_state = Object.assign({}, state)
 
       /* Mutate the new state */
