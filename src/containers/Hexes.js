@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addHexDetail } from '../actions/actions'
+import { addHexDetail, deleteHexDetail } from '../actions/actions'
 import {
   Button,
   Checkbox,
@@ -33,7 +33,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  addHexDetail
+  addHexDetail,
+  deleteHexDetail
 }, dispatch)
 
 class HexesWorkspace extends Component {
@@ -50,19 +51,24 @@ class HexesWorkspace extends Component {
     this.handleCancelClick_hexMapInputModal = this.handleCancelClick_hexMapInputModal.bind(this)
     this.handleSaveClick_hexMapInputModal = this.handleSaveClick_hexMapInputModal.bind(this)
     this.handleClick_addToHexMapButton = this.handleClick_addToHexMapButton.bind(this)
+    this.handleClick_deleteHexDetail = this.handleClick_deleteHexDetail.bind(this)
   };
 
   handleChange_hexDetailInput(event) {
     // can probably attach typing autosuggestion here, e.g. if [[ is at end of string, suggest TABLES_CODES
     // can probably also do live validation of input, print an error message on the input, disable submit if bad data has been entered
     this.setState({value_hexDetailInput: event.target.value})
-  }
+  };
 
   handleSubmit_hexDetailInput() {
     // no value is sent on submit. instead, whatever the last value from onChange was
     const value = this.state.value_hexDetailInput
     this.setState({ value_hexDetailInput: '' })
     this.props.addHexDetail(value)
+  }
+
+  handleClick_deleteHexDetail(id) {
+    this.props.deleteHexDetail(id)
   }
 
   handleClose_hexMapInputModal() {
@@ -234,7 +240,7 @@ class HexesWorkspace extends Component {
               onSubmit={null}
               name='hex'
               placeholder='coordinate,terrain,territory'
-              value={null}
+              value={''}
               onChange={null}
             />
           </Segment>

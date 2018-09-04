@@ -4,6 +4,7 @@
 
 export const CHANGE_PAGE = 'CHANGE_PAGE'
 export const ADD_HEX_DETAIL = 'ADD_HEX_DETAIL'
+export const DELETE_HEX_DETAIL = 'DELETE_HEX_DETAIL'
 
 /*
  * other constants
@@ -27,4 +28,8 @@ export function changePage(url) {
 
 export function addHexDetail(text) {
   return { type: ADD_HEX_DETAIL, text }
+}
+
+export function deleteHexDetail(id) {
+  return { type: DELETE_HEX_DETAIL, id }
 }

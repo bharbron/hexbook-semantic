@@ -13,7 +13,8 @@ class ListWithDeletableItems extends Component {
     bulleted: false,
     icon: false,
     icon_size: 'big',
-    items: []
+    items: [],
+    onClick: (id) => {}
   };
 
   render () {
@@ -24,9 +25,9 @@ class ListWithDeletableItems extends Component {
             { this.props.icon && <List.Icon name={this.props.icon} size={this.props.icon_size} /> }
             <List.Content>
               <List.Header>{header}</List.Header>
-              <List.Description>{description} { !content && <Icon link name='minus circle' color='grey' onClick={this.props.handleClick} /> }
+              <List.Description>{description} { !content && <Icon link name='minus circle' color='grey' onClick={this.props.onClick(id)} /> }
               </List.Description>
-              {content} { content && <Icon link name='minus circle' color='grey' onClick={this.props.handleClick} /> }
+              {content} { content && <Icon link name='minus circle' color='grey' onClick={this.props.onClick(id)} /> }
             </List.Content>
           </List.Item>
         )}
