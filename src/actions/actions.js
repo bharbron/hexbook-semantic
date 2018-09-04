@@ -1,14 +1,14 @@
 /*
- * action types
+* action types
  */
-​
+
 export const CHANGE_PAGE = 'CHANGE_PAGE'
 export const ADD_HEX_DETAIL = 'ADD_HEX_DETAIL'
 
 /*
  * other constants
  */
-​
+
 /* Example from official Redux docs https://redux.js.org/basics/actions#source-code
 export const VisibilityFilters = {
   SHOW_ALL: 'SHOW_ALL',
@@ -16,11 +16,11 @@ export const VisibilityFilters = {
   SHOW_ACTIVE: 'SHOW_ACTIVE'
 }
 */
-​
+
 /*
  * action creators
  */
-​
+
 export function changePage(url) {
   return { type: CHANGE_PAGE, url }
 }
