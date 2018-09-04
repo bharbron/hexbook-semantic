@@ -67,8 +67,12 @@ class HexesWorkspace extends Component {
     this.props.addHexDetail(value)
   }
 
-  handleClick_deleteHexDetail(id) {
-    this.props.deleteHexDetail(id)
+  handleClick_deleteHexDetail(event) {
+    console.log(this.props)
+    console.log(event)
+    console.log(event.target)
+    console.log(event.target.value)
+    this.props.deleteHexDetail()
   }
 
   handleClose_hexMapInputModal() {
@@ -97,19 +101,18 @@ class HexesWorkspace extends Component {
               <Header content='Hex Definition' subheader='What details should be randomly generated for each hex.' />
             </Segment>
             <Segment>
-              { /*}
+              {/*}
               <List bulleted size='large'>
                 <List.Item>Lorem ipsum [[DOLLAR]] sit amet, consectetur <Icon link name='minus circle' color='grey' /></List.Item>
                 <List.Item>[[CONSECTETUR]] adipiscing elit <Icon link name='minus circle' color='grey' /></List.Item>
                 <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
               </List>
-              */ }
-              { /*}
+              */}
+              <Button id='foobarTestButton' onClick={this.handleClick_deleteHexDetail} />
               <List bulleted size='large'>
-                { this.props.entry_details.allIds.map((id) => <List.Item>{ this.props.entry_details.byId[id].text }</List.Item>) }
+                { this.props.entry_details.allIds.map((id) => <List.Item key={id}>{ this.props.entry_details.byId[id].text } <Icon onClick={this.handleClick_deleteHexDetail} link name='minus circle' color='grey' /></List.Item>) }
               </List>
-              */ }
-              <ListWithDeletableItems bulleted='true' items={ this.props.entry_details.allIds.map((id) => ({'id': id, content: this.props.entry_details.byId[id].text})) } />
+              {/*<ListWithDeletableItems bulleted='true' onClick={this.handleClick_deleteHexDetail} items={ this.props.entry_details.allIds.map((id) => ({key: id, content: this.props.entry_details.byId[id].text})) } />*/}
               <SingleLineAdder
                 onSubmit={this.handleSubmit_hexDetailInput}
                 name='hex_definition'

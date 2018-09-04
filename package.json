@@ -32,6 +32,9 @@
     "concurrently": "^4.0.1",
     "electron": "^2.0.8",
     "electron-builder": "^20.28.2",
+    "electron-devtools-installer": "^2.2.4",
+    "react-devtools": "^3.3.2",
+    "redux-devtools": "^3.4.1",
     "wait-on": "^2.1.0"
   },
   "build": {
