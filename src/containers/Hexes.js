@@ -67,12 +67,10 @@ class HexesWorkspace extends Component {
     this.props.addHexDetail(value)
   }
 
-  handleClick_deleteHexDetail(event) {
+  handleClick_deleteHexDetail(id) {
     console.log(this.props)
-    console.log(event)
-    console.log(event.target)
-    console.log(event.target.value)
-    this.props.deleteHexDetail()
+    console.log(id)
+    this.props.deleteHexDetail(id)
   }
 
   handleClose_hexMapInputModal() {
@@ -108,9 +106,8 @@ class HexesWorkspace extends Component {
                 <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
               </List>
               */}
-              <Button id='foobarTestButton' onClick={this.handleClick_deleteHexDetail} />
               <List bulleted size='large'>
-                { this.props.entry_details.allIds.map((id) => <List.Item key={id}>{ this.props.entry_details.byId[id].text } <Icon onClick={this.handleClick_deleteHexDetail} link name='minus circle' color='grey' /></List.Item>) }
+                { this.props.entry_details.allIds.map((id) => <List.Item key={id}>{ this.props.entry_details.byId[id].text } <Icon onClick={() => this.handleClick_deleteHexDetail(id)} link name='minus circle' color='grey' /></List.Item>) }
               </List>
               {/*<ListWithDeletableItems bulleted='true' onClick={this.handleClick_deleteHexDetail} items={ this.props.entry_details.allIds.map((id) => ({key: id, content: this.props.entry_details.byId[id].text})) } />*/}
               <SingleLineAdder
