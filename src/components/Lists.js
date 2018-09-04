@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
   Icon,
-  List
+  List,
+  Transition
 } from 'semantic-ui-react';
 
 import './components.css';
@@ -18,6 +19,7 @@ class ListWithDeletableItems extends Component {
   render () {
     return (
       <List size={this.props.size} bulleted={this.props.bulleted}>
+        <Transition.Group>
         { this.props.items.map(({id, header, description, content}) => 
           <List.Item>
             { this.props.icon && <List.Icon name={this.props.icon} size={this.props.icon_size} /> }
@@ -29,6 +31,7 @@ class ListWithDeletableItems extends Component {
             </List.Content>
           </List.Item>
         )}
+        </Transition.Group>
       </List>
     )
   }
