@@ -1,3 +1,5 @@
+const uuidv4 = require('uuid/v4');
+
 /*
 * action types
  */
@@ -26,10 +28,10 @@ export function changePage(url) {
   return { type: CHANGE_PAGE, url }
 }
 
-export function addHexDetail(text) {
-  return { type: ADD_HEX_DETAIL, text }
+export function addHexDetail(entry_detail_text) {
+  return { type: ADD_HEX_DETAIL, payload: {'entry_detail_text': entry_detail_text, 'entry_detail_id': uuidv4() } }
 }
 
-export function deleteHexDetail(id) {
-  return { type: DELETE_HEX_DETAIL, id }
+export function deleteHexDetail(entry_detail_id) {
+  return { type: DELETE_HEX_DETAIL, payload: {'entry_detail_id': entry_detail_id} }
 }

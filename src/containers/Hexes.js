@@ -27,8 +27,8 @@ import './containers.css';
 
 function mapStateToProps(state) {
   return({
-    tables: state.data.tables,
-    entry_details: state.data.entry_details
+    tables: state.tables,
+    entry_details: state.entry_details
   })
 }
 

@@ -9,6 +9,7 @@ import './components.css';
 
 class ListWithDeletableItems extends Component {
   static defaultProps = {
+    animation: 'fade',
     size: 'large',
     bulleted: false,
     icon: false,
@@ -18,7 +19,7 @@ class ListWithDeletableItems extends Component {
 
   render () {
     return (
-      <Transition.Group as={List} size={this.props.size} bulleted={this.props.bulleted}>
+      <Transition.Group as={List} animation={this.props.animation} size={this.props.size} bulleted={this.props.bulleted}>
         { this.props.items.map(({key, header, description, content, onClick}) => 
           <List.Item key={key}>
             { this.props.icon && <List.Icon name={this.props.icon} size={this.props.icon_size} /> }
