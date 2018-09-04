@@ -13,21 +13,20 @@ class ListWithDeletableItems extends Component {
     bulleted: false,
     icon: false,
     icon_size: 'big',
-    items: [],
-    onClick: (key) => {}
+    items: []
   };
 
   render () {
     return (
       <Transition.Group as={List} size={this.props.size} bulleted={this.props.bulleted}>
-        { this.props.items.map(({key, header, description, content}) => 
-          <List.Item>
+        { this.props.items.map(({key, header, description, content, onClick}) => 
+          <List.Item key={key}>
             { this.props.icon && <List.Icon name={this.props.icon} size={this.props.icon_size} /> }
             <List.Content>
               <List.Header>{header}</List.Header>
-              <List.Description>{description} { !content && <Icon link name='minus circle' color='grey' onClick={this.props.onClick(key)} /> }
+              <List.Description>{description} { !content && <Icon link name='minus circle' color='grey' onClick={onClick} /> }
               </List.Description>
-              {content} { content && <Icon link name='minus circle' color='grey' onClick={this.props.onClick(key)} /> }
+              {content} { content && <Icon link name='minus circle' color='grey' onClick={onClick} /> }
             </List.Content>
           </List.Item>
         )}

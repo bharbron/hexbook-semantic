@@ -106,10 +106,12 @@ class HexesWorkspace extends Component {
                 <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
               </List>
               */}
-              <List bulleted size='large'>
+              {/*
+              <Transition.Group as={List} bulleted size='large'>
                 { this.props.entry_details.allIds.map((id) => <List.Item key={id}>{ this.props.entry_details.byId[id].text } <Icon onClick={() => this.handleClick_deleteHexDetail(id)} link name='minus circle' color='grey' /></List.Item>) }
-              </List>
-              {/*<ListWithDeletableItems bulleted='true' onClick={this.handleClick_deleteHexDetail} items={ this.props.entry_details.allIds.map((id) => ({key: id, content: this.props.entry_details.byId[id].text})) } />*/}
+              </Transition.Group>
+              */}
+              <ListWithDeletableItems bulleted='true' items={ this.props.entry_details.allIds.map((id) => ({key: id, content: this.props.entry_details.byId[id].text, onClick: () => this.handleClick_deleteHexDetail(id) })) } />
               <SingleLineAdder
                 onSubmit={this.handleSubmit_hexDetailInput}
                 name='hex_definition'
