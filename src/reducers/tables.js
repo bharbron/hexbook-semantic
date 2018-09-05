@@ -33,7 +33,8 @@ function byId(state=null, action) {
         'HEX': {
           ...state['HEX'],
           entries: [
-            ...state['HEX'].entries,
+            //avoid duplicates
+            ...state['HEX'].entries.filter(item => item != action.payload.coordinates),
             action.payload.coordinates
           ].sort() //always want hexes displayed in coordinate order
         }

@@ -8,12 +8,13 @@
 				"code": "HEX",
 				"name": "Hex Map",
 				"description": "Mapping of hex coordinates to terrain and territory",
-				"static_entries": "false",
-				"generator": "",
-				"target_num": "",
 				"templates": ["1"],
 				"entries": [],
-				"global_entry_details": []
+				"global_entry_text": "", //used by generator
+				"global_entry_details": [], //used by generator or HEX
+				"static_entries": "false",
+				"generator": "false",
+				"target_num": ""
 			}
 		},
 		"allIds": ["HEX"]
@@ -58,12 +59,13 @@
 				"code": "HEX",
 				"name": "Hex Map",
 				"description": "Mapping of hex coordinates to terrain and territory",
-				"static_entries": "false",
-				"generator": "",
-				"target_num": "",
 				"templates": ["1"],
 				"entries": [],
-				"global_entry_details": []
+				"global_entry_text": "", //used by generator
+				"global_entry_details": [], //used by generator or HEX
+				"static_entries": "false",
+				"generator": "false",
+				"target_num": ""
 			}
 		},
 		"allIds": ["HEX"]
@@ -73,8 +75,10 @@
 			"123": {
 				"id": "123",
 				"text": "0101", /* Hex coordinates for HEX table, "short text" for everything else */
-				"inherited_details": "true", /* Used in HEX table to tell which entries are using the default Hex Definition */
+				"inherited": "true", /* Used in HEX table to tell which entries are using the default Hex Definition */
 				"entry_details": ["432", "54", "..."],
+				"terrain_tag": "412", // HEX table only
+				"territory_tag": "14", // HEX table only
 				"add_tags": ["82", "12"],
 				"remove_tags": ["32", "53"],
 				"weight": "3",
@@ -108,7 +112,7 @@
 			"82": {
 				"id": "82",
 				"text": "garden",
-				"type": "terrain|territory|other",
+				"types": ["terrain", "territory", "other"],
 			}
 		},
 		"allIds": ["82"]

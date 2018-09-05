@@ -1,44 +1,57 @@
 import { combineReducers } from 'redux'
 import { ADD_HEX } from '../actions/hexes'
 
-function territoryTagToAdd(state, territory) {
-  // Need to check if the tag already exists, so we don't overwrite it
-  // For territory coordinate, if a "other" hex exists, update the type to "territory"
-  if ( state[territory] ) {
-    if ( state[territory].type === 'other' || state[territory].type === 'territory' ) {
-      return {...state[territory], type: 'territory'}
-    }
-    else {
-      return {...state[territory]}
-    }
-  }
-  return {
-    id: territory,
-    text: territory,
-    type: 'territory'
-  }
-}
+function addHex(state, action) {
+  //Because of the way tags get added as hexes are added, a tag can be added multiple times, and this is okay
+  //We do need to track what 'types' it has been added as though
+  //This makes things a little complicated
+  const {payload} = action;
+  const {terrain, territory} = payload;
 
-function terrainTagToAdd(state, terrain) {
-  // Need to check if the tag already exists, so we don't overwrite it
-  // For terrain coordinate, if an "other" or "territory" hex exists, update the type to "terrain"
-  return {
-    ...state[terrain],
-    id: terrain,
-    text: terrain,
-    type: 'terrain'
+  const newState = {...state}
+
+  if (newState[terrain]) {
+    newState[terrain] = {
+      ...newState[terrain],
+      types: [
+        ...newState[terrain].types.filter(item => item != 'terrain'),
+        'terrain'
+      ]
+    }
   }
+  else {
+    newState[terrain] = {
+      id: terrain,
+      text: terrain,
+      types: ['terrain']
+    }
+  }
+
+  if (newState[territory]) {
+    newState[territory] = {
+      ...newState[territory],
+      types: [
+        ...newState[territory].types.filter(item => item != 'territory'),
+        'territory'
+      ]
+    }
+  }
+  else {
+    newState[territory] = {
+      id: territory,
+      text: territory,
+      types: ['territory']
+    }
+  }
+
+  return newState
 }
 
 function byId(state=null, action) {
   console.log(state)
   switch (action.type) {
     case ADD_HEX:
-      return ({
-        ...state,
-        [action.payload.territory]: territoryTagToAdd(state, action.payload.territory),
-        [action.payload.terrain]: terrainTagToAdd(state, action.payload.terrain)
-      })
+      return addHex(state, action)
 
     default:
       return state
@@ -51,10 +64,7 @@ function allIds(state=null, action) {
     case ADD_HEX:
       // We want to avoid duplicates in the list, so doing some filtering here
       const newState = [...state.filter(item => item != action.payload.territory), action.payload.territory]
-      if ( action.payload.terrain != action.payload.territory ) {
-        return [...newState.filter(item => item != action.payload.terrain), action.payload.terrain].sort()
-      }
-      return newState.sort()
+      return [...newState.filter(item => item != action.payload.terrain), action.payload.terrain].sort()
 
     default:
       return state
