@@ -94,6 +94,8 @@ class HexesWorkspace extends Component {
       <div id='HexesWorkspace'>
         <WideColumnWorkspace>
 
+
+          <Transition transitionOnMount='true' animation='fade up'>
           <Segment.Group>
             <Segment>
               <Header content='Hex Definition' subheader='What details should be randomly generated for each hex.' />
@@ -130,7 +132,9 @@ class HexesWorkspace extends Component {
               </Dropdown.Menu>
             </Dropdown>
           </Segment.Group>
+          </Transition>
 
+          <Transition transitionOnMount='true' animation='fade up'>
           <Segment>
             <Header content='Hex Map' subheader='Mapping of hex coordinates to terrain and territory' />
             <Table selectable compact='very' striped fixed singleLine>
@@ -246,6 +250,7 @@ class HexesWorkspace extends Component {
               onChange={null}
             />
           </Segment>
+          </Transition>
 
           <TextAreaInputModal
             header='Add to Hex Map'

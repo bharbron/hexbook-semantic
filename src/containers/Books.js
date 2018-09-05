@@ -9,7 +9,8 @@ import {
   Icon,
   List,
   Progress,
-  Select
+  Select,
+  Transition
 } from 'semantic-ui-react';
 import { WideColumnWorkspace } from '../components/Workspaces'
 import { FloatingActionButton } from '../components/FloatingControls'
@@ -29,6 +30,7 @@ class BooksWorkspace extends Component {
         <WideColumnWorkspace>
           <Card.Group itemsPerRow='2' doubling>
 
+          <Transition transitionOnMount='true' animation='fade up'>
             <Card raised>
               <Card.Content>
                 <Card.Header>Book 1</Card.Header>
@@ -57,7 +59,9 @@ class BooksWorkspace extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </Card>
+          </Transition>
 
+          <Transition transitionOnMount='true' animation='fade up'>
             <Card raised>
               <Card.Content>
                 <Card.Header>Book 2</Card.Header>
@@ -100,7 +104,9 @@ class BooksWorkspace extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             </Card>
+          </Transition>
 
+          <Transition transitionOnMount='true' animation='fade up'>
             <Card raised>
               <Card.Content>
                 <Card.Header>Finalize</Card.Header>
@@ -110,6 +116,7 @@ class BooksWorkspace extends Component {
               </Card.Content>
               <Progress percent={70} indicating attached='bottom' />
             </Card>
+          </Transition>
 
           </Card.Group>
         </WideColumnWorkspace>

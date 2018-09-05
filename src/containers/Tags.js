@@ -8,7 +8,8 @@ import {
   Icon,
   Input,
   Label,
-  Segment
+  Segment,
+  Transition
 } from 'semantic-ui-react';
 import { WideColumnWorkspace } from '../components/Workspaces'
 
@@ -26,6 +27,7 @@ class TagsWorkspace extends Component {
       <div id='TagsWorkspace'>
         <WideColumnWorkspace>
 
+        <Transition transitionOnMount='true' animation='fade up'>
           <Segment.Group>
             <Segment>
               <Header content='Terrain Tags' subheader='Automatically generated and tagged by the hex map. Type of terrain in a given hex. Typically used by random encounter tables.' />
@@ -38,7 +40,9 @@ class TagsWorkspace extends Component {
               </Label.Group>
             </Segment>
           </Segment.Group>
+        </Transition>
 
+        <Transition transitionOnMount='true' animation='fade up'>
           <Segment.Group>
             <Segment>
               <Header content='Territory Tags' subheader='Automatically generated and tagged by the hex map. Group that holds influence in a given hex. Typically used by adventure hook and theme tables.' />
@@ -52,7 +56,9 @@ class TagsWorkspace extends Component {
               </Label.Group>
             </Segment>
           </Segment.Group>
+        </Transition>
 
+        <Transition transitionOnMount='true' animation='fade up'>
           <Segment.Group>
             <Segment>
               <Header content='Other Tags' subheader='Any other user-defined tags that table rolls may by filtered by.' />
@@ -87,6 +93,7 @@ class TagsWorkspace extends Component {
               </Dropdown.Menu>
             </Dropdown>
           </Segment.Group>
+        </Transition>
 
         </WideColumnWorkspace>
       </div>

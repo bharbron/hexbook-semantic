@@ -6,7 +6,8 @@ import {
   Card,
   Dropdown,
   Label,
-  List
+  List,
+  Transition
 } from 'semantic-ui-react';
 import { WideColumnWorkspace } from '../components/Workspaces'
 import { FloatingActionButton, FloatingWorkspaceMenu } from '../components/FloatingControls'
@@ -24,8 +25,10 @@ class TemplatesWorkspace extends Component {
     return (
       <div id='TemplatesWorkspace'>
         <WideColumnWorkspace>
+
           <Card.Group itemsPerRow='2' doubling>
 
+          <Transition transitionOnMount='true' animation='fade up'>
             <Card link>
               <Card.Content header='Hexes' meta='Template for printing the list of hexes' />
               <Card.Content className='templateCard'>
@@ -42,11 +45,13 @@ class TemplatesWorkspace extends Component {
                 <Label color='teal'>Whitespace<Label.Detail>4</Label.Detail></Label>
               </Card.Content>
             </Card>
+          </Transition>
 
-           </Card.Group> 
+          </Card.Group> 
 
-           <Card.Group itemsPerRow='2' doubling>
+          <Card.Group itemsPerRow='2' doubling>
 
+          <Transition transitionOnMount='true' animation='fade up'>
             <Card link>
               <Card.Content header='Key NPCs' meta='Template for printing the list of important NPCs' />
               <Card.Content className='templateCard'>
@@ -62,7 +67,9 @@ class TemplatesWorkspace extends Component {
                 <Label color='teal'>Whitespace<Label.Detail>6</Label.Detail></Label>
               </Card.Content>
             </Card>
+          </Transition>
 
+          <Transition transitionOnMount='true' animation='fade up'>
             <Card link>
               <Card.Content header='Magic Items' meta='Template for printing an index of magic items' />
               <Card.Content className='templateCard'>
@@ -80,7 +87,9 @@ class TemplatesWorkspace extends Component {
                 <Label color='teal'>Columns<Label.Detail>2</Label.Detail></Label>
               </Card.Content>
             </Card>
+          </Transition>
 
+          <Transition transitionOnMount='true' animation='fade up'>
             <Card link>
               <Card.Content header='Foobars' meta='Template for printing an index of foobars' />
               <Card.Content className='templateCard'>
@@ -95,6 +104,7 @@ class TemplatesWorkspace extends Component {
                 <Label color='teal'>Whitespace<Label.Detail>4</Label.Detail></Label>
               </Card.Content>
             </Card>
+          </Transition>
 
           </Card.Group> 
         </WideColumnWorkspace>
