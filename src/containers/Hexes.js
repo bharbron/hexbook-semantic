@@ -64,7 +64,9 @@ class HexesWorkspace extends Component {
   }
 
   handleSubmitHexInput(value) {
-    this.props.addHex(value)
+    //split into coordinate,terrain,territory
+    const [coordinates, terrain, territory] = value.split(',')
+    this.props.addHex(coordinates, terrain, territory)
   }
 
   handleCloseHexMapInputModal() {
