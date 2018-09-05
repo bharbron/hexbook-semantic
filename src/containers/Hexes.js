@@ -22,6 +22,7 @@ import { SingleLineAdder } from '../components/Forms'
 import { FloatingActionButton } from '../components/FloatingControls'
 import { TextAreaInputModal } from '../components/Modals'
 import { ListWithDeletableItems } from '../components/Lists'
+import { DirectInputTableCell } from '../components/Tables'
 
 import './containers.css';
 
@@ -151,7 +152,7 @@ class HexesWorkspace extends Component {
                 <Table.Row>
                   <Table.Cell><Checkbox /></Table.Cell>
                   <Table.Cell>0101</Table.Cell>
-                  <Table.Cell>forest</Table.Cell>
+                  <DirectInputTableCell content='forest' />
                   <Table.Cell>hearts</Table.Cell>
                   <Table.Cell></Table.Cell>
                 </Table.Row>
