@@ -35,5 +35,12 @@ export function deleteHexDetail(entryDetailId) {
 export function addHex(hexText) {
   //split into coordinate,terrain,territory
   const [coordinates, terrain, territory] = hexText.split(',')
-  return { type: ADD_HEX, payload: {'coordinates': coordinates, 'terrain': terrain, 'territory': territory}}
+  return { 
+    type: ADD_HEX,
+    payload: {
+      'coordinates': coordinates, 
+      'terrain': terrain, 
+      'territory': territory
+    }
+  }
 }

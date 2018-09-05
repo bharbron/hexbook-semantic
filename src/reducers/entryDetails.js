@@ -13,7 +13,7 @@ function byId(state=null, action) {
     case DELETE_HEX_DETAIL:
       return ({
         ...state,
-        [action.payload.entryDetailId]: undefined
+        [action.payload.entryDetailId]: null
       })
 
     default:

@@ -1,34 +1,32 @@
 import { combineReducers } from 'redux'
 import { ADD_HEX } from '../actions/hexes'
 
-function territoryTagToAdd(state, territory, coordinates) {
+function territoryTagToAdd(state, territory) {
   // Need to check if the tag already exists, so we don't overwrite it
   // For territory coordinate, if a "other" hex exists, update the type to "territory"
-  if ( state[territory] !== undefined ) {
+  if ( state[territory] ) {
     if ( state[territory].type === 'other' || state[territory].type === 'territory' ) {
-      return {...state[territory], type: 'territory', tableEntries: [...state[territory].tableEntries, coordinates]}
+      return {...state[territory], type: 'territory'}
     }
     else {
-      return {...state[territory], tableEntries: [...state[territory].tableEntries, coordinates]}
+      return {...state[territory]}
     }
   }
   return {
     id: territory,
-    type: 'territory',
-    tableEntries: [coordinates]
+    text: territory,
+    type: 'territory'
   }
 }
 
-function terrainTagToAdd(state, terrain, coordinates) {
+function terrainTagToAdd(state, terrain) {
   // Need to check if the tag already exists, so we don't overwrite it
   // For terrain coordinate, if an "other" or "territory" hex exists, update the type to "terrain"
-  if ( state[terrain] !== undefined ) {
-    return {...state[terrain], type: 'terrain', tableEntries: [...state[terrain].tableEntries, coordinates]}
-  }
   return {
+    ...state[terrain],
     id: terrain,
-    type: 'terrain',
-    tableEntries: [coordinates]
+    text: terrain,
+    type: 'terrain'
   }
 }
 
@@ -38,8 +36,8 @@ function byId(state=null, action) {
     case ADD_HEX:
       return ({
         ...state,
-        [action.payload.territory]: territoryTagToAdd(state, action.payload.territory, action.payload.coordinates),
-        [action.payload.terrain]: terrainTagToAdd(state, action.payload.terrain, action.payload.coordinates)
+        [action.payload.territory]: territoryTagToAdd(state, action.payload.territory),
+        [action.payload.terrain]: terrainTagToAdd(state, action.payload.terrain)
       })
 
     default:

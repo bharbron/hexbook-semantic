@@ -10,7 +10,6 @@ function byId(state=null, action) {
         [action.payload.coordinates] : {
           id: action.payload.coordinates,
           text: action.payload.coordinates,
-          table: 'HEX',
           inheritedDetails: true,
           entryDetails: [],
           addTags: [action.payload.terrain, action.payload.territory],
