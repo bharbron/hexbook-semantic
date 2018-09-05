@@ -20,6 +20,10 @@ class DirectInputTableCell extends Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
+  static defaultProps = {
+    onSubmit: () => console.log('default onSubmit')
+  };
+
   handleBlur() {
     this.setState({value: this.props.content, input_mode: false})
   }
@@ -28,9 +32,10 @@ class DirectInputTableCell extends Component {
     this.setState({value: event.target.value});
   }
 
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
+  handleSubmit() {
+    const value = this.state.value
+    this.setState({value: ''})
+    this.props.onSubmit(value)
   }
 
   handleKeyDown(event) {

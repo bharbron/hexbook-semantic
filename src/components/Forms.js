@@ -21,6 +21,7 @@ class SingleLineAdder extends Component {
 
   static defaultProps = {
     size: 'large',
+    onSubmit: () => console.log('default onSubmit')
   };
 
   handleBlur() {
