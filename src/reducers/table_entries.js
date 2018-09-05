@@ -5,7 +5,18 @@ function byId(state=null, action) {
   console.log(state)
   switch (action.type) {
     case ADD_HEX:
-      return state
+      return ({
+        ...state,
+        [action.payload.coordinates] : {
+          id: action.payload.coordinates,
+          text: action.payload.coordinates,
+          table: 'HEX',
+          inherited_details: true,
+          entry_details: [],
+          add_tags: [action.payload.terrain, action.payload.territory],
+          weight: 1,
+        }
+      })
 
     default:
       return state
@@ -16,7 +27,7 @@ function allIds(state=null, action) {
   console.log(state)
   switch (action.type) {
     case ADD_HEX:
-      return state
+      return [...state, action.payload.coordinates]
 
     default:
       return state

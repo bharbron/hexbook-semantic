@@ -35,7 +35,7 @@ function byId(state=null, action) {
           entries: [
             ...state['HEX'].entries,
             action.payload.coordinates
-          ].sorted() //always want hexes displayed in coordinate order
+          ].sort() //always want hexes displayed in coordinate order
         }
       })
 

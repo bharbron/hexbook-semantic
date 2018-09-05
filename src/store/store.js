@@ -33,6 +33,10 @@ const initialState = {
     byId: {},
     allIds: []
   },
+  tag_weights: {
+    byId: {},
+    allIds: []
+  },
   tags: {
     byId: {},
     allIds: []

@@ -26,6 +26,10 @@
 		"byId": {},
 		"allIds": []
 	},
+	"tag_weights": {
+		"byId": {},
+		"allIds": []
+	},
 	"tags": {
 		"byId": {},
 		"allIds": []
@@ -69,25 +73,36 @@
 			"123": {
 				"id": "123",
 				"text": "0101", /* Hex coordinates for HEX table, "short text" for everything else */
+				"table": "HEX",
 				"inherited_details": "true", /* Used in HEX table to tell which entries are using the default Hex Definition */
 				"entry_details": ["432", "54", "..."],
 				"add_tags": ["82", "12"],
 				"remove_tags": ["32", "53"],
 				"weight": "3",
-				"tag_weights": {
-					"82": "1",
-					"12": "3"
-				},
+				"tag_weights": ["7589", "..."],
 				"max_occurrences": "12"
 			}
 		},
 		"allIds": ["123"]
 	},
+	"tag_weights": {
+		"byId": {
+			"7589": {
+				"id": "7589",
+				"tag": "82",
+				"weight": "3",
+				"table_entry": "123"
+			}
+		},
+		"allIds": ["7589", "..."]
+	},
 	"entry_details": {
 		"byId": {
 			"432": {
 				"id": "432",
-				"text": "Ipsum lorem [[DOLOR]] sit amet"
+				"text": "Ipsum lorem [[DOLOR]] sit amet",
+				"table": "HEX", //if its a global entry detail
+				"table_entry": "123"
 			}
 		},
 		"allIds": ["432"]
@@ -97,7 +112,9 @@
 			"82": {
 				"id": "82",
 				"text": "garden",
-				"type": "terrain|territory|other"
+				"type": "terrain|territory|other",
+				"table_entries": ["123", "..."],
+				"tag_weights": ["7589", "..."]
 			}
 		},
 		"allIds": ["82"]

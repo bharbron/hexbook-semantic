@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addHexDetail, deleteHexDetail } from '../actions/hexes'
+import { addHexDetail, deleteHexDetail, addHex } from '../actions/hexes'
 import {
   Button,
   Checkbox,
@@ -28,14 +28,14 @@ import './containers.css';
 
 function mapStateToProps(state) {
   return({
-    tables: state.tables,
     entry_details: state.entry_details
   })
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   addHexDetail,
-  deleteHexDetail
+  deleteHexDetail,
+  addHex
 }, dispatch)
 
 class HexesWorkspace extends Component {
@@ -52,6 +52,7 @@ class HexesWorkspace extends Component {
     this.handleSaveClick_hexMapInputModal = this.handleSaveClick_hexMapInputModal.bind(this)
     this.handleClick_addToHexMapButton = this.handleClick_addToHexMapButton.bind(this)
     this.handleClick_deleteHexDetail = this.handleClick_deleteHexDetail.bind(this)
+    this.handleSubmit_hexInput = this.handleSubmit_hexInput.bind(this)
   };
 
   handleSubmit_hexDetailInput(value) {
@@ -60,6 +61,10 @@ class HexesWorkspace extends Component {
 
   handleClick_deleteHexDetail(id) {
     this.props.deleteHexDetail(id)
+  }
+
+  handleSubmit_hexInput(value) {
+    this.props.addHex(value)
   }
 
   handleClose_hexMapInputModal() {
@@ -107,7 +112,6 @@ class HexesWorkspace extends Component {
                 onSubmit={this.handleSubmit_hexDetailInput}
                 name='hex_definition'
                 placeholder='Enter [[NEW]] hex detail...'
-                value={this.state.value_hexDetailInput}
               />
             </Segment>
             <Segment>
@@ -233,7 +237,7 @@ class HexesWorkspace extends Component {
             <SingleLineAdder
               name='hex'
               placeholder='coordinate,terrain,territory'
-              value={''}
+              onSubmit={this.handleSubmit_hexInput}
             />
           </Segment>
           </Transition>
