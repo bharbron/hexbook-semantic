@@ -12,7 +12,9 @@ function byId(state=null, action) {
           text: action.payload.coordinates,
           inheritedDetails: true,
           entryDetails: [],
-          addTags: [action.payload.terrain, action.payload.territory],
+          terrainTag: action.payload.terrain,
+          territoryTag: action.payload.territory,
+          addTags: [],
           weight: 1,
         }
       })

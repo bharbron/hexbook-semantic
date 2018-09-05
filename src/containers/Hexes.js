@@ -28,7 +28,10 @@ import './containers.css';
 
 function mapStateToProps(state) {
   return({
-    entryDetails: state.entities.entryDetails
+    tables: state.entities.tables,
+    entryDetails: state.entities.entryDetails,
+    tableEntries: state.entities.tableEntries,
+    tags: state.entities.tags,
   })
 }
 
@@ -163,70 +166,28 @@ class HexesWorkspace extends Component {
                   <Table.Cell>hearts</Table.Cell>
                   <Table.Cell><Icon color='yellow' name='flag' /> sed do eiusmod [[TEMPOR]] incididunt</Table.Cell>
                 </Table.Row>
-                <Table.Row>
-                  <Table.Cell><Checkbox /></Table.Cell>
-                  <Table.Cell>0104</Table.Cell>
-                  <Table.Cell>garden</Table.Cell>
-                  <Table.Cell>hearts</Table.Cell>
-                  <Table.Cell></Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell><Checkbox /></Table.Cell>
-                  <Table.Cell>0105</Table.Cell>
-                  <Table.Cell>forest</Table.Cell>
-                  <Table.Cell>pale</Table.Cell>
-                  <Table.Cell></Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell><Checkbox /></Table.Cell>
-                  <Table.Cell>0106</Table.Cell>
-                  <Table.Cell>mountain</Table.Cell>
-                  <Table.Cell>pale</Table.Cell>
-                  <Table.Cell></Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell><Checkbox /></Table.Cell>
-                  <Table.Cell>0107</Table.Cell>
-                  <Table.Cell>forest</Table.Cell>
-                  <Table.Cell>red</Table.Cell>
-                  <Table.Cell></Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell><Checkbox /></Table.Cell>
-                  <Table.Cell>0108</Table.Cell>
-                  <Table.Cell>forest</Table.Cell>
-                  <Table.Cell>red</Table.Cell>
-                  <Table.Cell></Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell><Checkbox /></Table.Cell>
-                  <Table.Cell>0110</Table.Cell>
-                  <Table.Cell>forest</Table.Cell>
-                  <Table.Cell>red</Table.Cell>
-                  <Table.Cell></Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell><Checkbox /></Table.Cell>
-                  <Table.Cell>0201</Table.Cell>
-                  <Table.Cell>forest</Table.Cell>
-                  <Table.Cell>colorless</Table.Cell>
-                  <Table.Cell></Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell><Checkbox /></Table.Cell>
-                  <Table.Cell>0202</Table.Cell>
-                  <Table.Cell>forest</Table.Cell>
-                  <Table.Cell>colorless</Table.Cell>
-                  <Table.Cell></Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell><Checkbox /></Table.Cell>
-                  <Table.Cell>0203</Table.Cell>
-                  <Table.Cell>forest</Table.Cell>
-                  <Table.Cell>hearts</Table.Cell>
-                  <Table.Cell></Table.Cell>
-                </Table.Row>
               </Table.Body>
+            </Table>
+            <Table>
+              <Table.Header>
+                <Table.Row>
+                  <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>
+                  <Table.HeaderCell>Coordinates</Table.HeaderCell>
+                  <Table.HeaderCell>Terrain</Table.HeaderCell>
+                  <Table.HeaderCell>Territory</Table.HeaderCell>
+                  <Table.HeaderCell>Definition Override</Table.HeaderCell>
+                </Table.Row>
+              </Table.Header>
+              { this.props.tables.byId['HEX'].entries.map((tableEntryId) => 
+                <Table.Row>
+                  <Table.Cell><Checkbox /></Table.Cell>
+                  <Table.Cell>{tableEntryId}</Table.Cell>
+                  <Table.Cell>{ this.props.tags.byId[this.props.tableEntries.byId[tableEntryId].terrainTag].text }</Table.Cell>
+                  <Table.Cell>{ this.props.tags.byId[this.props.tableEntries.byId[tableEntryId].territoryTag].text }</Table.Cell>
+                  <Table.Cell></Table.Cell>
+                </Table.Row>
+                )
+              }
             </Table>
             <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
               <Dropdown.Menu direction='left'>
