@@ -17,18 +17,18 @@ import {
   Table,
   Transition,
 } from 'semantic-ui-react';
-import { WideColumnWorkspace } from '../components/Workspaces'
-import { SingleLineAdder } from '../components/Forms'
-import { FloatingActionButton } from '../components/FloatingControls'
-import { TextAreaInputModal } from '../components/Modals'
-import { ListWithDeletableItems } from '../components/Lists'
-import { DirectInputTableCell } from '../components/Tables'
+import { WideColumnWorkspace } from '../components/workspaces'
+import { SingleLineAdder } from '../components/forms'
+import { FloatingActionButton } from '../components/floatingcontrols'
+import { TextAreaInputModal } from '../components/modals'
+import { ListWithDeletableItems } from '../components/lists'
+import { DirectInputTableCell } from '../components/tables'
 
 import './containers.css';
 
 function mapStateToProps(state) {
   return({
-    entry_details: state.entry_details
+    entryDetails: state.entryDetails
   })
 }
 
@@ -42,45 +42,45 @@ class HexesWorkspace extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value_hexDetailInput: '',
-      open_hexMapInputModal: false,
+      valueHexDetailInput: '',
+      openHexMapInputModal: false,
     };
 
-    this.handleSubmit_hexDetailInput = this.handleSubmit_hexDetailInput.bind(this)
-    this.handleClose_hexMapInputModal = this.handleClose_hexMapInputModal.bind(this)
-    this.handleCancelClick_hexMapInputModal = this.handleCancelClick_hexMapInputModal.bind(this)
-    this.handleSaveClick_hexMapInputModal = this.handleSaveClick_hexMapInputModal.bind(this)
-    this.handleClick_addToHexMapButton = this.handleClick_addToHexMapButton.bind(this)
-    this.handleClick_deleteHexDetail = this.handleClick_deleteHexDetail.bind(this)
-    this.handleSubmit_hexInput = this.handleSubmit_hexInput.bind(this)
+    this.handleSubmitHexDetailInput = this.handleSubmitHexDetailInput.bind(this)
+    this.handleCloseHexMapInputModal = this.handleCloseHexMapInputModal.bind(this)
+    this.handleCancelClickHexMapInputModal = this.handleCancelClickHexMapInputModal.bind(this)
+    this.handleSaveClickHexMapInputModal = this.handleSaveClickHexMapInputModal.bind(this)
+    this.handleClickAddToHexMapButton = this.handleClickAddToHexMapButton.bind(this)
+    this.handleClickDeleteHexDetail = this.handleClickDeleteHexDetail.bind(this)
+    this.handleSubmitHexInput = this.handleSubmitHexInput.bind(this)
   };
 
-  handleSubmit_hexDetailInput(value) {
+  handleSubmitHexDetailInput(value) {
     this.props.addHexDetail(value)
   }
 
-  handleClick_deleteHexDetail(id) {
+  handleClickDeleteHexDetail(id) {
     this.props.deleteHexDetail(id)
   }
 
-  handleSubmit_hexInput(value) {
+  handleSubmitHexInput(value) {
     this.props.addHex(value)
   }
 
-  handleClose_hexMapInputModal() {
-    this.setState({open_hexMapInputModal: false})
+  handleCloseHexMapInputModal() {
+    this.setState({openHexMapInputModal: false})
   };
 
-  handleCancelClick_hexMapInputModal() {
-    this.setState({open_hexMapInputModal: false})
+  handleCancelClickHexMapInputModal() {
+    this.setState({openHexMapInputModal: false})
   };
 
-  handleSaveClick_hexMapInputModal() {
-    this.setState({open_hexMapInputModal: false})
+  handleSaveClickHexMapInputModal() {
+    this.setState({openHexMapInputModal: false})
   };
 
-  handleClick_addToHexMapButton() {
-    this.setState({open_hexMapInputModal: true})
+  handleClickAddToHexMapButton() {
+    this.setState({openHexMapInputModal: true})
   };
 
   render() {
@@ -104,12 +104,12 @@ class HexesWorkspace extends Component {
               */}
               {/*
               <Transition.Group as={List} bulleted size='large'>
-                { this.props.entry_details.allIds.map((id) => <List.Item key={id}>{ this.props.entry_details.byId[id].text } <Icon onClick={() => this.handleClick_deleteHexDetail(id)} link name='minus circle' color='grey' /></List.Item>) }
+                { this.props.entryDetails.allIds.map((id) => <List.Item key={id}>{ this.props.entryDetails.byId[id].text } <Icon onClick={() => this.handleClickDeleteHexDetail(id)} link name='minus circle' color='grey' /></List.Item>) }
               </Transition.Group>
               */}
-              <ListWithDeletableItems bulleted='true' items={ this.props.entry_details.allIds.map((id) => ({key: id, content: this.props.entry_details.byId[id].text, onClick: () => this.handleClick_deleteHexDetail(id) })) } />
+              <ListWithDeletableItems bulleted='true' items={ this.props.entryDetails.allIds.map((id) => ({key: id, content: this.props.entryDetails.byId[id].text, onClick: () => this.handleClickDeleteHexDetail(id) })) } />
               <SingleLineAdder
-                onSubmit={this.handleSubmit_hexDetailInput}
+                onSubmit={this.handleSubmitHexDetailInput}
                 name='hex_definition'
                 placeholder='Enter [[NEW]] hex detail...'
               />
@@ -237,7 +237,7 @@ class HexesWorkspace extends Component {
             <SingleLineAdder
               name='hex'
               placeholder='coordinate,terrain,territory'
-              onSubmit={this.handleSubmit_hexInput}
+              onSubmit={this.handleSubmitHexInput}
             />
           </Segment>
           </Transition>
@@ -246,15 +246,15 @@ class HexesWorkspace extends Component {
             header='Add to Hex Map'
             subheader='One hex per line, no spaces, all lowercase' 
             placeholder='coordinate,terrain,territory'
-            open={this.state.open_hexMapInputModal}
-            onClose={this.handleClose_hexMapInputModal}
-            onCancelClick={this.handleCancelClick_hexMapInputModal}
-            onSaveClick={this.handleSaveClick_hexMapInputModal}
+            open={this.state.openHexMapInputModal}
+            onClose={this.handleCloseHexMapInputModal}
+            onCancelClick={this.handleCancelClickHexMapInputModal}
+            onSaveClick={this.handleSaveClickHexMapInputModal}
           />
 
         </WideColumnWorkspace>
 
-        <FloatingActionButton icon='plus' color='google plus' onClick={this.handleClick_addToHexMapButton} />
+        <FloatingActionButton icon='plus' color='google plus' onClick={this.handleClickAddToHexMapButton} />
         
       </div>
     );

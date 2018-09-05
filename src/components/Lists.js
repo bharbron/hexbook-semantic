@@ -13,7 +13,7 @@ class ListWithDeletableItems extends Component {
     size: 'large',
     bulleted: false,
     icon: false,
-    icon_size: 'big',
+    iconSize: 'big',
     items: []
   };
 
@@ -22,7 +22,7 @@ class ListWithDeletableItems extends Component {
       <Transition.Group as={List} animation={this.props.animation} size={this.props.size} bulleted={this.props.bulleted}>
         { this.props.items.map(({key, header, description, content, onClick}) => 
           <List.Item key={key}>
-            { this.props.icon && <List.Icon name={this.props.icon} size={this.props.icon_size} /> }
+            { this.props.icon && <List.Icon name={this.props.icon} size={this.props.iconSize} /> }
             <List.Content>
               <List.Header>{header}</List.Header>
               <List.Description>{description} { !content && <Icon link name='minus circle' color='grey' onClick={onClick} /> }

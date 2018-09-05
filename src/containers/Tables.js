@@ -7,8 +7,8 @@ import {
   Dropdown,
   Label
 } from 'semantic-ui-react';
-import { WideColumnWorkspace } from '../components/Workspaces'
-import { FloatingActionButton, FloatingWorkspaceMenu } from '../components/FloatingControls'
+import { WideColumnWorkspace } from '../components/workspaces'
+import { FloatingActionButton, FloatingWorkspaceMenu } from '../components/floatingcontrols'
 
 import './containers.css';
 

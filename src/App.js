@@ -6,14 +6,14 @@ import {
   Transition,
 } from 'semantic-ui-react';
 
-import HomeWorkspace from './containers/Home'
-import HexesWorkspace from './containers/Hexes'
-import TagsWorkspace from './containers/Tags'
-import TablesWorkspace from './containers/Tables'
-import TemplatesWorkspace from './containers/Templates'
-import BooksWorkspace from './containers/Books'
+import HomeWorkspace from './containers/home'
+import HexesWorkspace from './containers/hexes'
+import TagsWorkspace from './containers/tags'
+import TablesWorkspace from './containers/tables'
+import TemplatesWorkspace from './containers/templates'
+import BooksWorkspace from './containers/books'
 
-import AppMenu from './containers/AppMenu'
+import AppMenu from './containers/appmenu'
 
 import './App.css';
 

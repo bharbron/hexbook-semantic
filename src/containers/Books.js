@@ -12,8 +12,8 @@ import {
   Select,
   Transition
 } from 'semantic-ui-react';
-import { WideColumnWorkspace } from '../components/Workspaces'
-import { FloatingActionButton } from '../components/FloatingControls'
+import { WideColumnWorkspace } from '../components/workspaces'
+import { FloatingActionButton } from '../components/floatingcontrols'
 
 import './containers.css';
 

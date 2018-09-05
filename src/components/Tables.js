@@ -10,7 +10,7 @@ class DirectInputTableCell extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      input_mode: false,
+      inputMode: false,
       value: this.props.content
     }
 
@@ -25,7 +25,7 @@ class DirectInputTableCell extends Component {
   };
 
   handleBlur() {
-    this.setState({value: this.props.content, input_mode: false})
+    this.setState({value: this.props.content, inputMode: false})
   }
 
   handleChange(event) {
@@ -41,15 +41,15 @@ class DirectInputTableCell extends Component {
   handleKeyDown(event) {
     //exit on escape
     if (event.keyCode === 27) {
-      this.setState({value: this.props.content, input_mode: false})
+      this.setState({value: this.props.content, inputMode: false})
     }
   }
 
   render () {
     return (
-      <Table.Cell onClick={ () => this.setState({input_mode: true}) } onBlur={this.handleBlur}>
-        { !this.state.input_mode && this.props.content }
-        { this.state.input_mode && 
+      <Table.Cell onClick={ () => this.setState({inputMode: true}) } onBlur={this.handleBlur}>
+        { !this.state.inputMode && this.props.content }
+        { this.state.inputMode && 
           <Form onSubmit={this.handleSubmit}>
             <Form.Input
               fluid

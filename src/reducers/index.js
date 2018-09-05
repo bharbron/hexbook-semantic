@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import tableReducer from './tables'
-import tableEntryReducer from './tableEntries'
-import entryDetailReducer from './entryDetails'
+import tableEntryReducer from './tableentries'
+import entryDetailReducer from './entrydetails'
 import tagReducer from './tags'
 
 export default combineReducers({

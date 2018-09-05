@@ -10,7 +10,7 @@ import {
   Icon,
   Segment
 } from 'semantic-ui-react';
-import { WideColumnWorkspace } from '../components/Workspaces'
+import { WideColumnWorkspace } from '../components/workspaces'
 
 import './containers.css';
 
