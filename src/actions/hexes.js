@@ -24,16 +24,16 @@ export const VisibilityFilters = {
  * action creators
  */
 
-export function addHexDetail(entry_detail_text) {
-  return { type: ADD_HEX_DETAIL, payload: {'entry_detail_text': entry_detail_text, 'entry_detail_id': uuidv4() } }
+export function addHexDetail(entryDetailText) {
+  return { type: ADD_HEX_DETAIL, payload: {'entryDetailText': entryDetailText, 'entryDetailId': uuidv4() } }
 }
 
-export function deleteHexDetail(entry_detail_id) {
-  return { type: DELETE_HEX_DETAIL, payload: {'entry_detail_id': entry_detail_id} }
+export function deleteHexDetail(entryDetailId) {
+  return { type: DELETE_HEX_DETAIL, payload: {'entryDetailId': entryDetailId} }
 }
 
-export function addHex(hex_text) {
+export function addHex(hexText) {
   //split into coordinate,terrain,territory
-  const [coordinates, terrain, territory] = hex_text.split(',')
+  const [coordinates, terrain, territory] = hexText.split(',')
   return { type: ADD_HEX, payload: {'coordinates': coordinates, 'terrain': terrain, 'territory': territory}}
 }

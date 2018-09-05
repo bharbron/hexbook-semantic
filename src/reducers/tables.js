@@ -9,9 +9,9 @@ function byId(state=null, action) {
         ...state,
         'HEX': {
           ...state['HEX'],
-          global_entry_details: [
-            ...state['HEX'].global_entry_details,
-            action.payload.entry_detail_id
+          globalEntryDetails: [
+            ...state['HEX'].globalEntryDetails,
+            action.payload.entryDetailId
           ]
         }
       })
@@ -21,7 +21,7 @@ function byId(state=null, action) {
         ...state,
         'HEX': {
           ...state['HEX'],
-          global_entry_details: state['HEX'].global_entry_details.filter(item => item !== action.payload.entry_detail_id)
+          globalEntryDetails: state['HEX'].globalEntryDetails.filter(item => item !== action.payload.entryDetailId)
         }
       })
 

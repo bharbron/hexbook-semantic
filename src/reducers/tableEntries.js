@@ -11,9 +11,9 @@ function byId(state=null, action) {
           id: action.payload.coordinates,
           text: action.payload.coordinates,
           table: 'HEX',
-          inherited_details: true,
-          entry_details: [],
-          add_tags: [action.payload.terrain, action.payload.territory],
+          inheritedDetails: true,
+          entryDetails: [],
+          addTags: [action.payload.terrain, action.payload.territory],
           weight: 1,
         }
       })

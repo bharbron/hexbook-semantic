@@ -7,13 +7,13 @@ function byId(state=null, action) {
     case ADD_HEX_DETAIL:
       return ({
         ...state,
-        [action.payload.entry_detail_id]: {id: action.payload.entry_detail_id, text: action.payload.entry_detail_text}
+        [action.payload.entryDetailId]: {id: action.payload.entryDetailId, text: action.payload.entryDetailText}
       })
 
     case DELETE_HEX_DETAIL:
       return ({
         ...state,
-        [action.payload.entry_detail_id]: undefined
+        [action.payload.entryDetailId]: undefined
       })
 
     default:
@@ -27,11 +27,11 @@ function allIds(state=null, action) {
     case ADD_HEX_DETAIL:
       return ([
         ...state,
-        action.payload.entry_detail_id
+        action.payload.entryDetailId
       ])
 
     case DELETE_HEX_DETAIL:
-      return state.filter(item => item !== action.payload.entry_detail_id)
+      return state.filter(item => item !== action.payload.entryDetailId)
 
     default:
       return state
