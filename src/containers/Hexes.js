@@ -231,11 +231,9 @@ class HexesWorkspace extends Component {
               </Dropdown.Menu>
             </Dropdown>
             <SingleLineAdder
-              onSubmit={null}
               name='hex'
               placeholder='coordinate,terrain,territory'
               value={''}
-              onChange={null}
             />
           </Segment>
           </Transition>
