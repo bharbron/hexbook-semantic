@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_HEX_DETAIL, DELETE_HEX_DETAIL } from '../actions/actions'
+import { ADD_HEX_DETAIL, DELETE_HEX_DETAIL } from '../actions/hexes'
 
 function byId(state=null, action) {
   console.log(state)
@@ -31,7 +31,7 @@ function allIds(state=null, action) {
       ])
 
     case DELETE_HEX_DETAIL:
-      return state.filter(item => item != action.payload.entry_detail_id)
+      return state.filter(item => item !== action.payload.entry_detail_id)
 
     default:
       return state

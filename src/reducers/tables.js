@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_HEX_DETAIL, DELETE_HEX_DETAIL } from '../actions/actions'
+import { ADD_HEX_DETAIL, DELETE_HEX_DETAIL } from '../actions/hexes'
 
 function byId(state=null, action) {
   console.log(state)
@@ -21,7 +21,7 @@ function byId(state=null, action) {
         ...state,
         "HEX": {
           ...state["HEX"],
-          global_entry_details: state["HEX"].global_entry_details.filter(item => item != action.payload.entry_detail_id)
+          global_entry_details: state["HEX"].global_entry_details.filter(item => item !== action.payload.entry_detail_id)
         }
       })
 

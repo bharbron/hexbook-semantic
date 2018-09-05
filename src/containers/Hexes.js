@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addHexDetail, deleteHexDetail } from '../actions/actions'
+import { addHexDetail, deleteHexDetail } from '../actions/hexes'
 import {
   Button,
   Checkbox,
