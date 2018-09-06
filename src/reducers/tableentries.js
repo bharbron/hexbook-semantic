@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_HEX } from '../actions/hexes'
+import { ADD_HEX, UPDATE_HEX_TAGS } from '../actions/hexes'
 
 function byId(state=null, action) {
   console.log(state)
@@ -10,6 +10,14 @@ function byId(state=null, action) {
         [action.payload.coordinates] : {
           id: action.payload.coordinates,
           text: action.payload.coordinates,
+          addTags: [action.payload.terrain, action.payload.territory],
+        }
+      })
+
+    case UPDATE_HEX_TAGS:
+      return ({
+        ...state,
+        [action.payload.coordinates] : {
           addTags: [action.payload.terrain, action.payload.territory],
         }
       })

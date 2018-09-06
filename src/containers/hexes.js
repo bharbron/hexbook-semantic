@@ -94,14 +94,18 @@ class HexesWorkspace extends Component {
   };
 
   handleSubmitTerrain(coordinates, value) {
-    alert('handleSubmitTerrain')
+    const terrain = value
+    const territory = this.props.tableEntries.byId[coordinates].addTags[1]
+    this.props.updateHexTags(coordinates, terrain, territory)
   }
 
   handleSubmitTerritory(coordinates, value) {
-    alert('handleSubmitTerritory')
+    const terrain = this.props.tableEntries.byId[coordinates].addTags[0]
+    const territory = value
+    this.props.updateHexTags(coordinates, terrain, territory)
   }
 
-  createHexDataTable(tables, tableEntries, tags) {
+  createHexDataTable(tables, tableEntries, tags, onSubmitTerrain, onSubmitTerritory) {
     const rows = []
     for (let i = 0; i < tables.byId['HEX'].entries.length; i++) {
       const coordinates = tables.byId['HEX'].entries[i]
@@ -112,8 +116,8 @@ class HexesWorkspace extends Component {
         <Table.Row>
           <Table.Cell><Checkbox /></Table.Cell>
           <Table.Cell>{ coordinates }</Table.Cell>
-          <DirectInputTableCell content={ terrain } />
-          <DirectInputTableCell content={ territory } />
+          <DirectInputTableCell onSubmit={(value) => onSubmitTerrain(coordinates, value)} content={ terrain } />
+          <DirectInputTableCell onSubmit={(value) => onSubmitTerritory(coordinates, value)} content={ territory } />
           <Table.Cell>{ override }</Table.Cell>
         </Table.Row>
       )
@@ -213,7 +217,7 @@ class HexesWorkspace extends Component {
                 </Table.Row>
               </Table.Header>
               <Table.Body>
-              { this.createHexDataTable(this.props.tables, this.props.tableEntries, this.props.tags) }
+              { this.createHexDataTable(this.props.tables, this.props.tableEntries, this.props.tags, this.handleSubmitTerrain, this.handleSubmitTerritory) }
               </Table.Body>
             </Table>
 
