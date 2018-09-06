@@ -24,6 +24,8 @@ import { TextAreaInputModal } from '../components/modals'
 import { ListWithDeletableItems } from '../components/lists'
 import { DirectInputTableCell } from '../components/tables'
 
+import { hexesDataArray } from '../helpers'
+
 import './containers.css';
 
 function mapStateToProps(state) {
@@ -92,7 +94,7 @@ class HexesWorkspace extends Component {
     return (
       <div id='HexesWorkspace'>
         <WideColumnWorkspace>
-
+          { console.log(hexesDataArray(this.props.tables, this.props.tableEntries, this.props.tags)) }
 
           <Transition transitionOnMount='true' animation='fade up'>
           <Segment.Group>

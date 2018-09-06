@@ -1,11 +1,14 @@
-function nextIntegerId(ids) {
-  if (ids.length == 0) {
-    return 1
+function hexesDataArray(tables, tableEntries, tags) {
+  //THIS FUNCTION MUST BE IMMUTABLE!!
+  const rows = []
+  for (var i = 0; i < tables.byId['HEX'].entries.length; i++) {
+    const coordinates = tables.byId['HEX'].entries[i]
+    const terrain = tableEntries.byId[coordinates].addTags[0]
+    const territory = tableEntries.byId[coordinates].addTags[1]
+    const override = ''
+    rows.push([coordinates, terrain, territory, override])
   }
-
-  // Copying the array first to ensure this is an immutable 
-  const sorted_ids = ids.slice().sort()
-  return sorted_ids[sorted_ids.length - 1] + 1
+  return rows
 }
 
-export { nextIntegerId }
+export { hexesDataArray }
