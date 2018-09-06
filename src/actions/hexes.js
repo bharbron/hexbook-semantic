@@ -38,8 +38,14 @@ export function addHex(coordinates, terrain, territory) {
   return { type: ADD_HEX, payload: {'coordinates': coordinates, 'terrain': terrain, 'territory': territory} }
 }
 
-export function updateHexTags(coordinates, terrain, territory) {
-  return { type: UPDATE_HEX_TAGS, payload: {'coordinates': coordinates, 'terrain': terrain, 'territory': territory} }
+export function updateHexTags(coordinates, oldTerrain, oldTerritory, newTerrain, newTerritory) {
+  return { type: UPDATE_HEX_TAGS, payload: {
+    'coordinates': coordinates, 
+    'oldTerrain': oldTerrain,
+    'oldTerritory': oldTerritory,
+    'newTerrain': newTerrain, 
+    'newTerritory': newTerritory
+  } }
 }
 
 export function updateHexCoordinates(oldCoordinates, newCoordinates) {

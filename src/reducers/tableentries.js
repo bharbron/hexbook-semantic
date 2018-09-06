@@ -18,7 +18,7 @@ function byId(state=null, action) {
       return ({
         ...state,
         [action.payload.coordinates] : {
-          addTags: [action.payload.terrain, action.payload.territory],
+          addTags: [action.payload.newTerrain, action.payload.newTerritory],
         }
       })
 

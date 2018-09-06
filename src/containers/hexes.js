@@ -102,15 +102,19 @@ class HexesWorkspace extends Component {
   };
 
   handleSubmitTerrain(coordinates, value) {
-    const terrain = value
-    const territory = this.props.tableEntries.byId[coordinates].addTags[1]
-    this.props.updateHexTags(coordinates, terrain, territory)
+    const oldTerrain = this.props.tableEntries.byId[coordinates].addTags[0]
+    const oldTerritory = this.props.tableEntries.byId[coordinates].addTags[1]
+    const newTerrain = value
+    const newTerritory = this.props.tableEntries.byId[coordinates].addTags[1]
+    this.props.updateHexTags(coordinates, oldTerrain, oldTerritory, newTerrain, newTerritory)
   }
 
   handleSubmitTerritory(coordinates, value) {
-    const terrain = this.props.tableEntries.byId[coordinates].addTags[0]
-    const territory = value
-    this.props.updateHexTags(coordinates, terrain, territory)
+    const oldTerrain = this.props.tableEntries.byId[coordinates].addTags[0]
+    const oldTerritory = this.props.tableEntries.byId[coordinates].addTags[1]
+    const newTerrain = this.props.tableEntries.byId[coordinates].addTags[0]
+    const newTerritory = value
+    this.props.updateHexTags(coordinates, oldTerrain, oldTerritory, newTerrain, newTerritory)
   }
 
   handleSubmitCoordinates(coordinates, value) {
