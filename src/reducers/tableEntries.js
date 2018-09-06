@@ -10,12 +10,7 @@ function byId(state=null, action) {
         [action.payload.coordinates] : {
           id: action.payload.coordinates,
           text: action.payload.coordinates,
-          inheritedDetails: true,
-          entryDetails: [],
-          terrainTag: action.payload.terrain,
-          territoryTag: action.payload.territory,
-          addTags: [],
-          weight: 1,
+          addTags: [action.payload.terrain, action.payload.territory],
         }
       })
 
@@ -28,7 +23,7 @@ function allIds(state=null, action) {
   console.log(state)
   switch (action.type) {
     case ADD_HEX:
-      return [...state, action.payload.coordinates]
+      return [...state.filter(item => item != action.payload.coordinates), action.payload.coordinates].sort()
 
     default:
       return state

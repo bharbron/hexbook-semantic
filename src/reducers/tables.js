@@ -21,7 +21,7 @@ function byId(state=null, action) {
         ...state,
         'HEX': {
           ...state['HEX'],
-          globalEntryDetails: state['HEX'].globalEntryDetails.filter(item => item !== action.payload.entryDetailId)
+          globalEntryDetails: state['HEX'].globalEntryDetails.filter(item => item != action.payload.entryDetailId)
         }
       })
 

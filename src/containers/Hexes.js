@@ -182,8 +182,8 @@ class HexesWorkspace extends Component {
                 <Table.Row>
                   <Table.Cell><Checkbox /></Table.Cell>
                   <Table.Cell>{tableEntryId}</Table.Cell>
-                  <Table.Cell>{ this.props.tags.byId[this.props.tableEntries.byId[tableEntryId].terrainTag].text }</Table.Cell>
-                  <Table.Cell>{ this.props.tags.byId[this.props.tableEntries.byId[tableEntryId].territoryTag].text }</Table.Cell>
+                  <Table.Cell>{ this.props.tags.byId[this.props.tableEntries.byId[tableEntryId].addTags[0]].text }</Table.Cell>
+                  <Table.Cell>{ this.props.tags.byId[this.props.tableEntries.byId[tableEntryId].addTags[1]].text }</Table.Cell>
                   <Table.Cell></Table.Cell>
                 </Table.Row>
                 )

@@ -54,7 +54,6 @@ class DirectInputTableCell extends Component {
             <Form.Input
               fluid
               focus
-              transparent
               size='tiny'
               autoFocus
               value={this.state.value}
