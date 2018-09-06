@@ -42,7 +42,7 @@ function allIds(state=null, action) {
   console.log(state)
   switch (action.type) {
     case ADD_HEX:
-      return [...state.filter(item => item != action.payload.coordinates), action.payload.coordinates].sort()
+      return [...state.filter(item => item != action.payload.coordinates), action.payload.coordinates]
 
     case UPDATE_HEX_COORDINATES:
       return ([

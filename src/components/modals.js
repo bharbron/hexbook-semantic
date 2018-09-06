@@ -67,6 +67,7 @@ class TextAreaInputModal extends Component {
               <Form.Field>
                 <TextArea
                   autoHeight
+                  autoFocus
                   placeholder={this.props.placeholder}
                   value={this.state.value}
                   onChange={this.handleChange}

@@ -42,12 +42,12 @@ function allIds(state=null, action) {
     case ADD_HEX:
       // We want to avoid duplicates in the list, so doing some filtering here
       newState = [...state.filter(item => item != action.payload.territory), action.payload.territory]
-      return [...newState.filter(item => item != action.payload.terrain), action.payload.terrain].sort()
+      return [...newState.filter(item => item != action.payload.terrain), action.payload.terrain]
 
     case UPDATE_HEX_TAGS:
       // We want to avoid duplicates in the list, so doing some filtering here
       newState = [...state.filter(item => item != action.payload.territory), action.payload.territory]
-      return [...newState.filter(item => item != action.payload.terrain), action.payload.terrain].sort()
+      return [...newState.filter(item => item != action.payload.terrain), action.payload.terrain]
 
     default:
       return state

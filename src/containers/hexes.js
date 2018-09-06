@@ -90,6 +90,11 @@ class HexesWorkspace extends Component {
   handleSubmitClickHexMapInputModal(value) {
     console.log(`handleSubmitClickHexMapInputModal: ${value}`)
     this.setState({openHexMapInputModal: false})
+    const lines = value.split('\n')
+    for (let i = 0; i < lines.length; i++) {
+      const [coordinates, terrain, territory] = lines[i].split(',')
+      this.props.addHex(coordinates, terrain, territory)
+    }
   };
 
   handleClickAddToHexMapButton() {
