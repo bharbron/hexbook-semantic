@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addHexDetail, deleteHexDetail, addHex } from '../actions/hexes'
+import { addHexDetail, deleteHexDetail, addHex, updateHexTags } from '../actions/hexes'
 import {
   Button,
   Checkbox,
@@ -40,7 +40,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => bindActionCreators({
   addHexDetail,
   deleteHexDetail,
-  addHex
+  addHex,
+  updateHexTags
 }, dispatch)
 
 class HexesWorkspace extends Component {
@@ -58,6 +59,8 @@ class HexesWorkspace extends Component {
     this.handleClickAddToHexMapButton = this.handleClickAddToHexMapButton.bind(this)
     this.handleClickDeleteHexDetail = this.handleClickDeleteHexDetail.bind(this)
     this.handleSubmitHexInput = this.handleSubmitHexInput.bind(this)
+    this.handleSubmitTerrain = this.handleSubmitTerrain.bind(this)
+    this.handleSubmitTerritory = this.handleSubmitTerritory.bind(this)
   };
 
   handleSubmitHexDetailInput(value) {
@@ -90,11 +93,39 @@ class HexesWorkspace extends Component {
     this.setState({openHexMapInputModal: true})
   };
 
+  handleSubmitTerrain(coordinates, value) {
+    alert('handleSubmitTerrain')
+  }
+
+  handleSubmitTerritory(coordinates, value) {
+    alert('handleSubmitTerritory')
+  }
+
+  createHexDataTable(tables, tableEntries, tags) {
+    const rows = []
+    for (let i = 0; i < tables.byId['HEX'].entries.length; i++) {
+      const coordinates = tables.byId['HEX'].entries[i]
+      const terrain = tableEntries.byId[coordinates].addTags[0]
+      const territory = tableEntries.byId[coordinates].addTags[1]
+      const override = ''
+      rows.push(
+        <Table.Row>
+          <Table.Cell><Checkbox /></Table.Cell>
+          <Table.Cell>{ coordinates }</Table.Cell>
+          <DirectInputTableCell content={ terrain } />
+          <DirectInputTableCell content={ territory } />
+          <Table.Cell>{ override }</Table.Cell>
+        </Table.Row>
+      )
+    }
+    return rows
+  }
+
   render() {
     return (
       <div id='HexesWorkspace'>
         <WideColumnWorkspace>
-          { console.log(hexesDataArray(this.props.tables, this.props.tableEntries, this.props.tags)) }
+          { console.log(hexesDataArray(this.props.tables, this.props.tableEntries, this.props.tags, this.props.handleSubmitTerrain, this.props.handleSubmitTerritory)) }
 
           <Transition transitionOnMount='true' animation='fade up'>
           <Segment.Group>
@@ -170,7 +201,8 @@ class HexesWorkspace extends Component {
                 </Table.Row>
               </Table.Body>
             </Table>
-            <Table>
+
+            <Table selectable compact='very' striped fixed singleLine>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>
@@ -180,17 +212,11 @@ class HexesWorkspace extends Component {
                   <Table.HeaderCell>Definition Override</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
-              { this.props.tables.byId['HEX'].entries.map((tableEntryId) => 
-                <Table.Row>
-                  <Table.Cell><Checkbox /></Table.Cell>
-                  <Table.Cell>{tableEntryId}</Table.Cell>
-                  <Table.Cell>{ this.props.tags.byId[this.props.tableEntries.byId[tableEntryId].addTags[0]].text }</Table.Cell>
-                  <Table.Cell>{ this.props.tags.byId[this.props.tableEntries.byId[tableEntryId].addTags[1]].text }</Table.Cell>
-                  <Table.Cell></Table.Cell>
-                </Table.Row>
-                )
-              }
+              <Table.Body>
+              { this.createHexDataTable(this.props.tables, this.props.tableEntries, this.props.tags) }
+              </Table.Body>
             </Table>
+
             <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
               <Dropdown.Menu direction='left'>
                 <Dropdown.Item text='Import hex[es] ...' />
