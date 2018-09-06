@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_HEX_DETAIL, DELETE_HEX_DETAIL, ADD_HEX } from '../actions/hexes'
+import { ADD_HEX_DETAIL, DELETE_HEX_DETAIL, ADD_HEX, UPDATE_HEX_COORDINATES } from '../actions/hexes'
 
 function byId(state=null, action) {
   console.log(state)
@@ -40,6 +40,18 @@ function byId(state=null, action) {
         }
       })
 
+    case UPDATE_HEX_COORDINATES:
+      return ({
+        ...state,
+        'HEX': {
+          ...state['HEX'],
+          entries: [
+            ...state['HEX'].entries.filter(item => (item != action.payload.oldCoordinates && item != action.payload.newCoordinates)),
+            action.payload.newCoordinates
+          ].sort()
+        }
+      })
+
     default:
       return state
   }
@@ -48,15 +60,7 @@ function byId(state=null, action) {
 function allIds(state=null, action) {
   console.log(state)
   switch (action.type) {
-    case ADD_HEX_DETAIL:
-      return state
-
-    case DELETE_HEX_DETAIL:
-      return state
-
-    case ADD_HEX:
-      return state
-
+    
     default:
       return state
   }

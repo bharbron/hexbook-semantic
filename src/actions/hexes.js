@@ -8,6 +8,7 @@ export const ADD_HEX_DETAIL = 'ADD_HEX_DETAIL'
 export const DELETE_HEX_DETAIL = 'DELETE_HEX_DETAIL'
 export const ADD_HEX = 'ADD_HEX'
 export const UPDATE_HEX_TAGS = 'UPDATE_HEX_TAGS'
+export const UPDATE_HEX_COORDINATES = 'UPDATE_HEX_COORDINATES'
 
 /*
  * other constants
@@ -39,4 +40,8 @@ export function addHex(coordinates, terrain, territory) {
 
 export function updateHexTags(coordinates, terrain, territory) {
   return { type: UPDATE_HEX_TAGS, payload: {'coordinates': coordinates, 'terrain': terrain, 'territory': territory} }
+}
+
+export function updateHexCoordinates(oldCoordinates, newCoordinates) {
+  return { type: UPDATE_HEX_COORDINATES, payload: {'oldCoordinates': oldCoordinates, 'newCoordinates': newCoordinates} }
 }

@@ -13,3 +13,7 @@ body > div.ui.page.modals.dimmer.transition.visible.active {
     float: none;
     margin: 0rem 1rem 0rem 0rem;
 }
+
+.table tr.visible.transition {
+  display: table-row !important;
+}

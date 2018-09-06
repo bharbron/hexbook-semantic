@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { addHexDetail, deleteHexDetail, addHex, updateHexTags } from '../actions/hexes'
 import {
   Button,
   Checkbox,
@@ -15,7 +14,7 @@ import {
   Modal,
   Segment,
   Table,
-  Transition,
+  Transition
 } from 'semantic-ui-react';
 import { WideColumnWorkspace } from '../components/workspaces'
 import { SingleLineAdder } from '../components/forms'
@@ -24,7 +23,13 @@ import { TextAreaInputModal } from '../components/modals'
 import { ListWithDeletableItems } from '../components/lists'
 import { DirectInputTableCell } from '../components/tables'
 
-import { hexesDataArray } from '../helpers'
+import { 
+  addHexDetail, 
+  deleteHexDetail, 
+  addHex, 
+  updateHexTags,
+  updateHexCoordinates
+} from '../actions/hexes'
 
 import './containers.css';
 
@@ -41,7 +46,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addHexDetail,
   deleteHexDetail,
   addHex,
-  updateHexTags
+  updateHexTags,
+  updateHexCoordinates
 }, dispatch)
 
 class HexesWorkspace extends Component {
@@ -61,6 +67,7 @@ class HexesWorkspace extends Component {
     this.handleSubmitHexInput = this.handleSubmitHexInput.bind(this)
     this.handleSubmitTerrain = this.handleSubmitTerrain.bind(this)
     this.handleSubmitTerritory = this.handleSubmitTerritory.bind(this)
+    this.handleSubmitCoordinates = this.handleSubmitCoordinates.bind(this)
   };
 
   handleSubmitHexDetailInput(value) {
@@ -105,7 +112,13 @@ class HexesWorkspace extends Component {
     this.props.updateHexTags(coordinates, terrain, territory)
   }
 
-  createHexDataTable(tables, tableEntries, tags, onSubmitTerrain, onSubmitTerritory) {
+  handleSubmitCoordinates(coordinates, value) {
+    const oldCoordinates = coordinates
+    const newCoordinates = value
+    this.props.updateHexCoordinates(oldCoordinates, newCoordinates)
+  }
+
+  createHexDataTable(tables, tableEntries, tags, onSubmitCoordinates, onSubmitTerrain, onSubmitTerritory) {
     const rows = []
     for (let i = 0; i < tables.byId['HEX'].entries.length; i++) {
       const coordinates = tables.byId['HEX'].entries[i]
@@ -113,9 +126,9 @@ class HexesWorkspace extends Component {
       const territory = tableEntries.byId[coordinates].addTags[1]
       const override = ''
       rows.push(
-        <Table.Row>
+        <Table.Row key={coordinates}>
           <Table.Cell><Checkbox /></Table.Cell>
-          <Table.Cell>{ coordinates }</Table.Cell>
+          <DirectInputTableCell onSubmit={(value) => onSubmitCoordinates(coordinates, value)} content={ coordinates } />
           <DirectInputTableCell onSubmit={(value) => onSubmitTerrain(coordinates, value)} content={ terrain } />
           <DirectInputTableCell onSubmit={(value) => onSubmitTerritory(coordinates, value)} content={ territory } />
           <Table.Cell>{ override }</Table.Cell>
@@ -129,7 +142,6 @@ class HexesWorkspace extends Component {
     return (
       <div id='HexesWorkspace'>
         <WideColumnWorkspace>
-          { console.log(hexesDataArray(this.props.tables, this.props.tableEntries, this.props.tags, this.props.handleSubmitTerrain, this.props.handleSubmitTerritory)) }
 
           <Transition transitionOnMount='true' animation='fade up'>
           <Segment.Group>
@@ -216,9 +228,17 @@ class HexesWorkspace extends Component {
                   <Table.HeaderCell>Definition Override</Table.HeaderCell>
                 </Table.Row>
               </Table.Header>
-              <Table.Body>
-              { this.createHexDataTable(this.props.tables, this.props.tableEntries, this.props.tags, this.handleSubmitTerrain, this.handleSubmitTerritory) }
-              </Table.Body>
+              <Transition.Group as={Table.Body}>
+              { this.createHexDataTable(
+                  this.props.tables, 
+                  this.props.tableEntries, 
+                  this.props.tags, 
+                  this.handleSubmitCoordinates, 
+                  this.handleSubmitTerrain, 
+                  this.handleSubmitTerritory
+                ) 
+              }
+              </Transition.Group>
             </Table>
 
             <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
