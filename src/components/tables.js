@@ -33,9 +33,8 @@ class DirectInputTableCell extends Component {
   }
 
   handleSubmit() {
-    const value = this.state.value
-    this.setState({value: ''})
-    this.props.onSubmit(value)
+    this.setState({inputMode: false})
+    this.props.onSubmit(this.state.value)
   }
 
   handleKeyDown(event) {
