@@ -60,8 +60,7 @@ class HexesWorkspace extends Component {
 
     this.handleSubmitHexDetailInput = this.handleSubmitHexDetailInput.bind(this)
     this.handleCloseHexMapInputModal = this.handleCloseHexMapInputModal.bind(this)
-    this.handleCancelClickHexMapInputModal = this.handleCancelClickHexMapInputModal.bind(this)
-    this.handleSaveClickHexMapInputModal = this.handleSaveClickHexMapInputModal.bind(this)
+    this.handleSubmitClickHexMapInputModal = this.handleSubmitClickHexMapInputModal.bind(this)
     this.handleClickAddToHexMapButton = this.handleClickAddToHexMapButton.bind(this)
     this.handleClickDeleteHexDetail = this.handleClickDeleteHexDetail.bind(this)
     this.handleSubmitHexInput = this.handleSubmitHexInput.bind(this)
@@ -88,11 +87,8 @@ class HexesWorkspace extends Component {
     this.setState({openHexMapInputModal: false})
   };
 
-  handleCancelClickHexMapInputModal() {
-    this.setState({openHexMapInputModal: false})
-  };
-
-  handleSaveClickHexMapInputModal() {
+  handleSubmitClickHexMapInputModal(value) {
+    console.log(`handleSubmitClickHexMapInputModal: ${value}`)
     this.setState({openHexMapInputModal: false})
   };
 
@@ -263,8 +259,7 @@ class HexesWorkspace extends Component {
             placeholder='coordinate,terrain,territory'
             open={this.state.openHexMapInputModal}
             onClose={this.handleCloseHexMapInputModal}
-            onCancelClick={this.handleCancelClickHexMapInputModal}
-            onSaveClick={this.handleSaveClickHexMapInputModal}
+            onSubmit={this.handleSubmitClickHexMapInputModal}
           />
 
         </WideColumnWorkspace>

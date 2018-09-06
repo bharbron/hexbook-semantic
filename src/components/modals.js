@@ -11,19 +11,54 @@ import {
 import './components.css';
 
 class TextAreaInputModal extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      primaryColor: null,
+      primaryDisabled: true,
+      value: ''
+    }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+  }
+
   static defaultProps = {
     open: false,
-    value: '',
-    primaryText: 'ADD'
+    primaryText: 'ADD',
+    onSubmit: (value) => console.log(`default onSubmit: ${value}`)
+  }
+
+  handleChange(event) {
+    if ( event.target.value ) { 
+      this.setState({value: event.target.value, primaryColor: 'blue', primaryDisabled: false})
+    }
+    else {
+      this.setState({value: event.target.value, primaryColor: null, primaryDisabled: true})
+    }
+  }
+
+  handleSubmit() {
+    const value = this.state.value
+    this.setState({value: '', primaryColor: null, primaryDisabled: true})
+    this.props.onSubmit(value)
+  }
+
+  handleClose() {
+    this.props.onClose()
+  }
+
+  handleCancel() {
+    this.setState({value: '', primaryColor: null, primaryDisabled: true})
+    this.props.onClose()
   }
 
   render () {
-    const primaryColor = ( this.props.value == '' ) ? null : 'blue';
-    const primaryDisabled = ( this.props.value == '' ) ? true : false;
-
     return (
       <Transition animation='fly up' mountOnShow unmountOnHide='true' visible={this.props.open}>
-        <Modal size='tiny' open={true} onClose={this.props.onClose} className='TextAreaInputModal'>
+        <Modal size='tiny' open={true} onClose={this.handleClose} className='TextAreaInputModal'>
           <Modal.Header style={{ borderBottom: '0px' }}>
             <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
           </Modal.Header>
@@ -33,15 +68,15 @@ class TextAreaInputModal extends Component {
                 <TextArea
                   autoHeight
                   placeholder={this.props.placeholder}
-                  value={this.props.value}
-                  onChange={this.props.onChange}
+                  value={this.state.value}
+                  onChange={this.handleChange}
                 />
               </Form.Field>
             </Form>
           </Modal.Content>
           <Modal.Actions>
-            <Button id='TextAreaInputModalCancel' onClick={this.props.onCancelClick}>CANCEL</Button>
-            <Button id='TextAreaInputModalSave' color={primaryColor} disabled={primaryDisabled} onClick={this.props.onSubmit}>{this.props.primaryText}</Button>
+            <Button id='TextAreaInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
+            <Button id='TextAreaInputModalSave' color={this.state.primaryColor} disabled={this.state.primaryDisabled} onClick={this.handleSubmit}>{this.props.primaryText}</Button>
           </Modal.Actions>
         </Modal>
       </Transition>
