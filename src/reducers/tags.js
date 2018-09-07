@@ -13,7 +13,8 @@ function newTerrainHex(state, coordinates, terrain) {
       id: terrain,
       text: terrain,
       terrainHexes: [coordinates],
-      territoryHexes: []
+      territoryHexes: [],
+      otherTag: false
     })
   }
 }
@@ -30,7 +31,8 @@ function newTerritoryHex(state, coordinates, territory) {
       id: territory,
       text: territory,
       terrainHexes: [],
-      territoryHexes: [coordinates]
+      territoryHexes: [coordinates],
+      otherTag: false
     })
   }
 }
@@ -82,8 +84,8 @@ function allIds(state=null, action) {
 
     case UPDATE_HEX_TAGS:
       // We want to avoid duplicates in the list, so doing some filtering here
-      newState = [...state.filter(item => item != action.payload.territory), action.payload.territory]
-      return [...newState.filter(item => item != action.payload.terrain), action.payload.terrain]
+      newState = [...state.filter(item => item != action.payload.newTerritory), action.payload.newTerritory]
+      return [...newState.filter(item => item != action.payload.newTerrain), action.payload.newTerrain]
 
     default:
       return state

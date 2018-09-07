@@ -26,8 +26,11 @@ class TagsWorkspace extends Component {
   render() {
     const terrainTags = this.props.tags.allIds.filter(id => this.props.tags.byId[id].terrainHexes.length > 0 ).sort()
     const territoryTags = this.props.tags.allIds.filter(id => this.props.tags.byId[id].territoryHexes.length > 0 ).sort()
+    const otherTags = this.props.tags.allIds.filter(id => this.props.tags.byId[id].otherTag == true ).sort()
     console.log(`terrainTags: ${terrainTags}`)
     console.log(`territoryTags: ${territoryTags}`)
+    console.log(`otherTags: ${otherTags}`)
+
     return (
       <div id='TagsWorkspace'>
         <WideColumnWorkspace>
@@ -38,11 +41,7 @@ class TagsWorkspace extends Component {
               <Header content='Terrain Tags' subheader='Automatically generated and tagged by the hex map. Type of terrain in a given hex. Typically used by random encounter tables.' />
             </Segment>
             <Segment>
-              <Label.Group tag color='olive'>
-                <Label>forest</Label>
-                <Label>garden</Label>
-                <Label>mountain</Label>
-              </Label.Group>
+              <Label.Group tag color='olive' children={ terrainTags.map( (tag) => <Label content={tag} /> ) } />
             </Segment>
           </Segment.Group>
         </Transition>
@@ -53,12 +52,7 @@ class TagsWorkspace extends Component {
               <Header content='Territory Tags' subheader='Automatically generated and tagged by the hex map. Group that holds influence in a given hex. Typically used by adventure hook and theme tables.' />
             </Segment>
             <Segment>
-              <Label.Group tag color='orange'>
-                <Label>colorless</Label>
-                <Label>hearts</Label>
-                <Label>pale</Label>
-                <Label>red</Label>
-              </Label.Group>
+              <Label.Group tag color='orange' children={ territoryTags.map( (tag) => <Label content={tag} /> ) } />
             </Segment>
           </Segment.Group>
         </Transition>
