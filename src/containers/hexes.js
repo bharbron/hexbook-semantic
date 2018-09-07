@@ -33,14 +33,12 @@ import {
 
 import './containers.css';
 
-function mapStateToProps(state) {
-  return({
-    tables: state.entities.tables,
-    entryDetails: state.entities.entryDetails,
-    tableEntries: state.entities.tableEntries,
-    tags: state.entities.tags,
-  })
-}
+const mapStateToProps = state => ({
+  tables: state.entities.tables,
+  entryDetails: state.entities.entryDetails,
+  tableEntries: state.entities.tableEntries,
+  tags: state.entities.tags,
+})
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   addHexDetail,

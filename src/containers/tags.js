@@ -14,6 +14,8 @@ import {
 import { WideColumnWorkspace } from '../components/workspaces'
 import { getTerrainTags, getTerritoryTags, getOtherTags, TagsSegment } from '../components/tags'
 
+import { addOtherTag } from '../actions/tags'
+
 import './containers.css';
 
 const mapStateToProps = state => ({
@@ -21,9 +23,23 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  addOtherTag
 }, dispatch)
 
 class TagsWorkspace extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleSubmitOtherTag = this.handleSubmitOtherTag.bind(this)
+  };
+
+  handleSubmitOtherTag(tag) {
+    const tagRegEx = /^[a-z]+$/
+    if ( tag.match(tagRegEx) ) {
+      this.props.addOtherTag(tag)
+    }
+  }
+
   render() {
     const terrainTags = getTerrainTags(this.props.tags)
     const territoryTags = getTerritoryTags(this.props.tags)
@@ -55,7 +71,7 @@ class TagsWorkspace extends Component {
           subheader='Any other user-defined tags that table rolls may by filtered by.'
           color='teal'
           tags={otherTags}
-          onSubmit={() => alert('onSubmit')}
+          onSubmit={this.handleSubmitOtherTag}
           placeholder='enter new tag...'
           onRemove={() => alert('onRemove')}
         />
