@@ -79,8 +79,14 @@ class HexesWorkspace extends Component {
 
   handleSubmitHexInput(value) {
     //split into coordinate,terrain,territory
-    const [coordinates, terrain, territory] = value.split(',')
-    this.props.addHex(coordinates, terrain, territory)
+    const hexLineRegEx = /^[a-zA-Z0-9]+$|^[a-zA-Z0-9]+,[a-z]*$|^[a-zA-Z0-9]+,[a-z]*,[a-z]*$/
+    const hexTagRegEx = /^[a-z]+$/ 
+    if ( value.match(hexLineRegEx) ) {
+      let [coordinates, terrain, territory] = value.split(',')
+      terrain = ( terrain.match(hexTagRegEx) ? terrain : null )
+      territory = ( territory.match(hexTagRegEx) ? territory : null )
+      this.props.addHex(coordinates, terrain, territory)
+    }
   }
 
   handleCloseHexMapInputModal() {
@@ -91,9 +97,15 @@ class HexesWorkspace extends Component {
     console.log(`handleSubmitClickHexMapInputModal: ${value}`)
     this.setState({openHexMapInputModal: false})
     const lines = value.split('\n')
+    const hexLineRegEx = /^[a-zA-Z0-9]+$|^[a-zA-Z0-9]+,[a-z]*$|^[a-zA-Z0-9]+,[a-z]*,[a-z]*$/
+    const hexTagRegEx = /^[a-z]+$/ 
     for (let i = 0; i < lines.length; i++) {
-      const [coordinates, terrain, territory] = lines[i].split(',')
-      this.props.addHex(coordinates, terrain, territory)
+      if ( lines[i].match(hexLineRegEx) ) {
+        let [coordinates, terrain, territory] = lines[i].split(',')
+        terrain = ( terrain.match(hexTagRegEx) ? terrain : null )
+        territory = ( territory.match(hexTagRegEx) ? territory : null )
+        this.props.addHex(coordinates, terrain, territory)
+      }
     }
   };
 

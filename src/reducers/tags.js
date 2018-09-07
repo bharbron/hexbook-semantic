@@ -78,14 +78,28 @@ function allIds(state=null, action) {
   let newState = []
   switch (action.type) {
     case ADD_HEX:
-      // We want to avoid duplicates in the list, so doing some filtering here
-      newState = [...state.filter(item => item != action.payload.territory), action.payload.territory]
-      return [...newState.filter(item => item != action.payload.terrain), action.payload.terrain]
+      // We want to avoid duplicates in the list, so doing some filtering herez
+      // We also want to prevent null, undefined, etc. ending up in this
+      newState = [...state]
+      if ( action.payload.terrain ) {
+        newState = [...newState.filter(item => item != action.payload.terrain), action.payload.terrain]
+      }
+      if ( action.payload.territory ) {
+        newState = [...newState.filter(item => item != action.payload.territory), action.payload.territory]
+      }
+      return newState
 
     case UPDATE_HEX_TAGS:
-      // We want to avoid duplicates in the list, so doing some filtering here
-      newState = [...state.filter(item => item != action.payload.newTerritory), action.payload.newTerritory]
-      return [...newState.filter(item => item != action.payload.newTerrain), action.payload.newTerrain]
+      // We want to avoid duplicates in the list, so doing some filtering herez
+      // We also want to prevent null, undefined, etc. ending up in this
+      newState = [...state]
+      if ( action.payload.newTerrain ) {
+        newState = [...newState.filter(item => item != action.payload.newTerrain), action.payload.newTerrain]
+      }
+      if ( action.payload.newTerritory ) {
+        newState = [...newState.filter(item => item != action.payload.newTerritory), action.payload.newTerritory]
+      }
+      return newState
 
     default:
       return state
