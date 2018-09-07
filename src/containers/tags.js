@@ -8,51 +8,81 @@ import {
   Icon,
   Input,
   Label,
-  Segment
+  Segment,
+  Transition
 } from 'semantic-ui-react';
-import { WideColumnWorkspace } from '../components/Workspaces'
+import { WideColumnWorkspace } from '../components/workspaces'
+import { getTerrainTags, getTerritoryTags, getOtherTags, TagsSegment } from '../components/tags'
+
+import { addOtherTag, deleteOtherTag } from '../actions/tags'
 
 import './containers.css';
 
 const mapStateToProps = state => ({
+  tags: state.entities.tags
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  addOtherTag,
+  deleteOtherTag
 }, dispatch)
 
 class TagsWorkspace extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleSubmitOtherTag = this.handleSubmitOtherTag.bind(this)
+    this.handleRemoveOtherTag = this.handleRemoveOtherTag.bind(this)
+  };
+
+  handleSubmitOtherTag(tag) {
+    const tagRegEx = /^[a-z]+$/
+    if ( tag.match(tagRegEx) ) {
+      this.props.addOtherTag(tag)
+    }
+  }
+
+  handleRemoveOtherTag(tag) {
+    this.props.deleteOtherTag(tag)
+  }
+
   render() {
+    const terrainTags = getTerrainTags(this.props.tags)
+    const territoryTags = getTerritoryTags(this.props.tags)
+    const otherTags = getOtherTags(this.props.tags)
+    console.log(`terrainTags: ${terrainTags}`)
+    console.log(`territoryTags: ${territoryTags}`)
+    console.log(`otherTags: ${otherTags}`)
+
     return (
       <div id='TagsWorkspace'>
         <WideColumnWorkspace>
 
-          <Segment.Group>
-            <Segment>
-              <Header content='Terrain Tags' subheader='Automatically generated and tagged by the hex map. Type of terrain in a given hex. Typically used by random encounter tables.' />
-            </Segment>
-            <Segment>
-              <Label.Group tag color='olive'>
-                <Label>forest</Label>
-                <Label>garden</Label>
-                <Label>mountain</Label>
-              </Label.Group>
-            </Segment>
-          </Segment.Group>
+        <TagsSegment
+          header='Terrain Tags' 
+          subheader='Automatically generated and tagged by the hex map. Type of terrain in a given hex. Typically used by random encounter tables.'
+          color='olive'
+          tags={terrainTags}
+        />
 
-          <Segment.Group>
-            <Segment>
-              <Header content='Territory Tags' subheader='Automatically generated and tagged by the hex map. Group that holds influence in a given hex. Typically used by adventure hook and theme tables.' />
-            </Segment>
-            <Segment>
-              <Label.Group tag color='orange'>
-                <Label>colorless</Label>
-                <Label>hearts</Label>
-                <Label>pale</Label>
-                <Label>red</Label>
-              </Label.Group>
-            </Segment>
-          </Segment.Group>
+        <TagsSegment
+          header='Territory Tags' 
+          subheader='Automatically generated and tagged by the hex map. Group that holds influence in a given hex. Typically used by adventure hook and theme tables.'
+          color='orange'
+          tags={territoryTags}
+        />
 
+        <TagsSegment
+          header='Other Tags' 
+          subheader='Any other user-defined tags that table rolls may by filtered by.'
+          color='teal'
+          tags={otherTags}
+          onSubmit={this.handleSubmitOtherTag}
+          placeholder='enter new tag...'
+          onRemove={this.handleRemoveOtherTag}
+        />
+
+        <Transition transitionOnMount='true' animation='fade up'>
           <Segment.Group>
             <Segment>
               <Header content='Other Tags' subheader='Any other user-defined tags that table rolls may by filtered by.' />
@@ -87,6 +117,7 @@ class TagsWorkspace extends Component {
               </Dropdown.Menu>
             </Dropdown>
           </Segment.Group>
+        </Transition>
 
         </WideColumnWorkspace>
       </div>

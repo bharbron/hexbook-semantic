@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import routes from './constants/routes.json'
 
-import HomeWorkspace from './containers/Home'
-import HexesWorkspace from './containers/Hexes'
-import TagsWorkspace from './containers/Tags'
-import TablesWorkspace from './containers/Tables'
-import TemplatesWorkspace from './containers/Templates'
-import BooksWorkspace from './containers/Books'
+import {
+  Transition,
+} from 'semantic-ui-react';
 
-import AppMenu from './containers/AppMenu'
+import HomeWorkspace from './containers/home'
+import HexesWorkspace from './containers/hexes'
+import TagsWorkspace from './containers/tags'
+import TablesWorkspace from './containers/tables'
+import TemplatesWorkspace from './containers/templates'
+import BooksWorkspace from './containers/books'
+
+import AppMenu from './containers/appmenu'
 
 import './App.css';
 

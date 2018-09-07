@@ -17,7 +17,8 @@
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "semantic-ui-css": "^2.3.3",
-    "semantic-ui-react": "^0.82.3"
+    "semantic-ui-react": "^0.82.3",
+    "uuid": "^3.3.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -32,6 +33,9 @@
     "concurrently": "^4.0.1",
     "electron": "^2.0.8",
     "electron-builder": "^20.28.2",
+    "electron-devtools-installer": "^2.2.4",
+    "react-devtools": "^3.3.2",
+    "redux-devtools": "^3.4.1",
     "wait-on": "^2.1.0"
   },
   "build": {

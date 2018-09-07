@@ -7,7 +7,53 @@ import rootReducer from '../reducers'
 export const history = createHistory()
 
 const initialState = {
-  currentPage: '/'
+  /* data state */
+  entities: {
+    tables: {
+      byId: {
+        "HEX": {
+          id: "HEX",
+          code: "HEX",
+          name: "Hex Map",
+          description: "Mapping of hex coordinates to terrain and territory",
+          globalEntryDetails: [],
+          entries: [],
+        }
+      },
+      allIds: ["HEX"]
+    },
+    tableEntries: {
+      byId: {},
+      allIds: []
+    },
+    entryDetails: {
+      byId: {},
+      allIds: []
+    },
+    tagWeights: {
+      byId: {},
+      allIds: []
+    },
+    tags: {
+      byId: {},
+      allIds: []
+    },
+    templates: {
+      byId: {
+        "Hexes": {
+          id: "Hexes",
+          name: "Hexes",
+          description: "Template for printing the list of hexes",
+          table: "HEX",
+          otherTemplateStuff: null
+        }
+      },
+      "allIds": ["Hexes"]
+    }
+  },
+
+  /* UI state */
+  ui: {}
 }
 
 const enhancers = []
@@ -34,5 +80,7 @@ const store = createStore(
   initialState,
   composedEnhancers
 )
+
+console.log(store.getState())
 
 export default store

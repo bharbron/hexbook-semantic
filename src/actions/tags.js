@@ -1,10 +1,9 @@
-const uuidv4 = require('uuid/v4');
-
 /*
 * action types
  */
 
-export const CHANGE_PAGE = 'CHANGE_PAGE'
+export const ADD_OTHER_TAG = 'ADD_OTHER_TAG'
+export const DELETE_OTHER_TAG = 'DELETE_OTHER_TAG'
 
 /*
  * other constants
@@ -22,6 +21,10 @@ export const VisibilityFilters = {
  * action creators
  */
 
-export function changePage(url) {
-  return { type: CHANGE_PAGE, url }
+export function addOtherTag(tag) {
+  return { type: ADD_OTHER_TAG, payload: {'tag': tag} }
+}
+
+export function deleteOtherTag(tag) {
+  return { type: DELETE_OTHER_TAG, payload: {'tag': tag} }
 }
