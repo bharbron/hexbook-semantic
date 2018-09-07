@@ -44,6 +44,7 @@ function TagsSegment(props) {
             { props.onSubmit && <SingleLineAdder onSubmit={props.onSubmit} placeholder={props.placeholder} /> }
           </Label.Group>
         </Segment>
+        { props.dropdown }
       </Segment.Group>
     </Transition>
   );
