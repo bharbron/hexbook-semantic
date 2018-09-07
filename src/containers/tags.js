@@ -16,6 +16,7 @@ import { WideColumnWorkspace } from '../components/workspaces'
 import './containers.css';
 
 const mapStateToProps = state => ({
+  tags: state.entities.tags
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -23,6 +24,10 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 class TagsWorkspace extends Component {
   render() {
+    const terrainTags = this.props.tags.allIds.filter(id => this.props.tags.byId[id].terrainHexes.length > 0 ).sort()
+    const territoryTags = this.props.tags.allIds.filter(id => this.props.tags.byId[id].territoryHexes.length > 0 ).sort()
+    console.log(`terrainTags: ${terrainTags}`)
+    console.log(`territoryTags: ${territoryTags}`)
     return (
       <div id='TagsWorkspace'>
         <WideColumnWorkspace>
