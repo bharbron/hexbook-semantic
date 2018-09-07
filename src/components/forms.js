@@ -53,7 +53,6 @@ class SingleLineAdder extends Component {
       <Form onSubmit={this.handleSubmit}>
         <Form.Field>
           <Form.Input
-            name={this.props.name}
             icon={
               <Icon 
                 name='circle plus'

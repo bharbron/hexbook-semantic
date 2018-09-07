@@ -50,6 +50,16 @@ class TagsWorkspace extends Component {
           tags={territoryTags}
         />
 
+        <TagsSegment
+          header='Other Tags' 
+          subheader='Any other user-defined tags that table rolls may by filtered by.'
+          color='teal'
+          tags={otherTags}
+          onSubmit={() => alert('onSubmit')}
+          placeholder='enter new tag...'
+          onRemove={() => alert('onRemove')}
+        />
+
         <Transition transitionOnMount='true' animation='fade up'>
           <Segment.Group>
             <Segment>

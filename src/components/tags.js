@@ -8,6 +8,7 @@ import {
   Segment,
   Transition
 } from 'semantic-ui-react';
+import { SingleLineAdder } from './forms'
 
 import './components.css';
 
@@ -24,7 +25,10 @@ function getOtherTags(tags) {
 };
 
 function TagLabel(props) {
-  return <Label content={props.tag} />
+  return <Label 
+    content={props.tag}
+    onRemove={props.onRemove}
+  />
 }
 
 function TagsSegment(props) {
@@ -35,7 +39,10 @@ function TagsSegment(props) {
           <Header content={props.header} subheader={props.subheader} />
         </Segment>
         <Segment>
-          <Label.Group tag color={props.color} children={ props.tags.map( (tag) => <TagLabel tag={tag} /> ) } />
+          <Label.Group tag color={props.color}>
+            { props.tags.map( (tag) => <TagLabel tag={tag} onRemove={props.onRemove} /> ) }
+            { props.onSubmit && <SingleLineAdder onSubmit={props.onSubmit} placeholder={props.placeholder} /> }
+          </Label.Group>
         </Segment>
       </Segment.Group>
     </Transition>
