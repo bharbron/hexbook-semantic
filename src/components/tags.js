@@ -27,7 +27,7 @@ function getOtherTags(tags) {
 function TagLabel(props) {
   return <Label 
     content={props.tag}
-    onRemove={props.onRemove}
+    onRemove={ (props.onRemove) ? () => props.onRemove(props.tag) : undefined }
   />
 }
 

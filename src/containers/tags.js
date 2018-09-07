@@ -14,7 +14,7 @@ import {
 import { WideColumnWorkspace } from '../components/workspaces'
 import { getTerrainTags, getTerritoryTags, getOtherTags, TagsSegment } from '../components/tags'
 
-import { addOtherTag } from '../actions/tags'
+import { addOtherTag, deleteOtherTag } from '../actions/tags'
 
 import './containers.css';
 
@@ -23,7 +23,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  addOtherTag
+  addOtherTag,
+  deleteOtherTag
 }, dispatch)
 
 class TagsWorkspace extends Component {
@@ -31,6 +32,7 @@ class TagsWorkspace extends Component {
     super(props);
 
     this.handleSubmitOtherTag = this.handleSubmitOtherTag.bind(this)
+    this.handleRemoveOtherTag = this.handleRemoveOtherTag.bind(this)
   };
 
   handleSubmitOtherTag(tag) {
@@ -38,6 +40,10 @@ class TagsWorkspace extends Component {
     if ( tag.match(tagRegEx) ) {
       this.props.addOtherTag(tag)
     }
+  }
+
+  handleRemoveOtherTag(tag) {
+    this.props.deleteOtherTag(tag)
   }
 
   render() {
@@ -73,7 +79,7 @@ class TagsWorkspace extends Component {
           tags={otherTags}
           onSubmit={this.handleSubmitOtherTag}
           placeholder='enter new tag...'
-          onRemove={() => alert('onRemove')}
+          onRemove={this.handleRemoveOtherTag}
         />
 
         <Transition transitionOnMount='true' animation='fade up'>

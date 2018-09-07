@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { ADD_HEX, UPDATE_HEX_TAGS } from '../actions/hexes'
-import { ADD_OTHER_TAG } from '../actions/tags'
+import { ADD_OTHER_TAG, DELETE_OTHER_TAG } from '../actions/tags'
 
 function newTerrainHex(state, coordinates, terrain) {
   if ( state[terrain] ) {
@@ -93,6 +93,15 @@ function byId(state=null, action) {
         [action.payload.tag]: newOtherTag(state, action.payload.tag)
       })
 
+    case DELETE_OTHER_TAG:
+      return ({
+        ...state,
+        [action.payload.tag]: {
+          ...state[action.payload.tag],
+          otherTag: false
+        }
+      })
+
     default:
       return state
   }
@@ -131,6 +140,9 @@ function allIds(state=null, action) {
         ...state.filter(item => item != action.payload.tag),
         action.payload.tag
       ])
+
+    case DELETE_OTHER_TAG:
+      return state
 
     default:
       return state
