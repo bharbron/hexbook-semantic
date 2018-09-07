@@ -12,6 +12,7 @@ import {
   Transition
 } from 'semantic-ui-react';
 import { WideColumnWorkspace } from '../components/workspaces'
+import { getTerrainTags, getTerritoryTags, getOtherTags, TagsSegment } from '../components/tags'
 
 import './containers.css';
 
@@ -24,9 +25,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 class TagsWorkspace extends Component {
   render() {
-    const terrainTags = this.props.tags.allIds.filter(id => this.props.tags.byId[id].terrainHexes.length > 0 ).sort()
-    const territoryTags = this.props.tags.allIds.filter(id => this.props.tags.byId[id].territoryHexes.length > 0 ).sort()
-    const otherTags = this.props.tags.allIds.filter(id => this.props.tags.byId[id].otherTag == true ).sort()
+    const terrainTags = getTerrainTags(this.props.tags)
+    const territoryTags = getTerritoryTags(this.props.tags)
+    const otherTags = getOtherTags(this.props.tags)
     console.log(`terrainTags: ${terrainTags}`)
     console.log(`territoryTags: ${territoryTags}`)
     console.log(`otherTags: ${otherTags}`)
@@ -35,27 +36,19 @@ class TagsWorkspace extends Component {
       <div id='TagsWorkspace'>
         <WideColumnWorkspace>
 
-        <Transition transitionOnMount='true' animation='fade up'>
-          <Segment.Group>
-            <Segment>
-              <Header content='Terrain Tags' subheader='Automatically generated and tagged by the hex map. Type of terrain in a given hex. Typically used by random encounter tables.' />
-            </Segment>
-            <Segment>
-              <Label.Group tag color='olive' children={ terrainTags.map( (tag) => <Label content={tag} /> ) } />
-            </Segment>
-          </Segment.Group>
-        </Transition>
+        <TagsSegment
+          header='Terrain Tags' 
+          subheader='Automatically generated and tagged by the hex map. Type of terrain in a given hex. Typically used by random encounter tables.'
+          color='olive'
+          tags={terrainTags}
+        />
 
-        <Transition transitionOnMount='true' animation='fade up'>
-          <Segment.Group>
-            <Segment>
-              <Header content='Territory Tags' subheader='Automatically generated and tagged by the hex map. Group that holds influence in a given hex. Typically used by adventure hook and theme tables.' />
-            </Segment>
-            <Segment>
-              <Label.Group tag color='orange' children={ territoryTags.map( (tag) => <Label content={tag} /> ) } />
-            </Segment>
-          </Segment.Group>
-        </Transition>
+        <TagsSegment
+          header='Territory Tags' 
+          subheader='Automatically generated and tagged by the hex map. Group that holds influence in a given hex. Typically used by adventure hook and theme tables.'
+          color='orange'
+          tags={territoryTags}
+        />
 
         <Transition transitionOnMount='true' animation='fade up'>
           <Segment.Group>
