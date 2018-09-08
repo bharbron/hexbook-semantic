@@ -1,18 +1,23 @@
 import { combineReducers } from 'redux'
 import { ADD_HEX, UPDATE_HEX_TAGS, UPDATE_HEX_COORDINATES } from '../actions/hexes'
 
+function byIdAddHex(state, action) {
+  return ({
+    ...state,
+    [action.payload.newCoordinates] : {
+      id: action.payload.newCoordinates,
+      text: action.payload.newCoordinates,
+      addTags: [action.payload.newTerrain, action.payload.newTerritory],
+    }
+  })
+}
+
 function byId(state=null, action) {
   console.log(state)
+  console.log(action)
   switch (action.type) {
     case ADD_HEX:
-      return ({
-        ...state,
-        [action.payload.newCoordinates] : {
-          id: action.payload.newCoordinates,
-          text: action.payload.newCoordinates,
-          addTags: [action.payload.newTerrain, action.payload.newTerritory],
-        }
-      })
+      return byIdAddHex(state, action)
 
     case UPDATE_HEX_TAGS:
       return ({
@@ -40,6 +45,7 @@ function byId(state=null, action) {
 
 function allIds(state=null, action) {
   console.log(state)
+  console.log(action)
   switch (action.type) {
     case ADD_HEX:
       return [...state.filter(item => item != action.payload.newCoordinates), action.payload.newCoordinates]
