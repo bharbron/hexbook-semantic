@@ -149,7 +149,6 @@ function byIdAddHex(state, action) {
 
 function byId(state=null, action) {
   console.log(state)
-  let newState = {}
   switch (action.type) {
     case ADD_HEX:
       return byIdAddHex(state, action)

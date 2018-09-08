@@ -103,10 +103,14 @@ class HexesWorkspace extends Component {
     const hexTagRegEx = /^[a-z]+$/ 
     for (let i = 0; i < lines.length; i++) {
       if ( lines[i].match(hexLineRegEx) ) {
-        let [coordinates, terrain, territory] = lines[i].split(',')
-        terrain = ( terrain.match(hexTagRegEx) ? terrain : null )
-        territory = ( territory.match(hexTagRegEx) ? territory : null )
-        this.props.addHex(coordinates, terrain, territory)
+        let [newCoordinates, newTerrain, newTerritory] = lines[i].split(',')
+        newTerrain = newTerrain.match(hexTagRegEx) ? newTerrain : undefined
+        newTerritory = newTerritory.match(hexTagRegEx) ? newTerritory : undefined
+        //are we overwriting an existing hex?
+        const replaceHex = this.props.tableEntries.byId[newCoordinates]
+        const replaceTerrainTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[0]] : undefined
+        const replaceTerritoryTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[1]] : undefined
+        this.props.addHex(newCoordinates, newTerrain, newTerritory, replaceHex, replaceTerritoryTag, replaceTerrainTag)
       }
     }
   };
