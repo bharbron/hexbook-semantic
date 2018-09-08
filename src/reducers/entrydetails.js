@@ -11,7 +11,7 @@ function byIdAddHexDetail(state, action) {
 function byIdDeleteHexDetail(state, action) {
   return ({
     ...state,
-    [action.payload.entryDetailId]: null
+    [action.payload.entryDetailId]: undefined
   })
 }
 

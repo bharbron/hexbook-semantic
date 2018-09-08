@@ -28,7 +28,7 @@ export function deleteHexDetail(entryDetailId) {
   return { type: DELETE_HEX_DETAIL, payload: {'entryDetailId': entryDetailId} }
 }
 
-export function addHex(newCoordinates, newTerrain, newTerritory, replaceHex, replaceTerritoryTag, replaceTerrainTag) {
+export function addHex(newCoordinates, newTerrain, newTerritory, replaceHex, replaceTerrainTag, replaceTerritoryTag) {
   /*
   :param newCoordinates: coordinates (tableEntry ID) of the new hex
   :param newTerrain: terrain tag ID of the new hex
@@ -40,8 +40,8 @@ export function addHex(newCoordinates, newTerrain, newTerritory, replaceHex, rep
     'newTerrain': newTerrain, 
     'newTerritory': newTerritory, 
     'replaceHex': replaceHex,
-    'replaceTerritoryTag': replaceTerritoryTag,
-    'replaceTerrainTag': replaceTerrainTag
+    'replaceTerrainTag': replaceTerrainTag,
+    'replaceTerritoryTag': replaceTerritoryTag
   } }
 }
 
@@ -62,6 +62,19 @@ export function updateHexTags(coordinates, newTerrain, newTerritory, oldTerrainT
   } }
 }
 
-export function updateHexCoordinates(oldCoordinates, newCoordinates) {
-  return { type: UPDATE_HEX_COORDINATES, payload: {'oldCoordinates': oldCoordinates, 'newCoordinates': newCoordinates} }
+export function updateHexCoordinates(newCoordinates, oldHex, replaceHex, replaceTerrainTag, replaceTerritoryTag) {
+  /*
+  :param newCoordinates: new coordinates (tableEntry ID) for the new hex
+  :param oldHex: full tableEntry object of the hexes previous state
+  :param replaceHex: existing hex tableEntry (if any) at the same coordinates that will be overwritten
+  :param replaceTerrainTag: existing full Tag object assinged to replaceHex.addTags[0]
+  :param replaceTerritoryTag: existing full Tag object assinged to replaceHex.addTags[1]
+  */
+  return { type: UPDATE_HEX_COORDINATES, payload: {
+    'newCoordinates': newCoordinates, 
+    'oldHex': oldHex,
+    'replaceHex': replaceHex,
+    'replaceTerrainTag': replaceTerrainTag,
+    'replaceTerritoryTag': replaceTerritoryTag,
+  } }
 }

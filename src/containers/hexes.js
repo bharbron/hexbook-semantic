@@ -87,7 +87,7 @@ class HexesWorkspace extends Component {
       const replaceHex = this.props.tableEntries.byId[newCoordinates]
       const replaceTerrainTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[0]] : undefined
       const replaceTerritoryTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[1]] : undefined
-      this.props.addHex(newCoordinates, newTerrain, newTerritory, replaceHex, replaceTerritoryTag, replaceTerrainTag)
+      this.props.addHex(newCoordinates, newTerrain, newTerritory, replaceHex, replaceTerrainTag, replaceTerritoryTag)
     }
   }
 
@@ -110,7 +110,7 @@ class HexesWorkspace extends Component {
         const replaceHex = this.props.tableEntries.byId[newCoordinates]
         const replaceTerrainTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[0]] : undefined
         const replaceTerritoryTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[1]] : undefined
-        this.props.addHex(newCoordinates, newTerrain, newTerritory, replaceHex, replaceTerritoryTag, replaceTerrainTag)
+        this.props.addHex(newCoordinates, newTerrain, newTerritory, replaceHex, replaceTerrainTag, replaceTerritoryTag)
       }
     }
   };
@@ -136,9 +136,12 @@ class HexesWorkspace extends Component {
   }
 
   handleSubmitCoordinates(coordinates, value) {
-    const oldCoordinates = coordinates
     const newCoordinates = value
-    this.props.updateHexCoordinates(oldCoordinates, newCoordinates)
+    const oldHex = this.props.tableEntries.byId[coordinates]
+    const replaceHex = this.props.tableEntries.byId[newCoordinates]
+    const replaceTerrainTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[0]] : undefined
+    const replaceTerritoryTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[1]] : undefined
+    this.props.updateHexCoordinates(newCoordinates, oldHex, replaceHex, replaceTerrainTag, replaceTerritoryTag)
   }
 
   createHexDataTable(tables, tableEntries, tags, onSubmitCoordinates, onSubmitTerrain, onSubmitTerritory) {

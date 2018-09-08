@@ -40,6 +40,22 @@ function byIdAddHex(state, action) {
   })
 }
 
+function byIdUpdateHexCoordinates(state, action) {
+  const newCoordinates = action.payload.newCoordinates
+  const oldHex = action.payload.oldHex
+  const oldHexCoordinates = (oldHex) ? oldHex.id : undefined
+  return ({
+    ...state,
+    'HEX': {
+      ...state['HEX'],
+      entries: [
+        ...state['HEX'].entries.filter(item => (item != oldHexCoordinates && item != newCoordinates)),
+        newCoordinates
+      ].sort() //always want hexes displayed in coordinate order
+    }
+  })
+}
+
 function byId(state=null, action) {
   console.log(state)
   console.log(action)
@@ -54,16 +70,7 @@ function byId(state=null, action) {
       return byIdAddHex(state, action)
 
     case UPDATE_HEX_COORDINATES:
-      return ({
-        ...state,
-        'HEX': {
-          ...state['HEX'],
-          entries: [
-            ...state['HEX'].entries.filter(item => (item != action.payload.oldCoordinates && item != action.payload.newCoordinates)),
-            action.payload.newCoordinates
-          ].sort()
-        }
-      })
+      return byIdUpdateHexCoordinates(state, action)
 
     default:
       return state
