@@ -126,25 +126,31 @@ function byIdAddHex(state, action) {
   const newCoordinates = action.payload.newCoordinates
   const newTerrain = action.payload.newTerrain
   const newTerritory = action.payload.newTerritory
+  let newState = {...state}
   if ( action.payload.replaceHex ) {
     const replaceCoordinates = action.payload.replaceHex.id
     const replaceTerrain = action.payload.replaceHex.addTags[0]
     const replaceTerritory = action.payload.replaceHex.addTags[1]
-    return ({
-      ...state,
-      [replaceTerrain]: removeTerrainHexFromTag(state[replaceTerrain], replaceCoordinates),
-      [replaceTerritory]: removeTerritoryHexFromTag(state[replaceTerritory], replaceCoordinates),
-      [newTerrain]: createOrUpdateTerrainTag(state, newCoordinates, newTerrain),
-      [newTerritory]: createOrUpdateTerritoryTag(state, newCoordinates, newTerritory),
-    })
+    //have to do these separately to handle case where replaceTerrain and replaceTerritory have the same ID
+    newState = {
+      ...newState,
+      [replaceTerrain]: removeTerrainHexFromTag(newState[replaceTerrain], replaceCoordinates),
+    }
+    newState = {
+      ...newState,
+      [replaceTerritory]: removeTerritoryHexFromTag(newState[replaceTerritory], replaceCoordinates),
+    }
   }
-  else {
-    return ({
-      ...state,
-      [newTerrain]: createOrUpdateTerrainTag(state, newCoordinates, newTerrain),
-      [newTerritory]: createOrUpdateTerritoryTag(state, newCoordinates, newTerritory),
-    })
+  //also have to do these separately in case newTerrain and newTerritory have the same value
+  newState = {
+    ...newState,
+    [newTerrain]: createOrUpdateTerrainTag(newState, newCoordinates, newTerrain),
   }
+  newState = {
+    ...newState,
+    [newTerritory]: createOrUpdateTerritoryTag(newState, newCoordinates, newTerritory),
+  }
+  return newState
 }
 
 function byIdUpdateHexTags(state, action) {
@@ -161,13 +167,26 @@ function byIdUpdateHexTags(state, action) {
   const oldTerritoryTag = action.payload.oldTerritoryTag
   const oldTerrainTagId = (oldTerrainTag) ? oldTerrainTag.id : undefined;
   const oldTerritoryTagId = (oldTerritoryTag) ? oldTerritoryTag.id : undefined;
-  return ({
-    ...state,
+  let newState = {...state}
+  // Have to do all of these separately to handle cases where territory and terrain have the same ID,
+  // otherwise terrainHexes and territoryHexes arrays won't be correct
+  newState = {
+    ...newState,
     [oldTerrainTagId]: (oldTerrainTagId) ? removeTerrainHexFromTag(oldTerrainTag, coordinates) : undefined,
+  }
+  newState = {
+    ...newState,
     [oldTerritoryTagId]: (oldTerritoryTagId) ? removeTerritoryHexFromTag(oldTerritoryTag, coordinates) : undefined,
-    [newTerrain]: createOrUpdateTerrainTag(state, coordinates, newTerrain),
-    [newTerritory] : createOrUpdateTerritoryTag(state, coordinates, newTerritory)
-  })
+  }
+  newState = {
+    ...newState,
+    [newTerrain]: createOrUpdateTerrainTag(newState, coordinates, newTerrain),
+  }
+  newState = {
+    ...newState,
+    [newTerritory] : createOrUpdateTerritoryTag(newState, coordinates, newTerritory)
+  }
+  return newState
 }
 
 function byId(state=null, action) {
