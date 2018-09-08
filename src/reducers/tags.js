@@ -270,27 +270,15 @@ function byId(state=null, action) {
   }
 }
 
-function wouldDeleteTerrainTag(tag, terrainHex) {
-  // If we were to remove the terrainHex from this tag, would the tag be deletable?
-  // i.e. Would it have any references left?
+function wouldDeleteTag(tag, coordinates) {
+  /*
+  If we were to remove the coordinates from this tag's terrainHexes and territoryHexes, would the tag be deletable?
+  i.e. Would it have any references left?
+  */
   const testTag = {
     ...tag,
-    terrainHexes: [...tag.terrainHexes.filter(item => item != terrainHex)]
-  }
-  if ( testTag.territoryHexes.length > 0 || testTag.terrainHexes.length > 0 || testTag.otherTag == true ) {
-    return false
-  }
-  else {
-    return true
-  }
-}
-
-function wouldDeleteTerritoryTag(tag, territoryHex) {
-  // If we were to remove the territoryHex from this tag, would the tag be deletable?
-  // i.e. Would it have any references left?
-  const testTag = {
-    ...tag,
-    territoryHexes: [...tag.territoryHexes.filter(item => item != territoryHex)]
+    terrainHexes: [...tag.terrainHexes.filter(item => item != coordinates)],
+    territoryHexes: [...tag.territoryHexes.filter(item => item != coordinates)]
   }
   if ( testTag.territoryHexes.length > 0 || testTag.terrainHexes.length > 0 || testTag.otherTag == true ) {
     return false
@@ -312,10 +300,10 @@ function allIdsAddHex(state, action) {
   const replaceTerrainTag = action.payload.replaceTerrainTag
   const replaceTerritoryTag = action.payload.replaceTerritoryTag
   let newState = [...state]
-  if (replaceTerrainTag && wouldDeleteTerrainTag(replaceTerrainTag, newCoordinates)) {
+  if (replaceTerrainTag && wouldDeleteTag(replaceTerrainTag, newCoordinates)) {
     newState = [...newState.filter(item => item != replaceTerrainTag.id)]
   }
-  if (replaceTerritoryTag && wouldDeleteTerritoryTag(replaceTerritoryTag, newCoordinates)) {
+  if (replaceTerritoryTag && wouldDeleteTag(replaceTerritoryTag, newCoordinates)) {
     newState = [...newState.filter(item => item != replaceTerritoryTag.id)]
   }
   if ( newTerrain ) {
@@ -341,10 +329,10 @@ function allIdsUpdateHexTags(state, action) {
   const oldTerrainTagId = (oldTerrainTag) ? oldTerrainTag.id : undefined;
   const oldTerritoryTagId = (oldTerritoryTag) ? oldTerritoryTag.id : undefined;
   let newState = [...state]
-  if (oldTerrainTag && wouldDeleteTerrainTag(oldTerrainTag, coordinates)) {
+  if (oldTerrainTag && wouldDeleteTag(oldTerrainTag, coordinates)) {
     newState = [...newState.filter(item => item != oldTerrainTagId)]
   }
-  if (oldTerritoryTag && wouldDeleteTerritoryTag(oldTerritoryTag, coordinates)) {
+  if (oldTerritoryTag && wouldDeleteTag(oldTerritoryTag, coordinates)) {
     newState = [...newState.filter(item => item != oldTerritoryTagId)]
   }
   // Do these separately to avoid duplicates in cases where newTerrain and newTerritory have the same text
@@ -367,10 +355,10 @@ function allIdsUpdateHexCoordinates(state, action) {
   const replaceTerrainTag = action.payload.replaceTerrainTag
   const replaceTerritoryTag = action.payload.replaceTerritoryTag
   let newState = [...state]
-  if (replaceTerrainTag && wouldDeleteTerrainTag(replaceTerrainTag, newCoordinates)) {
+  if (replaceTerrainTag && wouldDeleteTag(replaceTerrainTag, newCoordinates)) {
     newState = [...newState.filter(item => item != replaceTerrainTag.id)]
   }
-  if (replaceTerritoryTag && wouldDeleteTerritoryTag(replaceTerritoryTag, newCoordinates)) {
+  if (replaceTerritoryTag && wouldDeleteTag(replaceTerritoryTag, newCoordinates)) {
     newState = [...newState.filter(item => item != replaceTerritoryTag.id)]
   }
   return newState
