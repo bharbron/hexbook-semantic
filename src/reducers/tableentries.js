@@ -7,10 +7,10 @@ function byId(state=null, action) {
     case ADD_HEX:
       return ({
         ...state,
-        [action.payload.coordinates] : {
-          id: action.payload.coordinates,
-          text: action.payload.coordinates,
-          addTags: [action.payload.terrain, action.payload.territory],
+        [action.payload.newCoordinates] : {
+          id: action.payload.newCoordinates,
+          text: action.payload.newCoordinates,
+          addTags: [action.payload.newTerrain, action.payload.newTerritory],
         }
       })
 
@@ -42,7 +42,7 @@ function allIds(state=null, action) {
   console.log(state)
   switch (action.type) {
     case ADD_HEX:
-      return [...state.filter(item => item != action.payload.coordinates), action.payload.coordinates]
+      return [...state.filter(item => item != action.payload.newCoordinates), action.payload.newCoordinates]
 
     case UPDATE_HEX_COORDINATES:
       return ([

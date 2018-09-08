@@ -80,10 +80,14 @@ class HexesWorkspace extends Component {
     const hexLineRegEx = /^[a-zA-Z0-9]+$|^[a-zA-Z0-9]+,[a-z]*$|^[a-zA-Z0-9]+,[a-z]*,[a-z]*$/
     const hexTagRegEx = /^[a-z]+$/ 
     if ( value.match(hexLineRegEx) ) {
-      let [coordinates, terrain, territory] = value.split(',')
-      terrain = ( terrain.match(hexTagRegEx) ? terrain : null )
-      territory = ( territory.match(hexTagRegEx) ? territory : null )
-      this.props.addHex(coordinates, terrain, territory)
+      let [newCoordinates, newTerrain, newTerritory] = value.split(',')
+      newTerrain = newTerrain.match(hexTagRegEx) ? newTerrain : undefined
+      newTerritory = newTerritory.match(hexTagRegEx) ? newTerritory : undefined
+      //are we overwriting an existing hex?
+      const replaceHex = this.props.tableEntries.byId[newCoordinates]
+      const replaceTerrainTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[0]] : undefined
+      const replaceTerritoryTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[1]] : undefined
+      this.props.addHex(newCoordinates, newTerrain, newTerritory, replaceHex, replaceTerritoryTag, replaceTerrainTag)
     }
   }
 

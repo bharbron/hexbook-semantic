@@ -34,8 +34,8 @@ function byId(state=null, action) {
           ...state['HEX'],
           entries: [
             //avoid duplicates
-            ...state['HEX'].entries.filter(item => item != action.payload.coordinates),
-            action.payload.coordinates
+            ...state['HEX'].entries.filter(item => item != action.payload.newCoordinates),
+            action.payload.newCoordinates
           ].sort() //always want hexes displayed in coordinate order
         }
       })

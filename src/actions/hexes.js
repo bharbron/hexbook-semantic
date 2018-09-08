@@ -34,8 +34,21 @@ export function deleteHexDetail(entryDetailId) {
   return { type: DELETE_HEX_DETAIL, payload: {'entryDetailId': entryDetailId} }
 }
 
-export function addHex(coordinates, terrain, territory) {
-  return { type: ADD_HEX, payload: {'coordinates': coordinates, 'terrain': terrain, 'territory': territory} }
+export function addHex(newCoordinates, newTerrain, newTerritory, replaceHex, replaceTerritoryTag, replaceTerrainTag) {
+  /*
+  :param newCoordinates: coordinates (tableEntry ID) of the new hex
+  :param newTerrain: terrain tag ID of the new hex
+  :param newTerritory: territory tag ID of the new hex
+  :param replaceHex: existing hex tableEntry (if any) at the same coordinates that will be overwritten
+  */
+  return { type: ADD_HEX, payload: {
+    'newCoordinates': newCoordinates, 
+    'newTerrain': newTerrain, 
+    'newTerritory': newTerritory, 
+    'replaceHex': replaceHex,
+    'replaceTerritoryTag': replaceTerritoryTag,
+    'replaceTerrainTag': replaceTerrainTag
+  } }
 }
 
 export function updateHexTags(coordinates, oldTerrain, oldTerritory, newTerrain, newTerritory) {
