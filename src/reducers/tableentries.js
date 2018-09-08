@@ -12,6 +12,15 @@ function byIdAddHex(state, action) {
   })
 }
 
+function byIdUpdateHexTags(state, action) {
+  return ({
+    ...state,
+    [action.payload.coordinates] : {
+      addTags: [action.payload.newTerrain, action.payload.newTerritory],
+    }
+  })
+}
+
 function byId(state=null, action) {
   console.log(state)
   console.log(action)
@@ -20,12 +29,7 @@ function byId(state=null, action) {
       return byIdAddHex(state, action)
 
     case UPDATE_HEX_TAGS:
-      return ({
-        ...state,
-        [action.payload.coordinates] : {
-          addTags: [action.payload.newTerrain, action.payload.newTerritory],
-        }
-      })
+      return byIdUpdateHexTags(state, action)
 
     case UPDATE_HEX_COORDINATES:
       return ({

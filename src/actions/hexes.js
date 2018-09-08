@@ -1,8 +1,6 @@
 const uuidv4 = require('uuid/v4');
 
-/*
-* action types
- */
+/* action types */
 
 export const ADD_HEX_DETAIL = 'ADD_HEX_DETAIL'
 export const DELETE_HEX_DETAIL = 'DELETE_HEX_DETAIL'
@@ -10,9 +8,7 @@ export const ADD_HEX = 'ADD_HEX'
 export const UPDATE_HEX_TAGS = 'UPDATE_HEX_TAGS'
 export const UPDATE_HEX_COORDINATES = 'UPDATE_HEX_COORDINATES'
 
-/*
- * other constants
- */
+/* other constants */
 
 /* Example from official Redux docs https://redux.js.org/basics/actions#source-code
 export const VisibilityFilters = {
@@ -22,12 +18,10 @@ export const VisibilityFilters = {
 }
 */
 
-/*
- * action creators
- */
+/* action creators */
 
-export function addHexDetail(entryDetailText) {
-  return { type: ADD_HEX_DETAIL, payload: {'entryDetailText': entryDetailText, 'entryDetailId': uuidv4()} }
+export function addHexDetail(newEntryDetailText) {
+  return { type: ADD_HEX_DETAIL, payload: {'newEntryDetailText': newEntryDetailText, 'newEntryDetailId': uuidv4()} }
 }
 
 export function deleteHexDetail(entryDetailId) {
@@ -51,13 +45,20 @@ export function addHex(newCoordinates, newTerrain, newTerritory, replaceHex, rep
   } }
 }
 
-export function updateHexTags(coordinates, oldTerrain, oldTerritory, newTerrain, newTerritory) {
+export function updateHexTags(coordinates, newTerrain, newTerritory, oldTerrainTag, oldTerritoryTag) {
+  /*
+  :param coordinate: coordinates (tableEntry ID) of the hex we're updating tags on
+  :param newTerrain: new terrain tag ID of the hex
+  :param newTerritory: new territory tag ID of the hex
+  :param oldTerrainTag: full Tag object of the old terrain for hex
+  :param oldTerritoryTag: full Tag object of the old territory for hex
+  */
   return { type: UPDATE_HEX_TAGS, payload: {
     'coordinates': coordinates, 
-    'oldTerrain': oldTerrain,
-    'oldTerritory': oldTerritory,
     'newTerrain': newTerrain, 
-    'newTerritory': newTerritory
+    'newTerritory': newTerritory,
+    'oldTerrainTag': oldTerrainTag,
+    'oldTerritoryTag': oldTerritoryTag,
   } }
 }
 

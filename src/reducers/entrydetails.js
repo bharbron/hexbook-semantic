@@ -4,7 +4,7 @@ import { ADD_HEX_DETAIL, DELETE_HEX_DETAIL } from '../actions/hexes'
 function byIdAddHexDetail(state, action) {
   return ({
     ...state,
-    [action.payload.entryDetailId]: {id: action.payload.entryDetailId, text: action.payload.entryDetailText}
+    [action.payload.newEntryDetailId]: {id: action.payload.newEntryDetailId, text: action.payload.newEntryDetailText}
   })
 }
 

@@ -120,19 +120,19 @@ class HexesWorkspace extends Component {
   };
 
   handleSubmitTerrain(coordinates, value) {
-    const oldTerrain = this.props.tableEntries.byId[coordinates].addTags[0]
-    const oldTerritory = this.props.tableEntries.byId[coordinates].addTags[1]
     const newTerrain = value
     const newTerritory = this.props.tableEntries.byId[coordinates].addTags[1]
-    this.props.updateHexTags(coordinates, oldTerrain, oldTerritory, newTerrain, newTerritory)
+    const oldTerrainTag = this.props.tags.byId[this.props.tableEntries.byId[coordinates].addTags[0]]
+    const oldTerritoryTag = this.props.tags.byId[newTerritory]
+    this.props.updateHexTags(coordinates, newTerrain, newTerritory, oldTerrainTag, oldTerritoryTag)
   }
 
   handleSubmitTerritory(coordinates, value) {
-    const oldTerrain = this.props.tableEntries.byId[coordinates].addTags[0]
-    const oldTerritory = this.props.tableEntries.byId[coordinates].addTags[1]
     const newTerrain = this.props.tableEntries.byId[coordinates].addTags[0]
     const newTerritory = value
-    this.props.updateHexTags(coordinates, oldTerrain, oldTerritory, newTerrain, newTerritory)
+    const oldTerrainTag = this.props.tags.byId[newTerrain]
+    const oldTerritoryTag = this.props.tags.byId[this.props.tableEntries.byId[coordinates].addTags[1]]
+    this.props.updateHexTags(coordinates, newTerrain, newTerritory, oldTerrainTag, oldTerritoryTag)
   }
 
   handleSubmitCoordinates(coordinates, value) {

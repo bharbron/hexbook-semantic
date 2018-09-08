@@ -8,7 +8,7 @@ function byIdAddHexDetail(state, action) {
       ...state['HEX'],
       globalEntryDetails: [
         ...state['HEX'].globalEntryDetails,
-        action.payload.entryDetailId
+        action.payload.newEntryDetailId
       ]
     }
   })

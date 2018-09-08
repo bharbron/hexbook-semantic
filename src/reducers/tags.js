@@ -147,6 +147,29 @@ function byIdAddHex(state, action) {
   }
 }
 
+function byIdUpdateHexTags(state, action) {
+  /*
+  1. Remove terrain hex reference from oldTerrainTag, possibly delete Tag
+  2. Remove territory hex reference from old TerritoryTag, possibly delete Tag
+  3. Create or update tag for newTerrain
+  4. Create or update tag for newTerritory
+  */
+  const coordinates = action.payload.coordinates
+  const newTerrain = action.payload.newTerrain
+  const newTerritory = action.payload.newTerritory
+  const oldTerrainTag = action.payload.oldTerrainTag
+  const oldTerritoryTag = action.payload.oldTerritoryTag
+  const oldTerrainTagId = (oldTerrainTag) ? oldTerrainTag.id : undefined;
+  const oldTerritoryTagId = (oldTerritoryTag) ? oldTerritoryTag.id : undefined;
+  return ({
+    ...state,
+    [oldTerrainTagId]: (oldTerrainTagId) ? removeTerrainHexFromTag(oldTerrainTag, coordinates) : undefined,
+    [oldTerritoryTagId]: (oldTerritoryTagId) ? removeTerritoryHexFromTag(oldTerritoryTag, coordinates) : undefined,
+    [newTerrain]: createOrUpdateTerrainTag(state, coordinates, newTerrain),
+    [newTerritory] : createOrUpdateTerritoryTag(state, coordinates, newTerritory)
+  })
+}
+
 function byId(state=null, action) {
   console.log(state)
   console.log(action)
@@ -155,25 +178,7 @@ function byId(state=null, action) {
       return byIdAddHex(state, action)
 
     case UPDATE_HEX_TAGS:
-      return ({
-        ...state,
-        //remove references from the old tags
-        [action.payload.oldTerrain]: {
-          ...state[action.payload.oldTerrain],
-          terrainHexes: [
-            ...state[action.payload.oldTerrain].terrainHexes.filter(item => item != action.payload.coordinates)
-          ]
-        },
-        [action.payload.oldTerritory]: {
-          ...state[action.payload.oldTerritory],
-          territoryHexes: [
-            ...state[action.payload.oldTerritory].territoryHexes.filter(item => item != action.payload.coordinates)
-          ]
-        },
-        //update the new tags
-        [action.payload.newTerrain]: newTerrainHex(state, action.payload.coordinates, action.payload.newTerrain),
-        [action.payload.newTerritory]: newTerritoryHex(state, action.payload.coordinates, action.payload.newTerritory)
-      })
+      return byIdUpdateHexTags(state, action)
 
     case ADD_OTHER_TAG:
       return ({
@@ -257,6 +262,36 @@ function allIdsAddHex(state, action) {
   return newState
 }
 
+function allIdsUpdateHexTags(state, action) {
+  /*
+  1. If removing the coordinates reference from oldTerrainTag would delete the tag, remove it from the list
+  2. If removing the coordinates reference from oldTerritoryTag would delete the tag, remove it from the list
+  3. Add the new terrain and territory tags to the list
+  */
+  const coordinates = action.payload.coordinates
+  const newTerrain = action.payload.newTerrain
+  const newTerritory = action.payload.newTerritory
+  const oldTerrainTag = action.payload.oldTerrainTag
+  const oldTerritoryTag = action.payload.oldTerritoryTag
+  const oldTerrainTagId = (oldTerrainTag) ? oldTerrainTag.id : undefined;
+  const oldTerritoryTagId = (oldTerritoryTag) ? oldTerritoryTag.id : undefined;
+  let newState = [...state]
+  if (oldTerrainTag && wouldDeleteTerrainTag(oldTerrainTag, coordinates)) {
+    newState = [...newState.filter(item => item != oldTerrainTagId)]
+  }
+  if (oldTerritoryTag && wouldDeleteTerritoryTag(oldTerritoryTag, coordinates)) {
+    newState = [...newState.filter(item => item != oldTerritoryTagId)]
+  }
+  // Do these separately to avoid duplicates in cases where newTerrain and newTerritory have the same text
+  if ( newTerrain ) {
+    newState = [...newState.filter(item => item != newTerrain), newTerrain]
+  }
+  if ( newTerritory ) {
+    newState = [...newState.filter(item => item != newTerritory), newTerritory]
+  }
+  return newState
+}
+
 function allIds(state=null, action) {
   console.log(state)
   console.log(action)
@@ -266,16 +301,7 @@ function allIds(state=null, action) {
       return allIdsAddHex(state, action)
 
     case UPDATE_HEX_TAGS:
-      // We want to avoid duplicates in the list, so doing some filtering herez
-      // We also want to prevent null, undefined, etc. ending up in this
-      newState = [...state]
-      if ( action.payload.newTerrain ) {
-        newState = [...newState.filter(item => item != action.payload.newTerrain), action.payload.newTerrain]
-      }
-      if ( action.payload.newTerritory ) {
-        newState = [...newState.filter(item => item != action.payload.newTerritory), action.payload.newTerritory]
-      }
-      return newState
+      return allIdsUpdateHexTags(state, action)
 
     case ADD_OTHER_TAG:
       return ([
