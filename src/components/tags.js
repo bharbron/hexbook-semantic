@@ -41,8 +41,8 @@ function TagsSegment(props) {
         <Segment>
           <Label.Group tag color={props.color}>
             { props.tags.map( (tag) => <TagLabel tag={tag} onRemove={props.onRemove} /> ) }
-            { props.onSubmit && <SingleLineAdder onSubmit={props.onSubmit} placeholder={props.placeholder} /> }
           </Label.Group>
+          { props.onSubmit && <SingleLineAdder onSubmit={props.onSubmit} placeholder={props.placeholder} /> }
         </Segment>
         { props.dropdown }
       </Segment.Group>
