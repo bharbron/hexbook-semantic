@@ -24,6 +24,15 @@ class DirectInputTableCell extends Component {
     onSubmit: () => console.log('default onSubmit')
   };
 
+  componentDidUpdate(prevProps) {
+    // this handles the case where, for example, the 'tag name' changed due to an exisitng hex being overwritten
+    // forces the cell to reset its default input value to the cell content
+    // otherwise this would only update on the next handleBlue() or handleChange()
+    if (this.props.content !== prevProps.content) {
+      this.setState({value: this.props.content})
+    }
+  }
+
   handleBlur() {
     this.setState({value: this.props.content, inputMode: false})
   }

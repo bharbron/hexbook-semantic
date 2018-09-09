@@ -13,7 +13,7 @@ import { SingleLineAdder } from './forms'
 import './components.css';
 
 function getTerrainTags(tags) { 
-  return tags.allIds.filter(id => tags.byId[id].terrainHexes.length > 0 ).sort() 
+  return tags.allIds.filter(id => tags.byId[id].terrainHexes.length > 0 ).sort()
 };
 
 function getTerritoryTags(tags) {
