@@ -44,7 +44,7 @@ function allIds(state=null, action) {
 }
 
 function byIdAddHex(state, action) {
-  if (action.payload.replaceEntryDetailsGroupId) {
+  if (action.payload.replaceEntryDetailsGroupId && action.payload.replaceEntryDetailsGroupId != 'HEX') {
     return ({
       ...state,
       [action.payload.replaceEntryDetailsGroupId]: undefined
@@ -54,7 +54,7 @@ function byIdAddHex(state, action) {
 }
 
 function byIdUpdateHexCoordinates(state, action) {
-  if (action.payload.replaceEntryDetailsGroupId) {
+  if (action.payload.replaceEntryDetailsGroupId && action.payload.replaceEntryDetailsGroupId != 'HEX') {
     return ({
       ...state,
       [action.payload.replaceEntryDetailsGroupId]: undefined
@@ -64,7 +64,7 @@ function byIdUpdateHexCoordinates(state, action) {
 }
 
 function allIdsAddHex(state, action) {
-  if (action.payload.replaceEntryDetailsGroupId) {
+  if (action.payload.replaceEntryDetailsGroupId && action.payload.replaceEntryDetailsGroupId != 'HEX') {
     return ([
       ...state.filter(item => item != action.payload.replaceEntryDetailsGroupId)
     ])
@@ -73,7 +73,7 @@ function allIdsAddHex(state, action) {
 }
 
 function allIdsUpdateHexCoordinates(state, action) {
-  if (action.payload.replaceEntryDetailsGroupId) {
+  if (action.payload.replaceEntryDetailsGroupId && action.payload.replaceEntryDetailsGroupId != 'HEX') {
     return ([
       ...state.filter(item => item != action.payload.replaceEntryDetailsGroupId)
     ])

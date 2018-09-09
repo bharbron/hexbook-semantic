@@ -44,15 +44,18 @@ function allIds(state=null, action) {
 }
 
 function byIdAddHex(state, action) {
-  const replaceEntryDetailsIds = action.payload.replaceEntryDetailsIds
-  let newState = {...state}
-  for (let i = 0; i < replaceEntryDetailsIds.length; i++) {
-    newState = {
-      ...state,
-      [replaceEntryDetailsIds[i]]: undefined
+  if (action.payload.replaceEntryDetailsGroupId != 'HEX') {
+    const replaceEntryDetailsIds = action.payload.replaceEntryDetailsIds
+    let newState = {...state}
+    for (let i = 0; i < replaceEntryDetailsIds.length; i++) {
+      newState = {
+        ...state,
+        [replaceEntryDetailsIds[i]]: undefined
+      }
     }
+    return newState
   }
-  return newState
+  return state
 }
 
 function byIdAddHexDetail(state, action) {
@@ -70,22 +73,28 @@ function byIdDeleteHexDetail(state, action) {
 }
 
 function byIdUpdateHexCoordinates(state, action) {
-  const replaceEntryDetailsIds = action.payload.replaceEntryDetailsIds
-  let newState = {...state}
-  for (let i = 0; i < replaceEntryDetailsIds.length; i++) {
-    newState = {
-      ...state,
-      [replaceEntryDetailsIds[i]]: undefined
+  if (action.payload.replaceEntryDetailsGroupId != 'HEX') {
+    const replaceEntryDetailsIds = action.payload.replaceEntryDetailsIds
+    let newState = {...state}
+    for (let i = 0; i < replaceEntryDetailsIds.length; i++) {
+      newState = {
+        ...state,
+        [replaceEntryDetailsIds[i]]: undefined
+      }
     }
+    return newState
   }
-  return newState
+  return state
 }
 
 function allIdsAddHex(state, action) {
-  const replaceEntryDetailsIds = action.payload.replaceEntryDetailsIds
-  return ([
-    ...state.filter(item => !replaceEntryDetailsIds.includes(item))
-  ])
+  if (action.payload.replaceEntryDetailsGroupId != 'HEX') {
+    const replaceEntryDetailsIds = action.payload.replaceEntryDetailsIds
+    return ([
+      ...state.filter(item => !replaceEntryDetailsIds.includes(item))
+    ])
+  }
+  return state
 }
 
 function allIdsAddHexDetail(state, action) {
@@ -100,10 +109,13 @@ function allIdsDeleteHexDetail(state, action) {
 }
 
 function allIdsUpdateHexCoordinates(state, action) {
-  const replaceEntryDetailsIds = action.payload.replaceEntryDetailsIds
-  return ([
-    ...state.filter(item => !replaceEntryDetailsIds.includes(item))
-  ])
+  if (action.payload.replaceEntryDetailsGroupId != 'HEX') {
+    const replaceEntryDetailsIds = action.payload.replaceEntryDetailsIds
+    return ([
+      ...state.filter(item => !replaceEntryDetailsIds.includes(item))
+    ])
+  }
+  return state
 }
 
 export default combineReducers({byId: byId, allIds: allIds})

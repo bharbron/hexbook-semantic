@@ -48,7 +48,7 @@ export function addHex(newCoordinates, newTerrain, newTerritory) {
   const replaceTerrainTag = (replaceHex && replaceHex.addTags[0]) ? tags.byId[replaceHex.addTags[0]] : undefined
   const replaceTerritoryTag = (replaceHex && replaceHex.addTags[1]) ? tags.byId[replaceHex.addTags[1]] : undefined
   // Does that hex have any non-default entryDetails?
-  const replaceEntryDetailsGroupId = (replaceHex && replaceHex.entryDetailsGroup && replaceHex.entryDetailsGroup != 'HEX') ? 
+  const replaceEntryDetailsGroupId = (replaceHex && replaceHex.entryDetailsGroup) ? 
     replaceHex.entryDetailsGroup : 
     undefined;
   const replaceEntryDetailsIds = (replaceEntryDetailsGroupId) ?
@@ -116,7 +116,7 @@ export function updateHexCoordinates(newCoordinates, oldCoordinates) {
   const replaceTerrainTag = (replaceHex && replaceHex.addTags[0]) ? tags.byId[replaceHex.addTags[0]] : undefined
   const replaceTerritoryTag = (replaceHex && replaceHex.addTags[1]) ? tags.byId[replaceHex.addTags[1]] : undefined
   // Does that hex have any non-default entryDetails?
-  const replaceEntryDetailsGroupId = (replaceHex && replaceHex.entryDetailsGroup && replaceHex.entryDetailsGroup != 'HEX') ? 
+  const replaceEntryDetailsGroupId = (replaceHex && replaceHex.entryDetailsGroup) ? 
     replaceHex.entryDetailsGroup : 
     undefined;
   const replaceEntryDetailsIds = (replaceEntryDetailsGroupId) ?
