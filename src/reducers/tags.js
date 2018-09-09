@@ -2,117 +2,52 @@ import { combineReducers } from 'redux'
 import { ADD_HEX, UPDATE_HEX_TAGS, UPDATE_HEX_COORDINATES } from '../actions/hexes'
 import { ADD_OTHER_TAG, DELETE_OTHER_TAG } from '../actions/tags'
 
-function newTerrainHex(state, coordinates, terrain) {
-  if ( state[terrain] ) {
-    return ({
-      ...state[terrain],
-      terrainHexes: [...state[terrain].terrainHexes, coordinates]
-    })
-  }
-  else {
-    return ({
-      id: terrain,
-      text: terrain,
-      terrainHexes: [coordinates],
-      territoryHexes: [],
-      otherTag: false
-    })
+function byId(state=null, action) {
+  console.log(state)
+  console.log(action)
+  switch (action.type) {
+    case ADD_HEX:
+      return byIdAddHex(state, action)
+
+    case UPDATE_HEX_TAGS:
+      return byIdUpdateHexTags(state, action)
+
+    case UPDATE_HEX_COORDINATES:
+      return byIdUpdateHexCoordinates(state, action)
+
+    case ADD_OTHER_TAG:
+      return byIdAddOtherTag(state, action)
+
+    case DELETE_OTHER_TAG:
+      return byIdDeleteOtherTag(state, action)
+
+    default:
+      return state
   }
 }
 
-function newTerritoryHex(state, coordinates, territory) {
-  if ( state[territory] ) {
-    return ({
-      ...state[territory],
-      territoryHexes: [...state[territory].territoryHexes, coordinates]
-    })
-  }
-  else {
-    return ({
-      id: territory,
-      text: territory,
-      terrainHexes: [],
-      territoryHexes: [coordinates],
-      otherTag: false
-    })
-  }
-}
+function allIds(state=null, action) {
+  console.log(state)
+  console.log(action)
+  let newState = []
+  switch (action.type) {
+    case ADD_HEX:
+      return allIdsAddHex(state, action)
 
-function newOtherTag(state, tag) {
-  if ( state[tag] ) {
-    return ({
-      ...state[tag],
-      otherTag: true
-    })
-  }
-  else {
-    return ({
-      id: tag,
-      text: tag,
-      terrainHexes: [],
-      territoryHexes: [],
-      otherTag: true
-    })
-  }
-}
+    case UPDATE_HEX_TAGS:
+      return allIdsUpdateHexTags(state, action)
 
-function removeTerrainHexFromTag(tag, coordinates) {
-  // Remove terrainHex reference from this tag, delete the tag if we can
-  const newTag = {
-    ...tag,
-    terrainHexes: [...tag.terrainHexes.filter(item => item != coordinates)]
-  }
-  // If the tag has no references to anything left, it can be effectively deleted. I.e. don't return it
-  if ( newTag.territoryHexes.length > 0 || newTag.terrainHexes.length > 0 || newTag.otherTag == true ) {
-    return newTag
-  }
-}
+    case UPDATE_HEX_COORDINATES:
+      return allIdsUpdateHexCoordinates(state, action)
 
-function removeTerritoryHexFromTag(tag, coordinates) {
-  // Remove territoryHex reference from this tag, delete the tag if we can
-  const newTag = {
-    ...tag,
-    territoryHexes: [...tag.territoryHexes.filter(item => item != coordinates)]
-  }
-  // If the tag has no references to anything left, it can be effectively deleted. I.e. don't return it
-  if ( newTag.territoryHexes.length > 0 || newTag.terrainHexes.length > 0 || newTag.otherTag == true ) {
-    return newTag
-  }
-}
+    case ADD_OTHER_TAG:
+      return allIdsAddOtherTag(state, action)
 
-function createOrUpdateTerrainTag(state, coordinates, terrain) {
-  if ( state[terrain] ) {
-    return ({
-      ...state[terrain],
-      terrainHexes: [...state[terrain].terrainHexes.filter(item => item != coordinates), coordinates]
-    })
-  }
-  else {
-    return ({
-      id: terrain,
-      text: terrain,
-      terrainHexes: [coordinates],
-      territoryHexes: [],
-      otherTag: false
-    })
-  }
-}
+    case DELETE_OTHER_TAG:
+      return allIdsDeleteOtherTag(state, action)
 
-function createOrUpdateTerritoryTag(state, coordinates, territory) {
-  if ( state[territory] ) {
-    return ({
-      ...state[territory],
-      territoryHexes: [...state[territory].territoryHexes.filter(item => item != coordinates), coordinates]
-    })
-  }
-  else {
-    return ({
-      id: territory,
-      text: territory,
-      terrainHexes: [],
-      territoryHexes: [coordinates],
-      otherTag: false
-    })
+    default:
+      return state
   }
 }
 
@@ -132,13 +67,17 @@ function byIdAddHex(state, action) {
     const replaceTerrain = action.payload.replaceHex.addTags[0]
     const replaceTerritory = action.payload.replaceHex.addTags[1]
     //have to do these separately to handle case where replaceTerrain and replaceTerritory have the same ID
-    newState = {
-      ...newState,
-      [replaceTerrain]: removeTerrainHexFromTag(newState[replaceTerrain], replaceCoordinates)
+    if (replaceTerrain) {
+      newState = {
+        ...newState,
+        [replaceTerrain]: removeTerrainHexFromTag(newState[replaceTerrain], replaceCoordinates)
+      }
     }
-    newState = {
-      ...newState,
-      [replaceTerritory]: removeTerritoryHexFromTag(newState[replaceTerritory], replaceCoordinates)
+    if (replaceTerritory) {
+      newState = {
+        ...newState,
+        [replaceTerritory]: removeTerritoryHexFromTag(newState[replaceTerritory], replaceCoordinates)
+      }
     }
   }
   //also have to do these separately in case newTerrain and newTerritory have the same value
@@ -207,13 +146,17 @@ function byIdUpdateHexCoordinates(state, action) {
     const replaceCoordinates = replaceHex.id
     const replaceTerrain = replaceHex.addTags[0]
     const replaceTerritory = replaceHex.addTags[1]
-    newState = {
-      ...newState,
-      [replaceTerrain]: removeTerrainHexFromTag(newState[replaceTerrain], replaceCoordinates)
+    if (replaceTerrain) {
+      newState = {
+        ...newState,
+        [replaceTerrain]: removeTerrainHexFromTag(newState[replaceTerrain], replaceCoordinates)
+      }
     }
-    newState = {
-      ...newState,
-      [replaceTerritory]: removeTerritoryHexFromTag(newState[replaceTerritory], replaceCoordinates)
+    if (replaceTerritory) {
+      newState = {
+        ...newState,
+        [replaceTerritory]: removeTerritoryHexFromTag(newState[replaceTerritory], replaceCoordinates)
+      }
     }
   }
   if (newState[terrain]) {
@@ -237,55 +180,18 @@ function byIdUpdateHexCoordinates(state, action) {
   return newState
 }
 
-function byId(state=null, action) {
-  console.log(state)
-  console.log(action)
-  switch (action.type) {
-    case ADD_HEX:
-      return byIdAddHex(state, action)
-
-    case UPDATE_HEX_TAGS:
-      return byIdUpdateHexTags(state, action)
-
-    case UPDATE_HEX_COORDINATES:
-      return byIdUpdateHexCoordinates(state, action)
-
-    case ADD_OTHER_TAG:
-      return ({
-        ...state,
-        [action.payload.tag]: newOtherTag(state, action.payload.tag)
-      })
-
-    case DELETE_OTHER_TAG:
-      return ({
-        ...state,
-        [action.payload.tag]: {
-          ...state[action.payload.tag],
-          otherTag: false
-        }
-      })
-
-    default:
-      return state
-  }
+function byIdAddOtherTag(state, action) {
+  return ({
+    ...state,
+    [action.payload.tag]: newOtherTag(state, action.payload.tag)
+  })
 }
 
-function wouldDeleteTag(tag, coordinates) {
-  /*
-  If we were to remove the coordinates from this tag's terrainHexes and territoryHexes, would the tag be deletable?
-  i.e. Would it have any references left?
-  */
-  const testTag = {
-    ...tag,
-    terrainHexes: [...tag.terrainHexes.filter(item => item != coordinates)],
-    territoryHexes: [...tag.territoryHexes.filter(item => item != coordinates)]
-  }
-  if ( testTag.territoryHexes.length > 0 || testTag.terrainHexes.length > 0 || testTag.otherTag == true ) {
-    return false
-  }
-  else {
-    return true
-  }
+function byIdDeleteOtherTag(state, action) {
+  return ({
+    ...state,
+    [action.payload.tag.id]: removeOtherFromTag(action.payload.tag)
+  })
 }
 
 function allIdsAddHex(state, action) {
@@ -364,31 +270,133 @@ function allIdsUpdateHexCoordinates(state, action) {
   return newState
 }
 
-function allIds(state=null, action) {
-  console.log(state)
-  console.log(action)
-  let newState = []
-  switch (action.type) {
-    case ADD_HEX:
-      return allIdsAddHex(state, action)
+function allIdsAddOtherTag(state, action) {
+  return ([
+    ...state.filter(item => item != action.payload.tag),
+    action.payload.tag
+  ])
+}
 
-    case UPDATE_HEX_TAGS:
-      return allIdsUpdateHexTags(state, action)
+function allIdsDeleteOtherTag(state, action) {
+  const tagId = action.payload.tag.id
+  if (wouldDeleteTag(action.payload.tag, null, true)) {
+    return [...state.filter(item => item != tagId)]
+  }
+  return state
+}
 
-    case UPDATE_HEX_COORDINATES:
-      return allIdsUpdateHexCoordinates(state, action)
+function newOtherTag(state, tag) {
+  if ( state[tag] ) {
+    return ({
+      ...state[tag],
+      otherTag: true
+    })
+  }
+  else {
+    return ({
+      id: tag,
+      text: tag,
+      terrainHexes: [],
+      territoryHexes: [],
+      otherTag: true
+    })
+  }
+}
 
-    case ADD_OTHER_TAG:
-      return ([
-        ...state.filter(item => item != action.payload.tag),
-        action.payload.tag
-      ])
+function removeTerrainHexFromTag(tag, coordinates) {
+  // Remove terrainHex reference from this tag, delete the tag if we can
+  const newTag = {
+    ...tag,
+    terrainHexes: [...tag.terrainHexes.filter(item => item != coordinates)]
+  }
+  // If the tag has no references to anything left, it can be effectively deleted. I.e. don't return it
+  if ( newTag.territoryHexes.length > 0 || newTag.terrainHexes.length > 0 || newTag.otherTag == true ) {
+    return newTag
+  }
+}
 
-    case DELETE_OTHER_TAG:
-      return state
+function removeTerritoryHexFromTag(tag, coordinates) {
+  // Remove territoryHex reference from this tag, delete the tag if we can
+  const newTag = {
+    ...tag,
+    territoryHexes: [...tag.territoryHexes.filter(item => item != coordinates)]
+  }
+  // If the tag has no references to anything left, it can be effectively deleted. I.e. don't return it
+  if ( newTag.territoryHexes.length > 0 || newTag.terrainHexes.length > 0 || newTag.otherTag == true ) {
+    return newTag
+  }
+}
 
-    default:
-      return state
+function removeOtherFromTag(tag) {
+  // Set this Tag as no longer an Other Tag, delete the tag if that leaves it with no references
+  console.log(`tag: ${tag}`)
+  const newTag = {
+    ...tag,
+    otherTag: false
+  }
+  // Only return the updated tag if it still has references
+  if ( newTag.territoryHexes.length > 0 || newTag.terrainHexes.length > 0 || newTag.otherTag == true ) {
+    return newTag
+  }
+}
+
+function createOrUpdateTerrainTag(state, coordinates, terrain) {
+  if ( state[terrain] ) {
+    return ({
+      ...state[terrain],
+      terrainHexes: [...state[terrain].terrainHexes.filter(item => item != coordinates), coordinates]
+    })
+  }
+  else {
+    return ({
+      id: terrain,
+      text: terrain,
+      terrainHexes: [coordinates],
+      territoryHexes: [],
+      otherTag: false
+    })
+  }
+}
+
+function createOrUpdateTerritoryTag(state, coordinates, territory) {
+  if ( state[territory] ) {
+    return ({
+      ...state[territory],
+      territoryHexes: [...state[territory].territoryHexes.filter(item => item != coordinates), coordinates]
+    })
+  }
+  else {
+    return ({
+      id: territory,
+      text: territory,
+      terrainHexes: [],
+      territoryHexes: [coordinates],
+      otherTag: false
+    })
+  }
+}
+
+function wouldDeleteTag(tag, coordinates, removeOther) {
+  /*
+  If we were to remove the coordinates from this tag's terrainHexes and territoryHexes, would the tag be deletable?
+  i.e. Would it have any references left?
+  */
+  let testTag = {
+    ...tag,
+    terrainHexes: [...tag.terrainHexes.filter(item => item != coordinates)],
+    territoryHexes: [...tag.territoryHexes.filter(item => item != coordinates)],
+  }
+  if (removeOther) {
+    testTag = {
+      ...testTag,
+      otherTag: false
+    }
+  }
+  if ( testTag.territoryHexes.length > 0 || testTag.terrainHexes.length > 0 || testTag.otherTag == true ) {
+    return false
+  }
+  else {
+    return true
   }
 }
 

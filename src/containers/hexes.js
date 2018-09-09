@@ -81,8 +81,8 @@ class HexesWorkspace extends Component {
     const hexTagRegEx = /^[a-z]+$/ 
     if ( value.match(hexLineRegEx) ) {
       let [newCoordinates, newTerrain, newTerritory] = value.split(',')
-      newTerrain = newTerrain.match(hexTagRegEx) ? newTerrain : undefined
-      newTerritory = newTerritory.match(hexTagRegEx) ? newTerritory : undefined
+      newTerrain = newTerrain && newTerrain.match(hexTagRegEx) ? newTerrain : undefined
+      newTerritory = newTerritory && newTerritory.match(hexTagRegEx) ? newTerritory : undefined
       //are we overwriting an existing hex?
       const replaceHex = this.props.tableEntries.byId[newCoordinates]
       const replaceTerrainTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[0]] : undefined
@@ -103,8 +103,8 @@ class HexesWorkspace extends Component {
     for (let i = 0; i < lines.length; i++) {
       if ( lines[i].match(hexLineRegEx) ) {
         let [newCoordinates, newTerrain, newTerritory] = lines[i].split(',')
-        newTerrain = newTerrain.match(hexTagRegEx) ? newTerrain : undefined
-        newTerritory = newTerritory.match(hexTagRegEx) ? newTerritory : undefined
+        newTerrain = newTerrain && newTerrain.match(hexTagRegEx) ? newTerrain : undefined
+        newTerritory = newTerritory && newTerritory.match(hexTagRegEx) ? newTerritory : undefined
         //are we overwriting an existing hex?
         const replaceHex = this.props.tableEntries.byId[newCoordinates]
         const replaceTerrainTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[0]] : undefined

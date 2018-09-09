@@ -35,15 +35,16 @@ class TagsWorkspace extends Component {
     this.handleRemoveOtherTag = this.handleRemoveOtherTag.bind(this)
   };
 
-  handleSubmitOtherTag(tag) {
+  handleSubmitOtherTag(tagText) {
     const tagRegEx = /^[a-z]+$/
-    if ( tag.match(tagRegEx) ) {
-      this.props.addOtherTag(tag)
+    if ( tagText.match(tagRegEx) ) {
+      this.props.addOtherTag(tagText)
     }
   }
 
-  handleRemoveOtherTag(tag) {
-    this.props.deleteOtherTag(tag)
+  handleRemoveOtherTag(tagText) {
+    console.log(`tagText ${tagText}`)
+    this.props.deleteOtherTag(this.props.tags.byId[tagText])
   }
 
   render() {
