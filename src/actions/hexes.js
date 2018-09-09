@@ -1,3 +1,5 @@
+import store from '../store/store'
+
 const uuidv4 = require('uuid/v4');
 
 /* action types */
@@ -28,13 +30,23 @@ export function deleteHexDetail(entryDetailId) {
   return { type: DELETE_HEX_DETAIL, payload: {'entryDetailId': entryDetailId} }
 }
 
-export function addHex(newCoordinates, newTerrain, newTerritory, replaceHex, replaceTerrainTag, replaceTerritoryTag) {
+export function addHex(newCoordinates, newTerrain, newTerritory) {
   /*
   :param newCoordinates: coordinates (tableEntry ID) of the new hex
   :param newTerrain: terrain tag ID of the new hex
   :param newTerritory: territory tag ID of the new hex
-  :param replaceHex: existing hex tableEntry (if any) at the same coordinates that will be overwritten
   */
+  const state = store.getState()
+  const tables = state.entities.tables
+  const tableEntries = state.entities.tableEntries
+  const tags = state.entities.tags
+
+  // Are we overwriting an existing hex?
+  const replaceHex = (tables.byId['HEX'].entries.includes(newCoordinates)) ? tableEntries.byId[newCoordinates] : undefined
+  // Does that hex have existing tags?
+  const replaceTerrainTag = (replaceHex && replaceHex.addTags[0]) ? tags.byId[replaceHex.addTags[0]] : undefined
+  const replaceTerritoryTag = (replaceHex && replaceHex.addTags[1]) ? tags.byId[replaceHex.addTags[1]] : undefined
+
   return { type: ADD_HEX, payload: {
     'newCoordinates': newCoordinates, 
     'newTerrain': newTerrain, 
@@ -45,7 +57,7 @@ export function addHex(newCoordinates, newTerrain, newTerritory, replaceHex, rep
   } }
 }
 
-export function updateHexTags(coordinates, newTerrain, newTerritory, oldTerrainTag, oldTerritoryTag) {
+export function updateHexTags(coordinates, newTerrain, newTerritory) {
   /*
   :param coordinate: coordinates (tableEntry ID) of the hex we're updating tags on
   :param newTerrain: new terrain tag ID of the hex
@@ -53,6 +65,16 @@ export function updateHexTags(coordinates, newTerrain, newTerritory, oldTerrainT
   :param oldTerrainTag: full Tag object of the old terrain for hex
   :param oldTerritoryTag: full Tag object of the old territory for hex
   */
+  const state = store.getState()
+  const tableEntries = state.entities.tableEntries
+  const tags = state.entities.tags
+
+  const hex = tableEntries.byId[coordinates]
+
+  //What are the old tags we're replacing?
+  const oldTerrainTag = (hex.addTags[0]) ? tags.byId[hex.addTags[0]] : undefined
+  const oldTerritoryTag = (hex.addTags[1]) ? tags.byId[hex.addTags[1]] : undefined
+
   return { type: UPDATE_HEX_TAGS, payload: {
     'coordinates': coordinates, 
     'newTerrain': newTerrain, 
@@ -62,7 +84,7 @@ export function updateHexTags(coordinates, newTerrain, newTerritory, oldTerrainT
   } }
 }
 
-export function updateHexCoordinates(newCoordinates, oldHex, replaceHex, replaceTerrainTag, replaceTerritoryTag) {
+export function updateHexCoordinates(newCoordinates, oldCoordinates) {
   /*
   :param newCoordinates: new coordinates (tableEntry ID) for the new hex
   :param oldHex: full tableEntry object of the hexes previous state
@@ -70,6 +92,19 @@ export function updateHexCoordinates(newCoordinates, oldHex, replaceHex, replace
   :param replaceTerrainTag: existing full Tag object assinged to replaceHex.addTags[0]
   :param replaceTerritoryTag: existing full Tag object assinged to replaceHex.addTags[1]
   */
+  const state = store.getState()
+  const tables = state.entities.tables
+  const tableEntries = state.entities.tableEntries
+  const tags = state.entities.tags
+
+  const oldHex = tableEntries.byId[oldCoordinates]
+
+  // Are we overwriting an existing hex?
+  const replaceHex = (tables.byId['HEX'].entries.includes(newCoordinates)) ? tableEntries.byId[newCoordinates] : undefined
+  // Does that hex have existing tags?
+  const replaceTerrainTag = (replaceHex && replaceHex.addTags[0]) ? tags.byId[replaceHex.addTags[0]] : undefined
+  const replaceTerritoryTag = (replaceHex && replaceHex.addTags[1]) ? tags.byId[replaceHex.addTags[1]] : undefined
+
   return { type: UPDATE_HEX_COORDINATES, payload: {
     'newCoordinates': newCoordinates, 
     'oldHex': oldHex,

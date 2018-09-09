@@ -83,11 +83,7 @@ class HexesWorkspace extends Component {
       let [newCoordinates, newTerrain, newTerritory] = value.split(',')
       newTerrain = newTerrain && newTerrain.match(hexTagRegEx) ? newTerrain : undefined
       newTerritory = newTerritory && newTerritory.match(hexTagRegEx) ? newTerritory : undefined
-      //are we overwriting an existing hex?
-      const replaceHex = this.props.tableEntries.byId[newCoordinates]
-      const replaceTerrainTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[0]] : undefined
-      const replaceTerritoryTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[1]] : undefined
-      this.props.addHex(newCoordinates, newTerrain, newTerritory, replaceHex, replaceTerrainTag, replaceTerritoryTag)
+      this.props.addHex(newCoordinates, newTerrain, newTerritory)
     }
   }
 
@@ -103,13 +99,9 @@ class HexesWorkspace extends Component {
     for (let i = 0; i < lines.length; i++) {
       if ( lines[i].match(hexLineRegEx) ) {
         let [newCoordinates, newTerrain, newTerritory] = lines[i].split(',')
-        newTerrain = newTerrain && newTerrain.match(hexTagRegEx) ? newTerrain : undefined
-        newTerritory = newTerritory && newTerritory.match(hexTagRegEx) ? newTerritory : undefined
-        //are we overwriting an existing hex?
-        const replaceHex = this.props.tableEntries.byId[newCoordinates]
-        const replaceTerrainTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[0]] : undefined
-        const replaceTerritoryTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[1]] : undefined
-        this.props.addHex(newCoordinates, newTerrain, newTerritory, replaceHex, replaceTerrainTag, replaceTerritoryTag)
+      newTerrain = newTerrain && newTerrain.match(hexTagRegEx) ? newTerrain : undefined
+      newTerritory = newTerritory && newTerritory.match(hexTagRegEx) ? newTerritory : undefined
+      this.props.addHex(newCoordinates, newTerrain, newTerritory)
       }
     }
   };
@@ -121,26 +113,19 @@ class HexesWorkspace extends Component {
   handleSubmitTerrain(coordinates, value) {
     const newTerrain = value
     const newTerritory = this.props.tableEntries.byId[coordinates].addTags[1]
-    const oldTerrainTag = this.props.tags.byId[this.props.tableEntries.byId[coordinates].addTags[0]]
-    const oldTerritoryTag = this.props.tags.byId[newTerritory]
-    this.props.updateHexTags(coordinates, newTerrain, newTerritory, oldTerrainTag, oldTerritoryTag)
+    this.props.updateHexTags(coordinates, newTerrain, newTerritory)
   }
 
   handleSubmitTerritory(coordinates, value) {
     const newTerrain = this.props.tableEntries.byId[coordinates].addTags[0]
     const newTerritory = value
-    const oldTerrainTag = this.props.tags.byId[newTerrain]
-    const oldTerritoryTag = this.props.tags.byId[this.props.tableEntries.byId[coordinates].addTags[1]]
-    this.props.updateHexTags(coordinates, newTerrain, newTerritory, oldTerrainTag, oldTerritoryTag)
+    this.props.updateHexTags(coordinates, newTerrain, newTerritory)
   }
 
   handleSubmitCoordinates(coordinates, value) {
     const newCoordinates = value
-    const oldHex = this.props.tableEntries.byId[coordinates]
-    const replaceHex = this.props.tableEntries.byId[newCoordinates]
-    const replaceTerrainTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[0]] : undefined
-    const replaceTerritoryTag = replaceHex ? this.props.tags.byId[replaceHex.addTags[1]] : undefined
-    this.props.updateHexCoordinates(newCoordinates, oldHex, replaceHex, replaceTerrainTag, replaceTerritoryTag)
+    const oldCoordinates = coordinates
+    this.props.updateHexCoordinates(newCoordinates, oldCoordinates)
   }
 
   createHexDataTable(tables, tableEntries, tags, onSubmitCoordinates, onSubmitTerrain, onSubmitTerritory) {
