@@ -12,7 +12,7 @@ function byId(state=null, action) {
       return byIdAddHexDetail(state, action)
 
     case DELETE_HEX_DETAIL:
-      return state
+      return byIdDeleteHexDetail(state, action)
 
     case UPDATE_HEX_COORDINATES:
       return byIdUpdateHexCoordinates(state, action)
@@ -59,6 +59,16 @@ function byIdAddHexDetail(state, action) {
     ['HEX']: {
       ...state['HEX'],
       entryDetails: [...state['HEX'].entryDetails, action.payload.newEntryDetailId]
+    }
+  }
+}
+
+function byIdDeleteHexDetail(state, action) {
+  return {
+    ...state,
+    ['HEX']: {
+      ...state['HEX'],
+      entryDetails: [...state['HEX'].entryDetails.filter(item => item != action.payload.entryDetailId)]
     }
   }
 }

@@ -13,6 +13,7 @@ import { ListWithDeletableItems } from './lists'
 import './components.css';
 
 function getHexDefinitions(entryDetailsGroups, entryDetails) {
+  console.log('getHexDefinitions')
   console.log(entryDetailsGroups)
   console.log(entryDetails)
   const hexDetailsIds = entryDetailsGroups.byId['HEX'].entryDetails
@@ -39,7 +40,7 @@ function HexDefinitionSegment(props) {
                 (hexDefinition) => ({
                   key: hexDefinition.id, 
                   content: hexDefinition.text, 
-                  onClick: props.onDeleteHexDefinition(hexDefinition.id)
+                  onClick: () => props.onDeleteHexDefinition(hexDefinition.id)
                 })
               )
             }

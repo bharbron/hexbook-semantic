@@ -23,6 +23,7 @@ export const VisibilityFilters = {
 /* action creators */
 
 export function addHexDetail(newEntryDetailText) {
+  console.log(`newEntryDetailText: ${newEntryDetailText}`)
   return { type: ADD_HEX_DETAIL, payload: {'newEntryDetailText': newEntryDetailText, 'newEntryDetailId': uuidv4()} }
 }
 

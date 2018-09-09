@@ -98,7 +98,10 @@ function allIdsAddHex(state, action) {
 }
 
 function allIdsAddHexDetail(state, action) {
-  return ([...state, action.payload.entryDetailId])
+  console.log('allIdsAddHexDetail')
+  console.log(state)
+  console.log(action)
+  return ([...state, action.payload.newEntryDetailId])
 }
 
 function allIdsDeleteHexDetail(state, action) {

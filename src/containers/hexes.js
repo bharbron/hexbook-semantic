@@ -70,10 +70,12 @@ class HexesWorkspace extends Component {
   };
 
   handleSubmitHexDetailInput(value) {
+    console.log(`value: ${value}`)
     this.props.addHexDetail(value)
   }
 
   handleClickDeleteHexDetail(id) {
+    console.log(`id: ${id}`)
     this.props.deleteHexDetail(id)
   }
 
