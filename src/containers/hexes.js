@@ -96,7 +96,6 @@ class HexesWorkspace extends Component {
   };
 
   handleSubmitClickHexMapInputModal(value) {
-    console.log(`handleSubmitClickHexMapInputModal: ${value}`)
     this.setState({openHexMapInputModal: false})
     const lines = value.split('\n')
     const hexLineRegEx = /^[a-zA-Z0-9]+$|^[a-zA-Z0-9]+,[a-z]*$|^[a-zA-Z0-9]+,[a-z]*,[a-z]*$/
