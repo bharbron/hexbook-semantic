@@ -40,12 +40,20 @@ export function addHex(newCoordinates, newTerrain, newTerritory) {
   const tables = state.entities.tables
   const tableEntries = state.entities.tableEntries
   const tags = state.entities.tags
+  const entryDetailsGroups = state.entities.entryDetailsGroups
 
   // Are we overwriting an existing hex?
   const replaceHex = (tables.byId['HEX'].entries.includes(newCoordinates)) ? tableEntries.byId[newCoordinates] : undefined
   // Does that hex have existing tags?
   const replaceTerrainTag = (replaceHex && replaceHex.addTags[0]) ? tags.byId[replaceHex.addTags[0]] : undefined
   const replaceTerritoryTag = (replaceHex && replaceHex.addTags[1]) ? tags.byId[replaceHex.addTags[1]] : undefined
+  // Does that hex have any non-default entryDetails?
+  const replaceEntryDetailsGroupId = (replaceHex && replaceHex.entryDetailsGroup && replaceHex.entryDetailsGroup != 'HEX') ? 
+    replaceHex.entryDetailsGroup : 
+    undefined;
+  const replaceEntryDetailsIds = (replaceEntryDetailsGroupId) ?
+    entryDetailsGroups.byId[replaceEntryDetailsGroupId].entryDetails :
+    [];
 
   return { type: ADD_HEX, payload: {
     'newCoordinates': newCoordinates, 
@@ -53,7 +61,9 @@ export function addHex(newCoordinates, newTerrain, newTerritory) {
     'newTerritory': newTerritory, 
     'replaceHex': replaceHex,
     'replaceTerrainTag': replaceTerrainTag,
-    'replaceTerritoryTag': replaceTerritoryTag
+    'replaceTerritoryTag': replaceTerritoryTag,
+    'replaceEntryDetailsGroupId': replaceEntryDetailsGroupId,
+    'replaceEntryDetailsIds': replaceEntryDetailsIds,
   } }
 }
 
