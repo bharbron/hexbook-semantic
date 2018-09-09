@@ -106,6 +106,7 @@ export function updateHexCoordinates(newCoordinates, oldCoordinates) {
   const tables = state.entities.tables
   const tableEntries = state.entities.tableEntries
   const tags = state.entities.tags
+  const entryDetailsGroups = state.entities.entryDetailsGroups
 
   const oldHex = tableEntries.byId[oldCoordinates]
 
@@ -114,6 +115,13 @@ export function updateHexCoordinates(newCoordinates, oldCoordinates) {
   // Does that hex have existing tags?
   const replaceTerrainTag = (replaceHex && replaceHex.addTags[0]) ? tags.byId[replaceHex.addTags[0]] : undefined
   const replaceTerritoryTag = (replaceHex && replaceHex.addTags[1]) ? tags.byId[replaceHex.addTags[1]] : undefined
+  // Does that hex have any non-default entryDetails?
+  const replaceEntryDetailsGroupId = (replaceHex && replaceHex.entryDetailsGroup && replaceHex.entryDetailsGroup != 'HEX') ? 
+    replaceHex.entryDetailsGroup : 
+    undefined;
+  const replaceEntryDetailsIds = (replaceEntryDetailsGroupId) ?
+    entryDetailsGroups.byId[replaceEntryDetailsGroupId].entryDetails :
+    [];
 
   return { type: UPDATE_HEX_COORDINATES, payload: {
     'newCoordinates': newCoordinates, 
@@ -121,5 +129,7 @@ export function updateHexCoordinates(newCoordinates, oldCoordinates) {
     'replaceHex': replaceHex,
     'replaceTerrainTag': replaceTerrainTag,
     'replaceTerritoryTag': replaceTerritoryTag,
+    'replaceEntryDetailsGroupId': replaceEntryDetailsGroupId,
+    'replaceEntryDetailsIds': replaceEntryDetailsIds,
   } }
 }

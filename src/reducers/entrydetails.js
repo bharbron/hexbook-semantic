@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_HEX, ADD_HEX_DETAIL, DELETE_HEX_DETAIL } from '../actions/hexes'
+import { ADD_HEX, ADD_HEX_DETAIL, DELETE_HEX_DETAIL, UPDATE_HEX_COORDINATES } from '../actions/hexes'
 
 function byId(state=null, action) {
   console.log(state)
@@ -13,6 +13,9 @@ function byId(state=null, action) {
 
     case DELETE_HEX_DETAIL:
       return byIdDeleteHexDetail(state, action)
+
+    case UPDATE_HEX_COORDINATES:
+      return byIdUpdateHexCoordinates(state, action)
 
     default:
       return state
@@ -31,6 +34,9 @@ function allIds(state=null, action) {
 
     case DELETE_HEX_DETAIL:
       return allIdsDeleteHexDetail(state, action)
+
+    case UPDATE_HEX_COORDINATES:
+      return allIdsUpdateHexCoordinates(state, action)
 
     default:
       return state
@@ -63,6 +69,18 @@ function byIdDeleteHexDetail(state, action) {
   })
 }
 
+function byIdUpdateHexCoordinates(state, action) {
+  const replaceEntryDetailsIds = action.payload.replaceEntryDetailsIds
+  let newState = {...state}
+  for (let i = 0; i < replaceEntryDetailsIds.length; i++) {
+    newState = {
+      ...state,
+      [replaceEntryDetailsIds[i]]: undefined
+    }
+  }
+  return newState
+}
+
 function allIdsAddHex(state, action) {
   const replaceEntryDetailsIds = action.payload.replaceEntryDetailsIds
   return ([
@@ -79,6 +97,13 @@ function allIdsAddHexDetail(state, action) {
 
 function allIdsDeleteHexDetail(state, action) {
   return state.filter(item => item !== action.payload.entryDetailId)
+}
+
+function allIdsUpdateHexCoordinates(state, action) {
+  const replaceEntryDetailsIds = action.payload.replaceEntryDetailsIds
+  return ([
+    ...state.filter(item => !replaceEntryDetailsIds.includes(item))
+  ])
 }
 
 export default combineReducers({byId: byId, allIds: allIds})
