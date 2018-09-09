@@ -9,7 +9,7 @@ import {
 } from 'semantic-ui-react';
 import { WideColumnWorkspace } from '../components/workspaces'
 import { FloatingActionButton, FloatingWorkspaceMenu } from '../components/floatingcontrols'
-import { TableSummaryCardGroup } from '../components/tables'
+import { TableSummaryCardGroup, TableInputModal } from '../components/tables'
 
 import './containers.css';
 
@@ -20,12 +20,37 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 class TablesWorkspace extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      openTableInputModal: false,
+    };
+
+    this.handleCloseTableInputModal = this.handleCloseTableInputModal.bind(this)
+    this.handleSubmitTableInputModal = this.handleSubmitTableInputModal.bind(this)
+    this.handleClickAddTableButton = this.handleClickAddTableButton.bind(this)
+  };
+
+  handleCloseTableInputModal() {
+    this.setState({openTableInputModal: false})
+  }
+
+  handleSubmitTableInputModal(name, code, description) {
+    console.log('handleSubmitTableInputModal')
+    console.log(name)
+    console.log(code)
+    console.log(description)
+  }
+
+  handleClickAddTableButton() {
+    this.setState({openTableInputModal: true})
+  }
+    
   render() {
     return (
       <div id='TablesWorkspace'>
         <WideColumnWorkspace>
           <Card.Group>
-            <TableSummaryCard name='Component Test' code='TEST' description='Testing the new TableSummaryCard component' />
 
             <Card link>
               <Card.Content>
@@ -358,6 +383,13 @@ class TablesWorkspace extends Component {
             </Card>
 
           </Card.Group>
+
+          <TableInputModal 
+            open={this.state.openTableInputModal}
+            onClose={this.handleCloseTableInputModal}
+            onSubmit={this.handleSubmitTableInputModal}
+          />
+
         </WideColumnWorkspace>
 
         <FloatingWorkspaceMenu>
@@ -365,7 +397,8 @@ class TablesWorkspace extends Component {
           <Dropdown.Item text='Export tables ...' />
           <Dropdown.Item text='Delete all tables' />
         </FloatingWorkspaceMenu>
-        <FloatingActionButton icon='plus' color='google plus' />
+
+        <FloatingActionButton icon='plus' color='google plus' onClick={this.handleClickAddTableButton} />
         
       </div>
     );
