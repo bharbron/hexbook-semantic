@@ -22,6 +22,7 @@ import { FloatingActionButton } from '../components/floatingcontrols'
 import { TextAreaInputModal } from '../components/modals'
 import { ListWithDeletableItems } from '../components/lists'
 import { DirectInputTableCell } from '../components/datatables'
+import { getHexDefinitions, HexDefinitionSegment } from '../components/hexes'
 
 import { 
   addHexDetail, 
@@ -35,6 +36,7 @@ import './containers.css';
 
 const mapStateToProps = state => ({
   tables: state.entities.tables,
+  entryDetailsGroups: state.entities.entryDetailsGroups,
   entryDetails: state.entities.entryDetails,
   tableEntries: state.entities.tableEntries,
   tags: state.entities.tags,
@@ -149,9 +151,18 @@ class HexesWorkspace extends Component {
   }
 
   render() {
+    const hexDefinitions = getHexDefinitions(this.props.entryDetailsGroups, this.props.entryDetails)
+    console.log(hexDefinitions)
+
     return (
       <div id='HexesWorkspace'>
         <WideColumnWorkspace>
+
+          <HexDefinitionSegment
+            hexDefinitions={hexDefinitions}
+            onSubmitHexDefinition={this.handleSubmitHexDetailInput}
+            onDeleteHexDefinition={this.handleClickDeleteHexDetail}
+          />
 
           <Transition transitionOnMount='true' animation='fade up'>
           <Segment.Group>
@@ -159,19 +170,7 @@ class HexesWorkspace extends Component {
               <Header content='Hex Definition' subheader='What details should be randomly generated for each hex.' />
             </Segment>
             <Segment>
-              {/*}
-              <List bulleted size='large'>
-                <List.Item>Lorem ipsum [[DOLLAR]] sit amet, consectetur <Icon link name='minus circle' color='grey' /></List.Item>
-                <List.Item>[[CONSECTETUR]] adipiscing elit <Icon link name='minus circle' color='grey' /></List.Item>
-                <List.Item>sed do eiusmod [[TEMPOR]] incididunt <Icon link name='minus circle' color='grey' /></List.Item>
-              </List>
-              */}
-              {/*
-              <Transition.Group as={List} bulleted size='large'>
-                { this.props.entryDetails.allIds.map((id) => <List.Item key={id}>{ this.props.entryDetails.byId[id].text } <Icon onClick={() => this.handleClickDeleteHexDetail(id)} link name='minus circle' color='grey' /></List.Item>) }
-              </Transition.Group>
-              */}
-              <ListWithDeletableItems bulleted='true' items={ this.props.entryDetails.allIds.map((id) => ({key: id, content: this.props.entryDetails.byId[id].text, onClick: () => this.handleClickDeleteHexDetail(id) })) } />
+              {/*<ListWithDeletableItems bulleted='true' items={ this.props.entryDetails.allIds.map((id) => ({key: id, content: this.props.entryDetails.byId[id].text, onClick: () => this.handleClickDeleteHexDetail(id) })) } />*/}
               <SingleLineAdder
                 onSubmit={this.handleSubmitHexDetailInput}
                 name='hex_definition'
