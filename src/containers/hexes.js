@@ -21,7 +21,7 @@ import { SingleLineAdder } from '../components/forms'
 import { FloatingActionButton } from '../components/floatingcontrols'
 import { TextAreaInputModal } from '../components/modals'
 import { ListWithDeletableItems } from '../components/lists'
-import { DirectInputTableCell } from '../components/tables'
+import { DirectInputTableCell } from '../components/datatables'
 
 import { 
   addHexDetail, 

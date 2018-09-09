@@ -1,78 +1,167 @@
 import React, { Component } from 'react';
 import {
+  Button,
+  Card,
   Form,
-  Table
+  Header,
+  Input,
+  Label,
+  Modal,
+  Transition
 } from 'semantic-ui-react';
 
 import './components.css';
 
-class DirectInputTableCell extends Component {
+function TableSummaryLabels(props) {
+  return (
+    <Label.Group>
+      <Label circular>{props.table.entries.length}</Label>
+    </Label.Group>
+  );
+}
+
+function TableSummaryCard(props) {
+  return (
+    <Card link>
+      <Card.Content>
+        <Card.Header>{props.table.name}</Card.Header>
+        <Card.Meta>{props.table.code}</Card.Meta>
+        <Card.Description>{props.table.description}</Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+        <TableSummaryLabels table={this.props.table} />
+      </Card.Content>
+    </Card>
+  );
+}
+
+function TableSummaryCardGroup(props) {
+  return (
+    <Card.Group children={this.props.tables.map(table => <TableSummaryCard table={table} />)} />
+  );
+}
+
+class TableInputModal extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      inputMode: false,
-      value: this.props.content
+      valueName: '',
+      valueCode: '',
+      valueDescription: '',
+      nameValid: false,
+      codeValid: false,
+      descriptionValid: false,
+      addButtonColor: null,
+      addButtonDisabled: true
     }
 
-    this.handleBlur = this.handleBlur.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChangeName = this.handleChangeName.bind(this);
+    this.handleChangeCode = this.handleChangeCode.bind(this);
+    this.handleChangeDescription = this.handleChangeDescription.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+    this.addButtonColor = this.addButtonColor.bind(this);
+    this.addButtonDisabled = this.addButtonDisabled.bind(this);
   }
 
   static defaultProps = {
-    onSubmit: () => console.log('default onSubmit')
-  };
+    open: false,
+    onSubmit: (name, code, description) => console.log(`default onSubmit: ${name}; ${code}; ${description}`)
+  }
 
-  componentDidUpdate(prevProps) {
-    // this handles the case where, for example, the 'tag name' changed due to an exisitng hex being overwritten
-    // forces the cell to reset its default input value to the cell content
-    // otherwise this would only update on the next handleBlue() or handleChange()
-    if (this.props.content !== prevProps.content) {
-      this.setState({value: this.props.content})
+  handleChangeName(event) {
+    if (event.target.value) {
+      this.setState({valueName: event.target.value, nameValid: true})
+    }
+    else {
+      this.setState({valueName: event.target.value, nameValid: false})
     }
   }
 
-  handleBlur() {
-    this.setState({value: this.props.content, inputMode: false})
+  handleChangeCode(event) {
+    if (event.target.value) {
+      this.setState({valueCode: event.target.value, codeValid: true})
+    }
+    else {
+      this.setState({valueCode: event.target.value, codeValid: false})
+    }
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
+  handleChangeDescription(event) {
+    if (event.target.value) {
+      this.setState({valueDescription: event.target.value, descriptionValid: true})
+    }
+    else {
+      this.setState({valueDescription: event.target.value, descriptionValid: false})
+    }
   }
 
   handleSubmit() {
-    this.setState({inputMode: false})
-    this.props.onSubmit(this.state.value)
+    const name = this.state.valueName
+    const code = this.state.valueCode
+    const description = this.state.valueDescription
+    this.setState({valueName: '', valueCode: '', valueDescription: '', nameValid: false, codeValid: false, descriptionValid: false})
+    this.props.onSubmit(name, code, description)
   }
 
-  handleKeyDown(event) {
-    //exit on escape
-    if (event.keyCode === 27) {
-      this.setState({value: this.props.content, inputMode: false})
-    }
+  handleClose() {
+    this.props.onClose()
   }
 
-  render () {
+  handleCancel() {
+    this.setState({valueName: '', valueCode: '', valueDescription: ''})
+    this.props.onClose()
+  }
+
+  addButtonColor() {
+    return ( this.state.nameValid && this.state.codeValid && this.state.descriptionValid ) ? 'blue' : null
+  }
+
+  addButtonDisabled() {
+    return ( this.state.nameValid && this.state.codeValid && this.state.descriptionValid ) ? false : true
+  }
+
+  render() {
     return (
-      <Table.Cell onClick={ () => this.setState({inputMode: true}) } onBlur={this.handleBlur}>
-        { !this.state.inputMode && this.props.content }
-        { this.state.inputMode && 
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Input
-              fluid
-              focus
-              size='tiny'
-              autoFocus
-              value={this.state.value}
-              onChange={this.handleChange}
-              onKeyDown={this.handleKeyDown}
-            />
-          </Form>
-        }
-      </Table.Cell>
-    )
+      <Transition animation='fly up' mountOnShow unmountOnHide='true' visible={this.props.open}>
+        <Modal size='tiny' open={true} onClose={this.handleClose} className='TableInputModal'>
+          <Modal.Header style={{ borderBottom: '0px' }}>
+            <Header as='h3' content='Add New Table' />
+          </Modal.Header>
+          <Modal.Content scrolling>
+            <Form>
+              <Form.Input 
+                label='Name' 
+                transparent
+                placeholder='Enter name of table...' 
+                value={this.state.valueName}
+                onChange={this.handleChangeName} 
+              />
+              <Form.Input 
+                label='CODE' 
+                transparent
+                placeholder='Enter reference CODE for table...' 
+                value={this.state.valueCode}
+                onChange={this.handleChangeCode} 
+              />
+              <Form.Input
+                label='Description'
+                transparent
+                placeholder='Enter description of the table...' 
+                value={this.state.valueDescription}
+                onChange={this.handleChangeDescription}
+              />
+            </Form>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button id='TableInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
+            <Button id='TableInputModalSave' color={this.addButtonColor()} disabled={this.addButtonDisabled()} onClick={this.handleSubmit}>ADD</Button>
+          </Modal.Actions>
+        </Modal>
+      </Transition>
+    );
   }
 }
 
-export { DirectInputTableCell }
+export { TableSummaryCardGroup, TableInputModal }
