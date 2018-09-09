@@ -9,6 +9,7 @@ import {
 } from 'semantic-ui-react';
 import { WideColumnWorkspace } from '../components/workspaces'
 import { FloatingActionButton, FloatingWorkspaceMenu } from '../components/floatingcontrols'
+import { TableSummaryCardGroup } from '../components/tables'
 
 import './containers.css';
 
@@ -24,6 +25,8 @@ class TablesWorkspace extends Component {
       <div id='TablesWorkspace'>
         <WideColumnWorkspace>
           <Card.Group>
+            <TableSummaryCard name='Component Test' code='TEST' description='Testing the new TableSummaryCard component' />
+
             <Card link>
               <Card.Content>
                 <Card.Header>Random Encounters</Card.Header>
