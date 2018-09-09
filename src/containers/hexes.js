@@ -25,8 +25,8 @@ import { DirectInputTableCell } from '../components/datatables'
 import { getHexDefinitions, HexDefinitionSegment } from '../components/hexes'
 
 import { 
-  addHexDetail, 
-  deleteHexDetail, 
+  addHexDefinition, 
+  deleteHexDefinition, 
   addHex, 
   updateHexTags,
   updateHexCoordinates
@@ -43,8 +43,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  addHexDetail,
-  deleteHexDetail,
+  addHexDefinition,
+  deleteHexDefinition,
   addHex,
   updateHexTags,
   updateHexCoordinates
@@ -54,29 +54,29 @@ class HexesWorkspace extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      valueHexDetailInput: '',
+      valueHexDefinitionInput: '',
       openHexMapInputModal: false,
     };
 
-    this.handleSubmitHexDetailInput = this.handleSubmitHexDetailInput.bind(this)
+    this.handleSubmitHexDefinitionInput = this.handleSubmitHexDefinitionInput.bind(this)
     this.handleCloseHexMapInputModal = this.handleCloseHexMapInputModal.bind(this)
     this.handleSubmitClickHexMapInputModal = this.handleSubmitClickHexMapInputModal.bind(this)
     this.handleClickAddToHexMapButton = this.handleClickAddToHexMapButton.bind(this)
-    this.handleClickDeleteHexDetail = this.handleClickDeleteHexDetail.bind(this)
+    this.handleClickDeleteHexDefinition = this.handleClickDeleteHexDefinition.bind(this)
     this.handleSubmitHexInput = this.handleSubmitHexInput.bind(this)
     this.handleSubmitTerrain = this.handleSubmitTerrain.bind(this)
     this.handleSubmitTerritory = this.handleSubmitTerritory.bind(this)
     this.handleSubmitCoordinates = this.handleSubmitCoordinates.bind(this)
   };
 
-  handleSubmitHexDetailInput(value) {
+  handleSubmitHexDefinitionInput(value) {
     console.log(`value: ${value}`)
-    this.props.addHexDetail(value)
+    this.props.addHexDefinition(value)
   }
 
-  handleClickDeleteHexDetail(id) {
+  handleClickDeleteHexDefinition(id) {
     console.log(`id: ${id}`)
-    this.props.deleteHexDetail(id)
+    this.props.deleteHexDefinition(id)
   }
 
   handleSubmitHexInput(value) {
@@ -162,34 +162,9 @@ class HexesWorkspace extends Component {
 
           <HexDefinitionSegment
             hexDefinitions={hexDefinitions}
-            onSubmitHexDefinition={this.handleSubmitHexDetailInput}
-            onDeleteHexDefinition={this.handleClickDeleteHexDetail}
+            onSubmitHexDefinition={this.handleSubmitHexDefinitionInput}
+            onDeleteHexDefinition={this.handleClickDeleteHexDefinition}
           />
-
-          <Transition transitionOnMount='true' animation='fade up'>
-          <Segment.Group>
-            <Segment>
-              <Header content='Hex Definition' subheader='What details should be randomly generated for each hex.' />
-            </Segment>
-            <Segment>
-              {/*<ListWithDeletableItems bulleted='true' items={ this.props.entryDetails.allIds.map((id) => ({key: id, content: this.props.entryDetails.byId[id].text, onClick: () => this.handleClickDeleteHexDetail(id) })) } />*/}
-              <SingleLineAdder
-                onSubmit={this.handleSubmitHexDetailInput}
-                name='hex_definition'
-                placeholder='Enter [[NEW]] hex detail...'
-              />
-            </Segment>
-            <Segment>
-              <Label color='grey'>[[]]<Label.Detail>HEX</Label.Detail></Label>
-            </Segment>
-            <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
-              <Dropdown.Menu direction='left'>
-                <Dropdown.Item text='Import definition ...' />
-                <Dropdown.Item text='Export definition ...' />
-              </Dropdown.Menu>
-            </Dropdown>
-          </Segment.Group>
-          </Transition>
 
           <Transition transitionOnMount='true' animation='fade up'>
           <Segment>

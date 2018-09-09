@@ -4,8 +4,8 @@ const uuidv4 = require('uuid/v4');
 
 /* action types */
 
-export const ADD_HEX_DETAIL = 'ADD_HEX_DETAIL'
-export const DELETE_HEX_DETAIL = 'DELETE_HEX_DETAIL'
+export const ADD_HEX_DEFINITION = 'ADD_HEX_DEFINITION'
+export const DELETE_HEX_DEFINITION = 'DELETE_HEX_DEFINITION'
 export const ADD_HEX = 'ADD_HEX'
 export const UPDATE_HEX_TAGS = 'UPDATE_HEX_TAGS'
 export const UPDATE_HEX_COORDINATES = 'UPDATE_HEX_COORDINATES'
@@ -22,13 +22,13 @@ export const VisibilityFilters = {
 
 /* action creators */
 
-export function addHexDetail(newEntryDetailText) {
+export function addHexDefinition(newEntryDetailText) {
   console.log(`newEntryDetailText: ${newEntryDetailText}`)
-  return { type: ADD_HEX_DETAIL, payload: {'newEntryDetailText': newEntryDetailText, 'newEntryDetailId': uuidv4()} }
+  return { type: ADD_HEX_DEFINITION, payload: {'newEntryDetailText': newEntryDetailText, 'newEntryDetailId': uuidv4()} }
 }
 
-export function deleteHexDetail(entryDetailId) {
-  return { type: DELETE_HEX_DETAIL, payload: {'entryDetailId': entryDetailId} }
+export function deleteHexDefinition(entryDetailId) {
+  return { type: DELETE_HEX_DEFINITION, payload: {'entryDetailId': entryDetailId} }
 }
 
 export function addHex(newCoordinates, newTerrain, newTerritory) {

@@ -16,13 +16,13 @@ function getHexDefinitions(entryDetailsGroups, entryDetails) {
   console.log('getHexDefinitions')
   console.log(entryDetailsGroups)
   console.log(entryDetails)
-  const hexDetailsIds = entryDetailsGroups.byId['HEX'].entryDetails
-  const hexDetails = []
-  for (let i = 0; i < hexDetailsIds.length; i++) {
-    hexDetails.push(entryDetails.byId[hexDetailsIds[i]])
+  const hexDefinitionsIds = entryDetailsGroups.byId['HEX'].entryDetails
+  const hexDefinitions = []
+  for (let i = 0; i < hexDefinitionsIds.length; i++) {
+    hexDefinitions.push(entryDetails.byId[hexDefinitionsIds[i]])
   }
-  console.log(hexDetails)
-  return hexDetails
+  console.log(hexDefinitions)
+  return hexDefinitions
 };
 
 function HexDefinitionSegment(props) {

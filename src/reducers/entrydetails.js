@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_HEX, ADD_HEX_DETAIL, DELETE_HEX_DETAIL, UPDATE_HEX_COORDINATES } from '../actions/hexes'
+import { ADD_HEX, ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX_COORDINATES } from '../actions/hexes'
 
 function byId(state=null, action) {
   console.log(state)
@@ -8,11 +8,11 @@ function byId(state=null, action) {
     case ADD_HEX:
       return byIdAddHex(state, action)
 
-    case ADD_HEX_DETAIL:
-      return byIdAddHexDetail(state, action)
+    case ADD_HEX_DEFINITION:
+      return byIdAddHexDefinition(state, action)
 
-    case DELETE_HEX_DETAIL:
-      return byIdDeleteHexDetail(state, action)
+    case DELETE_HEX_DEFINITION:
+      return byIdDeleteHexDefinition(state, action)
 
     case UPDATE_HEX_COORDINATES:
       return byIdUpdateHexCoordinates(state, action)
@@ -29,11 +29,11 @@ function allIds(state=null, action) {
     case ADD_HEX:
       return allIdsAddHex(state, action)
 
-    case ADD_HEX_DETAIL:
-      return allIdsAddHexDetail(state, action)
+    case ADD_HEX_DEFINITION:
+      return allIdsAddHexDefinition(state, action)
 
-    case DELETE_HEX_DETAIL:
-      return allIdsDeleteHexDetail(state, action)
+    case DELETE_HEX_DEFINITION:
+      return allIdsDeleteHexDefinition(state, action)
 
     case UPDATE_HEX_COORDINATES:
       return allIdsUpdateHexCoordinates(state, action)
@@ -58,14 +58,14 @@ function byIdAddHex(state, action) {
   return state
 }
 
-function byIdAddHexDetail(state, action) {
+function byIdAddHexDefinition(state, action) {
   return ({
     ...state,
     [action.payload.newEntryDetailId]: {id: action.payload.newEntryDetailId, text: action.payload.newEntryDetailText}
   })
 }
 
-function byIdDeleteHexDetail(state, action) {
+function byIdDeleteHexDefinition(state, action) {
   return ({
     ...state,
     [action.payload.entryDetailId]: undefined
@@ -97,14 +97,14 @@ function allIdsAddHex(state, action) {
   return state
 }
 
-function allIdsAddHexDetail(state, action) {
-  console.log('allIdsAddHexDetail')
+function allIdsAddHexDefinition(state, action) {
+  console.log('allIdsAddHexDefinition')
   console.log(state)
   console.log(action)
   return ([...state, action.payload.newEntryDetailId])
 }
 
-function allIdsDeleteHexDetail(state, action) {
+function allIdsDeleteHexDefinition(state, action) {
   return state.filter(item => item !== action.payload.entryDetailId)
 }
 
