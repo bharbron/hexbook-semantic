@@ -8,9 +8,6 @@ function byId(state=null, action) {
     case ADD_HEX:
       return byIdAddHex(state, action)
 
-    case UPDATE_HEX_COORDINATES:
-      return byIdUpdateHexCoordinates(state, action)
-
     default:
       return state
   }
@@ -37,22 +34,6 @@ function byIdAddHex(state, action) {
         //avoid duplicates
         ...state['HEX'].entries.filter(item => item != action.payload.newCoordinates),
         action.payload.newCoordinates
-      ].sort() //always want hexes displayed in coordinate order
-    }
-  })
-}
-
-function byIdUpdateHexCoordinates(state, action) {
-  const newCoordinates = action.payload.newCoordinates
-  const oldHex = action.payload.oldHex
-  const oldHexCoordinates = (oldHex) ? oldHex.id : undefined
-  return ({
-    ...state,
-    'HEX': {
-      ...state['HEX'],
-      entries: [
-        ...state['HEX'].entries.filter(item => (item != oldHexCoordinates && item != newCoordinates)),
-        newCoordinates
       ].sort() //always want hexes displayed in coordinate order
     }
   })

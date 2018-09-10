@@ -14,9 +14,6 @@ function byId(state=null, action) {
     case DELETE_HEX_DEFINITION:
       return byIdDeleteHexDefinition(state, action)
 
-    case UPDATE_HEX_COORDINATES:
-      return byIdUpdateHexCoordinates(state, action)
-
     default:
       return state
   }
@@ -34,9 +31,6 @@ function allIds(state=null, action) {
 
     case DELETE_HEX_DEFINITION:
       return state
-
-    case UPDATE_HEX_COORDINATES:
-      return allIdsUpdateHexCoordinates(state, action)
 
     default:
       return state
@@ -73,26 +67,7 @@ function byIdDeleteHexDefinition(state, action) {
   }
 }
 
-function byIdUpdateHexCoordinates(state, action) {
-  if (action.payload.replaceEntryDetailsGroupId && action.payload.replaceEntryDetailsGroupId != 'HEX') {
-    return ({
-      ...state,
-      [action.payload.replaceEntryDetailsGroupId]: undefined
-    })
-  }
-  return state
-}
-
 function allIdsAddHex(state, action) {
-  if (action.payload.replaceEntryDetailsGroupId && action.payload.replaceEntryDetailsGroupId != 'HEX') {
-    return ([
-      ...state.filter(item => item != action.payload.replaceEntryDetailsGroupId)
-    ])
-  }
-  return state
-}
-
-function allIdsUpdateHexCoordinates(state, action) {
   if (action.payload.replaceEntryDetailsGroupId && action.payload.replaceEntryDetailsGroupId != 'HEX') {
     return ([
       ...state.filter(item => item != action.payload.replaceEntryDetailsGroupId)

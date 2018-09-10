@@ -28,8 +28,7 @@ import {
   addHexDefinition, 
   deleteHexDefinition, 
   addHex, 
-  updateHexTags,
-  updateHexCoordinates
+  updateHexTags
 } from '../actions/hexes'
 
 import './containers.css';
@@ -47,7 +46,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   deleteHexDefinition,
   addHex,
   updateHexTags,
-  updateHexCoordinates
 }, dispatch)
 
 class HexesWorkspace extends Component {
@@ -66,7 +64,6 @@ class HexesWorkspace extends Component {
     this.handleSubmitHexInput = this.handleSubmitHexInput.bind(this)
     this.handleSubmitTerrain = this.handleSubmitTerrain.bind(this)
     this.handleSubmitTerritory = this.handleSubmitTerritory.bind(this)
-    this.handleSubmitCoordinates = this.handleSubmitCoordinates.bind(this)
   };
 
   handleSubmitHexDefinitionInput(value) {
@@ -126,12 +123,6 @@ class HexesWorkspace extends Component {
     this.props.updateHexTags(coordinates, newTerrain, newTerritory)
   }
 
-  handleSubmitCoordinates(coordinates, value) {
-    const newCoordinates = value
-    const oldCoordinates = coordinates
-    this.props.updateHexCoordinates(newCoordinates, oldCoordinates)
-  }
-
   createHexDataTable(tables, tableEntries, tags, onSubmitCoordinates, onSubmitTerrain, onSubmitTerritory) {
     const rows = []
     for (let i = 0; i < tables.byId['HEX'].entries.length; i++) {
@@ -142,10 +133,10 @@ class HexesWorkspace extends Component {
       rows.push(
         <Table.Row key={coordinates}>
           <Table.Cell><Checkbox /></Table.Cell>
-          <DirectInputTableCell onSubmit={(value) => onSubmitCoordinates(coordinates, value)} content={ coordinates } />
+          <Table.Cell>{coordinates}</Table.Cell>
           <DirectInputTableCell onSubmit={(value) => onSubmitTerrain(coordinates, value)} content={ terrain } />
           <DirectInputTableCell onSubmit={(value) => onSubmitTerritory(coordinates, value)} content={ territory } />
-          <Table.Cell>{ override }</Table.Cell>
+          <Table.Cell>{override}</Table.Cell>
         </Table.Row>
       )
     }

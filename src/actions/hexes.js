@@ -8,7 +8,6 @@ export const ADD_HEX_DEFINITION = 'ADD_HEX_DEFINITION'
 export const DELETE_HEX_DEFINITION = 'DELETE_HEX_DEFINITION'
 export const ADD_HEX = 'ADD_HEX'
 export const UPDATE_HEX_TAGS = 'UPDATE_HEX_TAGS'
-export const UPDATE_HEX_COORDINATES = 'UPDATE_HEX_COORDINATES'
 
 /* other constants */
 
@@ -92,45 +91,5 @@ export function updateHexTags(coordinates, newTerrain, newTerritory) {
     'newTerritory': newTerritory,
     'oldTerrainTag': oldTerrainTag,
     'oldTerritoryTag': oldTerritoryTag,
-  } }
-}
-
-export function updateHexCoordinates(newCoordinates, oldCoordinates) {
-  /*
-  :param newCoordinates: new coordinates (tableEntry ID) for the new hex
-  :param oldHex: full tableEntry object of the hexes previous state
-  :param replaceHex: existing hex tableEntry (if any) at the same coordinates that will be overwritten
-  :param replaceTerrainTag: existing full Tag object assinged to replaceHex.addTags[0]
-  :param replaceTerritoryTag: existing full Tag object assinged to replaceHex.addTags[1]
-  */
-  const state = store.getState()
-  const tables = state.entities.tables
-  const tableEntries = state.entities.tableEntries
-  const tags = state.entities.tags
-  const entryDetailsGroups = state.entities.entryDetailsGroups
-
-  const oldHex = tableEntries.byId[oldCoordinates]
-
-  // Are we overwriting an existing hex?
-  const replaceHex = (tables.byId['HEX'].entries.includes(newCoordinates)) ? tableEntries.byId[newCoordinates] : undefined
-  // Does that hex have existing tags?
-  const replaceTerrainTag = (replaceHex && replaceHex.addTags[0]) ? tags.byId[replaceHex.addTags[0]] : undefined
-  const replaceTerritoryTag = (replaceHex && replaceHex.addTags[1]) ? tags.byId[replaceHex.addTags[1]] : undefined
-  // Does that hex have any non-default entryDetails?
-  const replaceEntryDetailsGroupId = (replaceHex && replaceHex.entryDetailsGroup) ? 
-    replaceHex.entryDetailsGroup : 
-    undefined;
-  const replaceEntryDetailsIds = (replaceEntryDetailsGroupId) ?
-    entryDetailsGroups.byId[replaceEntryDetailsGroupId].entryDetails :
-    [];
-
-  return { type: UPDATE_HEX_COORDINATES, payload: {
-    'newCoordinates': newCoordinates, 
-    'oldHex': oldHex,
-    'replaceHex': replaceHex,
-    'replaceTerrainTag': replaceTerrainTag,
-    'replaceTerritoryTag': replaceTerritoryTag,
-    'replaceEntryDetailsGroupId': replaceEntryDetailsGroupId,
-    'replaceEntryDetailsIds': replaceEntryDetailsIds,
   } }
 }

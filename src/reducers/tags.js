@@ -12,9 +12,6 @@ function byId(state=null, action) {
     case UPDATE_HEX_TAGS:
       return byIdUpdateHexTags(state, action)
 
-    case UPDATE_HEX_COORDINATES:
-      return byIdUpdateHexCoordinates(state, action)
-
     case ADD_OTHER_TAG:
       return byIdAddOtherTag(state, action)
 
@@ -36,9 +33,6 @@ function allIds(state=null, action) {
 
     case UPDATE_HEX_TAGS:
       return allIdsUpdateHexTags(state, action)
-
-    case UPDATE_HEX_COORDINATES:
-      return allIdsUpdateHexCoordinates(state, action)
 
     case ADD_OTHER_TAG:
       return allIdsAddOtherTag(state, action)
@@ -128,58 +122,6 @@ function byIdUpdateHexTags(state, action) {
   return newState
 }
 
-function byIdUpdateHexCoordinates(state, action) {
-  /*
-  1. Remove hex reference from the replaced hex's terrain tag
-  2. Remove hex reference from the replaced hex's territory tag
-  3. Update references in the hex's terrain tag to the new coordinates
-  4. Update referecens in the hex's territory tag to the new coordinates
-  */
-  const newCoordinates = action.payload.newCoordinates
-  const oldHex = action.payload.oldHex
-  const oldHexCoordinates = (oldHex) ? oldHex.id : undefined
-  const terrain = oldHex.addTags[0]
-  const territory = oldHex.addTags[1]
-  const replaceHex = action.payload.replaceHex
-  let newState = {...state}
-  if (replaceHex) {
-    const replaceCoordinates = replaceHex.id
-    const replaceTerrain = replaceHex.addTags[0]
-    const replaceTerritory = replaceHex.addTags[1]
-    if (replaceTerrain) {
-      newState = {
-        ...newState,
-        [replaceTerrain]: removeTerrainHexFromTag(newState[replaceTerrain], replaceCoordinates)
-      }
-    }
-    if (replaceTerritory) {
-      newState = {
-        ...newState,
-        [replaceTerritory]: removeTerritoryHexFromTag(newState[replaceTerritory], replaceCoordinates)
-      }
-    }
-  }
-  if (newState[terrain]) {
-    newState = {
-      ...newState,
-      [terrain]: {
-        ...newState[terrain],
-        terrainHexes: [...newState[terrain].terrainHexes.filter(item => item != oldHexCoordinates), newCoordinates]
-      }
-    }
-  }
-  if (newState[territory]) {
-    newState = {
-      ...newState,
-      [territory]: {
-        ...newState[territory],
-        territoryHexes: [...newState[territory].territoryHexes.filter(item => item != oldHexCoordinates), newCoordinates]
-      }
-    }
-  }
-  return newState
-}
-
 function byIdAddOtherTag(state, action) {
   return ({
     ...state,
@@ -247,25 +189,6 @@ function allIdsUpdateHexTags(state, action) {
   }
   if ( newTerritory ) {
     newState = [...newState.filter(item => item != newTerritory), newTerritory]
-  }
-  return newState
-}
-
-function allIdsUpdateHexCoordinates(state, action) {
-  /*
-  1. If removing the replaceHex coordinate from the replaceTerrain tag would leave it with no references, remove it from the list
-  2. If removing the replaceHex coordinate from the replaceTerritory tag would leave it with no references, remove it from the list
-  3. Nothing else to be done: coordinate change doesn't change the tags on the hex
-  */
-  const newCoordinates = action.payload.newCoordinates
-  const replaceTerrainTag = action.payload.replaceTerrainTag
-  const replaceTerritoryTag = action.payload.replaceTerritoryTag
-  let newState = [...state]
-  if (replaceTerrainTag && wouldDeleteTag(replaceTerrainTag, newCoordinates)) {
-    newState = [...newState.filter(item => item != replaceTerrainTag.id)]
-  }
-  if (replaceTerritoryTag && wouldDeleteTag(replaceTerritoryTag, newCoordinates)) {
-    newState = [...newState.filter(item => item != replaceTerritoryTag.id)]
   }
   return newState
 }
