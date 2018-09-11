@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_HEX, ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX_COORDINATES } from '../actions/hexes'
+import { ADD_HEX, ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION } from '../actions/hexes'
 
 function byId(state=null, action) {
   console.log(state)

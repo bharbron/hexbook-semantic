@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { ADD_HEX, UPDATE_HEX_TAGS, UPDATE_HEX_COORDINATES } from '../actions/hexes'
+import { ADD_HEX, UPDATE_HEX_TAGS } from '../actions/hexes'
 import { ADD_OTHER_TAG, DELETE_OTHER_TAG } from '../actions/tags'
 
 // Tags is a little special in that it doesn't divide byId and allIds into separate reducers
@@ -10,6 +10,12 @@ function tagsReducer(state=null, action) {
   switch (action.type) {
     case ADD_HEX: 
       return addHex(state, action)
+
+    case UPDATE_HEX_TAGS:
+      return updateHexTags(state, action)
+
+    case ADD_OTHER_TAG:
+      return addOtherTag(state, action)
 
     default:
       return state
@@ -27,48 +33,117 @@ function addHex(state, action) {
   }
   let newById = {...state.byId}
   //have to do these separately in case terrain and territory have the same value
-  if (terrain) {
-    newById = {
-      ...newById,
-      [terrain]: createOrUpdateTerrainTag(newById, coordinates, terrain)
-    }
+  newById = {
+    ...newById,
+    [terrain]: createOrUpdateTerrainTag(newById, coordinates, terrain)
   }
-  if (territory) {
-    newById = {
-      ...newById,
-      [territory]: createOrUpdateTerritoryTag(newById, coordinates, territory)
-    }
+  newById = {
+    ...newById,
+    [territory]: createOrUpdateTerritoryTag(newById, coordinates, territory)
   }
 
   let newAllIds = [...state.allIds]
   //have to do these separately in case terrain and territory have the same value
-  if (terrain) {
-    newAllIds = [
-      ...newAllIds.filter(id => id != terrain),
-      terrain
-    ]
-  }
-  if (territory) {
-    newAllIds = [
-      ...newAllIds.filter(id => id != territory),
-      territory
-    ]
-  }
-  const newState = {
-    ...state,
+  newAllIds = [
+    ...newAllIds.filter(id => id != terrain),
+    terrain
+  ]
+  newAllIds = [
+    ...newAllIds.filter(id => id != territory),
+    territory
+  ]
+
+  return {
     byId: newById,
     allIds: newAllIds
   }
-  console.log('reducers.tags.addHex: newState')
-  console.log(newState)
-  return newState
 }
 
-function createOrUpdateTerrainTag(byId, coordinates, terrain) {
-  if ( byId[terrain] ) {
+function updateHexTags(state, action) {
+  const coordinates = action.payload.coordinates
+  const newTerrain = action.payload.newTerrain
+  const newTerritory = action.payload.newTerritory
+  
+  let newById = {...state.byId}
+  //remove the old tags
+  //have to do these separately in case terrain and territory have the same value
+  const oldTerrain = getTerrainTagAtCoordinates(state, coordinates)
+  newById = {
+    ...newById,
+    [oldTerrain]: {
+      ...newById[oldTerrain],
+      terrainHexes: [
+        ...newById[oldTerrain].terrainHexes.filter(hex => hex != coordinates)
+      ]
+    }
+  }
+  const oldTerritory = getTerritoryTagAtCoordinates(state, coordinates)
+  newById = {
+    ...newById,
+    [oldTerritory]: {
+      ...newById[oldTerritory],
+      territoryHexes: [
+        ...newById[oldTerritory].territoryHexes.filter(hex => hex != coordinates)
+      ]
+    }
+  }
+
+  //add new tags
+  //have to do these separately in case terrain and territory have the same value
+  newById = {
+    ...newById,
+    [newTerrain]: createOrUpdateTerrainTag(newById, coordinates, newTerrain)
+  }
+  newById = {
+    ...newById,
+    [newTerritory]: createOrUpdateTerritoryTag(newById, coordinates, newTerritory)
+  }
+
+  let newAllIds = [...state.allIds]
+  //have to do these separately in case terrain and territory have the same value
+  newAllIds = [
+    ...newAllIds.filter(id => id != newTerrain),
+    newTerrain
+  ]
+  newAllIds = [
+    ...newAllIds.filter(id => id != newTerritory),
+    newTerritory
+  ]
+
+  return {
+    byId: newById,
+    allIds: newAllIds
+  }
+}
+
+function addOtherTag(state, action) {
+  const tag = action.payload.tag
+  //If the tag already exists, do nothing
+  if (state.byId[tag]) {
+    return state
+  }
+  return {
+    byId: {
+      ...state.byId,
+      [tag]: {
+        id: tag,
+        text: tag,
+        terrainHexes: [],
+        territoryHexes: []
+      }
+    },
+    allIds: [
+      ...state.allIds.filter(id => id != tag),
+      tag
+    ]
+  }
+}
+
+function createOrUpdateTerrainTag(tagsById, coordinates, terrain) {
+  if ( tagsById[terrain] ) {
     return ({
-      ...byId[terrain],
-      terrainHexes: [...byId[terrain].terrainHexes.filter(item => item != coordinates), coordinates]
+      ...tagsById[terrain],
+      terrainHexes: [...tagsById[terrain].terrainHexes.filter(id => id != coordinates), coordinates]
     })
   }
   else {
@@ -81,11 +156,11 @@ function createOrUpdateTerrainTag(byId, coordinates, terrain) {
   }
 }
 
-function createOrUpdateTerritoryTag(byId, coordinates, territory) {
-  if ( byId[territory] ) {
+function createOrUpdateTerritoryTag(tagsById, coordinates, territory) {
+  if ( tagsById[territory] ) {
     return ({
-      ...byId[territory],
-      territoryHexes: [...byId[territory].territoryHexes.filter(item => item != coordinates), coordinates]
+      ...tagsById[territory],
+      territoryHexes: [...tagsById[territory].territoryHexes.filter(id => id != coordinates), coordinates]
     })
   }
   else {
@@ -95,6 +170,24 @@ function createOrUpdateTerritoryTag(byId, coordinates, territory) {
       terrainHexes: [],
       territoryHexes: [coordinates],
     })
+  }
+}
+
+function getTerrainTagAtCoordinates(state, coordinates) {
+  for (let i = 0; i < state.allIds.length; i++) {
+    const id = state.allIds[i]
+    if (state.byId[id].terrainHexes.includes(coordinates)) {
+      return id
+    }
+  } 
+}
+
+function getTerritoryTagAtCoordinates(state, coordinates) {
+  for (let i = 0; i < state.allIds.length; i++) {
+    const id = state.allIds[i]
+    if (state.byId[id].territoryHexes.includes(coordinates)) {
+      return id
+    }
   }
 }
 

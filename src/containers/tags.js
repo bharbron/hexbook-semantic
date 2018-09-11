@@ -50,7 +50,7 @@ class TagsWorkspace extends Component {
   render() {
     console.log(`terrainTags: ${this.props.terrainTags}`)
     console.log(`territoryTags: ${this.props.territoryTags}`)
-    console.log(`otherTags: ${otherTags}`)
+    console.log(`otherTags: ${this.props.otherTags}`)
 
     return (
       <div id='TagsWorkspace'>

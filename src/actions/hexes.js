@@ -48,24 +48,10 @@ export function updateHexTags(coordinates, newTerrain, newTerritory) {
   :param coordinate: coordinates (tableEntry ID) of the hex we're updating tags on
   :param newTerrain: new terrain tag ID of the hex
   :param newTerritory: new territory tag ID of the hex
-  :param oldTerrainTag: full Tag object of the old terrain for hex
-  :param oldTerritoryTag: full Tag object of the old territory for hex
   */
-  const state = store.getState()
-  const tableEntries = state.entities.tableEntries
-  const tags = state.entities.tags
-
-  const hex = tableEntries.byId[coordinates]
-
-  //What are the old tags we're replacing?
-  const oldTerrainTag = (hex.addTags[0]) ? tags.byId[hex.addTags[0]] : undefined
-  const oldTerritoryTag = (hex.addTags[1]) ? tags.byId[hex.addTags[1]] : undefined
-
   return { type: UPDATE_HEX_TAGS, payload: {
     'coordinates': coordinates, 
     'newTerrain': newTerrain, 
     'newTerritory': newTerritory,
-    'oldTerrainTag': oldTerrainTag,
-    'oldTerritoryTag': oldTerritoryTag,
   } }
 }
