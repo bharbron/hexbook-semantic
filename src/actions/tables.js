@@ -11,10 +11,10 @@ export const DELETE_TABLE = 'DELETE_TABLE'
 
 /* action creators */
 
-export function addTable(value) {
-  return false
+export function addTable(id, code, name, description) {
+  return {type: 'ADD_TABLE', payload: {'id': id, 'code': code, 'name': name, 'description': description}}
 }
 
-export function deleteTable(value) {
-  return false
+export function deleteTable(id) {
+  return {type: DELETE_TABLE, payload: {'id': id}}
 }
