@@ -7,9 +7,10 @@ import {
   Dropdown,
   Label
 } from 'semantic-ui-react';
-import { WideColumnWorkspace } from '../components/workspaces'
-import { FloatingActionButton, FloatingWorkspaceMenu } from '../components/floatingcontrols'
-import { TableSummaryCardGroup, TableInputModal } from '../components/tables'
+import {WideColumnWorkspace} from '../components/workspaces'
+import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
+import {TableSummaryCardGroup, TableInputModal} from '../components/tables'
+import {addTable, deleteTable} from '../actions/tables'
 
 import './containers.css';
 
@@ -17,6 +18,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  addTable,
+  deleteTable,
 }, dispatch)
 
 class TablesWorkspace extends Component {
@@ -40,6 +43,7 @@ class TablesWorkspace extends Component {
     console.log(name)
     console.log(code)
     console.log(description)
+    this.props.addTable(name, code, description)
   }
 
   handleClickAddTableButton() {

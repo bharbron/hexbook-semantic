@@ -11,8 +11,8 @@ export const DELETE_TABLE = 'DELETE_TABLE'
 
 /* action creators */
 
-export function addTable(id, code, name, description) {
-  return {type: 'ADD_TABLE', payload: {'id': id, 'code': code, 'name': name, 'description': description}}
+export function addTable(name, code, description) {
+  return {type: 'ADD_TABLE', payload: {'id': uuidv4(), 'name': name, 'code': code, 'description': description}}
 }
 
 export function deleteTable(id) {
