@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React, {Component} from 'react';
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import {
   Button,
   Checkbox,
@@ -16,13 +16,14 @@ import {
   Table,
   Transition
 } from 'semantic-ui-react';
-import { WideColumnWorkspace } from '../components/workspaces'
-import { SingleLineAdder } from '../components/forms'
-import { FloatingActionButton } from '../components/floatingcontrols'
-import { TextAreaInputModal } from '../components/modals'
-import { ListWithDeletableItems } from '../components/lists'
-import { DirectInputTableCell } from '../components/datatables'
-import { getHexDefinitions, HexDefinitionSegment } from '../components/hexes'
+import {WideColumnWorkspace} from '../components/workspaces'
+import {SingleLineAdder} from '../components/forms'
+import {FloatingActionButton} from '../components/floatingcontrols'
+import {TextAreaInputModal} from '../components/modals'
+import {ListWithDeletableItems} from '../components/lists'
+import {DirectInputTableCell} from '../components/datatables'
+import {HexDefinitionSegment} from '../components/hexes'
+import {getHexes, getHexDefinitions} from '../selectors/hexes'
 
 import { 
   addHexDefinition, 
@@ -34,11 +35,8 @@ import {
 import './containers.css';
 
 const mapStateToProps = state => ({
-  tables: state.entities.tables,
-  entryDetailsGroups: state.entities.entryDetailsGroups,
-  entryDetails: state.entities.entryDetails,
-  tableEntries: state.entities.tableEntries,
-  tags: state.entities.tags,
+  hexes: getHexes(state),
+  hexDefinitions: getHexDefinitions(state),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -123,12 +121,12 @@ class HexesWorkspace extends Component {
     this.props.updateHexTags(coordinates, newTerrain, newTerritory)
   }
 
-  createHexDataTable(tables, tableEntries, tags, onSubmitCoordinates, onSubmitTerrain, onSubmitTerritory) {
+  createHexDataTable(hexes, onSubmitCoordinates, onSubmitTerrain, onSubmitTerritory) {
     const rows = []
-    for (let i = 0; i < tables.byId['HEX'].entries.length; i++) {
-      const coordinates = tables.byId['HEX'].entries[i]
-      const terrain = tableEntries.byId[coordinates].addTags[0]
-      const territory = tableEntries.byId[coordinates].addTags[1]
+    for (let i = 0; i < hexes.length; i++) {
+      const coordinates = hexes[i].coordinates
+      const terrain = hexes[i].terrain
+      const territory = hexes[i].territory
       const override = ''
       rows.push(
         <Table.Row key={coordinates}>
@@ -144,15 +142,14 @@ class HexesWorkspace extends Component {
   }
 
   render() {
-    const hexDefinitions = getHexDefinitions(this.props.entryDetailsGroups, this.props.entryDetails)
-    console.log(hexDefinitions)
+    console.log(this.props.hexDefinitions)
 
     return (
       <div id='HexesWorkspace'>
         <WideColumnWorkspace>
 
           <HexDefinitionSegment
-            hexDefinitions={hexDefinitions}
+            hexDefinitions={this.props.hexDefinitions}
             onSubmitHexDefinition={this.handleSubmitHexDefinitionInput}
             onDeleteHexDefinition={this.handleClickDeleteHexDefinition}
           />
@@ -207,9 +204,7 @@ class HexesWorkspace extends Component {
               </Table.Header>
               <Transition.Group as={Table.Body}>
               { this.createHexDataTable(
-                  this.props.tables, 
-                  this.props.tableEntries, 
-                  this.props.tags, 
+                  this.props.hexes, 
                   this.handleSubmitCoordinates, 
                   this.handleSubmitTerrain, 
                   this.handleSubmitTerritory

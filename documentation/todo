@@ -8,5 +8,5 @@ X1. getOtherTags() get any tag that has no value in terrainHexes[] or territoryH
 X1. Allow deletion of other tags, which completely removes them from the store. I.e. no checking of "do they still have terrains/territory hexes?"
 1. Intention is that once we have table entries with relations to tags, deleting an other tag would also remove all the tags relations off those table entries
 X1. Still allow terrain/territory to be edited on a hex, but doing so does not delete the tag. Just removes that hex from the tags' terrainHexes[] territoryHexes[]. The tag might become an "Other Tag", at which point it can be manually deleted.
-1. Selectors around everthing! No longer have connectStateToProps directly returning state. No longer expect UI to known the shape of the store.
+X1. Selectors around everthing! No longer have connectStateToProps directly returning state. No longer expect UI to known the shape of the store.
 1. Add some helper functions for common immutable actions on stores. arrayWithItemAdded(), arrayWithItemAddAtIndex(), objectWithKeyRemoved(), etc. Basically put some consistency around the various newState = {...state, foobar} stuff.

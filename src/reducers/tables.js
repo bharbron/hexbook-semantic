@@ -34,7 +34,7 @@ function byIdAddHex(state, action) {
         //avoid duplicates
         ...state['HEX'].entries.filter(item => item != action.payload.coordinates),
         action.payload.coordinates
-      ]
+      ].sort()
     }
   })
 }
