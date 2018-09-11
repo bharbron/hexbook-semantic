@@ -5,11 +5,8 @@ function byId(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
-    case ADD_HEX:
-      return byIdAddHex(state, action)
-
-    default:
-      return state
+    case ADD_HEX: return byIdAddHex(state, action)
+    default: return state
   }
 }
 
@@ -17,9 +14,7 @@ function allIds(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
-    
-    default:
-      return state
+    default: return state
   }
 }
 

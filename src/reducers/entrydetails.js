@@ -5,14 +5,9 @@ function byId(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
-    case ADD_HEX_DEFINITION:
-      return byIdAddHexDefinition(state, action)
-
-    case DELETE_HEX_DEFINITION:
-      return byIdDeleteHexDefinition(state, action)
-
-    default:
-      return state
+    case ADD_HEX_DEFINITION: return byIdAddHexDefinition(state, action)
+    case DELETE_HEX_DEFINITION: return byIdDeleteHexDefinition(state, action)
+    default: return state
   }
 }
 
@@ -20,14 +15,9 @@ function allIds(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
-    case ADD_HEX_DEFINITION:
-      return allIdsAddHexDefinition(state, action)
-
-    case DELETE_HEX_DEFINITION:
-      return allIdsDeleteHexDefinition(state, action)
-
-    default:
-      return state
+    case ADD_HEX_DEFINITION: return allIdsAddHexDefinition(state, action)
+    case DELETE_HEX_DEFINITION: return allIdsDeleteHexDefinition(state, action)
+    default: return state
   }
 }
 
@@ -46,9 +36,6 @@ function byIdDeleteHexDefinition(state, action) {
 }
 
 function allIdsAddHexDefinition(state, action) {
-  console.log('allIdsAddHexDefinition')
-  console.log(state)
-  console.log(action)
   return ([...state, action.payload.newEntryDetailId])
 }
 

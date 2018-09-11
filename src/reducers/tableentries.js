@@ -5,14 +5,9 @@ function byId(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
-    case ADD_HEX:
-      return byIdAddHex(state, action)
-
-    case UPDATE_HEX_TAGS:
-      return byIdUpdateHexTags(state, action)
-
-    default:
-      return state
+    case ADD_HEX: return byIdAddHex(state, action)
+    case UPDATE_HEX_TAGS: return byIdUpdateHexTags(state, action)
+    default: return state
   }
 }
 
@@ -20,11 +15,8 @@ function allIds(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
-    case ADD_HEX:
-      return allIdsAddHex(state, action)
-
-    default:
-      return state
+    case ADD_HEX: return allIdsAddHex(state, action)
+    default: return state
   }
 }
 

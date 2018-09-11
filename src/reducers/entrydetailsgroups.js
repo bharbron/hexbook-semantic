@@ -5,14 +5,9 @@ function byId(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
-    case ADD_HEX_DEFINITION:
-      return byIdAddHexDefinition(state, action)
-
-    case DELETE_HEX_DEFINITION:
-      return byIdDeleteHexDefinition(state, action)
-
-    default:
-      return state
+    case ADD_HEX_DEFINITION: return byIdAddHexDefinition(state, action)
+    case DELETE_HEX_DEFINITION: return byIdDeleteHexDefinition(state, action)
+    default: return state
   }
 }
 
@@ -20,14 +15,9 @@ function allIds(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
-    case ADD_HEX_DEFINITION:
-      return state
-
-    case DELETE_HEX_DEFINITION:
-      return state
-
-    default:
-      return state
+    case ADD_HEX_DEFINITION: return state
+    case DELETE_HEX_DEFINITION: return state
+    default: return state
   }
 }
 
