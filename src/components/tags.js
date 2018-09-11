@@ -12,18 +12,6 @@ import { SingleLineAdder } from './forms'
 
 import './components.css';
 
-function getTerrainTags(tags) { 
-  return tags.allIds.filter(id => tags.byId[id].terrainHexes.length > 0 ).sort()
-};
-
-function getTerritoryTags(tags) {
-  return tags.allIds.filter(id => tags.byId[id].territoryHexes.length > 0 ).sort()
-};
-
-function getOtherTags(tags) {
-  return tags.allIds.filter(id => tags.byId[id].otherTag == true ).sort()
-};
-
 function TagLabel(props) {
   return <Label 
     content={props.tag}
@@ -50,4 +38,4 @@ function TagsSegment(props) {
   );
 }
 
-export { getTerrainTags, getTerritoryTags, getOtherTags, TagsSegment }
+export { TagsSegment }
