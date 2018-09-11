@@ -29,14 +29,18 @@ function allIds(state=null, action) {
 }
 
 function byIdAddHex(state, action) {
-  return ({
-    ...state,
-    [action.payload.newCoordinates] : {
-      id: action.payload.newCoordinates,
-      text: action.payload.newCoordinates,
-      addTags: [action.payload.newTerrain, action.payload.newTerritory],
-    }
-  })
+  // Don't overwrite -- if a hex already exists at these coordinates, don't add anything
+  if (!state[action.payload.coordinates]) {
+    return ({
+      ...state,
+      [action.payload.coordinates] : {
+        id: action.payload.coordinates,
+        text: action.payload.coordinates,
+        addTags: [action.payload.terrain, action.payload.territory],
+      }
+    })
+  }
+  return state
 }
 
 function byIdUpdateHexTags(state, action) {
@@ -50,8 +54,8 @@ function byIdUpdateHexTags(state, action) {
 }
 
 function allIdsAddHex(state, action) {
-  const newCoordinates = action.payload.newCoordinates
-  return [...state.filter(item => item != newCoordinates), newCoordinates]
+  const coordinates = action.payload.coordinates
+  return [...state.filter(item => item != coordinates), coordinates]
 }
 
 export default combineReducers({byId: byId, allIds: allIds})

@@ -30,40 +30,16 @@ export function deleteHexDefinition(entryDetailId) {
   return { type: DELETE_HEX_DEFINITION, payload: {'entryDetailId': entryDetailId} }
 }
 
-export function addHex(newCoordinates, newTerrain, newTerritory) {
+export function addHex(coordinates, terrain, territory) {
   /*
-  :param newCoordinates: coordinates (tableEntry ID) of the new hex
-  :param newTerrain: terrain tag ID of the new hex
-  :param newTerritory: territory tag ID of the new hex
+  :param coordinates: coordinates (tableEntry ID) of the new hex
+  :param terrain: terrain tag ID of the new hex
+  :param territory: territory tag ID of the new hex
   */
-  const state = store.getState()
-  const tables = state.entities.tables
-  const tableEntries = state.entities.tableEntries
-  const tags = state.entities.tags
-  const entryDetailsGroups = state.entities.entryDetailsGroups
-
-  // Are we overwriting an existing hex?
-  const replaceHex = (tables.byId['HEX'].entries.includes(newCoordinates)) ? tableEntries.byId[newCoordinates] : undefined
-  // Does that hex have existing tags?
-  const replaceTerrainTag = (replaceHex && replaceHex.addTags[0]) ? tags.byId[replaceHex.addTags[0]] : undefined
-  const replaceTerritoryTag = (replaceHex && replaceHex.addTags[1]) ? tags.byId[replaceHex.addTags[1]] : undefined
-  // Does that hex have any non-default entryDetails?
-  const replaceEntryDetailsGroupId = (replaceHex && replaceHex.entryDetailsGroup) ? 
-    replaceHex.entryDetailsGroup : 
-    undefined;
-  const replaceEntryDetailsIds = (replaceEntryDetailsGroupId) ?
-    entryDetailsGroups.byId[replaceEntryDetailsGroupId].entryDetails :
-    [];
-
   return { type: ADD_HEX, payload: {
-    'newCoordinates': newCoordinates, 
-    'newTerrain': newTerrain, 
-    'newTerritory': newTerritory, 
-    'replaceHex': replaceHex,
-    'replaceTerrainTag': replaceTerrainTag,
-    'replaceTerritoryTag': replaceTerritoryTag,
-    'replaceEntryDetailsGroupId': replaceEntryDetailsGroupId,
-    'replaceEntryDetailsIds': replaceEntryDetailsIds,
+    'coordinates': coordinates, 
+    'terrain': terrain, 
+    'territory': territory,
   } }
 }
 

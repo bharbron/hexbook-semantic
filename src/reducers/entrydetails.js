@@ -5,9 +5,6 @@ function byId(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
-    case ADD_HEX:
-      return byIdAddHex(state, action)
-
     case ADD_HEX_DEFINITION:
       return byIdAddHexDefinition(state, action)
 
@@ -23,9 +20,6 @@ function allIds(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
-    case ADD_HEX:
-      return allIdsAddHex(state, action)
-
     case ADD_HEX_DEFINITION:
       return allIdsAddHexDefinition(state, action)
 
@@ -35,21 +29,6 @@ function allIds(state=null, action) {
     default:
       return state
   }
-}
-
-function byIdAddHex(state, action) {
-  if (action.payload.replaceEntryDetailsGroupId != 'HEX') {
-    const replaceEntryDetailsIds = action.payload.replaceEntryDetailsIds
-    let newState = {...state}
-    for (let i = 0; i < replaceEntryDetailsIds.length; i++) {
-      newState = {
-        ...state,
-        [replaceEntryDetailsIds[i]]: undefined
-      }
-    }
-    return newState
-  }
-  return state
 }
 
 function byIdAddHexDefinition(state, action) {
@@ -64,16 +43,6 @@ function byIdDeleteHexDefinition(state, action) {
     ...state,
     [action.payload.entryDetailId]: undefined
   })
-}
-
-function allIdsAddHex(state, action) {
-  if (action.payload.replaceEntryDetailsGroupId != 'HEX') {
-    const replaceEntryDetailsIds = action.payload.replaceEntryDetailsIds
-    return ([
-      ...state.filter(item => !replaceEntryDetailsIds.includes(item))
-    ])
-  }
-  return state
 }
 
 function allIdsAddHexDefinition(state, action) {

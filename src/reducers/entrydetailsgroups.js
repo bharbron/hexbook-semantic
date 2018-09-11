@@ -5,9 +5,6 @@ function byId(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
-    case ADD_HEX:
-      return byIdAddHex(state, action)
-
     case ADD_HEX_DEFINITION:
       return byIdAddHexDefinition(state, action)
 
@@ -23,9 +20,6 @@ function allIds(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
-    case ADD_HEX:
-      return allIdsAddHex(state, action)
-
     case ADD_HEX_DEFINITION:
       return state
 
@@ -35,16 +29,6 @@ function allIds(state=null, action) {
     default:
       return state
   }
-}
-
-function byIdAddHex(state, action) {
-  if (action.payload.replaceEntryDetailsGroupId && action.payload.replaceEntryDetailsGroupId != 'HEX') {
-    return ({
-      ...state,
-      [action.payload.replaceEntryDetailsGroupId]: undefined
-    })
-  }
-  return state
 }
 
 function byIdAddHexDefinition(state, action) {
@@ -65,15 +49,6 @@ function byIdDeleteHexDefinition(state, action) {
       entryDetails: [...state['HEX'].entryDetails.filter(item => item != action.payload.entryDetailId)]
     }
   }
-}
-
-function allIdsAddHex(state, action) {
-  if (action.payload.replaceEntryDetailsGroupId && action.payload.replaceEntryDetailsGroupId != 'HEX') {
-    return ([
-      ...state.filter(item => item != action.payload.replaceEntryDetailsGroupId)
-    ])
-  }
-  return state
 }
 
 export default combineReducers({byId: byId, allIds: allIds})
