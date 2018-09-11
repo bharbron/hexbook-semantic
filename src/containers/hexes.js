@@ -23,7 +23,7 @@ import {TextAreaInputModal} from '../components/modals'
 import {ListWithDeletableItems} from '../components/lists'
 import {DirectInputTableCell} from '../components/datatables'
 import {HexDefinitionSegment} from '../components/hexes'
-import {getHexes, getHexesById, getHexDefinitions} from '../selectors/hexes'
+import {getHexes, getHexDefinitions} from '../selectors/hexes'
 
 import { 
   addHexDefinition, 
@@ -36,7 +36,6 @@ import './containers.css';
 
 const mapStateToProps = state => ({
   hexes: getHexes(state),
-  hexesById: getHexesById(state),
   hexDefinitions: getHexDefinitions(state),
 })
 
@@ -61,8 +60,7 @@ class HexesWorkspace extends Component {
     this.handleClickAddToHexMapButton = this.handleClickAddToHexMapButton.bind(this)
     this.handleClickDeleteHexDefinition = this.handleClickDeleteHexDefinition.bind(this)
     this.handleSubmitHexInput = this.handleSubmitHexInput.bind(this)
-    this.handleSubmitTerrain = this.handleSubmitTerrain.bind(this)
-    this.handleSubmitTerritory = this.handleSubmitTerritory.bind(this)
+    this.handleSubmitTag = this.handleSubmitTag.bind(this)
   };
 
   handleSubmitHexDefinitionInput(value) {
@@ -108,19 +106,11 @@ class HexesWorkspace extends Component {
     this.setState({openHexMapInputModal: true})
   };
 
-  handleSubmitTerrain(coordinates, value) {
-    const newTerrain = value
-    const newTerritory = this.props.hexesById[coordinates].territory
-    this.props.updateHexTags(coordinates, newTerrain, newTerritory)
+  handleSubmitTag(coordinates, terrain, territory) {
+    this.props.updateHexTags(coordinates, terrain, territory)
   }
 
-  handleSubmitTerritory(coordinates, value) {
-    const newTerrain = this.props.hexesById[coordinates].terrain
-    const newTerritory = value
-    this.props.updateHexTags(coordinates, newTerrain, newTerritory)
-  }
-
-  createHexDataTable(hexes, onSubmitCoordinates, onSubmitTerrain, onSubmitTerritory) {
+  createHexDataTable(hexes, onSubmitCoordinates, onSubmitTag) {
     const rows = []
     for (let i = 0; i < hexes.length; i++) {
       const coordinates = hexes[i].coordinates
@@ -131,8 +121,8 @@ class HexesWorkspace extends Component {
         <Table.Row key={coordinates}>
           <Table.Cell><Checkbox /></Table.Cell>
           <Table.Cell>{coordinates}</Table.Cell>
-          <DirectInputTableCell onSubmit={(value) => onSubmitTerrain(coordinates, value)} content={ terrain } />
-          <DirectInputTableCell onSubmit={(value) => onSubmitTerritory(coordinates, value)} content={ territory } />
+          <DirectInputTableCell onSubmit={(value) => onSubmitTag(coordinates, value, territory)} content={ terrain } />
+          <DirectInputTableCell onSubmit={(value) => onSubmitTag(coordinates, terrain, value)} content={ territory } />
           <Table.Cell>{override}</Table.Cell>
         </Table.Row>
       )
@@ -167,20 +157,6 @@ class HexesWorkspace extends Component {
               <Table.Body>
                 <Table.Row>
                   <Table.Cell><Checkbox /></Table.Cell>
-                  <Table.Cell>0101</Table.Cell>
-                  <DirectInputTableCell content='forest' />
-                  <Table.Cell>hearts</Table.Cell>
-                  <Table.Cell></Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell><Checkbox /></Table.Cell>
-                  <Table.Cell>0102</Table.Cell>
-                  <Table.Cell>forest</Table.Cell>
-                  <Table.Cell>hearts</Table.Cell>
-                  <Table.Cell></Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell><Checkbox /></Table.Cell>
                   <Table.Cell>0103</Table.Cell>
                   <Table.Cell>forest</Table.Cell>
                   <Table.Cell>hearts</Table.Cell>
@@ -203,8 +179,7 @@ class HexesWorkspace extends Component {
               { this.createHexDataTable(
                   this.props.hexes, 
                   this.handleSubmitCoordinates, 
-                  this.handleSubmitTerrain, 
-                  this.handleSubmitTerritory
+                  this.handleSubmitTag
                 ) 
               }
               </Transition.Group>
