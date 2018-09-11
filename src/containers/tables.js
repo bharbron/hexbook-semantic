@@ -11,10 +11,11 @@ import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
 import {TableSummaryCardGroup, TableInputModal} from '../components/tables'
 import {addTable, deleteTable} from '../actions/tables'
-
+import {getTables} from '../selectors/tables'
 import './containers.css';
 
 const mapStateToProps = state => ({
+  tables: getTables(state.entities.tables)
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -42,7 +43,8 @@ class TablesWorkspace extends Component {
     console.log('handleSubmitTableInputModal')
     console.log(name)
     console.log(code)
-    console.log(description)
+    console.log(description) 
+    this.setState({openTableInputModal: false})
     this.props.addTable(name, code, description)
   }
 
@@ -54,6 +56,8 @@ class TablesWorkspace extends Component {
     return (
       <div id='TablesWorkspace'>
         <WideColumnWorkspace>
+          <TableSummaryCardGroup tables={this.props.tables} />
+
           <Card.Group>
 
             <Card link>

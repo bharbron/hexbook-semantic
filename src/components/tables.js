@@ -29,7 +29,7 @@ function TableSummaryCard(props) {
         <Card.Description>{props.table.description}</Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <TableSummaryLabels table={this.props.table} />
+        <TableSummaryLabels table={props.table} />
       </Card.Content>
     </Card>
   );
@@ -37,7 +37,7 @@ function TableSummaryCard(props) {
 
 function TableSummaryCardGroup(props) {
   return (
-    <Card.Group children={this.props.tables.map(table => <TableSummaryCard table={table} />)} />
+    <Card.Group children={props.tables.map(table => <TableSummaryCard table={table} />)} />
   );
 }
 
@@ -133,6 +133,7 @@ class TableInputModal extends Component {
             <Form>
               <Form.Input 
                 label='Name' 
+                autoFocus
                 transparent
                 placeholder='Enter name of table...' 
                 value={this.state.valueName}
