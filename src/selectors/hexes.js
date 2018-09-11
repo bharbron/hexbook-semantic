@@ -10,6 +10,19 @@ function getHexes(state) {
   return hexes
 };
 
+function getHexesById(state) { 
+  const hexesById = {}
+  for (let i = 0; i < state.entities.tables.byId['HEX'].entries.length; i++) {
+    const tableEntriesId = state.entities.tables.byId['HEX'].entries[i]
+    hexesById[tableEntriesId] = {
+      coordinates: tableEntriesId, 
+      terrain: state.entities.tableEntries.byId[tableEntriesId].addTags[0], 
+      territory: state.entities.tableEntries.byId[tableEntriesId].addTags[1]
+    }
+  }
+  return hexesById
+};
+
 function getHexDefinitions(state) {
   const hexDefinitions = []
   for (let i = 0; i < state.entities.entryDetailsGroups.byId['HEX'].entryDetails.length; i++) {
@@ -19,4 +32,4 @@ function getHexDefinitions(state) {
   return hexDefinitions
 };
 
-export {getHexes, getHexDefinitions}
+export {getHexes, getHexesById, getHexDefinitions}

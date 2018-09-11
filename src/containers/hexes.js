@@ -23,7 +23,7 @@ import {TextAreaInputModal} from '../components/modals'
 import {ListWithDeletableItems} from '../components/lists'
 import {DirectInputTableCell} from '../components/datatables'
 import {HexDefinitionSegment} from '../components/hexes'
-import {getHexes, getHexDefinitions} from '../selectors/hexes'
+import {getHexes, getHexesById, getHexDefinitions} from '../selectors/hexes'
 
 import { 
   addHexDefinition, 
@@ -36,6 +36,7 @@ import './containers.css';
 
 const mapStateToProps = state => ({
   hexes: getHexes(state),
+  hexesById: getHexesById(state),
   hexDefinitions: getHexDefinitions(state),
 })
 
@@ -65,12 +66,10 @@ class HexesWorkspace extends Component {
   };
 
   handleSubmitHexDefinitionInput(value) {
-    console.log(`value: ${value}`)
     this.props.addHexDefinition(value)
   }
 
   handleClickDeleteHexDefinition(id) {
-    console.log(`id: ${id}`)
     this.props.deleteHexDefinition(id)
   }
 
@@ -111,12 +110,12 @@ class HexesWorkspace extends Component {
 
   handleSubmitTerrain(coordinates, value) {
     const newTerrain = value
-    const newTerritory = this.props.tableEntries.byId[coordinates].addTags[1]
+    const newTerritory = this.props.hexesById[coordinates].territory
     this.props.updateHexTags(coordinates, newTerrain, newTerritory)
   }
 
   handleSubmitTerritory(coordinates, value) {
-    const newTerrain = this.props.tableEntries.byId[coordinates].addTags[0]
+    const newTerrain = this.props.hexesById[coordinates].terrain
     const newTerritory = value
     this.props.updateHexTags(coordinates, newTerrain, newTerritory)
   }
@@ -142,8 +141,6 @@ class HexesWorkspace extends Component {
   }
 
   render() {
-    console.log(this.props.hexDefinitions)
-
     return (
       <div id='HexesWorkspace'>
         <WideColumnWorkspace>
