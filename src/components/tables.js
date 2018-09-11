@@ -22,16 +22,18 @@ function TableSummaryLabels(props) {
 
 function TableSummaryCard(props) {
   return (
-    <Card link>
-      <Card.Content>
-        <Card.Header>{props.table.name}</Card.Header>
-        <Card.Meta>{props.table.code}</Card.Meta>
-        <Card.Description>{props.table.description}</Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <TableSummaryLabels table={props.table} />
-      </Card.Content>
-    </Card>
+    <Transition transitionOnMount='true' animation='fade up'>
+      <Card link>
+        <Card.Content>
+          <Card.Header>{props.table.name}</Card.Header>
+          <Card.Meta>{props.table.code}</Card.Meta>
+          <Card.Description>{props.table.description}</Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <TableSummaryLabels table={props.table} />
+        </Card.Content>
+      </Card>
+    </Transition>
   );
 }
 
