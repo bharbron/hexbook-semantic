@@ -1,12 +1,13 @@
+import store from '../store/store'
+
 const uuidv4 = require('uuid/v4');
 
 /* action types */
 
-export const ADD_HEX_DETAIL = 'ADD_HEX_DETAIL'
-export const DELETE_HEX_DETAIL = 'DELETE_HEX_DETAIL'
+export const ADD_HEX_DEFINITION = 'ADD_HEX_DEFINITION'
+export const DELETE_HEX_DEFINITION = 'DELETE_HEX_DEFINITION'
 export const ADD_HEX = 'ADD_HEX'
 export const UPDATE_HEX_TAGS = 'UPDATE_HEX_TAGS'
-export const UPDATE_HEX_COORDINATES = 'UPDATE_HEX_COORDINATES'
 
 /* other constants */
 
@@ -20,61 +21,37 @@ export const VisibilityFilters = {
 
 /* action creators */
 
-export function addHexDetail(newEntryDetailText) {
-  return { type: ADD_HEX_DETAIL, payload: {'newEntryDetailText': newEntryDetailText, 'newEntryDetailId': uuidv4()} }
+export function addHexDefinition(newEntryDetailText) {
+  console.log(`newEntryDetailText: ${newEntryDetailText}`)
+  return { type: ADD_HEX_DEFINITION, payload: {'newEntryDetailText': newEntryDetailText, 'newEntryDetailId': uuidv4()} }
 }
 
-export function deleteHexDetail(entryDetailId) {
-  return { type: DELETE_HEX_DETAIL, payload: {'entryDetailId': entryDetailId} }
+export function deleteHexDefinition(entryDetailId) {
+  return { type: DELETE_HEX_DEFINITION, payload: {'entryDetailId': entryDetailId} }
 }
 
-export function addHex(newCoordinates, newTerrain, newTerritory, replaceHex, replaceTerrainTag, replaceTerritoryTag) {
+export function addHex(coordinates, terrain, territory) {
   /*
-  :param newCoordinates: coordinates (tableEntry ID) of the new hex
-  :param newTerrain: terrain tag ID of the new hex
-  :param newTerritory: territory tag ID of the new hex
-  :param replaceHex: existing hex tableEntry (if any) at the same coordinates that will be overwritten
+  :param coordinates: coordinates (tableEntry ID) of the new hex
+  :param terrain: terrain tag ID of the new hex
+  :param territory: territory tag ID of the new hex
   */
   return { type: ADD_HEX, payload: {
-    'newCoordinates': newCoordinates, 
-    'newTerrain': newTerrain, 
-    'newTerritory': newTerritory, 
-    'replaceHex': replaceHex,
-    'replaceTerrainTag': replaceTerrainTag,
-    'replaceTerritoryTag': replaceTerritoryTag
+    'coordinates': coordinates, 
+    'terrain': terrain, 
+    'territory': territory,
   } }
 }
 
-export function updateHexTags(coordinates, newTerrain, newTerritory, oldTerrainTag, oldTerritoryTag) {
+export function updateHexTags(coordinates, newTerrain, newTerritory) {
   /*
   :param coordinate: coordinates (tableEntry ID) of the hex we're updating tags on
   :param newTerrain: new terrain tag ID of the hex
   :param newTerritory: new territory tag ID of the hex
-  :param oldTerrainTag: full Tag object of the old terrain for hex
-  :param oldTerritoryTag: full Tag object of the old territory for hex
   */
   return { type: UPDATE_HEX_TAGS, payload: {
     'coordinates': coordinates, 
     'newTerrain': newTerrain, 
     'newTerritory': newTerritory,
-    'oldTerrainTag': oldTerrainTag,
-    'oldTerritoryTag': oldTerritoryTag,
-  } }
-}
-
-export function updateHexCoordinates(newCoordinates, oldHex, replaceHex, replaceTerrainTag, replaceTerritoryTag) {
-  /*
-  :param newCoordinates: new coordinates (tableEntry ID) for the new hex
-  :param oldHex: full tableEntry object of the hexes previous state
-  :param replaceHex: existing hex tableEntry (if any) at the same coordinates that will be overwritten
-  :param replaceTerrainTag: existing full Tag object assinged to replaceHex.addTags[0]
-  :param replaceTerritoryTag: existing full Tag object assinged to replaceHex.addTags[1]
-  */
-  return { type: UPDATE_HEX_COORDINATES, payload: {
-    'newCoordinates': newCoordinates, 
-    'oldHex': oldHex,
-    'replaceHex': replaceHex,
-    'replaceTerrainTag': replaceTerrainTag,
-    'replaceTerritoryTag': replaceTerritoryTag,
   } }
 }

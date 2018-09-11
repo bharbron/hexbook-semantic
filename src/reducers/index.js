@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux'
-import tableReducer from './tables'
-import tableEntryReducer from './tableentries'
-import entryDetailReducer from './entrydetails'
-import tagReducer from './tags'
+import tablesReducer from './tables'
+import tableEntriesReducer from './tableentries'
+import entryDetailsGroupsReducer from './entrydetailsgroups'
+import entryDetailsReducer from './entrydetails'
+import tagsReducer from './tags'
 
 const entitiesReducer = combineReducers({
-  tables: tableReducer,
-  tableEntries: tableEntryReducer,
-  entryDetails: entryDetailReducer,
-  tags: tagReducer
+  tables: tablesReducer,
+  tableEntries: tableEntriesReducer,
+  entryDetailsGroups: entryDetailsGroupsReducer,
+  entryDetails: entryDetailsReducer,
+  tags: tagsReducer
 })
 
 export default combineReducers({

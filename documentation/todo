@@ -1,0 +1,12 @@
+X1. Remove ability to change coordinates of hex
+1. Thought going forward on this -- anything that uses text as it ID, e.g. "HEX" table, "0101" table entries, "animal" tag -- will not allow the text/ID to be edited. Or allow the record to be overwritten. Delete and create new, if needed.
+X1. No longer overwrite existing hex if new hex is added with same coordinates. Simply ignore the add.
+X1. Remove the otherTag=bool property from Tags. Instead, write some selectors: getTerrainTags(), getTerritoryTags(), getOtherTags()
+X1. getTerrainTags() get any tag that has a value in terrainHexes[]
+X1. getTerritoryTags() get any tag that has a value in territoyHexes[]
+X1. getOtherTags() get any tag that has no value in terrainHexes[] or territoryHexes[]
+X1. Allow deletion of other tags, which completely removes them from the store. I.e. no checking of "do they still have terrains/territory hexes?"
+1. Intention is that once we have table entries with relations to tags, deleting an other tag would also remove all the tags relations off those table entries
+X1. Still allow terrain/territory to be edited on a hex, but doing so does not delete the tag. Just removes that hex from the tags' terrainHexes[] territoryHexes[]. The tag might become an "Other Tag", at which point it can be manually deleted.
+X1. Selectors around everthing! No longer have connectStateToProps directly returning state. No longer expect UI to known the shape of the store.
+1. Add some helper functions for common immutable actions on stores. arrayWithItemAdded(), arrayWithItemAddAtIndex(), objectWithKeyRemoved(), etc. Basically put some consistency around the various newState = {...state, foobar} stuff.

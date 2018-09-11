@@ -16,7 +16,7 @@ const initialState = {
           code: "HEX",
           name: "Hex Map",
           description: "Mapping of hex coordinates to terrain and territory",
-          globalEntryDetails: [],
+          template: "HEX",
           entries: [],
         }
       },
@@ -25,6 +25,15 @@ const initialState = {
     tableEntries: {
       byId: {},
       allIds: []
+    },
+    entryDetailsGroups: {
+      byId: {
+        "HEX": {
+          id: "HEX",
+          entryDetails: []
+        }
+      },
+      allIds: ["HEX"]
     },
     entryDetails: {
       byId: {},
@@ -40,15 +49,15 @@ const initialState = {
     },
     templates: {
       byId: {
-        "Hexes": {
-          id: "Hexes",
+        "HEX": {
+          id: "HEX",
           name: "Hexes",
           description: "Template for printing the list of hexes",
           table: "HEX",
           otherTemplateStuff: null
         }
       },
-      "allIds": ["Hexes"]
+      "allIds": ["HEX"]
     }
   },
 

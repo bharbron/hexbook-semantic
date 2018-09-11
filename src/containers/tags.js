@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-
 import {
   Dropdown,
   Header,
@@ -12,14 +11,15 @@ import {
   Transition
 } from 'semantic-ui-react';
 import { WideColumnWorkspace } from '../components/workspaces'
-import { getTerrainTags, getTerritoryTags, getOtherTags, TagsSegment } from '../components/tags'
-
+import { TagsSegment } from '../components/tags'
+import { getTerrainTags, getTerritoryTags, getOtherTags } from '../selectors/tags'
 import { addOtherTag, deleteOtherTag } from '../actions/tags'
-
 import './containers.css';
 
 const mapStateToProps = state => ({
-  tags: state.entities.tags
+  terrainTags: getTerrainTags(state.entities.tags),
+  territoryTags: getTerritoryTags(state.entities.tags),
+  otherTags: getOtherTags(state.entities.tags),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -35,25 +35,22 @@ class TagsWorkspace extends Component {
     this.handleRemoveOtherTag = this.handleRemoveOtherTag.bind(this)
   };
 
-  handleSubmitOtherTag(tagText) {
+  handleSubmitOtherTag(tag) {
     const tagRegEx = /^[a-z]+$/
-    if ( tagText.match(tagRegEx) ) {
-      this.props.addOtherTag(tagText)
+    if ( tag.match(tagRegEx) ) {
+      this.props.addOtherTag(tag)
     }
   }
 
-  handleRemoveOtherTag(tagText) {
-    console.log(`tagText ${tagText}`)
-    this.props.deleteOtherTag(this.props.tags.byId[tagText])
+  handleRemoveOtherTag(tag) {
+    console.log(`tag ${tag}`)
+    this.props.deleteOtherTag(tag)
   }
 
   render() {
-    const terrainTags = getTerrainTags(this.props.tags)
-    const territoryTags = getTerritoryTags(this.props.tags)
-    const otherTags = getOtherTags(this.props.tags)
-    console.log(`terrainTags: ${terrainTags}`)
-    console.log(`territoryTags: ${territoryTags}`)
-    console.log(`otherTags: ${otherTags}`)
+    console.log(`terrainTags: ${this.props.terrainTags}`)
+    console.log(`territoryTags: ${this.props.territoryTags}`)
+    console.log(`otherTags: ${this.props.otherTags}`)
 
     return (
       <div id='TagsWorkspace'>
@@ -63,21 +60,21 @@ class TagsWorkspace extends Component {
           header='Terrain Tags' 
           subheader='Automatically generated and tagged by the hex map. Type of terrain in a given hex. Typically used by random encounter tables.'
           color='olive'
-          tags={terrainTags}
+          tags={this.props.terrainTags}
         />
 
         <TagsSegment
           header='Territory Tags' 
           subheader='Automatically generated and tagged by the hex map. Group that holds influence in a given hex. Typically used by adventure hook and theme tables.'
           color='orange'
-          tags={territoryTags}
+          tags={this.props.territoryTags}
         />
 
         <TagsSegment
           header='Other Tags' 
           subheader='Any other user-defined tags that table rolls may by filtered by.'
           color='teal'
-          tags={otherTags}
+          tags={this.props.otherTags}
           onSubmit={this.handleSubmitOtherTag}
           placeholder='enter new tag...'
           onRemove={this.handleRemoveOtherTag}
