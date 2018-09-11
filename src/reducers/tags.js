@@ -8,17 +8,11 @@ function tagsReducer(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
-    case ADD_HEX: 
-      return addHex(state, action)
-
-    case UPDATE_HEX_TAGS:
-      return updateHexTags(state, action)
-
-    case ADD_OTHER_TAG:
-      return addOtherTag(state, action)
-
-    default:
-      return state
+    case ADD_HEX: return addHex(state, action)
+    case UPDATE_HEX_TAGS: return updateHexTags(state, action)
+    case ADD_OTHER_TAG: return addOtherTag(state, action)
+    case DELETE_OTHER_TAG: return deleteOtherTag(state, action)
+    default: return state
   }
 }
 
@@ -135,6 +129,19 @@ function addOtherTag(state, action) {
     allIds: [
       ...state.allIds.filter(id => id != tag),
       tag
+    ]
+  }
+}
+
+function deleteOtherTag(state, action) {
+  const tag = action.payload.tag
+  return {
+    byId: {
+      ...state.byId,
+      [tag]: null
+    },
+    allIds: [
+      ...state.allIds.filter(id => id != tag)
     ]
   }
 }
