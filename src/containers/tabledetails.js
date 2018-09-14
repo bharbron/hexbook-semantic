@@ -6,9 +6,9 @@ import {
   Dropdown,
   Label
 } from 'semantic-ui-react';
-import {NarrowColumnWorkspace} from '../components/workspaces'
+import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
-import {TableDetailsSegment} from '../components/tabledetails'
+import {TableDetailsSegment, TableEntriesSegment} from '../components/tabledetails'
 import {addTable, deleteTable} from '../actions/tables'
 import {getTableId, getFullTableById} from '../selectors/tabledetails'
 import './containers.css';
@@ -27,10 +27,10 @@ class TableDetailsWorkspace extends Component {
     return (
       <div id='TableDetailsWorkspace'>
       {console.log(this.props.tableId)}
-        <NarrowColumnWorkspace>
-          <p>{this.props.tableId}</p>
+        <WideColumnWorkspace>
           <TableDetailsSegment table={this.props.table} />
-        </NarrowColumnWorkspace>
+          <TableEntriesSegment table={this.props.table} />
+        </WideColumnWorkspace>
       </div>
     )
   }

@@ -31,8 +31,6 @@ function HexDefinitionSegment(props) {
       <Segment.Group>
         <Segment>
           <Header content='Hex Definition' subheader='What details should be randomly generated for each hex.' />
-        </Segment>
-        <Segment>
           <ListWithDeletableItems 
             bulleted='true' 
             items={ 

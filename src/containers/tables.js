@@ -35,6 +35,7 @@ class TablesWorkspace extends Component {
     this.handleCloseTableInputModal = this.handleCloseTableInputModal.bind(this)
     this.handleSubmitTableInputModal = this.handleSubmitTableInputModal.bind(this)
     this.handleClickAddTableButton = this.handleClickAddTableButton.bind(this)
+    this.handleClickTableSummaryCard = this.handleClickTableSummaryCard.bind(this)
   };
 
   handleCloseTableInputModal() {
@@ -53,12 +54,16 @@ class TablesWorkspace extends Component {
   handleClickAddTableButton() {
     this.setState({openTableInputModal: true})
   }
+
+  handleClickTableSummaryCard(url) {
+    this.props.changePage(url)
+  }
     
   render() {
     return (
       <div id='TablesWorkspace'>
         <WideColumnWorkspace>
-          <TableSummaryCardGroup tables={this.props.tables} onClick={this.props.changePage} />
+          <TableSummaryCardGroup tables={this.props.tables} onClick={this.handleClickTableSummaryCard} />
 
           <Card.Group>
 

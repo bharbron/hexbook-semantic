@@ -24,9 +24,9 @@ class NarrowColumnWorkspace extends Component {
     return (
       <Grid padded className='WorkspaceGrid'>
         <Grid.Row className='WorkspaceGridRow'>
-          <Grid.Column width={4} />
-          <Grid.Column width={8} className='NarrowColumnWorkspace' children={this.props.children} />
-          <Grid.Column width={4} />
+          <Grid.Column width={2} />
+          <Grid.Column width={12} className='NarrowColumnWorkspace' children={this.props.children} />
+          <Grid.Column width={2} />
         </Grid.Row>
       </Grid>
     )
