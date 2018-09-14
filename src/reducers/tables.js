@@ -47,7 +47,7 @@ function byIdAddTable(state, action) {
       code: action.payload.code,
       name: action.payload.name,
       description: action.payload.description,
-      templates: undefined,
+      template: undefined,
       entries: [],
     }
   })

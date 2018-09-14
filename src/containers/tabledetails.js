@@ -10,12 +10,12 @@ import {NarrowColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
 import {TableDetailsSegment} from '../components/tabledetails'
 import {addTable, deleteTable} from '../actions/tables'
-import {getTableId, getTableDetailsById} from '../selectors/tabledetails'
+import {getTableId, getFullTableById} from '../selectors/tabledetails'
 import './containers.css';
 
 const mapStateToProps = state => ({
   tableId: getTableId(state.router),
-  tableDetails: getTableDetailsById(state.entities, getTableId(state.router))
+  table: getFullTableById(state.entities, getTableId(state.router))
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -29,7 +29,7 @@ class TableDetailsWorkspace extends Component {
       {console.log(this.props.tableId)}
         <NarrowColumnWorkspace>
           <p>{this.props.tableId}</p>
-          <TableDetailsSegment table={this.props.tableDetails} />
+          <TableDetailsSegment table={this.props.table} />
         </NarrowColumnWorkspace>
       </div>
     )
