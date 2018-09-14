@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { push } from 'connected-react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
@@ -19,6 +20,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  changePage: url => push(url),
   addTable,
   deleteTable,
 }, dispatch)
@@ -56,7 +58,7 @@ class TablesWorkspace extends Component {
     return (
       <div id='TablesWorkspace'>
         <WideColumnWorkspace>
-          <TableSummaryCardGroup tables={this.props.tables} />
+          <TableSummaryCardGroup tables={this.props.tables} onClick={this.props.changePage} />
 
           <Card.Group>
 

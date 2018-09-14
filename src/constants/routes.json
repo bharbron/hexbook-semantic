@@ -3,6 +3,7 @@
   "HEXES": "/hexes",
   "TAGS": "/tags",
   "TABLES": "/tables",
+  "TABLE_DETAILS": "/table_details",
   "TEMPLATES": "/templates",
   "BOOKS": "/books"
 }

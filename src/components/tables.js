@@ -9,7 +9,7 @@ import {
   Modal,
   Transition
 } from 'semantic-ui-react';
-
+import routes from '../constants/routes.json'
 import './components.css';
 
 function TableSummaryLabels(props) {
@@ -23,7 +23,7 @@ function TableSummaryLabels(props) {
 function TableSummaryCard(props) {
   return (
     <Transition transitionOnMount='true' animation='fade up'>
-      <Card link>
+      <Card link onClick={() => props.onClick(routes.TABLE_DETAILS + '/' + props.table.id)}>
         <Card.Content>
           <Card.Header>{props.table.name}</Card.Header>
           <Card.Meta>{props.table.code}</Card.Meta>
@@ -39,7 +39,7 @@ function TableSummaryCard(props) {
 
 function TableSummaryCardGroup(props) {
   return (
-    <Card.Group children={props.tables.map(table => <TableSummaryCard table={table} />)} />
+    <Card.Group children={props.tables.map(table => <TableSummaryCard table={table} onClick={props.onClick} />)} />
   );
 }
 

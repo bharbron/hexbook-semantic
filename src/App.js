@@ -10,6 +10,7 @@ import HomeWorkspace from './containers/home'
 import HexesWorkspace from './containers/hexes'
 import TagsWorkspace from './containers/tags'
 import TablesWorkspace from './containers/tables'
+import TableDetailsWorkspace from './containers/tabledetails'
 import TemplatesWorkspace from './containers/templates'
 import BooksWorkspace from './containers/books'
 
@@ -27,6 +28,7 @@ class App extends Component {
         <Route exact path={routes.HEXES} component={HexesWorkspace} />
         <Route exact path={routes.TAGS} component={TagsWorkspace} />
         <Route exact path={routes.TABLES} component={TablesWorkspace} />
+        <Route path={routes.TABLE_DETAILS} component={TableDetailsWorkspace} />
         <Route exact path={routes.TEMPLATES} component={TemplatesWorkspace} />
         <Route exact path={routes.BOOKS} component={BooksWorkspace} />
 
