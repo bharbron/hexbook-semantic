@@ -13,6 +13,7 @@ import {
   Transition
 } from 'semantic-ui-react';
 import {SingleLineAdder} from './forms'
+import {TableCodeLabel, TableEntriesCountLabel, TemplateLabel} from './labels'
 import './components.css';
 
 function TableDetailsSegment(props) {
@@ -24,7 +25,7 @@ function TableDetailsSegment(props) {
           <TableDetailsList table={props.table} />
         </Segment>
         <Segment>
-          {props.table.entries && <Label circular>{props.table.entries.length}</Label>}
+          <TableDetailsLabels table={props.table} />
         </Segment>
       </Segment.Group>
     </Transition>
@@ -36,9 +37,9 @@ function TableEntriesSegment(props) {
     <Transition transitionOnMount='true' animation='fade up'>
       <Segment.Group>
         <Segment>
-          <Header content='Table Entries' subheader='Click a row to edit' />
+          <Header content='Table Entries' subheader='Click a cell to edit' />
           <TableEntriesTable tableEntries={props.table.entries} />
-          <SingleLineAdder placeholder='weight,text' onSubmit={(value) => props.onSubmitAddEntry(props.table, value)} />
+          <SingleLineAdder placeholder='Weight,Entry result text' onSubmit={props.onSubmitAddEntry} />
         </Segment>
       </Segment.Group>
     </Transition>
@@ -48,10 +49,10 @@ function TableEntriesSegment(props) {
 function TableDetailsList(props) {
   return (
     <List size='large'>
+      <List.Item><List.Content floated='left'><Icon link circular name='settings' /></List.Content></List.Item>
       <TableDetailsListItem header='Name' contents={props.table.name} />
       <TableDetailsListItem header='CODE' contents={props.table.code} />
       <TableDetailsListItem header='Description' contents={props.table.description} />
-      <List.Item><List.Content floated='left'><Icon link circular name='settings' /></List.Content></List.Item>
     </List>
   );
 }
@@ -67,6 +68,16 @@ function TableDetailsListItem(props) {
   );
 }
 
+function TableDetailsLabels(props) {
+  return (
+    <Label.Group>
+      {props.table.entries && <TableEntriesCountLabel count={props.table.entries.length} />}
+      <TableCodeLabel code={props.table.code} />
+      {props.table.template && <TemplateLabel template={props.table.template.name} />}
+    </Label.Group>
+  )
+}
+
 function TableEntriesTable(props) {
   return (
     <Table basic='very' compact='very' striped>
@@ -74,16 +85,15 @@ function TableEntriesTable(props) {
         <Table.Row>
           <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>
           <Table.HeaderCell><Icon name='balance scale' /></Table.HeaderCell>
-          <Table.HeaderCell>Text</Table.HeaderCell>
+          <Table.HeaderCell>Result</Table.HeaderCell>
+          <Table.HeaderCell>Template Details</Table.HeaderCell>
           <Table.HeaderCell><Label tag><Icon name='balance scale' /></Label></Table.HeaderCell>
-          <Table.HeaderCell>Details</Table.HeaderCell>
-          <Table.HeaderCell></Table.HeaderCell>
           <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
-      <Table.Body>
+      <Transition.Group as={Table.Body}>
         {props.tableEntries && props.tableEntries.map(entry => <TableEntriesTableRow tableEntry={entry} />)}
-      </Table.Body>
+      </Transition.Group>
     </Table>
   )
 }
@@ -97,7 +107,6 @@ function TableEntriesTableRow(props) {
       <Table.Cell></Table.Cell>
       <Table.Cell></Table.Cell>
       <Table.Cell><Icon link name='clone' color='grey' /></Table.Cell>
-      <Table.Cell><Icon link name='minus circle' color='grey' /></Table.Cell>
     </Table.Row>
   )
 }

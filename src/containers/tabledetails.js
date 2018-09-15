@@ -8,6 +8,7 @@ import {
 } from 'semantic-ui-react';
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
+import {TextAreaInputModal} from '../components/modals'
 import {TableDetailsSegment, TableEntriesSegment} from '../components/tabledetails'
 import {addTableEntry} from '../actions/tabledetails'
 import {getTableId, getFullTableById} from '../selectors/tabledetails'
@@ -25,20 +26,48 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 class TableDetailsWorkspace extends Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      openTableEntriesInputModal: false,
+    }
 
     this.handleSubmitAddEntry = this.handleSubmitAddEntry.bind(this)
+    this.handleCloseTableEntriesInputModal = this.handleCloseTableEntriesInputModal.bind(this)
+    this.handleSubmitTableEntriesInputModal = this.handleSubmitTableEntriesInputModal.bind(this)
+    this.handleClickAddTableEntriesButton = this.handleClickAddTableEntriesButton.bind(this)
   }
 
-  handleSubmitAddEntry(table, value) {
+  handleSubmitAddEntry(value) {
     const tableEntryRegEx = /^[0-9]+,.+$/
     if (value.match(tableEntryRegEx)) {
-      const index = table.entries.length
       const entry = value.split(',')
       const weight = entry[0]
       const text = entry.slice(1).join(',')
-      this.props.addTableEntry(table, index, weight, text)
+      this.props.addTableEntry(this.props.table, weight, text)
     }
+  }
+
+  handleCloseTableEntriesInputModal() {
+    this.setState({openTableEntriesInputModal: false})
+  };
+
+  handleSubmitTableEntriesInputModal(value) {
+    this.setState({openTableEntriesInputModal: false})
+    console.log('handleSubmitTableEntriesInputModal(value)')
+    console.log(value)
+    const lines = value.split('\n')
+    const tableEntryRegEx = /^[0-9]+,.+$/
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].match(tableEntryRegEx)) {
+        const entry = lines[i].split(',')
+        const weight = entry[0]
+        const text = entry.slice(1).join(',')
+        this.props.addTableEntry(this.props.table, weight, text)
+      }
+    }
+  }
+
+  handleClickAddTableEntriesButton() {
+    this.setState({openTableEntriesInputModal: true})
   }
     
   render() {
@@ -48,7 +77,17 @@ class TableDetailsWorkspace extends Component {
         <WideColumnWorkspace>
           <TableDetailsSegment table={this.props.table} />
           <TableEntriesSegment table={this.props.table} onSubmitAddEntry={this.handleSubmitAddEntry} />
+
+          <TextAreaInputModal
+            header='Add Entries to Table'
+            subheader='One entry per line' 
+            placeholder='Weight,Entry result text'
+            open={this.state.openTableEntriesInputModal}
+            onClose={this.handleCloseTableEntriesInputModal}
+            onSubmit={this.handleSubmitTableEntriesInputModal}
+          />
         </WideColumnWorkspace>
+        <FloatingActionButton icon='plus' color='google plus' onClick={this.handleClickAddTableEntriesButton} />
       </div>
     )
   }

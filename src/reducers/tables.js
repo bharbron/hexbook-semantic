@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import {arrayWithInsertAtIndex} from './helpers'
+import {arrayWithPush} from './helpers'
 import {ADD_HEX} from '../actions/hexes'
 import {ADD_TABLE, DELETE_TABLE} from '../actions/tables'
 import {ADD_TABLE_ENTRY} from '../actions/tabledetails'
@@ -69,7 +69,7 @@ function byIdAddTableEntry(state, action) {
     ...state,
     [tableId]: {
       ...state[tableId],
-      entries: arrayWithInsertAtIndex(state[tableId].entries, action.payload.tableEntryId, action.payload.tableEntriesIndex)
+      entries: arrayWithPush(state[tableId].entries, action.payload.tableEntryId)
     }
   })
 }

@@ -8,16 +8,9 @@ import {
   Segment,
   Transition
 } from 'semantic-ui-react';
-import { SingleLineAdder } from './forms'
-
+import {SingleLineAdder} from './forms'
+import {TagLabel} from './labels'
 import './components.css';
-
-function TagLabel(props) {
-  return <Label 
-    content={props.tag}
-    onRemove={ (props.onRemove) ? () => props.onRemove(props.tag) : undefined }
-  />
-}
 
 function TagsSegment(props) {
   return (

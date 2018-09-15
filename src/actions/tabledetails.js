@@ -8,13 +8,12 @@ export const ADD_TABLE_ENTRY = 'ADD_TABLE_ENTRY'
 
 /* action creators */
 
-export function addTableEntry(table, tableEntriesIndex, weight, text) {
+export function addTableEntry(table, weight, text) {
   return {
     type: 'ADD_TABLE_ENTRY', 
     payload: {
       'tableEntryId': uuidv4(), 
       'tableId': table.id, 
-      'tableEntriesIndex': tableEntriesIndex, 
       'weight': weight, 
       'text': text,
       'entryDetailsGroupId': uuidv4()

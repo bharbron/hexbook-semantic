@@ -10,12 +10,14 @@ import {
   Transition
 } from 'semantic-ui-react';
 import routes from '../constants/routes.json'
+import {TableEntriesCountLabel, TemplateLabel} from './labels'
 import './components.css';
 
 function TableSummaryLabels(props) {
   return (
     <Label.Group>
-      <Label circular>{props.table.entries.length}</Label>
+      <TableEntriesCountLabel count={props.table.entries.length} />
+      {props.table.template && <TemplateLabel template={props.table.template.name} />}
     </Label.Group>
   );
 }
