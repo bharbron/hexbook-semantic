@@ -1,6 +1,8 @@
 import {combineReducers} from 'redux'
+import {arrayWithInsertAtIndex} from './helpers'
 import {ADD_HEX} from '../actions/hexes'
 import {ADD_TABLE, DELETE_TABLE} from '../actions/tables'
+import {ADD_TABLE_ENTRY} from '../actions/tabledetails'
 
 function byId(state=null, action) {
   console.log(state)
@@ -9,6 +11,7 @@ function byId(state=null, action) {
     case ADD_HEX: return byIdAddHex(state, action)
     case ADD_TABLE: return byIdAddTable(state, action)
     case DELETE_TABLE: return byIdDeleteTable(state, action)
+    case ADD_TABLE_ENTRY: return byIdAddTableEntry(state, action)
     default: return state
   }
 }
@@ -57,6 +60,17 @@ function byIdDeleteTable(state, action) {
   return ({
     ...state,
     [action.payload.id]: null
+  })
+}
+
+function byIdAddTableEntry(state, action) {
+  const tableId = action.payload.tableId
+  return ({
+    ...state,
+    [tableId]: {
+      ...state[tableId],
+      entries: arrayWithInsertAtIndex(state[tableId].entries, action.payload.tableEntryId, action.payload.tableEntriesIndex)
+    }
   })
 }
 

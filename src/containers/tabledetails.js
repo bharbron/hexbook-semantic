@@ -9,7 +9,7 @@ import {
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
 import {TableDetailsSegment, TableEntriesSegment} from '../components/tabledetails'
-import {addTable, deleteTable} from '../actions/tables'
+import {addTableEntry} from '../actions/tabledetails'
 import {getTableId, getFullTableById} from '../selectors/tabledetails'
 import './containers.css';
 
@@ -19,6 +19,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  addTableEntry
 }, dispatch)
 
 class TableDetailsWorkspace extends Component {
@@ -35,6 +36,7 @@ class TableDetailsWorkspace extends Component {
     console.log(value)
     const tableEntryRegEx = /^[0-9]+,.+$/
     if (value.match(tableEntryRegEx)) {
+      const index = table.entries.length
       const entry = value.split(',')
       const weight = entry[0]
       const text = entry.slice(1).join(',')
@@ -42,6 +44,7 @@ class TableDetailsWorkspace extends Component {
       console.log(weight)
       console.log('text')
       console.log(text)
+      this.props.addTableEntry(table, index, weight, text)
     }
   }
     
