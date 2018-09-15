@@ -19,6 +19,7 @@ function allIds(state=null, action) {
   console.log(action)
   switch (action.type) {
     case ADD_HEX: return allIdsAddHex(state, action)
+    case ADD_TABLE_ENTRY: return allIdsAddTableEntry(state, action)
     default: return state
   }
 }

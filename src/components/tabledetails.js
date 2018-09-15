@@ -79,7 +79,22 @@ function TableEntriesTable(props) {
           <Table.HeaderCell>Details</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
+      <Table.Body>
+        {props.tableEntries && props.tableEntries.map(entry => <TableEntriesTableRow tableEntry={entry} />)}
+      </Table.Body>
     </Table>
+  )
+}
+
+function TableEntriesTableRow(props) {
+  return (
+    <Table.Row key={props.tableEntry.id}>
+      <Table.Cell><Checkbox /></Table.Cell>
+      <Table.Cell>{props.tableEntry.weight}</Table.Cell>
+      <Table.Cell>{props.tableEntry.text}</Table.Cell>
+      <Table.Cell></Table.Cell>
+      <Table.Cell></Table.Cell>
+    </Table.Row>
   )
 }
 

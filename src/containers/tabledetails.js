@@ -31,19 +31,12 @@ class TableDetailsWorkspace extends Component {
   }
 
   handleSubmitAddEntry(table, value) {
-    console.log('handleSubmitAddEntry(table, value)')
-    console.log(table)
-    console.log(value)
     const tableEntryRegEx = /^[0-9]+,.+$/
     if (value.match(tableEntryRegEx)) {
       const index = table.entries.length
       const entry = value.split(',')
       const weight = entry[0]
       const text = entry.slice(1).join(',')
-      console.log('weight')
-      console.log(weight)
-      console.log('text')
-      console.log(text)
       this.props.addTableEntry(table, index, weight, text)
     }
   }
