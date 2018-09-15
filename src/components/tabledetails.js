@@ -38,7 +38,7 @@ function TableEntriesSegment(props) {
         <Segment>
           <Header content='Table Entries' subheader='Click a row to edit' />
           <TableEntriesTable tableEntries={props.table.entries} />
-          <SingleLineAdder placeholder='weight,text' />
+          <SingleLineAdder placeholder='weight,text' onSubmit={(value) => props.onSubmitAddEntry(props.table, value)} />
         </Segment>
       </Segment.Group>
     </Transition>
@@ -47,11 +47,11 @@ function TableEntriesSegment(props) {
 
 function TableDetailsList(props) {
   return (
-    <List horizontal size='large'>
-      <List.Item><Icon link name='pencil' color='grey'/></List.Item>
-      <TableDetailsListItem header='Name' contents={props.table.name} icon={true} />
+    <List size='large'>
+      <TableDetailsListItem header='Name' contents={props.table.name} />
       <TableDetailsListItem header='CODE' contents={props.table.code} />
       <TableDetailsListItem header='Description' contents={props.table.description} />
+      <List.Item><List.Content floated='left'><Icon link circular name='settings' /></List.Content></List.Item>
     </List>
   );
 }
@@ -61,7 +61,7 @@ function TableDetailsListItem(props) {
     <List.Item>
       <List.Content>
         <List.Header>{props.header}</List.Header>
-        {props.contents}
+        <List.Description>{props.contents}</List.Description>
       </List.Content>
     </List.Item>
   );
@@ -69,7 +69,7 @@ function TableDetailsListItem(props) {
 
 function TableEntriesTable(props) {
   return (
-    <Table selectable compact='very' striped>
+    <Table basic='very' compact='very' striped>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>

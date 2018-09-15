@@ -22,6 +22,28 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 class TableDetailsWorkspace extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {}
+
+    this.handleSubmitAddEntry = this.handleSubmitAddEntry.bind(this)
+  }
+
+  handleSubmitAddEntry(table, value) {
+    console.log('handleSubmitAddEntry(table, value)')
+    console.log(table)
+    console.log(value)
+    const tableEntryRegEx = /^[0-9]+,.+$/
+    if (value.match(tableEntryRegEx)) {
+      const entry = value.split(',')
+      const weight = entry[0]
+      const text = entry.slice(1).join(',')
+      console.log('weight')
+      console.log(weight)
+      console.log('text')
+      console.log(text)
+    }
+  }
     
   render() {
     return (
@@ -29,7 +51,7 @@ class TableDetailsWorkspace extends Component {
       {console.log(this.props.tableId)}
         <WideColumnWorkspace>
           <TableDetailsSegment table={this.props.table} />
-          <TableEntriesSegment table={this.props.table} />
+          <TableEntriesSegment table={this.props.table} onSubmitAddEntry={this.handleSubmitAddEntry} />
         </WideColumnWorkspace>
       </div>
     )
