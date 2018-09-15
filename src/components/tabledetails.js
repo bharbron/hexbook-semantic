@@ -73,10 +73,12 @@ function TableEntriesTable(props) {
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>
-          <Table.HeaderCell>Weight</Table.HeaderCell>
+          <Table.HeaderCell><Icon name='balance scale' /></Table.HeaderCell>
           <Table.HeaderCell>Text</Table.HeaderCell>
-          <Table.HeaderCell>Tags</Table.HeaderCell>
+          <Table.HeaderCell><Label tag><Icon name='balance scale' /></Label></Table.HeaderCell>
           <Table.HeaderCell>Details</Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
@@ -94,6 +96,8 @@ function TableEntriesTableRow(props) {
       <Table.Cell>{props.tableEntry.text}</Table.Cell>
       <Table.Cell></Table.Cell>
       <Table.Cell></Table.Cell>
+      <Table.Cell><Icon link name='clone' color='grey' /></Table.Cell>
+      <Table.Cell><Icon link name='minus circle' color='grey' /></Table.Cell>
     </Table.Row>
   )
 }
