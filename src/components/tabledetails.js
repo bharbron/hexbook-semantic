@@ -12,6 +12,7 @@ import {
   Table,
   Transition
 } from 'semantic-ui-react';
+import {DirectInputTableCell} from './datatables'
 import {SingleLineAdder} from './forms'
 import {TableCodeLabel, TableEntriesCountLabel, TemplateLabel} from './labels'
 import './components.css';
@@ -38,8 +39,12 @@ function TableEntriesSegment(props) {
       <Segment.Group>
         <Segment>
           <Header content='Table Entries' subheader='Click a cell to edit' />
-          <TableEntriesTable tableEntries={props.table.entries} />
-          <SingleLineAdder placeholder='Weight,Entry result text' onSubmit={props.onSubmitAddEntry} />
+          <TableEntriesTable 
+            tableEntries={props.table.entries}
+            onSubmitUpdateWeight={props.onSubmitUpdateWeight}
+            onSubmitUpdateText={props.onSubmitUpdateText}
+          />
+          <SingleLineAdder placeholder='Weight,Result text' onSubmit={props.onSubmitAddEntry} />
         </Segment>
       </Segment.Group>
     </Transition>
@@ -92,7 +97,13 @@ function TableEntriesTable(props) {
         </Table.Row>
       </Table.Header>
       <Transition.Group as={Table.Body}>
-        {props.tableEntries && props.tableEntries.map(entry => <TableEntriesTableRow tableEntry={entry} />)}
+        {props.tableEntries && props.tableEntries.map(
+          entry => <TableEntriesTableRow 
+            tableEntry={entry}
+            onSubmitUpdateWeight={props.onSubmitUpdateWeight}
+            onSubmitUpdateText={props.onSubmitUpdateText}
+          />
+        )}
       </Transition.Group>
     </Table>
   )
@@ -102,8 +113,8 @@ function TableEntriesTableRow(props) {
   return (
     <Table.Row key={props.tableEntry.id}>
       <Table.Cell><Checkbox /></Table.Cell>
-      <Table.Cell>{props.tableEntry.weight}</Table.Cell>
-      <Table.Cell>{props.tableEntry.text}</Table.Cell>
+      <DirectInputTableCell content={props.tableEntry.weight} onSubmit={(weight) => props.onSubmitUpdateWeight(props.tableEntry, weight)} />
+      <DirectInputTableCell content={props.tableEntry.text} onSubmit={(text) => props.onSubmitUpdateText(props.tableEntry, text)} />
       <Table.Cell></Table.Cell>
       <Table.Cell></Table.Cell>
       <Table.Cell><Icon link name='clone' color='grey' /></Table.Cell>

@@ -10,6 +10,7 @@ import {
   Transition
 } from 'semantic-ui-react';
 import routes from '../constants/routes.json'
+import {HiddenSubmitButton} from './forms'
 import {TableEntriesCountLabel, TemplateLabel} from './labels'
 import './components.css';
 
@@ -102,11 +103,13 @@ class TableInputModal extends Component {
   }
 
   handleSubmit() {
-    const name = this.state.valueName
-    const code = this.state.valueCode
-    const description = this.state.valueDescription
-    this.setState({valueName: '', valueCode: '', valueDescription: '', nameValid: false, codeValid: false, descriptionValid: false})
-    this.props.onSubmit(name, code, description)
+    if ( this.state.nameValid && this.state.codeValid && this.state.descriptionValid ) {
+      const name = this.state.valueName
+      const code = this.state.valueCode
+      const description = this.state.valueDescription
+      this.setState({valueName: '', valueCode: '', valueDescription: '', nameValid: false, codeValid: false, descriptionValid: false})
+      this.props.onSubmit(name, code, description)
+    }
   }
 
   handleClose() {
@@ -134,14 +137,14 @@ class TableInputModal extends Component {
             <Header as='h3' content='Add New Table' />
           </Modal.Header>
           <Modal.Content scrolling>
-            <Form>
+            <Form onSubmit={this.handleSubmit}>
               <Form.Input 
                 label='Name' 
                 autoFocus
                 transparent
                 placeholder='Enter name of table...' 
                 value={this.state.valueName}
-                onChange={this.handleChangeName} 
+                onChange={this.handleChangeName}
               />
               <Form.Input 
                 label='CODE' 
@@ -157,6 +160,7 @@ class TableInputModal extends Component {
                 value={this.state.valueDescription}
                 onChange={this.handleChangeDescription}
               />
+              <HiddenSubmitButton />
             </Form>
           </Modal.Content>
           <Modal.Actions>

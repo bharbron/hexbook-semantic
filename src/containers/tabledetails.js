@@ -10,7 +10,7 @@ import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
 import {TextAreaInputModal} from '../components/modals'
 import {TableDetailsSegment, TableEntriesSegment} from '../components/tabledetails'
-import {addTableEntry} from '../actions/tabledetails'
+import {addTableEntry, updateTableEntryWeight, updateTableEntryText} from '../actions/tabledetails'
 import {getTableId, getFullTableById} from '../selectors/tabledetails'
 import './containers.css';
 
@@ -20,7 +20,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  addTableEntry
+  addTableEntry,
+  updateTableEntryWeight,
+  updateTableEntryText
 }, dispatch)
 
 class TableDetailsWorkspace extends Component {
@@ -31,6 +33,8 @@ class TableDetailsWorkspace extends Component {
     }
 
     this.handleSubmitAddEntry = this.handleSubmitAddEntry.bind(this)
+    this.handleSubmitUpdateTableEntryWeight = this.handleSubmitUpdateTableEntryWeight.bind(this)
+    this.handleSubmitUpdateTableEntryText = this.handleSubmitUpdateTableEntryText.bind(this)
     this.handleCloseTableEntriesInputModal = this.handleCloseTableEntriesInputModal.bind(this)
     this.handleSubmitTableEntriesInputModal = this.handleSubmitTableEntriesInputModal.bind(this)
     this.handleClickAddTableEntriesButton = this.handleClickAddTableEntriesButton.bind(this)
@@ -44,6 +48,17 @@ class TableDetailsWorkspace extends Component {
       const text = entry.slice(1).join(',')
       this.props.addTableEntry(this.props.table, weight, text)
     }
+  }
+
+  handleSubmitUpdateTableEntryWeight(tableEntry, weight) {
+    const tableEntryWeightRegEx = /^[0-9]+$/
+    if (weight.match(tableEntryWeightRegEx)) {
+      this.props.updateTableEntryWeight(tableEntry, weight)
+    }
+  }
+
+  handleSubmitUpdateTableEntryText(tableEntry, text) {
+    this.props.updateTableEntryText(tableEntry, text)
   }
 
   handleCloseTableEntriesInputModal() {
@@ -76,12 +91,17 @@ class TableDetailsWorkspace extends Component {
       {console.log(this.props.tableId)}
         <WideColumnWorkspace>
           <TableDetailsSegment table={this.props.table} />
-          <TableEntriesSegment table={this.props.table} onSubmitAddEntry={this.handleSubmitAddEntry} />
+          <TableEntriesSegment 
+            table={this.props.table} 
+            onSubmitAddEntry={this.handleSubmitAddEntry} 
+            onSubmitUpdateWeight={this.handleSubmitUpdateTableEntryWeight}
+            onSubmitUpdateText={this.handleSubmitUpdateTableEntryText}
+          />
 
           <TextAreaInputModal
             header='Add Entries to Table'
             subheader='One entry per line' 
-            placeholder='Weight,Entry result text'
+            placeholder='Weight,Result text'
             open={this.state.openTableEntriesInputModal}
             onClose={this.handleCloseTableEntriesInputModal}
             onSubmit={this.handleSubmitTableEntriesInputModal}

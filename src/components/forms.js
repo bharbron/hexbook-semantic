@@ -76,4 +76,8 @@ class SingleLineAdder extends Component {
   }
 }
 
-export { SingleLineAdder }
+function HiddenSubmitButton(props) {
+  return <input type='submit' style={{visibility: 'hidden', position: 'fixed', bottom: '0rem', left: '0rem'}}/>
+}
+
+export { SingleLineAdder, HiddenSubmitButton }
