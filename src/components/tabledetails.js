@@ -147,18 +147,18 @@ class TableEntryEditModal extends Component {
     }
   }
 
-  handleSubmit = ()  => {
+  handleClick = (event)  => {
     const value = this.state.value
     this.setState({value: '', primaryColor: null, primaryDisabled: true})
     this.props.onSubmit(value)
   }
 
-  handleClose = () => {
+  handleClose = (event) => {
     this.setState({value: '', primaryColor: null, primaryDisabled: true})
     this.props.onClose()
   }
 
-  handleCancel = () => {
+  handleCancel = (event) => {
     this.setState({value: '', primaryColor: null, primaryDisabled: true})
     this.props.onClose()
   }
@@ -171,29 +171,10 @@ class TableEntryEditModal extends Component {
             <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
           </Modal.Header>
           <Modal.Content scrolling>
+            <TableEntryEditBasic />
+            <TableEntryEditDetails />
+            <TableEntryEditTagWeight />
             <Form>
-              <Header as='h4' content='Basic' />
-              <Form.Group>
-                <Form.Input inline width={2} label='Weight' placeholder='#' value='1' />
-                <Form.Input inline width={14} label='Result' placeholder='Main text for this result on the table' value='A slime appears' />
-              </Form.Group>
-              <Header as='h4' content='Template Details' subheader='Additional details to be printed only if a template is attached to this table' />
-                <List bulleted>
-                  <List.Item>One <Icon color='grey' name='minus circle' /></List.Item>
-                  <List.Item>Two <Icon color='grey' name='minus circle' /></List.Item>
-                </List>
-                <Form.Button circular label='' icon='plus' />
-                <Input placeholder='Enter new detail...' />
-              <Header as='h4' content='Weights by tag' />
-              <Label.Group tag>
-                <Label color='teal'>animal<Label.Detail>2</Label.Detail><Icon name='delete' /></Label>
-                <Label color='olive'>garden<Label.Detail>1</Label.Detail><Icon name='delete' /></Label>
-              </Label.Group>
-              <Form.Group>
-                <Form.Button circular label='' icon='plus' />
-                <Form.Input width={2} label='Weight' placeholder='#' />
-                <Form.Select width={4} label='Tag' placeholder='forest' search />
-              </Form.Group>
               <Header as='h4' content='Blacklist' subheader='Exclude this result if any of the following tags are present' />
               <Label.Group tag color='red'>
                 <Label>day<Icon name='delete' /></Label>
@@ -211,6 +192,175 @@ class TableEntryEditModal extends Component {
           </Modal.Actions>
         </Modal>
       </Transition>
+    )
+  }
+}
+
+class TableEntryEditBasic extends Component {
+  state = {
+    weight: this.props.weight,
+    text: this.props.text
+  }
+
+  handleChange = (event) => {
+    if (event.target.name == 'weight' && event.target.value.match(/^[0-9]*$/)) {
+      this.setState({weight: event.target.value})
+    }
+    if (event.target.name == 'text') {
+      this.setState({text: event.target.value})
+    }
+  }
+
+  render () {
+    return (
+      <Form className='TableEntryEditBasic'>
+        <Header as='h4' content='Basic' />
+        <Form.Group>
+          <Form.Input name='weight' inline width={2} label='Weight' placeholder='#' value={this.state.weight} onChange={this.handleChange} />
+          <Form.Input name='text' inline width={14} label='Result' placeholder='Main text for this result on the table' value={this.state.text} onChange={this.handleChange} />
+        </Form.Group>
+      </Form>
+    );
+  }
+}
+
+class TableEntryEditDetails extends Component {
+  state = {
+    entryDetails: this.props.entryDetails
+  }
+
+  handleSubmit = (value) => {
+    this.setState({entryDetails: []})
+  }
+
+  render () {
+    return (
+      <div className='TableEntryEditDetails'>
+        <Header as='h4' content='Template Details' subheader='Additional details to be printed only if a template is attached to this table' />
+        <List bulleted>
+          <EntryDetailListItem entryDetail={{text: 'One', id: 'fdjlkfda'}} />
+          {this.state.entryDetails && this.state.entryDetails.map(
+            entryDetail => <EntryDetailListItem entryDetail={entryDetail} />
+          )}
+        </List>
+        <EntryDetailAdder onSubmit={this.handleSubmit} />
+      </div>
+    )
+  }
+}
+
+function EntryDetailListItem(props) {
+  return (
+    <List.Item key={props.entryDetail.id}>
+      {props.entryDetail.text} <Icon link name='minus circle' color='grey' onClick={props.onClick} />
+    </List.Item>
+  )
+}
+
+class EntryDetailAdder extends Component {
+  state = {
+    value: ''
+  }
+
+  handleChange = (event) => {
+    this.setState({value: event.target.value})
+  }
+
+  handleSubmit = () => {
+    const value = this.state.value
+    this.setState({value: ''})
+    this.props.onSubmit(value)
+  }
+
+  render () {
+    return (
+      <Form className='EntryDetailAdder' onSubmit={this.handleSubmit}>
+        <Form.Group>
+          <Form.Input
+            name='newDetail'
+            action={{ color: 'blue', icon: 'plus' }}
+            actionPosition='left'
+            placeholder='Enter new detail...'
+            onChange={this.handleChange}
+            onKeyDown={this.handleKeyDown}
+            value={this.state.value}
+          />
+        </Form.Group>
+      </Form>
+    )
+  }
+}
+
+class TableEntryEditTagWeight extends Component {
+  state = {
+    tags: this.props.tags
+  }
+
+  render () {
+    return (
+      <div className='TableEntryEditTagWeight'>
+        <Header as='h4' content='Weights by tag' />
+        <Label.Group tag>
+          <TagWeightLabel tag={{id: 'fdfd', color: 'teal', name: 'animal', weight: 1}} onRemove={() => console.log('foo')} />
+        </Label.Group>
+        <TagWeightAdder />
+      </div>
+    )
+  }
+}
+
+function TagWeightLabel(props) {
+  return (
+    <Label 
+      key={props.tag.id} 
+      color={props.tag.color}
+      onRemove={props.onRemove}
+      content={props.tag.name}
+      detail={props.tag.weight}
+    />
+  )
+}
+
+class TagWeightAdder extends Component {
+  state = {
+    weight: '',
+    tag: ''
+  }
+
+  onChange = (event) => {
+    if (event.target.name == 'weight' && event.target.value.match(/^[0-9]*$/)) {
+      this.setState({weight: event.target.value})
+    }
+    if (event.target.name == 'tag') {
+      this.setState({tag: event.target.value})
+    }
+  }
+
+  render () {
+    return (
+      <Form className='TagWeightAdder'>
+        <Form.Group>
+          <Form.Button circular label='' icon='plus' />
+          <Form.Input 
+            name='weight' 
+            width={2} 
+            label='Weight' 
+            placeholder='#' 
+            value={this.state.weight} 
+            onChange={this.onChange} 
+          />
+          <Form.Select 
+            name='tag' 
+            width={4} 
+            label='Tag' 
+            placeholder='tag' 
+            search
+            options={this.props.tags}
+            value={this.state.tag} 
+            onChange={this.onChange} 
+          />
+        </Form.Group>
+      </Form>
     )
   }
 }
