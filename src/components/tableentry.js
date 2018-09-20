@@ -16,6 +16,7 @@ import {
   Transition
 } from 'semantic-ui-react';
 import './components.css';
+import {TagWeightLabel} from './labels'
 
 const uuidv4 = require('uuid/v4');
 
@@ -32,12 +33,12 @@ class TableEntryEditModal extends Component {
     onSubmit: (value) => console.log(`default onSubmit: ${value}`)
   }
 
-  handleChange = (event) => {
-    if ( event.target.value ) { 
-      this.setState({value: event.target.value, primaryColor: 'blue', primaryDisabled: false})
+  handleChange = (event, {name, value}) => {
+    if ( value ) { 
+      this.setState({value: value, primaryColor: 'blue', primaryDisabled: false})
     }
     else {
-      this.setState({value: event.target.value, primaryColor: null, primaryDisabled: true})
+      this.setState({value: value, primaryColor: null, primaryDisabled: true})
     }
   }
 
@@ -67,7 +68,11 @@ class TableEntryEditModal extends Component {
           <Modal.Content scrolling>
             <TableEntryEditBasic />
             <TableEntryEditDetails />
-            <TableEntryEditTagWeight />
+            <TableEntryEditTagWeight options={[
+              {key: 'forest', value: 'forest', text: 'forest'},
+              {key: 'garden', value: 'garden', text: 'garden'},
+              {key: 'mountain', value: 'mountain', text: 'mountain'},
+            ]} />
             <Form>
               <Header as='h4' content='Blacklist' subheader='Exclude this result if any of the following tags are present' />
               <Label.Group tag color='red'>
@@ -96,12 +101,12 @@ class TableEntryEditBasic extends Component {
     text: this.props.text
   }
 
-  handleChange = (event) => {
-    if (event.target.name == 'weight' && event.target.value.match(/^[0-9]*$/)) {
-      this.setState({weight: event.target.value})
+  handleChange = (event, {name, value}) => {
+    if (name == 'weight' && value.match(/^[0-9]*$/)) {
+      this.setState({weight: value})
     }
-    if (event.target.name == 'text') {
-      this.setState({text: event.target.value})
+    if (name == 'text') {
+      this.setState({text: value})
     }
   }
 
@@ -165,8 +170,7 @@ class EntryDetailAdder extends Component {
     disabled: true
   }
 
-  handleChange = (event) => {
-    const value = event.target.value
+  handleChange = (event, {name, value}) => {
     if (value) {
       this.setState({value: value, color: 'blue', disabled: false})
     }
@@ -205,29 +209,38 @@ class TableEntryEditTagWeight extends Component {
     tags: this.props.tags
   }
 
+  static defaultProps = {
+    tags: []
+  }
+
+  handleSubmit = ({tag, weight}) => {
+    this.setState({
+      tags: [
+        ...this.state.tags,
+        {
+          id: tag,
+          color: 'teal',
+          name: tag,
+          weight: weight,
+        }
+      ]
+    })
+  }
+
   render () {
     return (
       <div className='TableEntryEditTagWeight'>
         <Header as='h4' content='Weights by tag' />
         <Label.Group tag>
-          <TagWeightLabel tag={{id: 'fdfd', color: 'teal', name: 'animal', weight: 1}} onRemove={() => console.log('foo')} />
+          <TagWeightLabel id='animal' color='teal' name='animal' weight={1} onRemove={() => console.log('foo')} />
+          {this.state.tags.map(
+            tag => <TagWeightLabel id={tag.id} color={tag.color} name={tag.name} weight={tag.weight} />
+          )}
         </Label.Group>
-        <TagWeightAdder />
+        <TagWeightAdder options={this.props.options} onSubmit={this.handleSubmit} />
       </div>
     )
   }
-}
-
-function TagWeightLabel(props) {
-  return (
-    <Label 
-      key={props.tag.id} 
-      color={props.tag.color}
-      onRemove={props.onRemove}
-      content={props.tag.name}
-      detail={props.tag.weight}
-    />
-  )
 }
 
 class TagWeightAdder extends Component {
@@ -236,27 +249,34 @@ class TagWeightAdder extends Component {
     tag: ''
   }
 
-  onChange = (event) => {
-    if (event.target.name == 'weight' && event.target.value.match(/^[0-9]*$/)) {
-      this.setState({weight: event.target.value})
+  handleChange = (event, {name, value}) => {
+    if (name == 'weight' && value.match(/^[0-9]*$/)) {
+      this.setState({weight: value})
     }
-    if (event.target.name == 'tag') {
-      this.setState({tag: event.target.value})
+    if (name == 'tag') {
+      this.setState({tag: value})
     }
+  }
+
+  handleSubmit = () => {
+    const weight = this.state.weight
+    const tag = this.state.tag
+    this.setState({'weight': '', 'tag': ''})
+    this.props.onSubmit({'weight': weight, 'tag': tag})
   }
 
   render () {
     return (
-      <Form className='TagWeightAdder'>
+      <Form className='TagWeightAdder' onSubmit={this.handleSubmit}>
         <Form.Group>
-          <Form.Button circular label='' icon='plus' />
+          <Form.Button type='submit' circular icon='plus' />
           <Form.Input 
             name='weight' 
             width={2} 
             label='Weight' 
             placeholder='#' 
             value={this.state.weight} 
-            onChange={this.onChange} 
+            onChange={this.handleChange} 
           />
           <Form.Select 
             name='tag' 
@@ -264,9 +284,9 @@ class TagWeightAdder extends Component {
             label='Tag' 
             placeholder='tag' 
             search
-            options={this.props.tags}
+            options={this.props.options}
             value={this.state.tag} 
-            onChange={this.onChange} 
+            onChange={this.handleChange} 
           />
         </Form.Group>
       </Form>
