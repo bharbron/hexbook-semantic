@@ -206,14 +206,20 @@ class EntryDetailAdder extends Component {
 
 class TableEntryEditTagWeight extends Component {
   state = {
-    tags: this.props.tags
+    tags: this.props.tags,
+    options: this.props.options
   }
 
   static defaultProps = {
-    tags: []
+    tags: [],
+    options: []
   }
 
   handleSubmit = ({tag, weight}) => {
+    //TODO: Determine color based on whether this is a terrain, territory, or other tag
+    //TODO: Remove the tag from this.state.options when it is added
+    //TODO: Avoid duplicates in this.state.tags
+    //TODO: Maintain alphabetical order in this.state.tags
     this.setState({
       tags: [
         ...this.state.tags,
@@ -237,7 +243,7 @@ class TableEntryEditTagWeight extends Component {
             tag => <TagWeightLabel id={tag.id} color={tag.color} name={tag.name} weight={tag.weight} />
           )}
         </Label.Group>
-        <TagWeightAdder options={this.props.options} onSubmit={this.handleSubmit} />
+        <TagWeightAdder options={this.state.options} onSubmit={this.handleSubmit} />
       </div>
     )
   }
