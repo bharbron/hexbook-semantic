@@ -9,7 +9,7 @@ import {
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
 import {TextAreaInputModal} from '../components/modals'
-import {TableDetailsSegment, TableEntriesSegment} from '../components/tabledetails'
+import {TableDetailsSegment, TableEntriesSegment, TableEntryEditModal} from '../components/tabledetails'
 import {addTableEntry, updateTableEntryWeight, updateTableEntryText} from '../actions/tabledetails'
 import {getTableId, getFullTableById} from '../selectors/tabledetails'
 import './containers.css';
@@ -67,8 +67,6 @@ class TableDetailsWorkspace extends Component {
 
   handleSubmitTableEntriesInputModal(value) {
     this.setState({openTableEntriesInputModal: false})
-    console.log('handleSubmitTableEntriesInputModal(value)')
-    console.log(value)
     const lines = value.split('\n')
     const tableEntryRegEx = /^[0-9]+,.+$/
     for (let i = 0; i < lines.length; i++) {
@@ -106,6 +104,7 @@ class TableDetailsWorkspace extends Component {
             onClose={this.handleCloseTableEntriesInputModal}
             onSubmit={this.handleSubmitTableEntriesInputModal}
           />
+          <TableEntryEditModal header='> Edit Entry' open={true} />
         </WideColumnWorkspace>
         <FloatingActionButton icon='plus' color='google plus' onClick={this.handleClickAddTableEntriesButton} />
       </div>

@@ -1,13 +1,16 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
+  Button,
   Card,
   Checkbox,
   Dropdown,
+  Form,
   Header,
   Icon,
   Input,
   Label,
   List,
+  Modal,
   Segment,
   Table,
   Transition
@@ -27,24 +30,6 @@ function TableDetailsSegment(props) {
         </Segment>
         <Segment>
           <TableDetailsLabels table={props.table} />
-        </Segment>
-      </Segment.Group>
-    </Transition>
-  );
-}
-
-function TableEntriesSegment(props) {
-  return (
-    <Transition transitionOnMount='true' animation='fade up'>
-      <Segment.Group>
-        <Segment>
-          <Header content='Table Entries' subheader='Click a cell to edit' />
-          <TableEntriesTable 
-            tableEntries={props.table.entries}
-            onSubmitUpdateWeight={props.onSubmitUpdateWeight}
-            onSubmitUpdateText={props.onSubmitUpdateText}
-          />
-          <SingleLineAdder placeholder='Weight,Result text' onSubmit={props.onSubmitAddEntry} />
         </Segment>
       </Segment.Group>
     </Transition>
@@ -81,6 +66,24 @@ function TableDetailsLabels(props) {
       {props.table.template && <TemplateLabel template={props.table.template.name} />}
     </Label.Group>
   )
+}
+
+function TableEntriesSegment(props) {
+  return (
+    <Transition transitionOnMount='true' animation='fade up'>
+      <Segment.Group>
+        <Segment>
+          <Header content='Table Entries' subheader='Click a cell to edit' />
+          <TableEntriesTable 
+            tableEntries={props.table.entries}
+            onSubmitUpdateWeight={props.onSubmitUpdateWeight}
+            onSubmitUpdateText={props.onSubmitUpdateText}
+          />
+          <SingleLineAdder placeholder='Weight,Result text' onSubmit={props.onSubmitAddEntry} />
+        </Segment>
+      </Segment.Group>
+    </Transition>
+  );
 }
 
 function TableEntriesTable(props) {
@@ -122,4 +125,94 @@ function TableEntriesTableRow(props) {
   )
 }
 
-export { TableDetailsSegment, TableEntriesSegment }
+class TableEntryEditModal extends Component {
+  state = {
+      primaryColor: null,
+      primaryDisabled: true,
+      value: ''
+  }
+
+  static defaultProps = {
+    open: false,
+    primaryText: 'SAVE',
+    onSubmit: (value) => console.log(`default onSubmit: ${value}`)
+  }
+
+  handleChange = (event) => {
+    if ( event.target.value ) { 
+      this.setState({value: event.target.value, primaryColor: 'blue', primaryDisabled: false})
+    }
+    else {
+      this.setState({value: event.target.value, primaryColor: null, primaryDisabled: true})
+    }
+  }
+
+  handleSubmit = ()  => {
+    const value = this.state.value
+    this.setState({value: '', primaryColor: null, primaryDisabled: true})
+    this.props.onSubmit(value)
+  }
+
+  handleClose = () => {
+    this.setState({value: '', primaryColor: null, primaryDisabled: true})
+    this.props.onClose()
+  }
+
+  handleCancel = () => {
+    this.setState({value: '', primaryColor: null, primaryDisabled: true})
+    this.props.onClose()
+  }
+
+  render () {
+    return (
+      <Transition animation='fly up' mountOnShow unmountOnHide='true' visible={this.props.open}>
+        <Modal open={true} onClose={this.handleClose} className='TextAreaInputModal'>
+          <Modal.Header style={{ borderBottom: '0px' }}>
+            <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
+          </Modal.Header>
+          <Modal.Content scrolling>
+            <Form>
+              <Header as='h4' content='Basic' />
+              <Form.Group>
+                <Form.Input inline width={2} label='Weight' placeholder='#' value='1' />
+                <Form.Input inline width={14} label='Result' placeholder='Main text for this result on the table' value='A slime appears' />
+              </Form.Group>
+              <Header as='h4' content='Template Details' subheader='Additional details to be printed only if a template is attached to this table' />
+                <List bulleted>
+                  <List.Item>One <Icon color='grey' name='minus circle' /></List.Item>
+                  <List.Item>Two <Icon color='grey' name='minus circle' /></List.Item>
+                </List>
+                <Form.Button circular label='' icon='plus' />
+                <Input placeholder='Enter new detail...' />
+              <Header as='h4' content='Weights by tag' />
+              <Label.Group tag>
+                <Label color='teal'>animal<Label.Detail>2</Label.Detail><Icon name='delete' /></Label>
+                <Label color='olive'>garden<Label.Detail>1</Label.Detail><Icon name='delete' /></Label>
+              </Label.Group>
+              <Form.Group>
+                <Form.Button circular label='' icon='plus' />
+                <Form.Input width={2} label='Weight' placeholder='#' />
+                <Form.Select width={4} label='Tag' placeholder='forest' search />
+              </Form.Group>
+              <Header as='h4' content='Blacklist' subheader='Exclude this result if any of the following tags are present' />
+              <Label.Group tag color='red'>
+                <Label>day<Icon name='delete' /></Label>
+                <Label>romantic<Icon name='delete' /></Label>
+              </Label.Group>
+              <Form.Group>
+                <Form.Button circular label='' icon='plus' />
+                <Form.Select width={4} label='Tag' placeholder='forest' search />
+              </Form.Group>
+            </Form>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button id='TextAreaInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
+            <Button id='TextAreaInputModalSave' color={this.state.primaryColor} disabled={this.state.primaryDisabled} onClick={this.handleSubmit}>{this.props.primaryText}</Button>
+          </Modal.Actions>
+        </Modal>
+      </Transition>
+    )
+  }
+}
+
+export {TableDetailsSegment, TableEntriesSegment, TableEntryEditModal}
