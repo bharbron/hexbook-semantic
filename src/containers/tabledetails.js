@@ -9,7 +9,8 @@ import {
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
 import {TextAreaInputModal} from '../components/modals'
-import {TableDetailsSegment, TableEntriesSegment, TableEntryEditModal} from '../components/tabledetails'
+import {TableDetailsSegment, TableEntriesSegment} from '../components/tabledetails'
+import {TableEntryEditModal} from '../components/tableentry'
 import {addTableEntry, updateTableEntryWeight, updateTableEntryText} from '../actions/tabledetails'
 import {getTableId, getFullTableById} from '../selectors/tabledetails'
 import './containers.css';
