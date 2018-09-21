@@ -7,6 +7,7 @@ import './components.css';
 
 function TagLabel(props) {
   return <Label 
+    key={props.tag}
     content={props.tag}
     onRemove={ (props.onRemove) ? () => props.onRemove(props.tag) : undefined }
     color={props.color}

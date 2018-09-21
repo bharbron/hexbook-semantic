@@ -16,7 +16,7 @@ import {
   Transition
 } from 'semantic-ui-react';
 import './components.css';
-import {TagWeightLabel} from './labels'
+import {TagLabel, TagWeightLabel} from './labels'
 
 const uuidv4 = require('uuid/v4');
 
@@ -73,17 +73,11 @@ class TableEntryEditModal extends Component {
               {key: 'garden', value: 'garden', text: 'garden'},
               {key: 'mountain', value: 'mountain', text: 'mountain'},
             ]} />
-            <Form>
-              <Header as='h4' content='Blacklist' subheader='Exclude this result if any of the following tags are present' />
-              <Label.Group tag color='red'>
-                <Label>day<Icon name='delete' /></Label>
-                <Label>romantic<Icon name='delete' /></Label>
-              </Label.Group>
-              <Form.Group>
-                <Form.Button circular label='' icon='plus' />
-                <Form.Select width={4} label='Tag' placeholder='forest' search />
-              </Form.Group>
-            </Form>
+            <TableEntryEditBlacklist options={[
+              {key: 'forest', value: 'forest', text: 'forest'},
+              {key: 'garden', value: 'garden', text: 'garden'},
+              {key: 'mountain', value: 'mountain', text: 'mountain'},
+            ]} />
           </Modal.Content>
           <Modal.Actions>
             <Button id='TextAreaInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
@@ -292,6 +286,81 @@ class TagWeightAdder extends Component {
             search
             options={this.props.options}
             value={this.state.tag} 
+            onChange={this.handleChange} 
+          />
+        </Form.Group>
+      </Form>
+    )
+  }
+}
+
+class TableEntryEditBlacklist extends Component {
+  state = {
+    tags: this.props.tags,
+    options: this.props.options
+  }
+
+  static defaultProps = {
+    tags: [],
+    options: []
+  }
+
+  handleSubmit = ({tag}) => {
+    console.log(tag)
+    this.setState({
+      tags: [
+        ...this.state.tags,
+        tag
+      ].sort()
+    })
+  }
+
+  render () {
+    return (
+      <div className='TableEntryEditBlacklist'>
+        <Header as='h4' content='Blacklist' subheader='Exclude this result if any of the following tags are present' />
+        <Label.Group tag color='red'>
+          {this.state.tags.map(
+            tag => <TagLabel tag={tag} />
+          )}
+          <Label>romantic<Icon name='delete' /></Label>
+        </Label.Group>
+        <BlacklistAdder options={this.state.options} onSubmit={this.handleSubmit} />
+      </div>
+    )
+  }
+}
+
+class BlacklistAdder extends Component {
+  state = {
+    tag: ''
+  }
+
+  handleChange = (event, {name, value}) => {
+    if (name == 'tag') {
+      this.setState({tag: value})
+    }
+  }
+
+  handleSubmit = () => {
+    const tag = this.state.tag
+    this.setState({'tag': ''})
+    this.props.onSubmit({'tag': tag})
+  }
+
+  render() {
+    return (
+      <Form className='BlacklistAdder' onSubmit={this.handleSubmit}>
+        <Form.Group>
+          <Form.Button type='submit' circular label='' icon='plus' />
+          <Form.Select 
+            name='tag'
+            width={4} 
+            label='Tag' 
+            placeholder='tag' 
+            search
+            options={this.props.options}
+            value={this.state.value}
             onChange={this.handleChange} 
           />
         </Form.Group>
