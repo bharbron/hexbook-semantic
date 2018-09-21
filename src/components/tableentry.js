@@ -79,14 +79,6 @@ class TableEntryEditModal extends Component {
     })
   }
 
-  handleRemoveTagWeight = (id) => {
-    this.setState({
-      tagWeights: [
-        ...this.state.tagWeights.filter(tagWeight => tagWeight.id != id)
-      ]
-    })
-  }
-
   handleSubmitTagWeight = ({tag, weight}) => {
     //TODO: Set color based on whether the tag is terrain, territory, or other
     //TODO: Remove the tag from this.state.options when it is added
@@ -105,12 +97,28 @@ class TableEntryEditModal extends Component {
     })
   }
 
+  handleRemoveTagWeight = (id) => {
+    this.setState({
+      tagWeights: [
+        ...this.state.tagWeights.filter(tagWeight => tagWeight.id != id)
+      ]
+    })
+  }
+
   handleSubmitBlacklist = (value) => {
     this.setState({
       tagBlacklist: [
         ...this.state.tagBlacklist,
         value
       ].sort()
+    })
+  }
+
+  handleRemoveBlacklist = (value) => {
+    this.setState({
+      tagBlacklist: [
+        ...this.state.tagBlacklist.filter(tag => tag != value)
+      ]
     })
   }
 
@@ -134,7 +142,7 @@ class TableEntryEditModal extends Component {
             <TableEntryEditBasic weight={this.state.weight} text={this.state.text} onChange={this.handleChangeBasic} />
             <TableEntryEditDetails entryDetails={this.state.entryDetails} onSubmit={this.handleSubmitDetails} onRemove={this.handleRemoveDetails} />
             <TableEntryEditTagWeight tagWeights={this.state.tagWeights} options={this.state.tagWeightOptions} onSubmit={this.handleSubmitTagWeight} onRemove={this.handleRemoveTagWeight} />
-            <TableEntryEditBlacklist tagBlacklist={this.state.tagBlacklist} options={this.state.tagBlacklistOptions} onSubmit={this.handleSubmitBlacklist} />
+            <TableEntryEditBlacklist tagBlacklist={this.state.tagBlacklist} options={this.state.tagBlacklistOptions} onSubmit={this.handleSubmitBlacklist} onRemove={this.handleRemoveBlacklist} />
             <TableEntryEditLimit enabled={this.state.limitEnabled} limit={this.state.limit} onChange={this.handleChangeLimit} />
           </Modal.Content>
           <Modal.Actions>
@@ -327,7 +335,7 @@ function TableEntryEditBlacklist(props) {
       <Header as='h4' content='Blacklist' subheader='Exclude this result if any of the following tags are present.' />
       <Label.Group tag color='red'>
         {props.tagBlacklist.map(
-          tag => <TagLabel tag={tag} />
+          tag => <TagLabel tag={tag} onRemove={() => props.onRemove(tag)} />
         )}
       </Label.Group>
       <BlacklistAdder options={props.options} onSubmit={props.onSubmit} />
