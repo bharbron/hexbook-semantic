@@ -79,6 +79,14 @@ class TableEntryEditModal extends Component {
     })
   }
 
+  handleRemoveTagWeight = (id) => {
+    this.setState({
+      tagWeights: [
+        ...this.state.tagWeights.filter(tagWeight => tagWeight.id != id)
+      ]
+    })
+  }
+
   handleSubmitTagWeight = ({tag, weight}) => {
     //TODO: Set color based on whether the tag is terrain, territory, or other
     //TODO: Remove the tag from this.state.options when it is added
@@ -125,7 +133,7 @@ class TableEntryEditModal extends Component {
           <Modal.Content scrolling>
             <TableEntryEditBasic weight={this.state.weight} text={this.state.text} onChange={this.handleChangeBasic} />
             <TableEntryEditDetails entryDetails={this.state.entryDetails} onSubmit={this.handleSubmitDetails} onRemove={this.handleRemoveDetails} />
-            <TableEntryEditTagWeight tagWeights={this.state.tagWeights} options={this.state.tagWeightOptions} onSubmit={this.handleSubmitTagWeight} />
+            <TableEntryEditTagWeight tagWeights={this.state.tagWeights} options={this.state.tagWeightOptions} onSubmit={this.handleSubmitTagWeight} onRemove={this.handleRemoveTagWeight} />
             <TableEntryEditBlacklist tagBlacklist={this.state.tagBlacklist} options={this.state.tagBlacklistOptions} onSubmit={this.handleSubmitBlacklist} />
             <TableEntryEditLimit enabled={this.state.limitEnabled} limit={this.state.limit} onChange={this.handleChangeLimit} />
           </Modal.Content>
@@ -235,7 +243,7 @@ function TableEntryEditTagWeight(props) {
       <Header as='h4' content='Weights by tag' subheader='Will increase the weight of this result for each matching tag below.' />
       <Label.Group tag>
         {props.tagWeights.map(
-          tagWeight => <TagWeightLabel id={tagWeight.id} color={tagWeight.color} text={tagWeight.tag} weight={tagWeight.weight} />
+          tagWeight => <TagWeightLabel id={tagWeight.id} color={tagWeight.color} text={tagWeight.tag} weight={tagWeight.weight} onRemove={() => props.onRemove(tagWeight.id)} />
         )}
       </Label.Group>
       <TagWeightAdder options={props.options} onSubmit={props.onSubmit} />
