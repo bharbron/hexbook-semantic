@@ -88,6 +88,15 @@ class TableEntryEditModal extends Component {
     })
   }
 
+  handleSubmitBlacklist = (value) => {
+    this.setState({
+      tagBlacklist: [
+        ...this.state.tagBlacklist,
+        value
+      ].sort()
+    })
+  }
+
   render () {
     return (
       <Transition animation='fly up' mountOnShow unmountOnHide='true' visible={this.props.open}>
@@ -99,7 +108,7 @@ class TableEntryEditModal extends Component {
             <TableEntryEditBasic weight={this.state.weight} text={this.state.text} onChange={this.handleChangeBasic} />
             <TableEntryEditDetails entryDetails={this.state.entryDetails} onSubmit={this.handleSubmitDetails} />
             <TableEntryEditTagWeight tagWeights={this.state.tagWeights} options={this.state.tagWeightOptions} onSubmit={this.handleSubmitTagWeight} />
-            <TableEntryEditBlacklist options={this.state.tagBlacklistOptions} />
+            <TableEntryEditBlacklist tagBlacklist={this.state.tagBlacklist} options={this.state.tagBlacklistOptions} onSubmit={this.handleSubmitBlacklist} />
           {/*TODO: Form for editing max number of occurrences*/}
           </Modal.Content>
           <Modal.Actions>
@@ -127,7 +136,7 @@ function TableEntryEditBasic(props) {
 function TableEntryEditDetails(props) {
   return (
     <div className='TableEntryEditDetails'>
-      <Header as='h4' content='Template Details' subheader='Additional details to be printed only if a template is attached to this table' />
+      <Header as='h4' content='Template Details' subheader='Additional details for use by any directly attached templates' />
       <List bulleted>
         {props.entryDetails.map(
           entryDetail => <EntryDetailListItem entryDetail={entryDetail} />
@@ -252,41 +261,18 @@ class TagWeightAdder extends Component {
   }
 }
 
-class TableEntryEditBlacklist extends Component {
-  state = {
-    tags: this.props.tags,
-    options: this.props.options
-  }
-
-  static defaultProps = {
-    tags: [],
-    options: []
-  }
-
-  handleSubmit = ({tag}) => {
-    console.log(tag)
-    this.setState({
-      tags: [
-        ...this.state.tags,
-        tag
-      ].sort()
-    })
-  }
-
-  render () {
-    return (
-      <div className='TableEntryEditBlacklist'>
-        <Header as='h4' content='Blacklist' subheader='Exclude this result if any of the following tags are present' />
-        <Label.Group tag color='red'>
-          {this.state.tags.map(
-            tag => <TagLabel tag={tag} />
-          )}
-          <Label>romantic<Icon name='delete' /></Label>
-        </Label.Group>
-        <BlacklistAdder options={this.state.options} onSubmit={this.handleSubmit} />
-      </div>
-    )
-  }
+function TableEntryEditBlacklist(props) {
+  return (
+    <div className='TableEntryEditBlacklist'>
+      <Header as='h4' content='Blacklist' subheader='Exclude this result if any of the following tags are present' />
+      <Label.Group tag color='red'>
+        {props.tagBlacklist.map(
+          tag => <TagLabel tag={tag} />
+        )}
+      </Label.Group>
+      <BlacklistAdder options={props.options} onSubmit={props.onSubmit} />
+    </div>
+  )
 }
 
 class BlacklistAdder extends Component {
@@ -303,7 +289,7 @@ class BlacklistAdder extends Component {
   handleSubmit = () => {
     const tag = this.state.tag
     this.setState({'tag': ''})
-    this.props.onSubmit({'tag': tag})
+    this.props.onSubmit(tag)
   }
 
   render() {
