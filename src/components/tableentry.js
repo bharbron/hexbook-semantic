@@ -18,9 +18,8 @@ class TableEntryEditModal extends Component {
   state = {
       primaryColor: null,
       primaryDisabled: true,
-      weight: (this.props.tableEntry) ? this.props.tableEntry.weight : undefined,
-      text: (this.props.tableEntry) ? this.props.tableEntry.text : undefined,
-      maxOccurences: (this.props.tableEntry) ? this.props.tableEntry.maxOccurences : undefined,
+      weight: (this.props.tableEntry) ? this.props.tableEntry.weight : '',
+      text: (this.props.tableEntry) ? this.props.tableEntry.text : '',
       entryDetails: (this.props.tableEntry) ? [...this.props.tableEntry.entryDetails] : [],
       tagWeights: (this.props.tableEntry) ? [...this.props.tableEntry.tagWeights] : [],
       tagWeightOptions: [
@@ -34,6 +33,8 @@ class TableEntryEditModal extends Component {
         {key: 'garden', value: 'garden', text: 'garden'},
         {key: 'mountain', value: 'mountain', text: 'mountain'},
       ],
+      limitEnabled: (this.props.tableEntry && this.props.tableEntry.limit) ? true : false,
+      limit: (this.props.tableEntry && this.props.tableEntry.limit) ? this.props.tableEntry.limit : '',
   }
 
   static defaultProps = {
@@ -97,6 +98,15 @@ class TableEntryEditModal extends Component {
     })
   }
 
+  handleChangeLimit = (event, {name, value}) => {
+    if (name == 'limitToggle') {
+      this.setState({limitEnabled: !this.state.limitEnabled})
+    }
+    if (name == 'limit' && value.match(/^[0-9]*$/)) {
+      this.setState({limit: value})
+    }
+  }
+
   render () {
     return (
       <Transition animation='fly up' mountOnShow unmountOnHide='true' visible={this.props.open}>
@@ -109,7 +119,7 @@ class TableEntryEditModal extends Component {
             <TableEntryEditDetails entryDetails={this.state.entryDetails} onSubmit={this.handleSubmitDetails} />
             <TableEntryEditTagWeight tagWeights={this.state.tagWeights} options={this.state.tagWeightOptions} onSubmit={this.handleSubmitTagWeight} />
             <TableEntryEditBlacklist tagBlacklist={this.state.tagBlacklist} options={this.state.tagBlacklistOptions} onSubmit={this.handleSubmitBlacklist} />
-          {/*TODO: Form for editing max number of occurrences*/}
+            <TableEntryEditLimit enabled={this.state.limitEnabled} limit={this.state.limit} onChange={this.handleChangeLimit} />
           </Modal.Content>
           <Modal.Actions>
             <Button id='TextAreaInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
@@ -124,19 +134,19 @@ class TableEntryEditModal extends Component {
 function TableEntryEditBasic(props) {
   return (
     <Form className='TableEntryEditBasic'>
-      <Header as='h4' content='Basic' />
+      <Header as='h4' content='Basic' subheader='Generic weight and main text for this result.' />
       <Form.Group>
         <Form.Input 
           name='weight' 
           inline 
-          width={2} 
+          width={3} 
           placeholder='Weight'
           icon='balance scale'
           iconPosition='left'
           value={props.weight} 
           onChange={props.onChange}
         />
-        <Form.Input name='text' inline width={14} placeholder='Main text for this result on the table' value={props.text} onChange={props.onChange} />
+        <Form.Input name='text' inline width={13} placeholder='Main text for this result on the table' value={props.text} onChange={props.onChange} />
       </Form.Group>
     </Form>
   );
@@ -145,7 +155,7 @@ function TableEntryEditBasic(props) {
 function TableEntryEditDetails(props) {
   return (
     <div className='TableEntryEditDetails'>
-      <Header as='h4' content='Template Details' subheader='Additional details for use by any directly attached templates' />
+      <Header as='h4' content='Template Details' subheader='Additional details for use by any directly attached templates.' />
       <List bulleted>
         {props.entryDetails.map(
           entryDetail => <EntryDetailListItem entryDetail={entryDetail} />
@@ -208,7 +218,7 @@ class EntryDetailAdder extends Component {
 function TableEntryEditTagWeight(props) {
   return (
     <div className='TableEntryEditTagWeight'>
-      <Header as='h4' content='Weights by tag' />
+      <Header as='h4' content='Weights by tag' subheader='Will increase the weight of this result for each matching tag below.' />
       <Label.Group tag>
         {props.tagWeights.map(
           tagWeight => <TagWeightLabel id={tagWeight.id} color={tagWeight.color} text={tagWeight.tag} weight={tagWeight.weight} />
@@ -258,7 +268,9 @@ class TagWeightAdder extends Component {
           <Form.Input 
             name='weight'
             inline
-            width={2} 
+            width={3} 
+            icon='balance scale'
+            iconPosition='left'
             placeholder='Weight' 
             value={this.state.weight} 
             onChange={this.handleChange} 
@@ -272,7 +284,7 @@ class TagWeightAdder extends Component {
 function TableEntryEditBlacklist(props) {
   return (
     <div className='TableEntryEditBlacklist'>
-      <Header as='h4' content='Blacklist' subheader='Exclude this result if any of the following tags are present' />
+      <Header as='h4' content='Blacklist' subheader='Exclude this result if any of the following tags are present.' />
       <Label.Group tag color='red'>
         {props.tagBlacklist.map(
           tag => <TagLabel tag={tag} />
@@ -318,6 +330,33 @@ class BlacklistAdder extends Component {
       </Form>
     )
   }
+}
+
+function TableEntryEditLimit(props) {
+  return (
+    <Form className='TableEntryEditLimit'>
+      <Header as='h4' content='Maximum occurrences' subheader='If enabled, will put a limit on the maximum number of times this result can be rolled on the table.' />
+      <Form.Group>
+        <Form.Radio 
+          toggle
+          name='limitToggle'
+          value={props.enabled}
+          onChange={props.onChange}
+        />
+        <Form.Input 
+          name='limit' 
+          inline 
+          width={3} 
+          placeholder='Limit'
+          icon='ban'
+          iconPosition='left'
+          disabled={!props.enabled}
+          value={props.limit}
+          onChange={props.onChange}
+        />
+      </Form.Group>
+    </Form>
+  )
 }
 
 export {TableEntryEditModal}
