@@ -75,8 +75,6 @@ class TableEntryEditModal extends Component {
     //TODO: Remove the tag from this.state.options when it is added
     //TODO: Avoid duplicates in this.state.tags
     //TODO: Maintain alphabetical order in this.state.tags
-    console.log(tag)
-    console.log(weight)
     this.setState({
       tagWeights: [
         ...this.state.tagWeights,
@@ -178,22 +176,21 @@ function EntryDetailListItem(props) {
 class EntryDetailAdder extends Component {
   state = {
     value: '',
-    color: undefined,
     disabled: true
   }
 
   handleChange = (event, {name, value}) => {
     if (value) {
-      this.setState({value: value, color: 'blue', disabled: false})
+      this.setState({value: value, disabled: false})
     }
     else {
-      this.setState({value: value, color: undefined, disabled: true})
+      this.setState({value: value, disabled: true})
     }
   }
 
   handleSubmit = () => {
     const value = this.state.value
-    this.setState({value: '', color: undefined, disabled: true})
+    this.setState({value: '', disabled: true})
     this.props.onSubmit(value)
   }
 
@@ -201,7 +198,14 @@ class EntryDetailAdder extends Component {
     return (
       <Form className='EntryDetailAdder' onSubmit={this.handleSubmit}>
         <Form.Group>
-          <Form.Button type='submit' inline circular icon='plus' disabled={this.state.disabled} color={this.state.color} />
+          <Form.Button 
+            type='submit' 
+            inline 
+            circular 
+            icon='plus' 
+            primary={!this.state.disabled}
+            disabled={this.state.disabled}
+          />
           <Form.Input
             name='newDetail'
             width={16}
@@ -233,22 +237,33 @@ function TableEntryEditTagWeight(props) {
 class TagWeightAdder extends Component {
   state = {
     weight: '',
-    tag: ''
+    tag: '',
+    disabled: true
   }
 
   handleChange = (event, {name, value}) => {
     if (name == 'weight' && value.match(VALID_INTEGER_REGEX)) {
-      this.setState({weight: value})
+      if (value && this.state.tag) {
+        this.setState({weight: value, disabled: false})
+      }
+      else {
+        this.setState({weight: value, disabled: true})
+      }
     }
     if (name == 'tag') {
-      this.setState({tag: value})
+      if (this.state.weight && value) {
+        this.setState({tag: value, disabled: false})
+      }
+      else {
+        this.setState({tag: value, disabled: true})
+      }
     }
   }
 
   handleSubmit = () => {
     const weight = this.state.weight
     const tag = this.state.tag
-    this.setState({'weight': '', 'tag': ''})
+    this.setState({'weight': '', 'tag': '', disabled: true})
     this.props.onSubmit({'weight': weight, 'tag': tag})
   }
 
@@ -256,7 +271,14 @@ class TagWeightAdder extends Component {
     return (
       <Form className='TagWeightAdder' onSubmit={this.handleSubmit}>
         <Form.Group>
-          <Form.Button type='submit' inline circular icon='plus' />
+          <Form.Button 
+            type='submit' 
+            inline 
+            circular 
+            icon='plus'
+            primary={!this.state.disabled}
+            disabled={this.state.disabled}
+          />
           <Form.Select 
             name='tag' 
             inline
@@ -298,18 +320,24 @@ function TableEntryEditBlacklist(props) {
 
 class BlacklistAdder extends Component {
   state = {
-    tag: ''
+    tag: '',
+    disabled: true
   }
 
   handleChange = (event, {name, value}) => {
     if (name == 'tag') {
-      this.setState({tag: value})
+      if (value) {
+        this.setState({tag: value, disabled: false})
+      }
+      else {
+        this.setState({tag: value, disabled: true})
+      }
     }
   }
 
   handleSubmit = () => {
     const tag = this.state.tag
-    this.setState({'tag': ''})
+    this.setState({'tag': '', 'disabled': true})
     this.props.onSubmit(tag)
   }
 
@@ -317,14 +345,21 @@ class BlacklistAdder extends Component {
     return (
       <Form className='BlacklistAdder' onSubmit={this.handleSubmit}>
         <Form.Group>
-          <Form.Button type='submit' inline circular icon='plus' />
+          <Form.Button 
+            type='submit' 
+            inline 
+            circular 
+            icon='plus'
+            primary={!this.state.disabled}
+            disabled={this.state.disabled}
+          />
           <Form.Select 
             name='tag'
             inline
             placeholder='Tag' 
             search
             options={this.props.options}
-            value={this.state.value}
+            value={this.state.tag}
             onChange={this.handleChange} 
           />
         </Form.Group>
