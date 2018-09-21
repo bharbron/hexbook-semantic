@@ -1,0 +1,1 @@
+export const VALID_INTEGER_REGEX = /^$|^0$|^[1-9]+[0-9]*$/

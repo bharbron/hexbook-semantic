@@ -11,6 +11,7 @@ import {
 } from 'semantic-ui-react';
 import './components.css';
 import {TagLabel, TagWeightLabel} from './labels'
+import {VALID_INTEGER_REGEX} from '../constants/regex'
 
 const uuidv4 = require('uuid/v4');
 
@@ -54,7 +55,7 @@ class TableEntryEditModal extends Component {
   }
 
   handleChangeBasic = (event, {name, value}) => {
-    if (name == 'weight' && value.match(/^[0-9]*$/)) {
+    if (name == 'weight' && value.match(VALID_INTEGER_REGEX)) {
       this.setState({weight: value})
     }
     if (name == 'text') {
@@ -102,7 +103,7 @@ class TableEntryEditModal extends Component {
     if (name == 'limitToggle') {
       this.setState({limitEnabled: !this.state.limitEnabled})
     }
-    if (name == 'limit' && value.match(/^[0-9]*$/)) {
+    if (name == 'limit' && value.match(VALID_INTEGER_REGEX)) {
       this.setState({limit: value})
     }
   }
@@ -236,7 +237,7 @@ class TagWeightAdder extends Component {
   }
 
   handleChange = (event, {name, value}) => {
-    if (name == 'weight' && value.match(/^[0-9]*$/)) {
+    if (name == 'weight' && value.match(VALID_INTEGER_REGEX)) {
       this.setState({weight: value})
     }
     if (name == 'tag') {
@@ -346,10 +347,8 @@ function TableEntryEditLimit(props) {
         <Form.Input 
           name='limit' 
           inline 
-          width={3} 
+          width={2} 
           placeholder='Limit'
-          icon='ban'
-          iconPosition='left'
           disabled={!props.enabled}
           value={props.limit}
           onChange={props.onChange}
