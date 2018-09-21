@@ -126,8 +126,17 @@ function TableEntryEditBasic(props) {
     <Form className='TableEntryEditBasic'>
       <Header as='h4' content='Basic' />
       <Form.Group>
-        <Form.Input name='weight' inline width={2} label='Weight' placeholder='#' value={props.weight} onChange={props.onChange} />
-        <Form.Input name='text' inline width={14} label='Result' placeholder='Main text for this result on the table' value={props.text} onChange={props.onChange} />
+        <Form.Input 
+          name='weight' 
+          inline 
+          width={2} 
+          placeholder='Weight'
+          icon='balance scale'
+          iconPosition='left'
+          value={props.weight} 
+          onChange={props.onChange}
+        />
+        <Form.Input name='text' inline width={14} placeholder='Main text for this result on the table' value={props.text} onChange={props.onChange} />
       </Form.Group>
     </Form>
   );
@@ -181,10 +190,10 @@ class EntryDetailAdder extends Component {
     return (
       <Form className='EntryDetailAdder' onSubmit={this.handleSubmit}>
         <Form.Group>
+          <Form.Button type='submit' inline circular icon='plus' disabled={this.state.disabled} color={this.state.color} />
           <Form.Input
             name='newDetail'
-            action={{ color: this.state.color, disabled: this.state.disabled, icon: 'plus' }}
-            actionPosition='left'
+            width={16}
             placeholder='Enter new detail...'
             onChange={this.handleChange}
             onKeyDown={this.handleKeyDown}
@@ -236,23 +245,22 @@ class TagWeightAdder extends Component {
     return (
       <Form className='TagWeightAdder' onSubmit={this.handleSubmit}>
         <Form.Group>
-          <Form.Button type='submit' circular icon='plus' />
-          <Form.Input 
-            name='weight' 
-            width={2} 
-            label='Weight' 
-            placeholder='#' 
-            value={this.state.weight} 
-            onChange={this.handleChange} 
-          />
+          <Form.Button type='submit' inline circular icon='plus' />
           <Form.Select 
             name='tag' 
-            width={4} 
-            label='Tag' 
-            placeholder='tag' 
+            inline
+            placeholder='Tag' 
             search
             options={this.props.options}
             value={this.state.tag} 
+            onChange={this.handleChange} 
+          />
+          <Form.Input 
+            name='weight'
+            inline
+            width={2} 
+            placeholder='Weight' 
+            value={this.state.weight} 
             onChange={this.handleChange} 
           />
         </Form.Group>
@@ -296,12 +304,11 @@ class BlacklistAdder extends Component {
     return (
       <Form className='BlacklistAdder' onSubmit={this.handleSubmit}>
         <Form.Group>
-          <Form.Button type='submit' circular label='' icon='plus' />
+          <Form.Button type='submit' inline circular icon='plus' />
           <Form.Select 
             name='tag'
-            width={4} 
-            label='Tag' 
-            placeholder='tag' 
+            inline
+            placeholder='Tag' 
             search
             options={this.props.options}
             value={this.state.value}
