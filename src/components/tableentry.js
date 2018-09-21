@@ -1,18 +1,12 @@
 import React, {Component} from 'react';
 import {
   Button,
-  Card,
-  Checkbox,
-  Dropdown,
   Form,
   Header,
   Icon,
-  Input,
   Label,
   List,
   Modal,
-  Segment,
-  Table,
   Transition
 } from 'semantic-ui-react';
 import './components.css';
@@ -24,28 +18,18 @@ class TableEntryEditModal extends Component {
   state = {
       primaryColor: null,
       primaryDisabled: true,
-      value: ''
+      weight: (this.props.tableEntry) ? this.props.tableEntry.weight : undefined,
+      text: (this.props.tableEntry) ? this.props.tableEntry.text : undefined,
+      maxOccurences: (this.props.tableEntry) ? this.props.tableEntry.maxOccurences : undefined,
+      entryDetails: (this.props.tableEntry) ? [...this.props.tableEntry.entryDetails] : [],
+      tagWeights: (this.props.tableEntry) ? [...this.props.tableEntry.tagWeights] : [],
+      tagBlacklist: (this.props.tableEntry) ? [...this.props.tableEntry.tagBlacklist] : [],
   }
 
   static defaultProps = {
     open: false,
     primaryText: 'SAVE',
     onSubmit: (value) => console.log(`default onSubmit: ${value}`)
-  }
-
-  handleChange = (event, {name, value}) => {
-    if ( value ) { 
-      this.setState({value: value, primaryColor: 'blue', primaryDisabled: false})
-    }
-    else {
-      this.setState({value: value, primaryColor: null, primaryDisabled: true})
-    }
-  }
-
-  handleClick = (event)  => {
-    const value = this.state.value
-    this.setState({value: '', primaryColor: null, primaryDisabled: true})
-    this.props.onSubmit(value)
   }
 
   handleClose = (event) => {
@@ -58,6 +42,15 @@ class TableEntryEditModal extends Component {
     this.props.onClose()
   }
 
+  handleChangeBasic = (event, {name, value}) => {
+    if (name == 'weight' && value.match(/^[0-9]*$/)) {
+      this.setState({weight: value})
+    }
+    if (name == 'text') {
+      this.setState({text: value})
+    }
+  }
+
   render () {
     return (
       <Transition animation='fly up' mountOnShow unmountOnHide='true' visible={this.props.open}>
@@ -66,7 +59,7 @@ class TableEntryEditModal extends Component {
             <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
           </Modal.Header>
           <Modal.Content scrolling>
-            <TableEntryEditBasic />
+            <TableEntryEditBasic weight={this.state.weight} text={this.state.text} onChange={this.handleChangeBasic} />
             <TableEntryEditDetails />
             <TableEntryEditTagWeight options={[
               {key: 'forest', value: 'forest', text: 'forest'},
@@ -78,6 +71,7 @@ class TableEntryEditModal extends Component {
               {key: 'garden', value: 'garden', text: 'garden'},
               {key: 'mountain', value: 'mountain', text: 'mountain'},
             ]} />
+          {/*TODO: Form for editing max number of occurrences*/}
           </Modal.Content>
           <Modal.Actions>
             <Button id='TextAreaInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
@@ -90,27 +84,13 @@ class TableEntryEditModal extends Component {
 }
 
 class TableEntryEditBasic extends Component {
-  state = {
-    weight: this.props.weight,
-    text: this.props.text
-  }
-
-  handleChange = (event, {name, value}) => {
-    if (name == 'weight' && value.match(/^[0-9]*$/)) {
-      this.setState({weight: value})
-    }
-    if (name == 'text') {
-      this.setState({text: value})
-    }
-  }
-
   render () {
     return (
       <Form className='TableEntryEditBasic'>
         <Header as='h4' content='Basic' />
         <Form.Group>
-          <Form.Input name='weight' inline width={2} label='Weight' placeholder='#' value={this.state.weight} onChange={this.handleChange} />
-          <Form.Input name='text' inline width={14} label='Result' placeholder='Main text for this result on the table' value={this.state.text} onChange={this.handleChange} />
+          <Form.Input name='weight' inline width={2} label='Weight' placeholder='#' value={this.props.weight} onChange={this.props.onChange} />
+          <Form.Input name='text' inline width={14} label='Result' placeholder='Main text for this result on the table' value={this.props.text} onChange={this.props.onChange} />
         </Form.Group>
       </Form>
     );
