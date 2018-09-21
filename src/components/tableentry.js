@@ -23,7 +23,17 @@ class TableEntryEditModal extends Component {
       maxOccurences: (this.props.tableEntry) ? this.props.tableEntry.maxOccurences : undefined,
       entryDetails: (this.props.tableEntry) ? [...this.props.tableEntry.entryDetails] : [],
       tagWeights: (this.props.tableEntry) ? [...this.props.tableEntry.tagWeights] : [],
+      tagWeightOptions: [
+        {key: 'forest', value: 'forest', text: 'forest'},
+        {key: 'garden', value: 'garden', text: 'garden'},
+        {key: 'mountain', value: 'mountain', text: 'mountain'},
+      ],
       tagBlacklist: (this.props.tableEntry) ? [...this.props.tableEntry.tagBlacklist] : [],
+      tagBlacklistOptions: [
+        {key: 'forest', value: 'forest', text: 'forest'},
+        {key: 'garden', value: 'garden', text: 'garden'},
+        {key: 'mountain', value: 'mountain', text: 'mountain'},
+      ],
   }
 
   static defaultProps = {
@@ -58,6 +68,26 @@ class TableEntryEditModal extends Component {
     ]})
   }
 
+  handleSubmitTagWeight = ({tag, weight}) => {
+    //TODO: Set color based on whether the tag is terrain, territory, or other
+    //TODO: Remove the tag from this.state.options when it is added
+    //TODO: Avoid duplicates in this.state.tags
+    //TODO: Maintain alphabetical order in this.state.tags
+    console.log(tag)
+    console.log(weight)
+    this.setState({
+      tagWeights: [
+        ...this.state.tagWeights,
+        {
+          id: uuidv4(),
+          tag: tag,
+          color: 'teal',
+          weight: weight,
+        }
+      ]
+    })
+  }
+
   render () {
     return (
       <Transition animation='fly up' mountOnShow unmountOnHide='true' visible={this.props.open}>
@@ -68,16 +98,8 @@ class TableEntryEditModal extends Component {
           <Modal.Content scrolling>
             <TableEntryEditBasic weight={this.state.weight} text={this.state.text} onChange={this.handleChangeBasic} />
             <TableEntryEditDetails entryDetails={this.state.entryDetails} onSubmit={this.handleSubmitDetails} />
-            <TableEntryEditTagWeight options={[
-              {key: 'forest', value: 'forest', text: 'forest'},
-              {key: 'garden', value: 'garden', text: 'garden'},
-              {key: 'mountain', value: 'mountain', text: 'mountain'},
-            ]} />
-            <TableEntryEditBlacklist options={[
-              {key: 'forest', value: 'forest', text: 'forest'},
-              {key: 'garden', value: 'garden', text: 'garden'},
-              {key: 'mountain', value: 'mountain', text: 'mountain'},
-            ]} />
+            <TableEntryEditTagWeight tagWeights={this.state.tagWeights} options={this.state.tagWeightOptions} onSubmit={this.handleSubmitTagWeight} />
+            <TableEntryEditBlacklist options={this.state.tagBlacklistOptions} />
           {/*TODO: Form for editing max number of occurrences*/}
           </Modal.Content>
           <Modal.Actions>
@@ -165,49 +187,18 @@ class EntryDetailAdder extends Component {
   }
 }
 
-class TableEntryEditTagWeight extends Component {
-  state = {
-    tags: this.props.tags,
-    options: this.props.options
-  }
-
-  static defaultProps = {
-    tags: [],
-    options: []
-  }
-
-  handleSubmit = ({tag, weight}) => {
-    //TODO: Determine color based on whether this is a terrain, territory, or other tag
-    //TODO: Remove the tag from this.state.options when it is added
-    //TODO: Avoid duplicates in this.state.tags
-    //TODO: Maintain alphabetical order in this.state.tags
-    this.setState({
-      tags: [
-        ...this.state.tags,
-        {
-          id: tag,
-          color: 'teal',
-          name: tag,
-          weight: weight,
-        }
-      ]
-    })
-  }
-
-  render () {
-    return (
-      <div className='TableEntryEditTagWeight'>
-        <Header as='h4' content='Weights by tag' />
-        <Label.Group tag>
-          <TagWeightLabel id='animal' color='teal' name='animal' weight={1} onRemove={() => console.log('foo')} />
-          {this.state.tags.map(
-            tag => <TagWeightLabel id={tag.id} color={tag.color} name={tag.name} weight={tag.weight} />
-          )}
-        </Label.Group>
-        <TagWeightAdder options={this.state.options} onSubmit={this.handleSubmit} />
-      </div>
-    )
-  }
+function TableEntryEditTagWeight(props) {
+  return (
+    <div className='TableEntryEditTagWeight'>
+      <Header as='h4' content='Weights by tag' />
+      <Label.Group tag>
+        {props.tagWeights.map(
+          tagWeight => <TagWeightLabel id={tagWeight.id} color={tagWeight.color} text={tagWeight.tag} weight={tagWeight.weight} />
+        )}
+      </Label.Group>
+      <TagWeightAdder options={props.options} onSubmit={props.onSubmit} />
+    </div>
+  )
 }
 
 class TagWeightAdder extends Component {

@@ -32,7 +32,7 @@ function TagWeightLabel(props) {
       key={props.id} 
       color={props.color}
       onRemove={props.onRemove}
-      content={props.name}
+      content={props.text}
       detail={props.weight}
     />
   )
