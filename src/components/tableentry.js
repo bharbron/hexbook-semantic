@@ -51,6 +51,13 @@ class TableEntryEditModal extends Component {
     }
   }
 
+  handleSubmitDetails = (value) => {
+    this.setState({entryDetails: [
+      ...this.state.entryDetails,
+      {id: uuidv4(), text: value}
+    ]})
+  }
+
   render () {
     return (
       <Transition animation='fly up' mountOnShow unmountOnHide='true' visible={this.props.open}>
@@ -60,7 +67,7 @@ class TableEntryEditModal extends Component {
           </Modal.Header>
           <Modal.Content scrolling>
             <TableEntryEditBasic weight={this.state.weight} text={this.state.text} onChange={this.handleChangeBasic} />
-            <TableEntryEditDetails />
+            <TableEntryEditDetails entryDetails={this.state.entryDetails} onSubmit={this.handleSubmitDetails} />
             <TableEntryEditTagWeight options={[
               {key: 'forest', value: 'forest', text: 'forest'},
               {key: 'garden', value: 'garden', text: 'garden'},
@@ -83,50 +90,30 @@ class TableEntryEditModal extends Component {
   }
 }
 
-class TableEntryEditBasic extends Component {
-  render () {
-    return (
-      <Form className='TableEntryEditBasic'>
-        <Header as='h4' content='Basic' />
-        <Form.Group>
-          <Form.Input name='weight' inline width={2} label='Weight' placeholder='#' value={this.props.weight} onChange={this.props.onChange} />
-          <Form.Input name='text' inline width={14} label='Result' placeholder='Main text for this result on the table' value={this.props.text} onChange={this.props.onChange} />
-        </Form.Group>
-      </Form>
-    );
-  }
+function TableEntryEditBasic(props) {
+  return (
+    <Form className='TableEntryEditBasic'>
+      <Header as='h4' content='Basic' />
+      <Form.Group>
+        <Form.Input name='weight' inline width={2} label='Weight' placeholder='#' value={props.weight} onChange={props.onChange} />
+        <Form.Input name='text' inline width={14} label='Result' placeholder='Main text for this result on the table' value={props.text} onChange={props.onChange} />
+      </Form.Group>
+    </Form>
+  );
 }
 
-class TableEntryEditDetails extends Component {
-  state = {
-    entryDetails: this.props.entryDetails
-  }
-
-  static defaultProps = {
-    entryDetails: []
-  }
-
-  handleSubmit = (value) => {
-    this.setState({entryDetails: [
-      ...this.state.entryDetails,
-      {id: uuidv4(), text: value}
-    ]})
-  }
-
-  render () {
-    return (
-      <div className='TableEntryEditDetails'>
-        <Header as='h4' content='Template Details' subheader='Additional details to be printed only if a template is attached to this table' />
-        <List bulleted>
-          <EntryDetailListItem entryDetail={{text: 'One', id: uuidv4()}} />
-          {this.state.entryDetails && this.state.entryDetails.map(
-            entryDetail => <EntryDetailListItem entryDetail={entryDetail} />
-          )}
-        </List>
-        <EntryDetailAdder onSubmit={this.handleSubmit} />
-      </div>
-    )
-  }
+function TableEntryEditDetails(props) {
+  return (
+    <div className='TableEntryEditDetails'>
+      <Header as='h4' content='Template Details' subheader='Additional details to be printed only if a template is attached to this table' />
+      <List bulleted>
+        {props.entryDetails.map(
+          entryDetail => <EntryDetailListItem entryDetail={entryDetail} />
+        )}
+      </List>
+      <EntryDetailAdder onSubmit={props.onSubmit} />
+    </div>
+  )
 }
 
 function EntryDetailListItem(props) {
