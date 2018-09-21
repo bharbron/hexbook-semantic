@@ -12,6 +12,7 @@ import {
 import './components.css';
 import {TagLabel, TagWeightLabel} from './labels'
 import {VALID_INTEGER_REGEX} from '../constants/regex'
+import {arrayWithItemRemoved} from '../reducers/helpers'
 
 const uuidv4 = require('uuid/v4');
 
@@ -70,6 +71,14 @@ class TableEntryEditModal extends Component {
     ]})
   }
 
+  handleRemoveDetails = (id) => {
+    this.setState({
+      entryDetails: [
+        ...this.state.entryDetails.filter(detail => detail.id != id)
+      ]
+    })
+  }
+
   handleSubmitTagWeight = ({tag, weight}) => {
     //TODO: Set color based on whether the tag is terrain, territory, or other
     //TODO: Remove the tag from this.state.options when it is added
@@ -115,7 +124,7 @@ class TableEntryEditModal extends Component {
           </Modal.Header>
           <Modal.Content scrolling>
             <TableEntryEditBasic weight={this.state.weight} text={this.state.text} onChange={this.handleChangeBasic} />
-            <TableEntryEditDetails entryDetails={this.state.entryDetails} onSubmit={this.handleSubmitDetails} />
+            <TableEntryEditDetails entryDetails={this.state.entryDetails} onSubmit={this.handleSubmitDetails} onRemove={this.handleRemoveDetails} />
             <TableEntryEditTagWeight tagWeights={this.state.tagWeights} options={this.state.tagWeightOptions} onSubmit={this.handleSubmitTagWeight} />
             <TableEntryEditBlacklist tagBlacklist={this.state.tagBlacklist} options={this.state.tagBlacklistOptions} onSubmit={this.handleSubmitBlacklist} />
             <TableEntryEditLimit enabled={this.state.limitEnabled} limit={this.state.limit} onChange={this.handleChangeLimit} />
@@ -157,7 +166,7 @@ function TableEntryEditDetails(props) {
       <Header as='h4' content='Template Details' subheader='Additional details for use by any directly attached templates.' />
       <List bulleted>
         {props.entryDetails.map(
-          entryDetail => <EntryDetailListItem entryDetail={entryDetail} />
+          entryDetail => <EntryDetailListItem entryDetail={entryDetail} onRemove={props.onRemove} />
         )}
       </List>
       <EntryDetailAdder onSubmit={props.onSubmit} />
@@ -168,7 +177,7 @@ function TableEntryEditDetails(props) {
 function EntryDetailListItem(props) {
   return (
     <List.Item key={props.entryDetail.id}>
-      {props.entryDetail.text} <Icon link name='minus circle' color='grey' onClick={props.onClick} />
+      {props.entryDetail.text} <Icon link name='minus circle' color='grey' onClick={() => props.onRemove(props.entryDetail.id)} />
     </List.Item>
   )
 }
