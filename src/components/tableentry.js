@@ -17,6 +17,21 @@ import {VALID_INTEGER_REGEX} from '../constants/regex'
 
 const uuidv4 = require('uuid/v4');
 
+function initializeTagOptions(allTagIds, tagWeights, tagBlacklist) {
+  /*
+  Create the list of initial tagOptions by removing any tags from the list of all tagsIDs that
+  are already in the list of tagWeights or the tagBlacklist 
+  */
+  const tagWeightTags = []
+  tagWeights.map(tw => tagWeightTags.push(tw.tag))
+  const tagOptionsTags = [
+    ...allTagIds.filter(t => !tagWeightTags.includes(t) && !tagBlacklist.includes(t))
+  ].sort()
+  const tagOptions = []
+  tagOptionsTags.map(t => tagOptions.push({key: t, value: t, text: t}))
+  return tagOptions
+}
+
 class TableEntryEditModal extends Component {
   state = {
       changed: false,
@@ -24,7 +39,7 @@ class TableEntryEditModal extends Component {
       text: (this.props.tableEntry) ? this.props.tableEntry.text : '',
       entryDetails: (this.props.tableEntry) ? [...this.props.tableEntry.entryDetails] : [],
       tagOptions: (this.props.tableEntry) ? 
-        () => this.initializeTagOptions(this.props.allTagIds, this.props.tableEntry.tagWeights, this.props.tableEntry.tagBlacklist) : 
+        initializeTagOptions(this.props.allTagIds, this.props.tableEntry.tagWeights, this.props.tableEntry.tagBlacklist) : 
         [],
       tagWeights: (this.props.tableEntry) ? [...this.props.tableEntry.tagWeights] : [],
       tagBlacklist: (this.props.tableEntry) ? [...this.props.tableEntry.tagBlacklist] : [],
@@ -32,33 +47,7 @@ class TableEntryEditModal extends Component {
       limit: (this.props.tableEntry && this.props.tableEntry.limit) ? this.props.tableEntry.limit : '',
   }
 
-  static defaultProps = {
-    allTagIds: [],
-    tagsById: {},
-    onSubmit: () => console.log(`onSubmit`),
-  }
-
-  componentDidUpdate = (prevProps) => {
-    /*
-    If the tableEntry this modal is editing changes (e.g. we clicked a different entry on the table)
-    then we need to re-initialize the state based on that new tableEntry
-    */
-    if (this.props.tableEntry !== prevProps.tableEntry) {
-      this.setState({
-        changed: false,
-        weight: this.props.tableEntry.weight,
-        text: this.props.tableEntry.text,
-        entryDetails: [...this.props.tableEntry.entryDetails],
-        tagOptions: this.initializeTagOptions(this.props.allTagIds, this.props.tableEntry.tagWeights, this.props.tableEntry.tagBlacklist),
-        tagWeights: [...this.props.tableEntry.tagWeights],
-        tagBlacklist: [...this.props.tableEntry.tagBlacklist],
-        limitEnabled: (this.props.tableEntry.limit) ? true : false,
-        limit: (this.props.tableEntry.limit) ? this.props.tableEntry.limit : '',
-      })
-    }
-  }
-
-  initializeTagOptions = (allTagIds, tagWeights, tagBlacklist) => {
+  static initializeTagOptions = (allTagIds, tagWeights, tagBlacklist) => {
     /*
     Create the list of initial tagOptions by removing any tags from the list of all tagsIDs that
     are already in the list of tagWeights or the tagBlacklist 
@@ -273,55 +262,49 @@ class TableEntryEditModal extends Component {
 
   render () {
     return (
-      <div>
-      {console.log('this.props')}
-      {console.log(this.props)}
-      {console.log('this.state')}
-      {console.log(this.state)}
-        <Modal open={this.props.open} onClose={this.handleClose} className='TextAreaInputModal'>
-          <Modal.Header style={{ borderBottom: '0px' }}>
-            <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
-          </Modal.Header>
-          <Modal.Content scrolling>
-            <Divider horizontal>Required</Divider>
-            <TableEntryEditBasic weight={this.state.weight} text={this.state.text} onChange={this.handleChangeBasic} />
-            <Divider horizontal>Optional</Divider>
-            <TableEntryEditDetails 
-              entryDetails={this.state.entryDetails} 
-              onSubmit={this.handleSubmitDetails} 
-              onRemove={this.handleRemoveDetails} 
-            />
-            <TableEntryEditTagWeight 
-              tagWeights={this.state.tagWeights} 
-              options={this.state.tagOptions} 
-              onSubmit={this.handleSubmitTagWeight} 
-              onRemove={this.handleRemoveTagWeight} 
-            />
-            <TableEntryEditBlacklist 
-              tagBlacklist={this.state.tagBlacklist} 
-              options={this.state.tagOptions} 
-              onSubmit={this.handleSubmitBlacklist} 
-              onRemove={this.handleRemoveBlacklist} 
-            />
-            <TableEntryEditLimit 
-              enabled={this.state.limitEnabled} 
-              limit={this.state.limit} 
-              onChange={this.handleChangeLimit} 
-            />
-          </Modal.Content>
-          <Modal.Actions>
-            <Button id='TextAreaInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
-            <Button 
-              id='TextAreaInputModalSave' 
-              primary={!this.primaryDisabled()} 
-              disabled={this.primaryDisabled()} 
-              onClick={this.handleSubmit}
-            >
-              SAVE
-            </Button>
-          </Modal.Actions>
-        </Modal>
-      </div>
+      <Modal open={this.props.open} onClose={this.handleClose} className='TableEntryEditModal'>
+        <Modal.Header style={{ borderBottom: '0px' }}>
+          <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
+        </Modal.Header>
+        <Modal.Content scrolling>
+          <Divider horizontal>Required</Divider>
+          <TableEntryEditBasic weight={this.state.weight} text={this.state.text} onChange={this.handleChangeBasic} />
+          <Divider horizontal>Optional</Divider>
+          <TableEntryEditDetails 
+            entryDetails={this.state.entryDetails} 
+            onSubmit={this.handleSubmitDetails} 
+            onRemove={this.handleRemoveDetails} 
+          />
+          <TableEntryEditTagWeight 
+            tagWeights={this.state.tagWeights} 
+            options={this.state.tagOptions} 
+            onSubmit={this.handleSubmitTagWeight} 
+            onRemove={this.handleRemoveTagWeight} 
+          />
+          <TableEntryEditBlacklist 
+            tagBlacklist={this.state.tagBlacklist} 
+            options={this.state.tagOptions} 
+            onSubmit={this.handleSubmitBlacklist} 
+            onRemove={this.handleRemoveBlacklist} 
+          />
+          <TableEntryEditLimit 
+            enabled={this.state.limitEnabled} 
+            limit={this.state.limit} 
+            onChange={this.handleChangeLimit} 
+          />
+        </Modal.Content>
+        <Modal.Actions>
+          <Button id='TextAreaInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
+          <Button 
+            id='TextAreaInputModalSave' 
+            primary={!this.primaryDisabled()} 
+            disabled={this.primaryDisabled()} 
+            onClick={this.handleSubmit}
+          >
+            SAVE
+          </Button>
+        </Modal.Actions>
+      </Modal>
     )
   }
 }
