@@ -12,14 +12,12 @@ import {
 import './components.css';
 import {TagLabel, TagWeightLabel} from './labels'
 import {VALID_INTEGER_REGEX} from '../constants/regex'
-import {arrayWithItemRemoved} from '../reducers/helpers'
 
 const uuidv4 = require('uuid/v4');
 
 class TableEntryEditModal extends Component {
   state = {
-      primaryColor: null,
-      primaryDisabled: true,
+      changed: false,
       weight: (this.props.tableEntry) ? this.props.tableEntry.weight : '',
       text: (this.props.tableEntry) ? this.props.tableEntry.text : '',
       entryDetails: (this.props.tableEntry) ? [...this.props.tableEntry.entryDetails] : [],
@@ -45,34 +43,47 @@ class TableEntryEditModal extends Component {
     onSubmit: (value) => console.log(`default onSubmit: ${value}`)
   }
 
+  primaryDisabled = () => {
+    if (this.state.changed && this.state.weight && this.state.text) {
+      return false
+    }
+    else {
+      return true
+    }
+  }
+
   handleClose = (event) => {
-    this.setState({value: '', primaryColor: null, primaryDisabled: true})
+    this.setState({weight: '', text: ''})
     this.props.onClose()
   }
 
   handleCancel = (event) => {
-    this.setState({value: '', primaryColor: null, primaryDisabled: true})
+    this.setState({weight: '', text: ''})
     this.props.onClose()
   }
 
   handleChangeBasic = (event, {name, value}) => {
     if (name == 'weight' && value.match(VALID_INTEGER_REGEX)) {
-      this.setState({weight: value})
+      this.setState({weight: value, changed: true})
     }
     if (name == 'text') {
-      this.setState({text: value})
+      this.setState({text: value, changed: true})
     }
   }
 
   handleSubmitDetails = (value) => {
-    this.setState({entryDetails: [
-      ...this.state.entryDetails,
-      {id: uuidv4(), text: value}
-    ]})
+    this.setState({
+      changed: true,
+      entryDetails: [
+        ...this.state.entryDetails,
+        {id: uuidv4(), text: value}
+      ]
+    })
   }
 
   handleRemoveDetails = (id) => {
     this.setState({
+      changed: true,
       entryDetails: [
         ...this.state.entryDetails.filter(detail => detail.id != id)
       ]
@@ -85,6 +96,7 @@ class TableEntryEditModal extends Component {
     //TODO: Avoid duplicates in this.state.tags
     //TODO: Maintain alphabetical order in this.state.tags
     this.setState({
+      changed: true,
       tagWeights: [
         ...this.state.tagWeights,
         {
@@ -99,6 +111,7 @@ class TableEntryEditModal extends Component {
 
   handleRemoveTagWeight = (id) => {
     this.setState({
+      changed: true,
       tagWeights: [
         ...this.state.tagWeights.filter(tagWeight => tagWeight.id != id)
       ]
@@ -107,6 +120,7 @@ class TableEntryEditModal extends Component {
 
   handleSubmitBlacklist = (value) => {
     this.setState({
+      changed: true,
       tagBlacklist: [
         ...this.state.tagBlacklist,
         value
@@ -116,6 +130,7 @@ class TableEntryEditModal extends Component {
 
   handleRemoveBlacklist = (value) => {
     this.setState({
+      changed: true,
       tagBlacklist: [
         ...this.state.tagBlacklist.filter(tag => tag != value)
       ]
@@ -124,10 +139,10 @@ class TableEntryEditModal extends Component {
 
   handleChangeLimit = (event, {name, value}) => {
     if (name == 'limitToggle') {
-      this.setState({limitEnabled: !this.state.limitEnabled})
+      this.setState({limitEnabled: !this.state.limitEnabled, changed: true})
     }
     if (name == 'limit' && value.match(VALID_INTEGER_REGEX)) {
-      this.setState({limit: value})
+      this.setState({limit: value, changed: true})
     }
   }
 
@@ -147,7 +162,7 @@ class TableEntryEditModal extends Component {
           </Modal.Content>
           <Modal.Actions>
             <Button id='TextAreaInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
-            <Button id='TextAreaInputModalSave' color={this.state.primaryColor} disabled={this.state.primaryDisabled} onClick={this.handleSubmit}>{this.props.primaryText}</Button>
+            <Button id='TextAreaInputModalSave' primary={!this.primaryDisabled()} disabled={this.primaryDisabled()} onClick={this.handleSubmit}>SAVE</Button>
           </Modal.Actions>
         </Modal>
       </Transition>
