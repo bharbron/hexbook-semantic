@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
   Button,
+  Divider,
   Form,
   Header,
   Icon,
@@ -149,7 +150,9 @@ class TableEntryEditModal extends Component {
             <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
           </Modal.Header>
           <Modal.Content scrolling>
+            <Divider horizontal>Required</Divider>
             <TableEntryEditBasic weight={this.state.weight} text={this.state.text} onChange={this.handleChangeBasic} />
+            <Divider horizontal>Optional</Divider>
             <TableEntryEditDetails entryDetails={this.state.entryDetails} onSubmit={this.handleSubmitDetails} onRemove={this.handleRemoveDetails} />
             <TableEntryEditTagWeight tagWeights={this.state.tagWeights} options={this.state.tagWeightOptions} onSubmit={this.handleSubmitTagWeight} onRemove={this.handleRemoveTagWeight} />
             <TableEntryEditBlacklist tagBlacklist={this.state.tagBlacklist} options={this.state.tagBlacklistOptions} onSubmit={this.handleSubmitBlacklist} onRemove={this.handleRemoveBlacklist} />
@@ -190,7 +193,7 @@ function TableEntryEditDetails(props) {
   return (
     <div className='TableEntryEditDetails'>
       <Header as='h4' content='Template Details' subheader='Additional details for use by any directly attached templates.' />
-      <List bulleted>
+      <List bulleted size='large'>
         {props.entryDetails.map(
           entryDetail => <EntryDetailListItem entryDetail={entryDetail} onRemove={props.onRemove} />
         )}
@@ -236,7 +239,6 @@ class EntryDetailAdder extends Component {
             inline 
             circular 
             icon='plus' 
-            primary={!this.adderDisabled()}
             disabled={this.adderDisabled()}
           />
           <Form.Input
@@ -302,7 +304,6 @@ class TagWeightAdder extends Component {
             inline 
             circular 
             icon='plus'
-            primary={!this.adderDisabled()}
             disabled={this.adderDisabled()}
           />
           <Form.Select 
@@ -374,7 +375,6 @@ class BlacklistAdder extends Component {
             inline 
             circular 
             icon='plus'
-            primary={!this.adderDisabled()}
             disabled={this.adderDisabled()}
           />
           <Form.Select 
