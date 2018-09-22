@@ -24,12 +24,8 @@ class TableEntryEditModal extends Component {
       text: (this.props.tableEntry) ? this.props.tableEntry.text : '',
       entryDetails: (this.props.tableEntry) ? [...this.props.tableEntry.entryDetails] : [],
       tagOptions: (this.props.tableEntry) ? 
-        this.initializeTagOptions(this.props.allTagIds, this.props.tableEntry.tagWeights, this.props.tableEntry.tagBlacklist) : 
-        [
-          {key: 'forest', value: 'forest', text: 'forest'},
-          {key: 'garden', value: 'garden', text: 'garden'},
-          {key: 'mountain', value: 'mountain', text: 'mountain'},
-        ],
+        () => this.initializeTagOptions(this.props.allTagIds, this.props.tableEntry.tagWeights, this.props.tableEntry.tagBlacklist) : 
+        [],
       tagWeights: (this.props.tableEntry) ? [...this.props.tableEntry.tagWeights] : [],
       tagBlacklist: (this.props.tableEntry) ? [...this.props.tableEntry.tagBlacklist] : [],
       limitEnabled: (this.props.tableEntry && this.props.tableEntry.limit) ? true : false,
@@ -37,7 +33,6 @@ class TableEntryEditModal extends Component {
   }
 
   static defaultProps = {
-    open: false,
     allTagIds: [],
     tagsById: {},
     onSubmit: () => console.log(`onSubmit`),
@@ -101,19 +96,17 @@ class TableEntryEditModal extends Component {
     return COLORS.OTHER_TAG
   }
 
-  handleClose = (event) => {
+  handleClose = () => {
     /*
     Closing the modal
     */
-    this.setState({weight: '', text: ''})
     this.props.onClose()
   }
 
-  handleCancel = (event) => {
+  handleCancel = () => {
     /*
     Clicking the modal cancel button
     */
-    this.setState({weight: '', text: ''})
     this.props.onClose()
   }
 
@@ -285,8 +278,7 @@ class TableEntryEditModal extends Component {
       {console.log(this.props)}
       {console.log('this.state')}
       {console.log(this.state)}
-      <Transition animation='fly up' mountOnShow unmountOnHide='true' visible={this.props.open}>
-        <Modal open={true} onClose={this.handleClose} className='TextAreaInputModal'>
+        <Modal open={this.props.open} onClose={this.handleClose} className='TextAreaInputModal'>
           <Modal.Header style={{ borderBottom: '0px' }}>
             <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
           </Modal.Header>
@@ -329,7 +321,6 @@ class TableEntryEditModal extends Component {
             </Button>
           </Modal.Actions>
         </Modal>
-      </Transition>
       </div>
     )
   }

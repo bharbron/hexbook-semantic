@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import {
   Card,
   Dropdown,
-  Label
+  Label,
 } from 'semantic-ui-react';
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
@@ -36,7 +36,7 @@ class TableDetailsWorkspace extends Component {
   state = {
       openTableEntriesInputModal: false,
       openTableEntryEditModal: false,
-      editingTableEntry: null
+      editingTableEntryId: null
   }
 
   handleSubmitAddEntry = (value) => {
@@ -86,7 +86,7 @@ class TableDetailsWorkspace extends Component {
     */
     this.setState({
       openTableEntryEditModal: true,
-      editingTableEntry: this.props.tableEntriesById[id],
+      editingTableEntryId: id,
     })
   }
 
@@ -117,12 +117,13 @@ class TableDetailsWorkspace extends Component {
             onClose={this.handleCloseTableEntriesInputModal}
             onSubmit={this.handleSubmitTableEntriesInputModal}
           />
-          <TableEntryEditModal 
+          <TableEntryEditModal
+            key={this.state.editingTableEntryId} //This is IMPORTANT! https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key
             header={this.props.table.name + ' > Edit Entry'}
-            open={this.state.openTableEntryEditModal}
-            tableEntry={this.state.editingTableEntry}
+            tableEntry={this.props.tableEntriesById[this.state.editingTableEntryId]}
             allTagIds={this.props.allTagIds}
             tagsById={this.props.tagsById}
+            open={this.state.openTableEntryEditModal}
             onClose={this.handleCloseTableEntryEditModal}
           />
         </WideColumnWorkspace>
