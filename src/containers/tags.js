@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React, {Component} from 'react';
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import {
   Dropdown,
   Header,
@@ -10,10 +10,11 @@ import {
   Segment,
   Transition
 } from 'semantic-ui-react';
-import { WideColumnWorkspace } from '../components/workspaces'
-import { TagsSegment } from '../components/tags'
-import { getTerrainTags, getTerritoryTags, getOtherTags } from '../selectors/tags'
-import { addOtherTag, deleteOtherTag } from '../actions/tags'
+import {WideColumnWorkspace} from '../components/workspaces'
+import {TagsSegment} from '../components/tags'
+import {getTerrainTags, getTerritoryTags, getOtherTags} from '../selectors/tags'
+import {addOtherTag, deleteOtherTag} from '../actions/tags'
+import {COLORS} from '../constants/colors'
 import './containers.css';
 
 const mapStateToProps = state => ({
@@ -59,21 +60,21 @@ class TagsWorkspace extends Component {
         <TagsSegment
           header='Terrain Tags' 
           subheader='Automatically generated and tagged by the hex map. Type of terrain in a given hex. Typically used by random encounter tables.'
-          color='olive'
+          color={COLORS.TERRAIN_TAG}
           tags={this.props.terrainTags}
         />
 
         <TagsSegment
           header='Territory Tags' 
           subheader='Automatically generated and tagged by the hex map. Group that holds influence in a given hex. Typically used by adventure hook and theme tables.'
-          color='orange'
+          color={COLORS.TERRITORY_TAG}
           tags={this.props.territoryTags}
         />
 
         <TagsSegment
           header='Other Tags' 
           subheader='Any other user-defined tags that table rolls may by filtered by.'
-          color='teal'
+          color={COLORS.OTHER_TAG}
           tags={this.props.otherTags}
           onSubmit={this.handleSubmitOtherTag}
           placeholder='enter new tag...'

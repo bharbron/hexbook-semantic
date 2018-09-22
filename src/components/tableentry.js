@@ -12,6 +12,7 @@ import {
 } from 'semantic-ui-react';
 import './components.css';
 import {TagLabel, TagWeightLabel} from './labels'
+import {COLORS} from '../constants/colors'
 import {VALID_INTEGER_REGEX} from '../constants/regex'
 
 const uuidv4 = require('uuid/v4');
@@ -22,43 +23,89 @@ class TableEntryEditModal extends Component {
       weight: (this.props.tableEntry) ? this.props.tableEntry.weight : '',
       text: (this.props.tableEntry) ? this.props.tableEntry.text : '',
       entryDetails: (this.props.tableEntry) ? [...this.props.tableEntry.entryDetails] : [],
+      tagOptions: (this.props.tableEntry) ? 
+        this.initializeTagOptions(this.props.allTagIds, this.props.tableEntry.tagWeights, this.props.tableEntry.tagBlacklist) : 
+        [
+          {key: 'forest', value: 'forest', text: 'forest'},
+          {key: 'garden', value: 'garden', text: 'garden'},
+          {key: 'mountain', value: 'mountain', text: 'mountain'},
+        ],
       tagWeights: (this.props.tableEntry) ? [...this.props.tableEntry.tagWeights] : [],
-      tagWeightOptions: [
-        {key: 'forest', value: 'forest', text: 'forest'},
-        {key: 'garden', value: 'garden', text: 'garden'},
-        {key: 'mountain', value: 'mountain', text: 'mountain'},
-      ],
       tagBlacklist: (this.props.tableEntry) ? [...this.props.tableEntry.tagBlacklist] : [],
-      tagBlacklistOptions: [
-        {key: 'forest', value: 'forest', text: 'forest'},
-        {key: 'garden', value: 'garden', text: 'garden'},
-        {key: 'mountain', value: 'mountain', text: 'mountain'},
-      ],
       limitEnabled: (this.props.tableEntry && this.props.tableEntry.limit) ? true : false,
       limit: (this.props.tableEntry && this.props.tableEntry.limit) ? this.props.tableEntry.limit : '',
   }
 
   static defaultProps = {
     open: false,
-    primaryText: 'SAVE',
-    onSubmit: (value) => console.log(`default onSubmit: ${value}`)
+    allTagIds: [],
+    terrainTagIds: [],
+    territoryTagIds: [],
+    onSubmit: () => console.log(`onSubmit`),
+  }
+
+  initializeTagOptions = (allTagIds, tagWeights, tagBlacklist) => {
+    /*
+    Create the list of initial tagOptions by removing any tags from the list of all tagsIDs that
+    are already in the list of tagWeights or the tagBlacklist 
+    */
+    const tagWeightTags = []
+    tagWeights.map(tw => tagWeightTags.push(tw.tag))
+    const tagOptionsTags = [
+      ...allTagIds.filter(t => !tagWeightTags.includes(t) && !tagBlacklist.includes(t))
+    ].sort()
+    const tagOptions = []
+    tagOptionsTags.map(t => tagOptions.push({key: t, value: t, text: t}))
+    return tagOptions
   }
 
   primaryDisabled = () => {
+    /*
+    Determine whether or not the primary SAVE button should be enabled based on what data has been input or changed
+    */
     return (this.state.changed && this.state.weight && this.state.text) ? false : true
   }
 
+  tagColor = (tag) => {
+    /*
+    Determine what color a tag should appears as, based on whether it is the terrain or territory tag lists
+    */
+    if (this.props.terrainTagIds.includes(tag)) {
+      return COLORS.TERRAIN_TAG
+    }
+    if (this.props.territoryTagIds.includes(tag)) {
+      return COLORS.TERRITORY_TAG
+    }
+    return COLORS.OTHER_TAG
+  }
+
   handleClose = (event) => {
+    /*
+    Closing the modal
+    */
     this.setState({weight: '', text: ''})
     this.props.onClose()
   }
 
   handleCancel = (event) => {
+    /*
+    Clicking the modal cancel button
+    */
     this.setState({weight: '', text: ''})
     this.props.onClose()
   }
 
+  handleSubmit = () => {
+    /*
+    Clicking the save button
+    */
+    this.props.onSubmit()
+  }
+
   handleChangeBasic = (event, {name, value}) => {
+    /*
+    Handling input in the basic weight or text fields
+    */
     if (name == 'weight' && value.match(VALID_INTEGER_REGEX)) {
       this.setState({weight: value, changed: true})
     }
@@ -67,17 +114,24 @@ class TableEntryEditModal extends Component {
     }
   }
 
-  handleSubmitDetails = (value) => {
+  handleSubmitDetails = (text) => {
+    /*
+    Add a newly submitted entry template detail.
+    Need to assign a new uuid to it so we can track it.
+    */
     this.setState({
       changed: true,
       entryDetails: [
         ...this.state.entryDetails,
-        {id: uuidv4(), text: value}
+        {id: uuidv4(), 'text': text}
       ]
     })
   }
 
   handleRemoveDetails = (id) => {
+    /*
+    Remove an entry detail based on the given id (uuid)
+    */
     this.setState({
       changed: true,
       entryDetails: [
@@ -87,10 +141,11 @@ class TableEntryEditModal extends Component {
   }
 
   handleSubmitTagWeight = ({tag, weight}) => {
-    //TODO: Set color based on whether the tag is terrain, territory, or other
-    //TODO: Remove the tag from this.state.options when it is added
-    //TODO: Avoid duplicates in this.state.tags
-    //TODO: Maintain alphabetical order in this.state.tags
+    /*
+    Add a newly submitted weighting by tag.
+    Need to assign a new uuid to it so we can track it.
+    Remove the tag from the remaining tagOptions
+    */
     this.setState({
       changed: true,
       tagWeights: [
@@ -98,42 +153,101 @@ class TableEntryEditModal extends Component {
         {
           id: uuidv4(),
           tag: tag,
-          color: 'teal',
+          color: this.tagColor(tag),
           weight: weight,
         }
+      ].sort(this.compareTagWeights),
+      tagOptions: [
+        ...this.state.tagOptions.filter(tagOption => tagOption.key != tag)
       ]
     })
   }
 
-  handleRemoveTagWeight = (id) => {
+  compareTagWeights = (a, b) => {
+    /*
+    tagWeights is an array of objects, so we can't do a straight .sort() on the array
+    We need to provide a comparison function to compare specific keys in the objects
+    */
+    if (a.tag < b.tag) {
+      return -1
+    }
+    if (a.tag > b.tag) {
+      return 1
+    }
+    return 0
+  }
+
+  handleRemoveTagWeight = (tagWeight) => {
+    /*
+    Remove the given tagWeight
+    We receive a full tagWeight object as input, as we need information on multiple properties of the object
+    Make sure to add the tag back to the available tagOptions when done
+    */
     this.setState({
       changed: true,
       tagWeights: [
-        ...this.state.tagWeights.filter(tagWeight => tagWeight.id != id)
-      ]
+        ...this.state.tagWeights.filter(tw => tw.id != tagWeight.id)
+      ],
+      tagOptions: [
+        ...this.state.tagOptions,
+        {key: tagWeight.tag, value: tagWeight.tag, text: tagWeight.tag}
+      ].sort(this.compareTagOptions)
     })
   }
 
-  handleSubmitBlacklist = (value) => {
+  compareTagOptions = (a, b) => {
+    /*
+    tagOptions is an array of objects, so we can't do a straight .sort() on the array
+    We need to provide a comparison function to compare specific keys in the objects
+    */
+    if (a.key < b.key) {
+      return -1
+    }
+    if (a.key > b.key) {
+      return 1
+    }
+    return 0
+  }
+
+  handleSubmitBlacklist = (tag) => {
+    /*
+    Add the given tag to the blacklist
+    tagBlacklist is simply an array of tag names, so nothing fancy
+    Make sure to remove the tag from the array of available tagOptions when done
+    */
     this.setState({
       changed: true,
       tagBlacklist: [
         ...this.state.tagBlacklist,
-        value
-      ].sort()
-    })
-  }
-
-  handleRemoveBlacklist = (value) => {
-    this.setState({
-      changed: true,
-      tagBlacklist: [
-        ...this.state.tagBlacklist.filter(tag => tag != value)
+        tag
+      ].sort(), 
+      tagOptions: [
+        ...this.state.tagOptions.filter(tagOption => tagOption.key != tag)
       ]
     })
   }
 
+  handleRemoveBlacklist = (tag) => {
+    /*
+    Remove the given tag from the blacklist
+    Make sure to add the tag back to the array of available tagOptions when done
+    */
+    this.setState({
+      changed: true,
+      tagBlacklist: [
+        ...this.state.tagBlacklist.filter(t => t != tag)
+      ],
+      tagOptions: [
+        ...this.state.tagOptions,
+        {key: tag, 'value': tag, text: tag}
+      ].sort(this.compareTagOptions)
+    })
+  }
+
   handleChangeLimit = (event, {name, value}) => {
+    /*
+    Manages changes to the Max Occurences section
+    */
     if (name == 'limitToggle') {
       this.setState({limitEnabled: !this.state.limitEnabled, changed: true})
     }
@@ -153,14 +267,39 @@ class TableEntryEditModal extends Component {
             <Divider horizontal>Required</Divider>
             <TableEntryEditBasic weight={this.state.weight} text={this.state.text} onChange={this.handleChangeBasic} />
             <Divider horizontal>Optional</Divider>
-            <TableEntryEditDetails entryDetails={this.state.entryDetails} onSubmit={this.handleSubmitDetails} onRemove={this.handleRemoveDetails} />
-            <TableEntryEditTagWeight tagWeights={this.state.tagWeights} options={this.state.tagWeightOptions} onSubmit={this.handleSubmitTagWeight} onRemove={this.handleRemoveTagWeight} />
-            <TableEntryEditBlacklist tagBlacklist={this.state.tagBlacklist} options={this.state.tagBlacklistOptions} onSubmit={this.handleSubmitBlacklist} onRemove={this.handleRemoveBlacklist} />
-            <TableEntryEditLimit enabled={this.state.limitEnabled} limit={this.state.limit} onChange={this.handleChangeLimit} />
+            <TableEntryEditDetails 
+              entryDetails={this.state.entryDetails} 
+              onSubmit={this.handleSubmitDetails} 
+              onRemove={this.handleRemoveDetails} 
+            />
+            <TableEntryEditTagWeight 
+              tagWeights={this.state.tagWeights} 
+              options={this.state.tagOptions} 
+              onSubmit={this.handleSubmitTagWeight} 
+              onRemove={this.handleRemoveTagWeight} 
+            />
+            <TableEntryEditBlacklist 
+              tagBlacklist={this.state.tagBlacklist} 
+              options={this.state.tagOptions} 
+              onSubmit={this.handleSubmitBlacklist} 
+              onRemove={this.handleRemoveBlacklist} 
+            />
+            <TableEntryEditLimit 
+              enabled={this.state.limitEnabled} 
+              limit={this.state.limit} 
+              onChange={this.handleChangeLimit} 
+            />
           </Modal.Content>
           <Modal.Actions>
             <Button id='TextAreaInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
-            <Button id='TextAreaInputModalSave' primary={!this.primaryDisabled()} disabled={this.primaryDisabled()} onClick={this.handleSubmit}>SAVE</Button>
+            <Button 
+              id='TextAreaInputModalSave' 
+              primary={!this.primaryDisabled()} 
+              disabled={this.primaryDisabled()} 
+              onClick={this.handleSubmit}
+            >
+              SAVE
+            </Button>
           </Modal.Actions>
         </Modal>
       </Transition>
@@ -259,9 +398,15 @@ function TableEntryEditTagWeight(props) {
   return (
     <div className='TableEntryEditTagWeight'>
       <Header as='h4' content='Weights by tag' subheader='Will increase the weight of this result for each matching tag below.' />
-      <Label.Group tag>
+      <Label.Group tag size='large'>
         {props.tagWeights.map(
-          tagWeight => <TagWeightLabel id={tagWeight.id} color={tagWeight.color} text={tagWeight.tag} weight={tagWeight.weight} onRemove={() => props.onRemove(tagWeight.id)} />
+          tagWeight => <TagWeightLabel 
+            id={tagWeight.id} 
+            color={tagWeight.color} 
+            text={tagWeight.tag} 
+            weight={tagWeight.weight} 
+            onRemove={() => props.onRemove(tagWeight)}
+          />
         )}
       </Label.Group>
       <TagWeightAdder options={props.options} onSubmit={props.onSubmit} />
@@ -335,7 +480,7 @@ function TableEntryEditBlacklist(props) {
   return (
     <div className='TableEntryEditBlacklist'>
       <Header as='h4' content='Blacklist' subheader='Exclude this result if any of the following tags are present.' />
-      <Label.Group tag color='red'>
+      <Label.Group tag color={COLORS.BLACKLIST_TAG} size='large'>
         {props.tagBlacklist.map(
           tag => <TagLabel tag={tag} onRemove={() => props.onRemove(tag)} />
         )}
@@ -406,7 +551,9 @@ function TableEntryEditLimit(props) {
         <Form.Input 
           name='limit' 
           inline 
-          width={2} 
+          width={3} 
+          icon='stop circle'
+          iconPosition='left'
           placeholder='Limit'
           disabled={!props.enabled}
           value={props.limit}
