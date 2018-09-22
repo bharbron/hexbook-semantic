@@ -20,7 +20,7 @@ function TagsSegment(props) {
           <Header content={props.header} subheader={props.subheader} />
         </Segment>
         <Segment>
-          <Label.Group tag color={props.color}>
+          <Label.Group tag size='large' color={props.color}>
             { props.tags.map( (tag) => <TagLabel tag={tag} onRemove={props.onRemove} /> ) }
           </Label.Group>
           { props.onSubmit && <SingleLineAdder onSubmit={props.onSubmit} placeholder={props.placeholder} /> }

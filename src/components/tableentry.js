@@ -39,9 +39,28 @@ class TableEntryEditModal extends Component {
   static defaultProps = {
     open: false,
     allTagIds: [],
-    terrainTagIds: [],
-    territoryTagIds: [],
+    tagsById: {},
     onSubmit: () => console.log(`onSubmit`),
+  }
+
+  componentDidUpdate = (prevProps) => {
+    /*
+    If the tableEntry this modal is editing changes (e.g. we clicked a different entry on the table)
+    then we need to re-initialize the state based on that new tableEntry
+    */
+    if (this.props.tableEntry !== prevProps.tableEntry) {
+      this.setState({
+        changed: false,
+        weight: this.props.tableEntry.weight,
+        text: this.props.tableEntry.text,
+        entryDetails: [...this.props.tableEntry.entryDetails],
+        tagOptions: this.initializeTagOptions(this.props.allTagIds, this.props.tableEntry.tagWeights, this.props.tableEntry.tagBlacklist),
+        tagWeights: [...this.props.tableEntry.tagWeights],
+        tagBlacklist: [...this.props.tableEntry.tagBlacklist],
+        limitEnabled: (this.props.tableEntry.limit) ? true : false,
+        limit: (this.props.tableEntry.limit) ? this.props.tableEntry.limit : '',
+      })
+    }
   }
 
   initializeTagOptions = (allTagIds, tagWeights, tagBlacklist) => {
@@ -68,12 +87,15 @@ class TableEntryEditModal extends Component {
 
   tagColor = (tag) => {
     /*
-    Determine what color a tag should appears as, based on whether it is the terrain or territory tag lists
+    Determine what color a tag should appears as, based on whether it is a terrain or territory tag
     */
-    if (this.props.terrainTagIds.includes(tag)) {
+    console.log(this.props.tagsById)
+    console.log(tag)
+    console.log(this.props.tagsById[tag])
+    if (this.props.tagsById[tag].terrainHexes && this.props.tagsById[tag].terrainHexes.length > 0) {
       return COLORS.TERRAIN_TAG
     }
-    if (this.props.territoryTagIds.includes(tag)) {
+    if (this.props.tagsById[tag].territoryHexes && this.props.tagsById[tag].territoryHexes.length > 0) {
       return COLORS.TERRITORY_TAG
     }
     return COLORS.OTHER_TAG
@@ -258,6 +280,11 @@ class TableEntryEditModal extends Component {
 
   render () {
     return (
+      <div>
+      {console.log('this.props')}
+      {console.log(this.props)}
+      {console.log('this.state')}
+      {console.log(this.state)}
       <Transition animation='fly up' mountOnShow unmountOnHide='true' visible={this.props.open}>
         <Modal open={true} onClose={this.handleClose} className='TextAreaInputModal'>
           <Modal.Header style={{ borderBottom: '0px' }}>
@@ -303,6 +330,7 @@ class TableEntryEditModal extends Component {
           </Modal.Actions>
         </Modal>
       </Transition>
+      </div>
     )
   }
 }

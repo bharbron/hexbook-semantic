@@ -13,7 +13,7 @@ import {TableDetailsSegment, TableEntriesSegment} from '../components/tabledetai
 import {TableEntryEditModal} from '../components/tableentry'
 import {addTableEntry, updateTableEntryWeight, updateTableEntryText} from '../actions/tabledetails'
 import {getTableId, getFullTableById} from '../selectors/tabledetails'
-import {getFullTableEntries} from '../selectors/tableentries'
+import {getFullTableEntriesLookup} from '../selectors/tableentries'
 import {getTerrainTags, getTerritoryTags} from '../selectors/tags'
 import {VALID_INTEGER_REGEX, VALID_TABLE_ENTRY_REGEX} from '../constants/regex'
 import './containers.css';
@@ -21,10 +21,9 @@ import './containers.css';
 const mapStateToProps = state => ({
   tableId: getTableId(state.router),
   table: getFullTableById(state.entities, getTableId(state.router)),
-  tableEntriesById: getFullTableEntries(state.entities),
+  tableEntriesById: getFullTableEntriesLookup(state.entities),
   allTagIds: state.entities.tags.allIds,
-  terrainTagIds: getTerrainTags(state.entities.tags),
-  territoryTagIds: getTerritoryTags(state.entities.tags),
+  tagsById: state.entities.tags.byId,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -34,23 +33,13 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 class TableDetailsWorkspace extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  state = {
       openTableEntriesInputModal: false,
       openTableEntryEditModal: false,
-      editingTableEntryId: null
-    }
-
-    this.handleSubmitAddEntry = this.handleSubmitAddEntry.bind(this)
-    this.handleSubmitUpdateTableEntryWeight = this.handleSubmitUpdateTableEntryWeight.bind(this)
-    this.handleSubmitUpdateTableEntryText = this.handleSubmitUpdateTableEntryText.bind(this)
-    this.handleCloseTableEntriesInputModal = this.handleCloseTableEntriesInputModal.bind(this)
-    this.handleSubmitTableEntriesInputModal = this.handleSubmitTableEntriesInputModal.bind(this)
-    this.handleClickAddTableEntriesButton = this.handleClickAddTableEntriesButton.bind(this)
+      editingTableEntry: null
   }
 
-  handleSubmitAddEntry(value) {
+  handleSubmitAddEntry = (value) => {
     if (value.match(VALID_TABLE_ENTRY_REGEX)) {
       const entry = value.split(',')
       const weight = entry[0]
@@ -59,21 +48,21 @@ class TableDetailsWorkspace extends Component {
     }
   }
 
-  handleSubmitUpdateTableEntryWeight(tableEntry, weight) {
+  handleSubmitUpdateTableEntryWeight = (tableEntry, weight) => {
     if (weight.match(VALID_INTEGER_REGEX)) {
       this.props.updateTableEntryWeight(tableEntry, weight)
     }
   }
 
-  handleSubmitUpdateTableEntryText(tableEntry, text) {
+  handleSubmitUpdateTableEntryText = (tableEntry, text) => {
     this.props.updateTableEntryText(tableEntry, text)
   }
 
-  handleCloseTableEntriesInputModal() {
+  handleCloseTableEntriesInputModal = () => {
     this.setState({openTableEntriesInputModal: false})
-  };
+  }
 
-  handleSubmitTableEntriesInputModal(value) {
+  handleSubmitTableEntriesInputModal = (value) => {
     this.setState({openTableEntriesInputModal: false})
     const lines = value.split('\n')
     for (let i = 0; i < lines.length; i++) {
@@ -86,8 +75,25 @@ class TableDetailsWorkspace extends Component {
     }
   }
 
-  handleClickAddTableEntriesButton() {
+  handleClickAddTableEntriesButton = () => {
     this.setState({openTableEntriesInputModal: true})
+  }
+
+  handleClickTableEntry = (id) => {
+    /*
+    An entry was clicked in the table. Let's open the tableEntry edit modal
+    id: The tableEntry id
+    */
+    this.setState({
+      openTableEntryEditModal: true,
+      editingTableEntry: this.props.tableEntriesById[id],
+    })
+  }
+
+  handleCloseTableEntryEditModal = () => {
+    this.setState({
+      openTableEntryEditModal: false,
+    })
   }
     
   render() {
@@ -101,8 +107,8 @@ class TableDetailsWorkspace extends Component {
             onSubmitAddEntry={this.handleSubmitAddEntry} 
             onSubmitUpdateWeight={this.handleSubmitUpdateTableEntryWeight}
             onSubmitUpdateText={this.handleSubmitUpdateTableEntryText}
+            onClickEntry={this.handleClickTableEntry}
           />
-
           <TextAreaInputModal
             header='Add Entries to Table'
             subheader='One entry per line' 
@@ -113,8 +119,11 @@ class TableDetailsWorkspace extends Component {
           />
           <TableEntryEditModal 
             header={this.props.table.name + ' > Edit Entry'}
-            open={this.state.openTableEntryEditModal} 
-            tableEntry={this.props.tableEntriesById[this.state.editingTableEntryId]}
+            open={this.state.openTableEntryEditModal}
+            tableEntry={this.state.editingTableEntry}
+            allTagIds={this.props.allTagIds}
+            tagsById={this.props.tagsById}
+            onClose={this.handleCloseTableEntryEditModal}
           />
         </WideColumnWorkspace>
         <FloatingActionButton icon='plus' color='google plus' onClick={this.handleClickAddTableEntriesButton} />

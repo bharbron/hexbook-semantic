@@ -76,8 +76,8 @@ function TableEntriesSegment(props) {
           <Header content='Table Entries' subheader='Click a cell to edit' />
           <TableEntriesTable 
             tableEntries={props.table.entries}
-            onEntryClick={props.onEntryClick}
-            onCloneClick={props.onCloneClick}
+            onClickEntry={props.onClickEntry}
+            onClickClone={props.onClickClone}
           />
           <SingleLineAdder placeholder='Weight,Result text' onSubmit={props.onSubmitAddEntry} />
         </Segment>
@@ -105,8 +105,8 @@ function TableEntriesTable(props) {
         {props.tableEntries && props.tableEntries.map(
           entry => <TableEntriesTableRow 
             tableEntry={entry}
-            onEntryClick={props.onEntryClick}
-            onCloneClick={props.onCloneClick}
+            onClickEntry={props.onClickEntry}
+            onClickClone={props.onClickClone}
           />
         )}
       </Transition.Group>
@@ -118,13 +118,13 @@ function TableEntriesTableRow(props) {
   return (
     <Table.Row key={props.tableEntry.id}>
       <Table.Cell><Checkbox /></Table.Cell>
-      <Table.Cell onClick={() => props.onEntryClick(props.tableEntry.id)}>{props.tableEntry.weight}</Table.Cell>
-      <Table.Cell onClick={() => props.onEntryClick(props.tableEntry.id)}>{props.tableEntry.text}</Table.Cell>
-      <Table.Cell onClick={() => props.onEntryClick(props.tableEntry.id)}></Table.Cell>
-      <Table.Cell onClick={() => props.onEntryClick(props.tableEntry.id)}></Table.Cell>
-      <Table.Cell onClick={() => props.onEntryClick(props.tableEntry.id)}></Table.Cell>
-      <Table.Cell onClick={() => props.onEntryClick(props.tableEntry.id)}></Table.Cell>
-      <Table.Cell><Icon link name='clone' onClick={() => props.onCloneClick(props.tableEntry.id)} /></Table.Cell>
+      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>{props.tableEntry.weight}</Table.Cell>
+      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>{props.tableEntry.text}</Table.Cell>
+      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}></Table.Cell>
+      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}></Table.Cell>
+      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}></Table.Cell>
+      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}></Table.Cell>
+      <Table.Cell><Icon link name='clone' onClick={() => props.onClickClone(props.tableEntry.id)} /></Table.Cell>
     </Table.Row>
   )
 }

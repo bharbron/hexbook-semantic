@@ -15,7 +15,7 @@ export function getFullTableEntryById(stateEntities, id) {
   return tableEntry
 }
 
-export function getFullTableEntries(stateEntities) {
+export function getFullTableEntriesLookup(stateEntities) {
   /*
   Return a byId lookup object of all "full" table entries
   */

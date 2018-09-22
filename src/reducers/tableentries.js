@@ -35,9 +35,11 @@ function byIdAddHex(state, action) {
         id: action.payload.coordinates,
         weight: 1,
         text: action.payload.coordinates,
-        addTags: [action.payload.terrain, action.payload.territory],
-        tagBlacklist: [],
         entryDetailsGroup: 'HEX',
+        addTags: [action.payload.terrain, action.payload.territory],
+        tagWeights: [],
+        tagBlacklist: [],
+        limit: null,
       }
     })
   }
@@ -62,9 +64,11 @@ function byIdAddTableEntry(state, action) {
       id: tableEntryId,
       weight: action.payload.weight,
       text: action.payload.text,
-      addTags: [],
-      tagBlacklist: [],
       entryDetailsGroup: action.payload.entryDetailsGroupId,
+      addTags: [],
+      tagWeights: [],
+      tagBlacklist: [],
+      limit: null,
     }
   })
 }

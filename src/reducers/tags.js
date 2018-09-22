@@ -26,26 +26,35 @@ function addHex(state, action) {
     return state
   }
   let newById = {...state.byId}
+  //There was a bug where 'undefined' tags were ending up in the store, so we need to filter those out
   //have to do these separately in case terrain and territory have the same value
-  newById = {
-    ...newById,
-    [terrain]: createOrUpdateTerrainTag(newById, coordinates, terrain)
+  if (terrain) {
+    newById = {
+      ...newById,
+      [terrain]: createOrUpdateTerrainTag(newById, coordinates, terrain)
+    }
   }
-  newById = {
-    ...newById,
-    [territory]: createOrUpdateTerritoryTag(newById, coordinates, territory)
+  if (territory) {
+    newById = {
+      ...newById,
+      [territory]: createOrUpdateTerritoryTag(newById, coordinates, territory)
+    }
   }
 
   let newAllIds = [...state.allIds]
   //have to do these separately in case terrain and territory have the same value
-  newAllIds = [
-    ...newAllIds.filter(id => id != terrain),
-    terrain
-  ]
-  newAllIds = [
-    ...newAllIds.filter(id => id != territory),
-    territory
-  ]
+  if (terrain) {
+    newAllIds = [
+      ...newAllIds.filter(id => id != terrain),
+      terrain
+    ]
+  }
+  if (territory) {
+    newAllIds = [
+      ...newAllIds.filter(id => id != territory),
+      territory
+    ]
+  }
 
   return {
     byId: newById,
@@ -84,25 +93,34 @@ function updateHexTags(state, action) {
 
   //add new tags
   //have to do these separately in case terrain and territory have the same value
-  newById = {
-    ...newById,
-    [newTerrain]: createOrUpdateTerrainTag(newById, coordinates, newTerrain)
+  //There was a bug where 'undefined' tags were ending up in the store, so we need to filter those out
+  if (newTerrain) {
+    newById = {
+      ...newById,
+      [newTerrain]: createOrUpdateTerrainTag(newById, coordinates, newTerrain)
+    }
   }
-  newById = {
-    ...newById,
-    [newTerritory]: createOrUpdateTerritoryTag(newById, coordinates, newTerritory)
+  if (newTerritory) {
+    newById = {
+      ...newById,
+      [newTerritory]: createOrUpdateTerritoryTag(newById, coordinates, newTerritory)
+    }
   }
 
   let newAllIds = [...state.allIds]
   //have to do these separately in case terrain and territory have the same value
-  newAllIds = [
-    ...newAllIds.filter(id => id != newTerrain),
-    newTerrain
-  ]
-  newAllIds = [
-    ...newAllIds.filter(id => id != newTerritory),
-    newTerritory
-  ]
+  if (newTerrain) {
+    newAllIds = [
+      ...newAllIds.filter(id => id != newTerrain),
+      newTerrain
+    ]
+  }
+  if (newTerritory) {
+    newAllIds = [
+      ...newAllIds.filter(id => id != newTerritory),
+      newTerritory
+    ]
+  }
 
   return {
     byId: newById,
