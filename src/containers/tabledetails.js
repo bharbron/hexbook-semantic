@@ -13,11 +13,18 @@ import {TableDetailsSegment, TableEntriesSegment} from '../components/tabledetai
 import {TableEntryEditModal} from '../components/tableentry'
 import {addTableEntry, updateTableEntryWeight, updateTableEntryText} from '../actions/tabledetails'
 import {getTableId, getFullTableById} from '../selectors/tabledetails'
+import {getFullTableEntries} from '../selectors/tableentries'
+import {getTerrainTags, getTerritoryTags} from '../selectors/tags'
+import {VALID_INTEGER_REGEX, VALID_TABLE_ENTRY_REGEX} from '../constants/regex'
 import './containers.css';
 
 const mapStateToProps = state => ({
   tableId: getTableId(state.router),
-  table: getFullTableById(state.entities, getTableId(state.router))
+  table: getFullTableById(state.entities, getTableId(state.router)),
+  tableEntriesById: getFullTableEntries(state.entities),
+  allTagIds: state.entities.tags.allIds,
+  terrainTagIds: getTerrainTags(state.entities.tags),
+  territoryTagIds: getTerritoryTags(state.entities.tags),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -31,6 +38,8 @@ class TableDetailsWorkspace extends Component {
     super(props);
     this.state = {
       openTableEntriesInputModal: false,
+      openTableEntryEditModal: false,
+      editingTableEntryId: null
     }
 
     this.handleSubmitAddEntry = this.handleSubmitAddEntry.bind(this)
@@ -42,8 +51,7 @@ class TableDetailsWorkspace extends Component {
   }
 
   handleSubmitAddEntry(value) {
-    const tableEntryRegEx = /^[0-9]+,.+$/
-    if (value.match(tableEntryRegEx)) {
+    if (value.match(VALID_TABLE_ENTRY_REGEX)) {
       const entry = value.split(',')
       const weight = entry[0]
       const text = entry.slice(1).join(',')
@@ -52,8 +60,7 @@ class TableDetailsWorkspace extends Component {
   }
 
   handleSubmitUpdateTableEntryWeight(tableEntry, weight) {
-    const tableEntryWeightRegEx = /^[0-9]+$/
-    if (weight.match(tableEntryWeightRegEx)) {
+    if (weight.match(VALID_INTEGER_REGEX)) {
       this.props.updateTableEntryWeight(tableEntry, weight)
     }
   }
@@ -69,9 +76,8 @@ class TableDetailsWorkspace extends Component {
   handleSubmitTableEntriesInputModal(value) {
     this.setState({openTableEntriesInputModal: false})
     const lines = value.split('\n')
-    const tableEntryRegEx = /^[0-9]+,.+$/
     for (let i = 0; i < lines.length; i++) {
-      if (lines[i].match(tableEntryRegEx)) {
+      if (lines[i].match(VALID_TABLE_ENTRY_REGEX)) {
         const entry = lines[i].split(',')
         const weight = entry[0]
         const text = entry.slice(1).join(',')
@@ -105,7 +111,11 @@ class TableDetailsWorkspace extends Component {
             onClose={this.handleCloseTableEntriesInputModal}
             onSubmit={this.handleSubmitTableEntriesInputModal}
           />
-          <TableEntryEditModal header='> Edit Entry' open={true} />
+          <TableEntryEditModal 
+            header={this.props.table.name + ' > Edit Entry'}
+            open={this.state.openTableEntryEditModal} 
+            tableEntry={this.props.tableEntriesById[this.state.editingTableEntryId]}
+          />
         </WideColumnWorkspace>
         <FloatingActionButton icon='plus' color='google plus' onClick={this.handleClickAddTableEntriesButton} />
       </div>

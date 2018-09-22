@@ -76,8 +76,8 @@ function TableEntriesSegment(props) {
           <Header content='Table Entries' subheader='Click a cell to edit' />
           <TableEntriesTable 
             tableEntries={props.table.entries}
-            onSubmitUpdateWeight={props.onSubmitUpdateWeight}
-            onSubmitUpdateText={props.onSubmitUpdateText}
+            onEntryClick={props.onEntryClick}
+            onCloneClick={props.onCloneClick}
           />
           <SingleLineAdder placeholder='Weight,Result text' onSubmit={props.onSubmitAddEntry} />
         </Segment>
@@ -96,6 +96,8 @@ function TableEntriesTable(props) {
           <Table.HeaderCell>Result</Table.HeaderCell>
           <Table.HeaderCell>Template Details</Table.HeaderCell>
           <Table.HeaderCell><Label tag><Icon name='balance scale' /></Label></Table.HeaderCell>
+          <Table.HeaderCell><Label tag><Icon name='ban' /></Label></Table.HeaderCell>
+          <Table.HeaderCell>Limit</Table.HeaderCell>
           <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -103,8 +105,8 @@ function TableEntriesTable(props) {
         {props.tableEntries && props.tableEntries.map(
           entry => <TableEntriesTableRow 
             tableEntry={entry}
-            onSubmitUpdateWeight={props.onSubmitUpdateWeight}
-            onSubmitUpdateText={props.onSubmitUpdateText}
+            onEntryClick={props.onEntryClick}
+            onCloneClick={props.onCloneClick}
           />
         )}
       </Transition.Group>
@@ -116,11 +118,13 @@ function TableEntriesTableRow(props) {
   return (
     <Table.Row key={props.tableEntry.id}>
       <Table.Cell><Checkbox /></Table.Cell>
-      <DirectInputTableCell content={props.tableEntry.weight} onSubmit={(weight) => props.onSubmitUpdateWeight(props.tableEntry, weight)} />
-      <DirectInputTableCell content={props.tableEntry.text} onSubmit={(text) => props.onSubmitUpdateText(props.tableEntry, text)} />
-      <Table.Cell></Table.Cell>
-      <Table.Cell></Table.Cell>
-      <Table.Cell><Icon link name='clone' color='grey' /></Table.Cell>
+      <Table.Cell onClick={() => props.onEntryClick(props.tableEntry.id)}>{props.tableEntry.weight}</Table.Cell>
+      <Table.Cell onClick={() => props.onEntryClick(props.tableEntry.id)}>{props.tableEntry.text}</Table.Cell>
+      <Table.Cell onClick={() => props.onEntryClick(props.tableEntry.id)}></Table.Cell>
+      <Table.Cell onClick={() => props.onEntryClick(props.tableEntry.id)}></Table.Cell>
+      <Table.Cell onClick={() => props.onEntryClick(props.tableEntry.id)}></Table.Cell>
+      <Table.Cell onClick={() => props.onEntryClick(props.tableEntry.id)}></Table.Cell>
+      <Table.Cell><Icon link name='clone' onClick={() => props.onCloneClick(props.tableEntry.id)} /></Table.Cell>
     </Table.Row>
   )
 }

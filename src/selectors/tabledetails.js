@@ -1,3 +1,5 @@
+import {getFullTableEntryById} from './tableentries'
+
 function getTableId(router) {
   const pathParts = router.location.pathname.split('/')
   return pathParts[pathParts.length - 1]
@@ -20,30 +22,6 @@ function getFullTableById(stateEntities, id) {
   console.log('getFullTableById: table')
   console.log(table)
   return table
-}
-
-function getFullTableEntryById(stateEntities, id) {
-  const tableEntry = {...stateEntities.tableEntries.byId[id]}
-  if (tableEntry.entryDetailsGroup) {
-    const entryDetailsIds = stateEntities.entryDetailsGroups.byId[tableEntry.entryDetailsGroup].entryDetails
-    if (entryDetailsIds) {
-      tableEntry['entryDetails'] = entryDetailsIds.map(id => getFullEntryDetailById(stateEntities, id))
-    }
-  }
-  if (tableEntry.tagWeights) {
-    tableEntry['tagWeights'] = tableEntry['tagWeights'].map(id => getFullTagWeightById(stateEntities, id))
-  }
-  return tableEntry
-}
-
-function getFullEntryDetailById(stateEntities, id) {
-  const entryDetail = {...stateEntities.entryDetails.byId[id]}
-  return entryDetail
-}
-
-function getFullTagWeightById(stateEntities, id) {
-  const tagWeight = {...stateEntities.tagWeights.byId[id]}
-  return tagWeight
 }
 
 export {getTableId, getFullTableById}
