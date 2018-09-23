@@ -3,8 +3,7 @@ const uuidv4 = require('uuid/v4');
 /* action types */
 
 export const ADD_TABLE_ENTRY = 'ADD_TABLE_ENTRY'
-export const UPDATE_TABLE_ENTRY_WEIGHT = 'UPDATE_TABLE_ENTRY_WEIGHT'
-export const UPDATE_TABLE_ENTRY_TEXT = 'UPDATE_TABLE_ENTRY_TEXT'
+export const UPDATE_TABLE_ENTRY = 'UPDATE_TABLE_ENTRY'
 
 /* other constants */
 
@@ -23,22 +22,13 @@ export function addTableEntry(table, weight, text) {
   }
 }
 
-export function updateTableEntryWeight(tableEntry, weight) {
+export function updateTableEntry(tableEntry, prevTableEntry) {
   return {
-    type: UPDATE_TABLE_ENTRY_WEIGHT,
+    type: UPDATE_TABLE_ENTRY,
     payload: {
-      'tableEntryId': tableEntry.id,
-      'weight': weight
-    }
-  }
-}
-
-export function updateTableEntryText(tableEntry, text) {
-  return {
-    type: UPDATE_TABLE_ENTRY_TEXT,
-    payload: {
-      'tableEntryId': tableEntry.id,
-      'text': text
+      'tableEntryId': prevTableEntry.id,
+      'tableEntry': tableEntry,
+      'prevTableEntry': prevTableEntry
     }
   }
 }

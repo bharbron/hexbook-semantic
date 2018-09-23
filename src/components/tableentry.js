@@ -102,8 +102,19 @@ class TableEntryEditModal extends Component {
   handleSubmit = () => {
     /*
     Clicking the save button
+    Assemble all the bits of data into a tableEntry object
+    Send that to this.props.onSubmit()
     */
-    this.props.onSubmit()
+    const tableEntry = {
+      ...this.props.tableEntry,
+      weight: this.state.weight,
+      text: this.state.text,
+      entryDetails: [...this.state.entryDetails],
+      tagWeights: [...this.state.tagWeights],
+      tagBlacklist: [...this.state.tagBlacklist],
+      limit: (this.state.limitEnabled) ? this.state.limit : null
+    }
+    this.props.onSubmit(tableEntry)
   }
 
   handleChangeBasic = (event, {name, value}) => {

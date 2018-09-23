@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux'
 import {arrayWithPush, arrayWithInsertAtIndex} from './helpers'
 import {ADD_HEX, UPDATE_HEX_TAGS} from '../actions/hexes'
-import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY_WEIGHT, UPDATE_TABLE_ENTRY_TEXT} from '../actions/tabledetails'
+import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
 
 function byId(state=null, action) {
   console.log(state)
@@ -10,8 +10,7 @@ function byId(state=null, action) {
     case ADD_HEX: return byIdAddHex(state, action)
     case UPDATE_HEX_TAGS: return byIdUpdateHexTags(state, action)
     case ADD_TABLE_ENTRY: return byIdAddTableEntry(state, action)
-    case UPDATE_TABLE_ENTRY_WEIGHT: return byIdUpdateTableEntryWeight(state, action)
-    case UPDATE_TABLE_ENTRY_TEXT: return byIdUpdateTableEntryText(state, action)
+    case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
     default: return state
   }
 }
@@ -73,25 +72,10 @@ function byIdAddTableEntry(state, action) {
   })
 }
 
-function byIdUpdateTableEntryWeight(state, action) {
+function byIdUpdateTableEntry(state, action) {
   const tableEntryId = action.payload.tableEntryId
   return ({
-    ...state,
-    [tableEntryId]: {
-      ...state[tableEntryId],
-      weight: action.payload.weight
-    }
-  })
-}
-
-function byIdUpdateTableEntryText(state, action) {
-  const tableEntryId = action.payload.tableEntryId
-  return ({
-    ...state,
-    [tableEntryId]: {
-      ...state[tableEntryId],
-      text: action.payload.text
-    }
+    ...state
   })
 }
 
