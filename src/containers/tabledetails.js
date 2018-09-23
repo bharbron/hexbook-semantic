@@ -87,11 +87,16 @@ class TableDetailsWorkspace extends Component {
 
   handleSubmitTableEntryEditModal = (tableEntry) => {
     /*
+    Close the modal
     Receive the updated tableEntry from the modal
     Pull the non-updated tableEntry from state
     Dispatch both to the action creator
     */
+    console.log('tableEntry')
+    console.log(tableEntry)
+    this.setState({openTableEntryEditModal: false})
     const prevTableEntry = this.props.tableEntriesById[tableEntry.id]
+    this.props.updateTableEntry(tableEntry, prevTableEntry)
   }
     
   render() {

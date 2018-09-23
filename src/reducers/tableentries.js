@@ -73,9 +73,32 @@ function byIdAddTableEntry(state, action) {
 }
 
 function byIdUpdateTableEntry(state, action) {
+  /*
+  1. id = unchanged
+  2. weight = update
+  3. text = update
+  4. entryDetailsGroup = unchanged
+  5. addTags = update
+  6. tagWeights = update
+  7. tagBlacklist = update
+  8. limit = update
+  */
+  const tagWeights = []
+  action.payload.tableEntry.tagWeights.map(
+    tw => tagWeights.push(tw.id)
+  )
   const tableEntryId = action.payload.tableEntryId
   return ({
-    ...state
+    ...state,
+    [tableEntryId]: {
+      ...state[tableEntryId],
+      weight: action.payload.tableEntry.weight,
+      text: action.payload.tableEntry.text,
+      addTags: action.payload.tableEntry.addTags,
+      'tagWeights': tagWeights,
+      tagBlacklist: action.payload.tableEntry.tagBlacklist,
+      limit: action.payload.tableEnty.limit
+    }
   })
 }
 
