@@ -96,8 +96,8 @@ function TableEntriesTable(props) {
           <Table.HeaderCell><Icon name='balance scale' /></Table.HeaderCell>
           <Table.HeaderCell>Result</Table.HeaderCell>
           <Table.HeaderCell>Template Details</Table.HeaderCell>
-          <Table.HeaderCell><Label tag><Icon name='balance scale' /></Label></Table.HeaderCell>
-          <Table.HeaderCell><Label tag><Icon name='ban' /></Label></Table.HeaderCell>
+          <Table.HeaderCell><Label color='grey' tag><Icon name='balance scale' /></Label></Table.HeaderCell>
+          <Table.HeaderCell><Label color='grey' tag><Icon name='ban' /></Label></Table.HeaderCell>
           <Table.HeaderCell>Limit</Table.HeaderCell>
           <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
@@ -154,11 +154,11 @@ function EntryDetailsList(props) {
 
 function TagWeightsList(props) {
   return (
-    <Label.Group tag size='small'>
+    <Label.Group size='small'>
       {props.tagWeights.map(
         tagWeight => <TagWeightLabel 
           id={tagWeight.id} 
-          color='blue'
+          color={COLORS.TERRAIN_TAG}
           text={tagWeight.tag} 
           weight={tagWeight.weight}
         />
@@ -169,7 +169,7 @@ function TagWeightsList(props) {
 
 function TagBlacklist(props) {
   return (
-    <Label.Group tag color={COLORS.BLACKLIST_TAG} size='small'>
+    <Label.Group color={COLORS.BLACKLIST_TAG} size='small'>
       {props.tagBlacklist.map(
         tag => <TagLabel tag={tag} />
       )}

@@ -24,33 +24,22 @@ function byIdUpdateTableEntry(state, action) {
   1. Remove all tag weights found in prevTableEntry
   2. Add tag weights found in tableEntry
   */
-  console.log('tagweights.byIdUpdateTableEntry')
   const prevTagWeightIds = []
   action.payload.prevTableEntry.tagWeights.map(
     tw => prevTagWeightIds.push(tw.id)
   )
-  console.log('prevTagWeightIds')
-  console.log(prevTagWeightIds)
   const tagWeights = action.payload.tableEntry.tagWeights
-  console.log('tagWeights')
-  console.log(tagWeights)
   //remove prev
-  console.log('state')
-  console.log(state)
   const newState = {
     ...state,
   }
   for (let i = 0; i < prevTagWeightIds.length; i++) {
     newState[prevTagWeightIds[i]] = undefined
   }
-  console.log('newState')
-  console.log(newState)
   //add new
   for (let i = 0; i < tagWeights.length; i++) {
     newState[tagWeights[i].id] = {id: tagWeights[i].id, tag: tagWeights[i].tag, weight: tagWeights[i].weight}
   }
-  console.log('newState')
-  console.log(newState)
   return newState
 }
 
