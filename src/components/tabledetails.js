@@ -26,7 +26,7 @@ function TableDetailsSegment(props) {
     <Transition transitionOnMount='true' animation='fade up'>
       <Segment.Group>
         <Segment>
-          <Header content={props.table.name} subheader='Click below to edit settings' />
+          <Header content='Table Settings' subheader='Click text below to edit' />
           <TableDetailsList table={props.table} />
         </Segment>
         <Segment>
@@ -40,7 +40,6 @@ function TableDetailsSegment(props) {
 function TableDetailsList(props) {
   return (
     <List size='large'>
-      <List.Item><List.Content floated='left'><Icon link circular name='settings' /></List.Content></List.Item>
       <TableDetailsListItem header='Name' contents={props.table.name} />
       <TableDetailsListItem header='CODE' contents={props.table.code} />
       <TableDetailsListItem header='Description' contents={props.table.description} />
@@ -69,112 +68,4 @@ function TableDetailsLabels(props) {
   )
 }
 
-function TableEntriesSegment(props) {
-  return (
-    <Transition transitionOnMount='true' animation='fade up'>
-      <Segment.Group>
-        <Segment>
-          <Header content='Table Entries' subheader='Click a cell to edit' />
-          <TableEntriesTable 
-            tableEntries={props.table.entries}
-            onClickEntry={props.onClickEntry}
-            onClickClone={props.onClickClone}
-          />
-          <SingleLineAdder placeholder='Weight,Result text' onSubmit={props.onSubmitAddEntry} />
-        </Segment>
-      </Segment.Group>
-    </Transition>
-  );
-}
-
-function TableEntriesTable(props) {
-  return (
-    <Table basic='very' compact='very' striped>
-      <Table.Header>
-        <Table.Row>
-          <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>
-          <Table.HeaderCell><Icon name='balance scale' /></Table.HeaderCell>
-          <Table.HeaderCell>Result</Table.HeaderCell>
-          <Table.HeaderCell>Template Details</Table.HeaderCell>
-          <Table.HeaderCell><Label color='grey' tag><Icon name='balance scale' /></Label></Table.HeaderCell>
-          <Table.HeaderCell><Label color='grey' tag><Icon name='ban' /></Label></Table.HeaderCell>
-          <Table.HeaderCell>Limit</Table.HeaderCell>
-          <Table.HeaderCell></Table.HeaderCell>
-        </Table.Row>
-      </Table.Header>
-      <Transition.Group as={Table.Body}>
-        {props.tableEntries && props.tableEntries.map(
-          entry => <TableEntriesTableRow 
-            tableEntry={entry}
-            onClickEntry={props.onClickEntry}
-            onClickClone={props.onClickClone}
-          />
-        )}
-      </Transition.Group>
-    </Table>
-  )
-}
-
-function TableEntriesTableRow(props) {
-  return (
-    <Table.Row key={props.tableEntry.id}>
-      {console.log('props.tableEntry')}
-      {console.log(props.tableEntry)}
-      <Table.Cell><Checkbox /></Table.Cell>
-      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>{props.tableEntry.weight}</Table.Cell>
-      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>{props.tableEntry.text}</Table.Cell>
-      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>
-        <EntryDetailsList entryDetails={props.tableEntry.entryDetails} />
-      </Table.Cell>
-      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>
-        <TagWeightsList tagWeights={props.tableEntry.tagWeights} />
-      </Table.Cell>
-      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>
-        <TagBlacklist tagBlacklist={props.tableEntry.tagBlacklist} />
-      </Table.Cell>
-      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>{props.tableEntry.limit}</Table.Cell>
-      <Table.Cell><Icon link name='clone' onClick={() => props.onClickClone(props.tableEntry.id)} /></Table.Cell>
-    </Table.Row>
-  )
-}
-
-function EntryDetailsList(props) {
-  return (
-    <List bulleted size='small'>
-      {console.log('props.entryDetails')}
-      {console.log(props.entryDetails)}
-      {props.entryDetails.map(
-        ed => <List.Item key={ed.id}>
-          {ed.text}
-        </List.Item>
-      )}
-    </List>
-  )
-}
-
-function TagWeightsList(props) {
-  return (
-    <Label.Group size='small'>
-      {props.tagWeights.map(
-        tagWeight => <TagWeightLabel 
-          id={tagWeight.id} 
-          color={COLORS.TERRAIN_TAG}
-          text={tagWeight.tag} 
-          weight={tagWeight.weight}
-        />
-      )}
-    </Label.Group>
-  )
-}
-
-function TagBlacklist(props) {
-  return (
-    <Label.Group color={COLORS.BLACKLIST_TAG} size='small'>
-      {props.tagBlacklist.map(
-        tag => <TagLabel tag={tag} />
-      )}
-    </Label.Group>
-  )
-}
-
-export {TableDetailsSegment, TableEntriesSegment}
+export {TableDetailsSegment}

@@ -143,7 +143,7 @@ class HexesWorkspace extends Component {
 
           <Transition transitionOnMount='true' animation='fade up'>
           <Segment>
-            <Header content='Hex Map' subheader='Mapping of hex coordinates to terrain and territory' />
+            <Header content='Hex Map' subheader='Mapping of map coordinates to terrain and territory' />
             <Table basic='very' compact='very' fixed singleLine>
               <Table.Header>
                 <Table.Row>
