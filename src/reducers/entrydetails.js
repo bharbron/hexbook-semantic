@@ -74,10 +74,10 @@ function allIdsUpdateTableEntry(state, action) {
   let newState = [
     ...state
   ]
-  for (let i; i < prevEntryDetails.length; i++) {
+  for (let i = 0; i < prevEntryDetails.length; i++) {
     newState = arrayWithItemRemoved(newState, prevEntryDetails[i].id)
   }
-  for (let i; i < action.payload.tableEntry.entryDetails.length; i++) {
+  for (let i = 0; i < action.payload.tableEntry.entryDetails.length; i++) {
     newState = arrayWithPush(newState, entryDetails[i].id)
   }
   return newState

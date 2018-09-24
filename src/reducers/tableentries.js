@@ -88,7 +88,7 @@ function byIdUpdateTableEntry(state, action) {
     tw => tagWeights.push(tw.id)
   )
   const tableEntryId = action.payload.tableEntryId
-  return ({
+  const newState = {
     ...state,
     [tableEntryId]: {
       ...state[tableEntryId],
@@ -99,7 +99,8 @@ function byIdUpdateTableEntry(state, action) {
       tagBlacklist: action.payload.tableEntry.tagBlacklist,
       limit: action.payload.tableEntry.limit
     }
-  })
+  }
+  return newState
 }
 
 function allIdsAddHex(state, action) {
