@@ -92,6 +92,7 @@ class TableDetailsWorkspace extends Component {
     Pull the non-updated tableEntry from state
     Dispatch both to the action creator
     */
+    console.log('handleSubmitTableEntryEditModal')
     console.log('tableEntry')
     console.log(tableEntry)
     this.setState({openTableEntryEditModal: false})

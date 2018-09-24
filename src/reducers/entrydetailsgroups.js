@@ -68,13 +68,13 @@ function byIdUpdateTableEntry(state, action) {
   const entryDetailIds = []
   action.payload.tableEntry.entryDetails.map(
     ed => entryDetailIds.push(ed.id)
-  ) 
+  )
   //Remove prev
   let newState = {
     ...state,
     [prevEntryDetailsGroupId]: {
       ...state[prevEntryDetailsGroupId],
-      entryDetails: [...state[prevEntryDetailsGroupId].entryDetails.filter(id => !prevEntryDetailIds.includes(id))]
+      entryDetails: [...state[prevEntryDetailsGroupId].entryDetails.filter(id => (!prevEntryDetailIds.includes(id)))]
     }
   }
   //Add new
@@ -82,9 +82,10 @@ function byIdUpdateTableEntry(state, action) {
     ...newState,
     [entryDetailsGroupId]: {
       ...newState[entryDetailsGroupId],
-      entryDetails: [...state[entryDetailsGroupId].entryDetails, ...entryDetailIds]
+      entryDetails: [...newState[entryDetailsGroupId].entryDetails, ...entryDetailIds]
     }
   }
+  return newState
 }
 
 function allIdsAddTableEntry(state, action) {

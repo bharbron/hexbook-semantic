@@ -97,7 +97,7 @@ function byIdUpdateTableEntry(state, action) {
       addTags: action.payload.tableEntry.addTags,
       'tagWeights': tagWeights,
       tagBlacklist: action.payload.tableEntry.tagBlacklist,
-      limit: action.payload.tableEnty.limit
+      limit: action.payload.tableEntry.limit
     }
   })
 }

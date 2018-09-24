@@ -17,7 +17,8 @@ import {
 } from 'semantic-ui-react';
 import {DirectInputTableCell} from './datatables'
 import {SingleLineAdder} from './forms'
-import {TableCodeLabel, TableEntriesCountLabel, TemplateLabel} from './labels'
+import {TableCodeLabel, TableEntriesCountLabel, TemplateLabel, TagLabel, TagWeightLabel} from './labels'
+import {COLORS} from '../constants/colors'
 import './components.css';
 
 function TableDetailsSegment(props) {
@@ -117,15 +118,62 @@ function TableEntriesTable(props) {
 function TableEntriesTableRow(props) {
   return (
     <Table.Row key={props.tableEntry.id}>
+      {console.log('props.tableEntry')}
+      {console.log(props.tableEntry)}
       <Table.Cell><Checkbox /></Table.Cell>
       <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>{props.tableEntry.weight}</Table.Cell>
       <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>{props.tableEntry.text}</Table.Cell>
-      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}></Table.Cell>
-      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}></Table.Cell>
-      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}></Table.Cell>
-      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}></Table.Cell>
+      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>
+        <EntryDetailsList entryDetails={props.tableEntry.entryDetails} />
+      </Table.Cell>
+      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>
+        <TagWeightsList tagWeights={props.tableEntry.tagWeights} />
+      </Table.Cell>
+      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>
+        <TagBlacklist tagBlacklist={props.tableEntry.tagBlacklist} />
+      </Table.Cell>
+      <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>{props.tableEntry.limit}</Table.Cell>
       <Table.Cell><Icon link name='clone' onClick={() => props.onClickClone(props.tableEntry.id)} /></Table.Cell>
     </Table.Row>
+  )
+}
+
+function EntryDetailsList(props) {
+  return (
+    <List bulleted size='small'>
+      {console.log('props.entryDetails')}
+      {console.log(props.entryDetails)}
+      {props.entryDetails.map(
+        ed => <List.Item key={ed.id}>
+          {ed.text}
+        </List.Item>
+      )}
+    </List>
+  )
+}
+
+function TagWeightsList(props) {
+  return (
+    <Label.Group tag size='small'>
+      {props.tagWeights.map(
+        tagWeight => <TagWeightLabel 
+          id={tagWeight.id} 
+          color='blue'
+          text={tagWeight.tag} 
+          weight={tagWeight.weight}
+        />
+      )}
+    </Label.Group>
+  )
+}
+
+function TagBlacklist(props) {
+  return (
+    <Label.Group tag color={COLORS.BLACKLIST_TAG} size='small'>
+      {props.tagBlacklist.map(
+        tag => <TagLabel tag={tag} />
+      )}
+    </Label.Group>
   )
 }
 

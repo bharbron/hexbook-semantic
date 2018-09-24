@@ -274,6 +274,8 @@ class TableEntryEditModal extends Component {
   render () {
     return (
       <Modal open={this.props.open} onClose={this.handleClose} className='TableEntryEditModal'>
+        {console.log('this.state')}
+        {console.log(this.state)}
         <Modal.Header style={{ borderBottom: '0px' }}>
           <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
         </Modal.Header>
@@ -299,9 +301,9 @@ class TableEntryEditModal extends Component {
             onRemove={this.handleRemoveBlacklist} 
           />
           <TableEntryEditLimit 
-            enabled={this.state.limitEnabled} 
-            limit={this.state.limit} 
-            onChange={this.handleChangeLimit} 
+            enabled={this.state.limitEnabled}
+            limit={this.state.limit}
+            onChange={this.handleChangeLimit}
           />
         </Modal.Content>
         <Modal.Actions>

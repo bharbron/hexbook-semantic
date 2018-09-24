@@ -34,12 +34,13 @@ function byIdUpdateTableEntry(state, action) {
     ...state,
   }
   for (let i; i < prevTagWeightIds.length; i++) {
-    newState[id] = undefined
+    newState[prevTagWeightIds[i]] = undefined
   }
   //add new
   for (let i; i < tagWeights.length; i++) {
     newState[tagWeights[i].id] = {id: tagWeights[i].id, tag: tagWeights[i].tag, weight: tagWeights[i].weight}
   }
+  return newState
 }
 
 function allIdsUpdateTableEntry(state, action) {
@@ -56,7 +57,9 @@ function allIdsUpdateTableEntry(state, action) {
     tw => tagWeightIds.push(tw.id)
   )
   return [
-    ...state.filter(id => !prevTagWeightIds.include(id)), //remove prev
+    ...state.filter(id => !prevTagWeightIds.includes(id)), //remove prev
     ...tagWeightIds //add new
   ]
 }
+
+export default combineReducers({byId: byId, allIds: allIds})

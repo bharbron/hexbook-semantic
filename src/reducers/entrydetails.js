@@ -69,15 +69,18 @@ function allIdsUpdateTableEntry(state, action) {
   1. Remove all entryDetails found in prevTableEntry
   2. Add all entryDetails found in tableEntry
   */
+  const prevEntryDetails = action.payload.prevTableEntry.entryDetails
+  const entryDetails = action.payload.tableEntry.entryDetails
   let newState = [
     ...state
   ]
-  for (let i; i < action.payload.prevTableEntry.entryDetails.length; i++) {
-    newState = arrayWithItemRemoved(newState, action.payload.prevTableEntry.entryDetails[i].id)
+  for (let i; i < prevEntryDetails.length; i++) {
+    newState = arrayWithItemRemoved(newState, prevEntryDetails[i].id)
   }
   for (let i; i < action.payload.tableEntry.entryDetails.length; i++) {
-    newState = arrayWithPush(newState, action.payload.tableEntry.entryDetails[i].id)
+    newState = arrayWithPush(newState, entryDetails[i].id)
   }
+  return newState
 }
 
 export default combineReducers({byId: byId, allIds: allIds})
