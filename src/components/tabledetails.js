@@ -19,122 +19,287 @@ import {DirectInputTableCell} from './datatables'
 import {SingleLineAdder} from './forms'
 import {TableCodeLabel, TableEntriesCountLabel, TemplateLabel, TagLabel, TagWeightLabel} from './labels'
 import {COLORS} from '../constants/colors'
+import {EMPTY_REGEX, VALID_TABLE_NAME_REGEX, VALID_TABLE_CODE_REGEX, VALID_TABLE_DESCRIPTION_REGEX} from '../constants/regex'
 import './components.css';
 
-function TableDetailsSegment(props) {
-  return (
-    <Transition transitionOnMount='true' animation='fade up'>
-      <Segment.Group>
-        <Segment>
-          <Header content='Table Settings' subheader='Click pencil to edit' />
-          <TableDetailsList {...props} />
-        </Segment>
-        <Segment>
-          <TableDetailsLabels table={props.table} />
-        </Segment>
-      </Segment.Group>
-    </Transition>
-  );
+class TableDetailsSegment extends Component {
+  state = {
+    error: {name: null, code: null, description: null},
+    valid: {name: true, code: true, description: true},
+    editMode: {name: false, code: false, description: false},
+    value: {name: this.props.table.name, code: this.props.table.code, description: this.props.table.description}
+  }
+
+  static defaultProps = {
+    onSubmit: () => console.log('default onSubmit')
+  }
+
+  handleClick = (event, field) => {
+    console.log('handleClick')
+    console.log('event')
+    console.log(event)
+    console.log('event.target')
+    console.log(event.target)
+    console.log('field')
+    console.log(field)
+    const newEditMode = {
+      ...this.state.editMode,
+      [field]: true
+    }
+    this.setState({editMode: newEditMode})
+  }
+
+  handleBlur = (event, field) => {
+    console.log('handleBlur')
+    console.log('event')
+    console.log(event)
+    console.log('event.target')
+    console.log(event.target)
+    console.log('field')
+    console.log(field)
+    const contents = {
+      'name': this.props.table.name,
+      'code': this.props.table.code,
+      'description': this.props.table.description
+    }
+    const newValue = {
+      ...this.state.value,
+      [field]: contents[field]
+    }
+    const newEditMode = {
+      ...this.state.editMode,
+      [field]: false
+    }
+    this.setState({value: newValue, editMode: newEditMode})
+  }
+
+  handleKeyDown = (event, field) => {
+    console.log('handleKeyDown')
+    console.log('event')
+    console.log(event)
+    console.log('event.target')
+    console.log(event.target)
+    //exit on escape
+    if (event.keyCode === 27) {
+      const contents = {
+      'name': this.props.table.name,
+      'code': this.props.table.code,
+      'description': this.props.table.description
+      }
+      const newValue = {
+        ...this.state.value,
+        [field]: contents[field]
+      }
+      const newEditMode = {
+        ...this.state.editMode,
+        [field]: false
+      }
+      this.setState({value: newValue, editMode: newEditMode})
+      }
+  }
+
+  handleChange = (event, {name, value}) => {
+    /*
+    In general:
+    1. Make any "adjustments" to the input, e.g. autocapitalization
+    2. Match against regex (which allows empty input)
+    3. If match, perform any more detailed checks, e.g. is the value already in use somewhere
+    4. If okay, update state
+
+    If it fails at any step, set any appropriate error text
+    */
+    if (name === 'name') {
+      if (value.match(EMPTY_REGEX)) {
+        this.setState({
+          value: {...this.state.value, 'name': value},
+          valid: {...this.state.valid, 'name': false},
+          error: {...this.state.error, 'name': 'Name is required'}
+        })
+        return
+      }
+      if (value.match(VALID_TABLE_NAME_REGEX)) {
+        this.setState({
+          value: {...this.state.value, 'name': value},
+          valid: {...this.state.valid, 'name': true},
+          error: {...this.state.error, 'name': null}
+        })
+        return
+      }
+      this.setState({
+        valid: {...this.state.valid, 'name': false},
+        error: {...this.state.error, 'name': 'May contain only letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?'}
+      })
+      return
+    }
+
+    if (name === 'code') {
+      const adjValue = value.toUpperCase()
+      if (adjValue.match(EMPTY_REGEX)) {
+        this.setState({
+          value: {...this.state.value, 'code': adjValue},
+          valid: {...this.state.valid, 'code': false},
+          error: {...this.state.error, 'code': 'CODE is required'}
+        })
+        return
+      }
+      if (adjValue.match(VALID_TABLE_CODE_REGEX)) {
+        if (adjValue !== this.props.table.code /*&& CODE is already used by another table*/) {
+          this.setState({
+            value: {...this.state.value, 'code': adjValue},
+            valid: {...this.state.valid, 'code': false},
+            error: {...this.state.error, 'code': this.props.table.code + ' is already assigned to another table'}
+          })
+          return
+        }
+        this.setState({
+          value: {...this.state.value, 'code': adjValue},
+          valid: {...this.state.valid, 'code': true},
+          error: {...this.state.error, 'code': null}
+        })
+        return
+      }
+      this.setState({
+        valid: {...this.state.valid, 'code': false},
+        error: {...this.state.error, 'code': 'May contain only capital letters or underscore'}
+      })
+      return
+    }
+
+    if (name === 'description') {
+      if (value.match(EMPTY_REGEX)) {
+        this.setState({
+          value: {...this.state.value, 'description': value},
+          valid: {...this.state.valid, 'description': false},
+          error: {...this.state.error, 'description': 'Description is required'}
+        })
+        return
+      }
+      if (value.match(VALID_TABLE_DESCRIPTION_REGEX)) {
+        this.setState({
+          value: {...this.state.value, 'description': value},
+          valid: {...this.state.valid, 'description': true},
+          error: {...this.state.error, 'description': null}
+        })
+        return
+      }
+      this.setState({
+        valid: {...this.state.valid, 'description': false},
+        error: {...this.state.error, 'description': 'May contain only letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?'}
+      })
+      return
+    }
+  }
+
+  handleSubmit = (field) => {
+    console.log('handleSubmit')
+    console.log('field')
+    console.log(field)
+    console.log('this.state')
+    console.log(this.state)
+    if (this.state.valid[field]) {
+      const contents = {
+        'name': this.props.table.name,
+        'code': this.props.table.code,
+        'description': this.props.table.description
+      }
+      this.setState({
+        error: {name: null, code: null, description: null},
+        valid: {name: true, code: true, description: true},
+        editMode: {name: false, code: false, description: false},
+      })
+      this.props.onSubmit({...contents, [field]: this.state.value[field]})
+    }
+  }
+
+  render() {
+    return (
+      <Transition transitionOnMount='true' animation='fade up'>
+        <Segment.Group>
+          <Segment>
+            <Header content='Table Settings' subheader='Click pencil to edit' />
+            <TableDetailsList 
+              table={this.props.table}
+              onBlur={this.handleBlur}
+              editMode={this.state.editMode}
+              onClick={this.handleClick}
+              onSubmit={this.handleSubmit}
+              value={this.state.value}
+              onChange={this.handleChange}
+              onKeyDown={this.handleKeyDown} />
+          </Segment>
+          <Segment>
+            <TableDetailsLabels table={this.props.table} />
+          </Segment>
+        </Segment.Group>
+      </Transition>
+    )
+  }
 }
 
 function TableDetailsList(props) {
   return (
     <List size='large'>
       <TableDetailsListItem 
-        header='Name' 
-        content={props.table.name} 
-        adjuster={props.nameAdjuster} 
-        validation={props.nameValidation} 
-        submitValidation={props.nameSubmitValidation} />
+        header='Name'
+        name='name'
+        content={props.table.name}
+        onBlur={props.onBlur}
+        editMode={props.editMode.name} 
+        onClick={props.onClick}
+        onSubmit={props.onSubmit} 
+        value={props.value.name}
+        onChange={props.onChange}
+        onKeyDown={props.onKeyDown} />
       <TableDetailsListItem 
         header='CODE' 
-        content={props.table.code} 
-        adjuster={props.codeAdjuster} 
-        validation={props.codeValidation} 
-        submitValidation={props.codeSubmitValidation} />
+        name='code'
+        content={props.table.code}
+        onBlur={props.onBlur}
+        editMode={props.editMode.code} 
+        onClick={props.onClick}
+        onSubmit={props.onSubmit} 
+        value={props.value.code}
+        onChange={props.onChange}
+        onKeyDown={props.onKeyDown} />
       <TableDetailsListItem 
         header='Description' 
-        content={props.table.description} 
-        adjuster={props.descriptionAdjuster} 
-        validation={props.descriptionValidation} 
-        submitValidation={props.descriptionSubmitValidation} />
+        name='description'
+        content={props.table.description}
+        onBlur={props.onBlur}
+        editMode={props.editMode.description} 
+        onClick={props.onClick}
+        onSubmit={props.onSubmit} 
+        value={props.value.description}
+        onChange={props.onChange}
+        onKeyDown={props.onKeyDown} />
     </List>
   );
 }
 
-class TableDetailsListItem extends Component {
-  state = {
-    editMode: false,
-    value: this.props.content
-  }
-
-  componentDidUpdate = (prevProps) => {
-    if (this.props.content !== prevProps.content) {
-      this.setState({value: this.props.content})
-    }
-  }
-
-  handleClick = () => {
-    this.setState({editMode: true})
-  }
-
-  handleBlur = () => {
-    this.setState({value: this.props.content, editMode: false})
-  }
-
-  handleKeyDown = (event) => {
-    //exit on escape
-    if (event.keyCode === 27) {
-      this.setState({value: this.props.content, editMode: false})
-    }
-  }
-
-  handleChange = (event, {name, value}) => {
-    const adjValue = this.props.adjuster(value)
-    let error = undefined
-    if (this.props.validation) {
-      error = this.props.validation(adjValue, this.props.content)
-    }
-    if (!error) {
-      this.setState({'value': adjValue})
-    }
-  }
-
-  handleSubmit = (event) => {
-    let error = undefined
-    if (this.props.submitValidation) {
-      error = this.props.submitValidation(this.props.value, this.props.content)
-    }
-    if (!error) {
-      this.setState({editMode: false})
-      this.props.onSubmit(this.props.value)
-    }
-    this.setState({value: this.props.content, editMode: false})
-  }
-
-  render() {
-    return (
-      <List.Item>
-        <List.Content>
-          <List.Header>{this.props.header}</List.Header>
-          <List.Description onBlur={this.handleBlur}>
-          {!this.state.editMode && this.props.content}   {!this.state.editMode && <Icon link name='pencil' onClick={this.handleClick} />}
-          {this.state.editMode && 
-            <Form onSubmit={this.handleSubmit}>
-              <Form.Input
-                focus
-                size='tiny'
-                autoFocus
-                value={this.state.value}
-                onChange={this.handleChange}
-                onKeyDown={this.handleKeyDown}
-              />
-            </Form>}
-          </List.Description>
-        </List.Content>
-      </List.Item>
-    );
-  }
+function TableDetailsListItem(props) {
+  return (
+    <List.Item>
+      <List.Content>
+        <List.Header>{props.header}</List.Header>
+        <List.Description>
+        {!props.editMode && props.content}   {!props.editMode && <Icon link name='pencil' onClick={(e) => props.onClick(e, props.name)} />}
+        {props.editMode && 
+          <Form onSubmit={() => props.onSubmit(props.name)}>
+            <Form.Input
+              name={props.name}
+              focus
+              size='tiny'
+              autoFocus
+              value={props.value}
+              onChange={props.onChange}
+              onKeyDown={(event) => props.onKeyDown(event, props.name)}
+              onBlur={(event) => props.onBlur(event, props.name)}
+            />
+          </Form>}
+        </List.Description>
+      </List.Content>
+    </List.Item>
+  )
 }
 
 function TableDetailsLabels(props) {

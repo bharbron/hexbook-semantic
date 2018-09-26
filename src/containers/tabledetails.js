@@ -16,7 +16,7 @@ import {addTableEntry, updateTableEntry} from '../actions/tabledetails'
 import {getTableId, getFullTableById} from '../selectors/tabledetails'
 import {getFullTableEntriesLookup} from '../selectors/tableentries'
 import {getTerrainTags, getTerritoryTags} from '../selectors/tags'
-import {VALID_INTEGER_REGEX, VALID_TABLE_CODE_REGEX, VALID_TABLE_ENTRY_REGEX} from '../constants/regex'
+import {VALID_TABLE_ENTRY_REGEX} from '../constants/regex'
 import './containers.css';
 
 const mapStateToProps = state => ({
@@ -39,48 +39,7 @@ class TableDetailsWorkspace extends Component {
       editingTableEntryId: null
   }
 
-  nameAdjuster = (value) => {
-    return value
-  }
-
-  nameValidation = (value, original) => {
-    return false
-  }
-
-  nameSubmitValidation = (value, original) => {
-    return false
-  }
-
-  codeAdjuster = (value) => {
-    return value.toUpperCase()
-  }
-
-  codeValidation = (value, original) => {
-    if (value === original) {
-      return
-    }
-    if (!value.match(VALID_TABLE_CODE_REGEX)) {
-      return 'Code may only contain uppercase letters and underscores'
-    }
-  }
-
-  codeSubmitValidation = (value, original) => {
-    return false
-  }
-
-  descriptionAdjuster = (value) => {
-    return value
-  }
-
-  descriptionValidation = (value, original) => {
-    return false
-  }
-
-  descriptionSubmitValidation = (value, original) => {
-    return false
-  }
-
-  handleSubmitEditDetails = (name, code, description) => {
+ handleSubmitEditDetails = (name, code, description) => {
     alert('handleSubmitEditDetails')
   }
 
@@ -152,16 +111,7 @@ class TableDetailsWorkspace extends Component {
       {console.log(this.props.tableId)}
         <WideColumnWorkspace>
           <TableDetailsSegment
-            table={this.props.table} 
-            nameAdjuster={this.nameAdjuster}
-            nameValidation={this.nameValidation}
-            nameSubmitValidation={this.nameSubmitValidation}
-            codeAdjuster={this.codeAdjuster}
-            codeValidation={this.codeValidation}
-            codeSubmitValidation={this.codeSubmitValidation}
-            descriptionAdjuster={this.descriptionAdjuster}
-            descriptionValidation={this.descriptionValidation}
-            descriptionSubmitValidation={this.descriptionSubmitValidation}
+            table={this.props.table}
           />
           <TableEntriesSegment 
             table={this.props.table} 
