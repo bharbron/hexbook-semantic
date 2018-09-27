@@ -10,6 +10,7 @@ import {
   Input,
   Label,
   List,
+  Message,
   Modal,
   Segment,
   Table,
@@ -56,7 +57,11 @@ class TableDetailsSegment extends Component {
       ...this.state.editMode,
       [field]: false
     }
-    this.setState({value: newValue, editMode: newEditMode})
+    const newError = {
+      ...this.state.error,
+      [field]: null
+    }
+    this.setState({value: newValue, editMode: newEditMode, error: newError})
   }
 
   handleKeyDown = (event, field) => {
@@ -75,7 +80,11 @@ class TableDetailsSegment extends Component {
         ...this.state.editMode,
         [field]: false
       }
-      this.setState({value: newValue, editMode: newEditMode})
+      const newError = {
+        ...this.state.error,
+        [field]: null
+      }
+      this.setState({value: newValue, editMode: newEditMode, error: newError})
       }
   }
 
@@ -107,7 +116,6 @@ class TableDetailsSegment extends Component {
         return
       }
       this.setState({
-        valid: {...this.state.valid, 'name': false},
         error: {...this.state.error, 'name': 'May contain only letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?'}
       })
       return
@@ -128,7 +136,7 @@ class TableDetailsSegment extends Component {
           this.setState({
             value: {...this.state.value, 'code': adjValue},
             valid: {...this.state.valid, 'code': false},
-            error: {...this.state.error, 'code': this.props.table.code + ' is already assigned to another table'}
+            error: {...this.state.error, 'code': adjValue + ' is already assigned to another table'}
           })
           return
         }
@@ -140,7 +148,6 @@ class TableDetailsSegment extends Component {
         return
       }
       this.setState({
-        valid: {...this.state.valid, 'code': false},
         error: {...this.state.error, 'code': 'May contain only capital letters or underscore'}
       })
       return
@@ -164,7 +171,6 @@ class TableDetailsSegment extends Component {
         return
       }
       this.setState({
-        valid: {...this.state.valid, 'description': false},
         error: {...this.state.error, 'description': 'May contain only letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?'}
       })
       return
@@ -203,7 +209,8 @@ class TableDetailsSegment extends Component {
               onSubmit={this.handleSubmit}
               value={this.state.value}
               onChange={this.handleChange}
-              onKeyDown={this.handleKeyDown} />
+              onKeyDown={this.handleKeyDown}
+              error={this.state.error} />
           </Segment>
           <Segment>
             <TableDetailsLabels table={this.props.table} />
@@ -227,7 +234,8 @@ function TableDetailsList(props) {
         onSubmit={props.onSubmit} 
         value={props.value.name}
         onChange={props.onChange}
-        onKeyDown={props.onKeyDown} />
+        onKeyDown={props.onKeyDown}
+        error={props.error.name} />
       <TableDetailsListItem 
         header='CODE' 
         name='code'
@@ -238,7 +246,8 @@ function TableDetailsList(props) {
         onSubmit={props.onSubmit} 
         value={props.value.code}
         onChange={props.onChange}
-        onKeyDown={props.onKeyDown} />
+        onKeyDown={props.onKeyDown}
+        error={props.error.code} />
       <TableDetailsListItem 
         header='Description' 
         name='description'
@@ -249,7 +258,8 @@ function TableDetailsList(props) {
         onSubmit={props.onSubmit} 
         value={props.value.description}
         onChange={props.onChange}
-        onKeyDown={props.onKeyDown} />
+        onKeyDown={props.onKeyDown}
+        error={props.error.description} />
     </List>
   );
 }
@@ -262,7 +272,7 @@ function TableDetailsListItem(props) {
         <List.Description>
         {!props.editMode && props.content}   {!props.editMode && <Icon link name='pencil' onClick={(e) => props.onClick(e, props.name)} />}
         {props.editMode && 
-          <Form onSubmit={() => props.onSubmit(props.name)}>
+          <Form error={props.error} onSubmit={() => props.onSubmit(props.name)}>
             <Form.Input
               name={props.name}
               focus
@@ -273,6 +283,7 @@ function TableDetailsListItem(props) {
               onKeyDown={(event) => props.onKeyDown(event, props.name)}
               onBlur={(event) => props.onBlur(event, props.name)}
             />
+            <Message error size='tiny' content={props.error} />
           </Form>}
         </List.Description>
       </List.Content>
