@@ -124,7 +124,7 @@ class TableDetailsSegment extends Component {
         return
       }
       if (adjValue.match(VALID_TABLE_CODE_REGEX)) {
-        if (adjValue !== this.props.table.code && this.props.tablesById[adjValue] ) {
+        if (adjValue !== this.props.table.code && this.props.tablesByCode[adjValue] ) {
           this.setState({
             value: {...this.state.value, 'code': adjValue},
             valid: {...this.state.valid, 'code': false},
@@ -178,12 +178,14 @@ class TableDetailsSegment extends Component {
         'code': this.props.table.code,
         'description': this.props.table.description
       }
+      contents[field] = this.state.value[field]
       this.setState({
         error: {name: null, code: null, description: null},
         valid: {name: true, code: true, description: true},
         editMode: {name: false, code: false, description: false},
+        value: {name: contents.name, code: contents.code, description: contents.description}
       })
-      this.props.onSubmit({...contents, [field]: this.state.value[field]})
+      this.props.onSubmit(contents.name, contents.code, contents.description)
     }
   }
 

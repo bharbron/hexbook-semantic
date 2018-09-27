@@ -12,7 +12,9 @@ import {TextAreaInputModal} from '../components/modals'
 import {TableDetailsSegment} from '../components/tabledetails'
 import {TableEntriesSegment} from '../components/tableentries'
 import {TableEntryEditModal} from '../components/tableentry'
+import {updateTable} from '../actions/tables'
 import {addTableEntry, updateTableEntry} from '../actions/tabledetails'
+import {getByCodeTables} from '../selectors/tables'
 import {getTableId, getFullTableById} from '../selectors/tabledetails'
 import {getFullTableEntriesLookup} from '../selectors/tableentries'
 import {getTerrainTags, getTerritoryTags} from '../selectors/tags'
@@ -20,7 +22,7 @@ import {VALID_TABLE_ENTRY_REGEX} from '../constants/regex'
 import './containers.css';
 
 const mapStateToProps = state => ({
-  tablesById: state.entities.tables.byId,
+  tablesByCode: getByCodeTables(state.entities.tables),
   tableId: getTableId(state.router),
   table: getFullTableById(state.entities, getTableId(state.router)),
   tableEntriesById: getFullTableEntriesLookup(state.entities),
@@ -31,6 +33,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   addTableEntry,
   updateTableEntry,
+  updateTable
 }, dispatch)
 
 class TableDetailsWorkspace extends Component {
@@ -41,7 +44,7 @@ class TableDetailsWorkspace extends Component {
   }
 
  handleSubmitEditDetails = (name, code, description) => {
-    alert('handleSubmitEditDetails')
+    this.props.updateTable(name, code, description, this.props.table)
   }
 
   handleSubmitAddEntry = (value) => {
@@ -109,7 +112,7 @@ class TableDetailsWorkspace extends Component {
         <WideColumnWorkspace>
           <TableDetailsSegment
             table={this.props.table}
-            tablesById={this.props.tablesById}
+            tablesByCode={this.props.tablesByCode}
             onSubmit={this.handleSubmitEditDetails}
           />
           <TableEntriesSegment 

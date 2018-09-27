@@ -4,6 +4,7 @@ const uuidv4 = require('uuid/v4');
 
 export const ADD_TABLE = 'ADD_TABLE'
 export const DELETE_TABLE = 'DELETE_TABLE'
+export const UPDATE_TABLE = 'UPDATE_TABLE'
 
 /* other constants */
 
@@ -15,4 +16,8 @@ export function addTable(name, code, description) {
 
 export function deleteTable(id) {
   return {type: DELETE_TABLE, payload: {'id': id}}
+}
+
+export function updateTable(name, code, description, prevTable) {
+  return {type: UPDATE_TABLE, payload: {name: name, code: code, description: description, prevTable: prevTable}}
 }

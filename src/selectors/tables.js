@@ -18,4 +18,14 @@ function getTables(stateTables) {
   return tables
 }
 
-export {getTables}
+function getByCodeTables(stateTables) {
+  const tablesByCode = {}
+  stateTables.allIds.map(
+    id => {
+      tablesByCode[id] = stateTables.byId[id]
+    }
+  )
+  return tablesByCode
+}
+
+export {getTables, getByCodeTables}
