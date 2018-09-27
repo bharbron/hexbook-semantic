@@ -20,6 +20,7 @@ import {VALID_TABLE_ENTRY_REGEX} from '../constants/regex'
 import './containers.css';
 
 const mapStateToProps = state => ({
+  tablesById: state.entities.tables.byId,
   tableId: getTableId(state.router),
   table: getFullTableById(state.entities, getTableId(state.router)),
   tableEntriesById: getFullTableEntriesLookup(state.entities),
@@ -97,9 +98,6 @@ class TableDetailsWorkspace extends Component {
     Pull the non-updated tableEntry from state
     Dispatch both to the action creator
     */
-    console.log('handleSubmitTableEntryEditModal')
-    console.log('tableEntry')
-    console.log(tableEntry)
     this.setState({openTableEntryEditModal: false})
     const prevTableEntry = this.props.tableEntriesById[tableEntry.id]
     this.props.updateTableEntry(tableEntry, prevTableEntry)
@@ -108,10 +106,11 @@ class TableDetailsWorkspace extends Component {
   render() {
     return (
       <div id='TableDetailsWorkspace'>
-      {console.log(this.props.tableId)}
         <WideColumnWorkspace>
           <TableDetailsSegment
             table={this.props.table}
+            tablesById={this.props.tablesById}
+            onSubmit={this.handleSubmitEditDetails}
           />
           <TableEntriesSegment 
             table={this.props.table} 

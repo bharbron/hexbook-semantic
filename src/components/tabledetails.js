@@ -35,13 +35,6 @@ class TableDetailsSegment extends Component {
   }
 
   handleClick = (event, field) => {
-    console.log('handleClick')
-    console.log('event')
-    console.log(event)
-    console.log('event.target')
-    console.log(event.target)
-    console.log('field')
-    console.log(field)
     const newEditMode = {
       ...this.state.editMode,
       [field]: true
@@ -50,13 +43,6 @@ class TableDetailsSegment extends Component {
   }
 
   handleBlur = (event, field) => {
-    console.log('handleBlur')
-    console.log('event')
-    console.log(event)
-    console.log('event.target')
-    console.log(event.target)
-    console.log('field')
-    console.log(field)
     const contents = {
       'name': this.props.table.name,
       'code': this.props.table.code,
@@ -74,11 +60,6 @@ class TableDetailsSegment extends Component {
   }
 
   handleKeyDown = (event, field) => {
-    console.log('handleKeyDown')
-    console.log('event')
-    console.log(event)
-    console.log('event.target')
-    console.log(event.target)
     //exit on escape
     if (event.keyCode === 27) {
       const contents = {
@@ -143,7 +124,7 @@ class TableDetailsSegment extends Component {
         return
       }
       if (adjValue.match(VALID_TABLE_CODE_REGEX)) {
-        if (adjValue !== this.props.table.code /*&& CODE is already used by another table*/) {
+        if (adjValue !== this.props.table.code && this.props.tablesById[adjValue] ) {
           this.setState({
             value: {...this.state.value, 'code': adjValue},
             valid: {...this.state.valid, 'code': false},
@@ -191,11 +172,6 @@ class TableDetailsSegment extends Component {
   }
 
   handleSubmit = (field) => {
-    console.log('handleSubmit')
-    console.log('field')
-    console.log(field)
-    console.log('this.state')
-    console.log(this.state)
     if (this.state.valid[field]) {
       const contents = {
         'name': this.props.table.name,
