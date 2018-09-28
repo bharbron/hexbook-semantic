@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {push} from 'connected-react-router'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-
 import {
   Card,
   Dropdown,
@@ -27,23 +26,15 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 class TablesWorkspace extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      openTableInputModal: false,
-    };
+  state = {
+    openTableInputModal: false,
+  }
 
-    this.handleCloseTableInputModal = this.handleCloseTableInputModal.bind(this)
-    this.handleSubmitTableInputModal = this.handleSubmitTableInputModal.bind(this)
-    this.handleClickAddTableButton = this.handleClickAddTableButton.bind(this)
-    this.handleClickTableSummaryCard = this.handleClickTableSummaryCard.bind(this)
-  };
-
-  handleCloseTableInputModal() {
+  handleCloseTableInputModal = () => {
     this.setState({openTableInputModal: false})
   }
 
-  handleSubmitTableInputModal(name, code, description) {
+  handleSubmitTableInputModal = (name, code, description) => {
     console.log('handleSubmitTableInputModal')
     console.log(name)
     console.log(code)
@@ -52,11 +43,11 @@ class TablesWorkspace extends Component {
     this.props.addTable(name, code, description)
   }
 
-  handleClickAddTableButton() {
+  handleClickAddTableButton = () => {
     this.setState({openTableInputModal: true})
   }
 
-  handleClickTableSummaryCard(url) {
+  handleClickTableSummaryCard = (url) => {
     this.props.changePage(url)
   }
     
@@ -92,34 +83,6 @@ class TablesWorkspace extends Component {
                   <Label circular>12</Label>
                   <Label color='grey'>Static</Label>
                   <Label color='olive'>Generator<Label.Detail>50</Label.Detail></Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Magic Items</Card.Header>
-                <Card.Meta>MAGIC_ITEMS</Card.Meta>
-                <Card.Description>Items that hold some kind of magic power.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>10</Label>
-                  <Label color='grey'>Static</Label>
-                  <Label color='olive'>Generator<Label.Detail>40</Label.Detail></Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
                 </Label.Group>
               </Card.Content>
             </Card>

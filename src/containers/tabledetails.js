@@ -17,7 +17,7 @@ import {addTableEntry, updateTableEntry} from '../actions/tabledetails'
 import {getByCodeTables} from '../selectors/tables'
 import {getTableId, getFullTableById} from '../selectors/tabledetails'
 import {getFullTableEntriesLookup} from '../selectors/tableentries'
-import {getTerrainTags, getTerritoryTags} from '../selectors/tags'
+import {getByTagColors} from '../selectors/tags'
 import {VALID_TABLE_ENTRY_REGEX} from '../constants/regex'
 import './containers.css';
 
@@ -27,7 +27,7 @@ const mapStateToProps = state => ({
   table: getFullTableById(state.entities, getTableId(state.router)),
   tableEntriesById: getFullTableEntriesLookup(state.entities),
   allTagIds: state.entities.tags.allIds,
-  tagsById: state.entities.tags.byId,
+  colorsByTag: getByTagColors(state.entities.tags),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -117,6 +117,7 @@ class TableDetailsWorkspace extends Component {
           />
           <TableEntriesSegment 
             table={this.props.table} 
+            colorsByTag={this.props.colorsByTag}
             onSubmitAddEntry={this.handleSubmitAddEntry}
             onClickEntry={this.handleClickTableEntry}
           />
@@ -133,7 +134,7 @@ class TableDetailsWorkspace extends Component {
             header={this.props.table.name + ' > Edit Entry'}
             tableEntry={this.props.tableEntriesById[this.state.editingTableEntryId]}
             allTagIds={this.props.allTagIds}
-            tagsById={this.props.tagsById}
+            colorsByTag={this.props.colorsByTag}
             open={this.state.openTableEntryEditModal}
             onClose={this.handleCloseTableEntryEditModal}
             onSubmit={this.handleSubmitTableEntryEditModal}

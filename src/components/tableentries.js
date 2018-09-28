@@ -29,6 +29,7 @@ function TableEntriesSegment(props) {
           <Header content='Table Entries' subheader='Click a cell to edit' />
           <TableEntriesTable 
             tableEntries={props.table.entries}
+            colorsByTag={props.colorsByTag}
             onClickEntry={props.onClickEntry}
             onClickClone={props.onClickClone}
           />
@@ -58,6 +59,7 @@ function TableEntriesTable(props) {
         {props.tableEntries && props.tableEntries.map(
           entry => <TableEntriesTableRow 
             tableEntry={entry}
+            colorsByTag={props.colorsByTag}
             onClickEntry={props.onClickEntry}
             onClickClone={props.onClickClone}
           />
@@ -77,7 +79,7 @@ function TableEntriesTableRow(props) {
         <EntryDetailsList entryDetails={props.tableEntry.entryDetails} />
       </Table.Cell>
       <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>
-        <TagWeightsList tagWeights={props.tableEntry.tagWeights} />
+        <TagWeightsList tagWeights={props.tableEntry.tagWeights} colorsByTag={props.colorsByTag} />
       </Table.Cell>
       <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>
         <TagBlacklist tagBlacklist={props.tableEntry.tagBlacklist} />
@@ -106,7 +108,7 @@ function TagWeightsList(props) {
       {props.tagWeights.map(
         tagWeight => <TagWeightLabel 
           id={tagWeight.id} 
-          color={COLORS.TERRAIN_TAG}
+          color={props.colorsByTag[tagWeight.tag]}
           text={tagWeight.tag} 
           weight={tagWeight.weight}
         />

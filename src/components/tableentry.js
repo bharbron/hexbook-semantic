@@ -69,22 +69,6 @@ class TableEntryEditModal extends Component {
     return (this.state.changed && this.state.weight && this.state.text) ? false : true
   }
 
-  tagColor = (tag) => {
-    /*
-    Determine what color a tag should appears as, based on whether it is a terrain or territory tag
-    */
-    console.log(this.props.tagsById)
-    console.log(tag)
-    console.log(this.props.tagsById[tag])
-    if (this.props.tagsById[tag].terrainHexes && this.props.tagsById[tag].terrainHexes.length > 0) {
-      return COLORS.TERRAIN_TAG
-    }
-    if (this.props.tagsById[tag].territoryHexes && this.props.tagsById[tag].territoryHexes.length > 0) {
-      return COLORS.TERRITORY_TAG
-    }
-    return COLORS.OTHER_TAG
-  }
-
   handleClose = () => {
     /*
     Closing the modal
@@ -168,7 +152,6 @@ class TableEntryEditModal extends Component {
         {
           id: uuidv4(),
           tag: tag,
-          color: this.tagColor(tag),
           weight: weight,
         }
       ].sort(this.compareTagWeights),
@@ -289,7 +272,8 @@ class TableEntryEditModal extends Component {
             onRemove={this.handleRemoveDetails} 
           />
           <TableEntryEditTagWeight 
-            tagWeights={this.state.tagWeights} 
+            tagWeights={this.state.tagWeights}
+            colorsByTag={this.props.colorsByTag}
             options={this.state.tagOptions} 
             onSubmit={this.handleSubmitTagWeight} 
             onRemove={this.handleRemoveTagWeight} 
@@ -417,7 +401,7 @@ function TableEntryEditTagWeight(props) {
         {props.tagWeights.map(
           tagWeight => <TagWeightLabel 
             id={tagWeight.id} 
-            color={tagWeight.color} 
+            color={props.colorsByTag[tagWeight.tag]} 
             text={tagWeight.tag} 
             weight={tagWeight.weight} 
             onRemove={() => props.onRemove(tagWeight)}
