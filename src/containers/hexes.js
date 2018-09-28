@@ -47,31 +47,19 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 class HexesWorkspace extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      valueHexDefinitionInput: '',
-      openHexMapInputModal: false,
-    };
+  state = {
+    openHexMapInputModal: false,
+  }
 
-    this.handleSubmitHexDefinitionInput = this.handleSubmitHexDefinitionInput.bind(this)
-    this.handleCloseHexMapInputModal = this.handleCloseHexMapInputModal.bind(this)
-    this.handleSubmitClickHexMapInputModal = this.handleSubmitClickHexMapInputModal.bind(this)
-    this.handleClickAddToHexMapButton = this.handleClickAddToHexMapButton.bind(this)
-    this.handleClickDeleteHexDefinition = this.handleClickDeleteHexDefinition.bind(this)
-    this.handleSubmitHexInput = this.handleSubmitHexInput.bind(this)
-    this.handleSubmitTag = this.handleSubmitTag.bind(this)
-  };
-
-  handleSubmitHexDefinitionInput(value) {
+  handleSubmitHexDefinitionInput = (value) => {
     this.props.addHexDefinition(value)
   }
 
-  handleClickDeleteHexDefinition(id) {
+  handleClickDeleteHexDefinition = (id) => {
     this.props.deleteHexDefinition(id)
   }
 
-  handleSubmitHexInput(value) {
+  handleSubmitHexInput = (value) => {
     //split into coordinate,terrain,territory
     const hexLineRegEx = /^[a-zA-Z0-9]+$|^[a-zA-Z0-9]+,[a-z]*$|^[a-zA-Z0-9]+,[a-z]*,[a-z]*$/
     const hexTagRegEx = /^[a-z]+$/ 
@@ -83,11 +71,11 @@ class HexesWorkspace extends Component {
     }
   }
 
-  handleCloseHexMapInputModal() {
+  handleCloseHexMapInputModal = () => {
     this.setState({openHexMapInputModal: false})
-  };
+  }
 
-  handleSubmitClickHexMapInputModal(value) {
+  handleSubmitClickHexMapInputModal = (value) => {
     this.setState({openHexMapInputModal: false})
     const lines = value.split('\n')
     const hexLineRegEx = /^[a-zA-Z0-9]+$|^[a-zA-Z0-9]+,[a-z]*$|^[a-zA-Z0-9]+,[a-z]*,[a-z]*$/
@@ -100,17 +88,17 @@ class HexesWorkspace extends Component {
       this.props.addHex(newCoordinates, newTerrain, newTerritory)
       }
     }
-  };
+  }
 
-  handleClickAddToHexMapButton() {
+  handleClickAddToHexMapButton = () => {
     this.setState({openHexMapInputModal: true})
-  };
+  }
 
-  handleSubmitTag(coordinates, terrain, territory) {
+  handleSubmitTag = (coordinates, terrain, territory) => {
     this.props.updateHexTags(coordinates, terrain, territory)
   }
 
-  createHexDataTable(hexes, onSubmitCoordinates, onSubmitTag) {
+  createHexDataTable = (hexes, onSubmitCoordinates, onSubmitTag) => {
     const rows = []
     for (let i = 0; i < hexes.length; i++) {
       const coordinates = hexes[i].coordinates
@@ -137,8 +125,8 @@ class HexesWorkspace extends Component {
 
           <HexDefinitionSegment
             hexDefinitions={this.props.hexDefinitions}
-            onSubmitHexDefinition={this.handleSubmitHexDefinitionInput}
-            onDeleteHexDefinition={this.handleClickDeleteHexDefinition}
+            onSubmit={this.handleSubmitHexDefinitionInput}
+            onDelete={this.handleClickDeleteHexDefinition}
           />
 
           <Transition transitionOnMount='true' animation='fade up'>

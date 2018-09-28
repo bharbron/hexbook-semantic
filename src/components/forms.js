@@ -2,9 +2,70 @@ import React, { Component } from 'react';
 import {
   Form,
   Icon,
+  Popup,
 } from 'semantic-ui-react';
 
 import './components.css';
+
+class SingleLineAdderV2 extends Component {
+  static defaultProps = {
+    size: 'large',
+    errorPosition: 'left center',
+  }
+
+  adderDisabled = () => {
+    return (this.props.valid) ? false : true
+  }
+
+  iconColor = () => {
+    return (this.props.valid) ? 'blue' : null
+  }
+
+  isLink = () => {
+    return (this.props.valid) ? true : false
+  }
+
+  render () {
+    return (
+      <Form onSubmit={this.props.onSubmit}>
+        {console.log('SingleLineAdderV2')}
+        {console.log('this.props')}
+        {console.log(this.props)}
+        <Form.Field>
+          <Popup
+            trigger={
+              <Form.Input
+                name={this.props.name}
+                icon={
+                  <Icon 
+                    name='circle plus'
+                    disabled={this.adderDisabled()}
+                    color={this.iconColor()}
+                    link={this.isLink()}
+                    onClick={this.props.onSubmit} />
+                }
+                iconPosition='left'
+                transparent
+                fluid
+                error={this.props.error}
+                size={this.props.size}
+                placeholder={this.props.placeholder}
+                value={this.props.value}
+                onChange={this.props.onChange}
+                onKeyDown={this.props.onKeyDown}
+                onBlur={this.props.onBlur}
+              />
+            }
+            content={this.props.error}
+            open={this.props.error}
+            position={this.props.errorPosition}
+            size='small'
+          />
+        </Form.Field>
+      </Form>
+    )
+  }
+}
 
 class SingleLineAdder extends Component {
   constructor(props) {
@@ -80,4 +141,4 @@ function HiddenSubmitButton(props) {
   return <input type='submit' style={{visibility: 'hidden', position: 'fixed', bottom: '0rem', left: '0rem'}}/>
 }
 
-export { SingleLineAdder, HiddenSubmitButton }
+export { SingleLineAdder, SingleLineAdderV2, HiddenSubmitButton }
