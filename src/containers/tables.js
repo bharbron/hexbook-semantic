@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { push } from 'connected-react-router'
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React, {Component} from 'react';
+import {push} from 'connected-react-router'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 
 import {
   Card,
@@ -12,11 +12,12 @@ import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
 import {TableSummaryCardGroup, TableInputModal} from '../components/tables'
 import {addTable, deleteTable} from '../actions/tables'
-import {getTables} from '../selectors/tables'
+import {getTables, getByCodeTables} from '../selectors/tables'
 import './containers.css';
 
 const mapStateToProps = state => ({
-  tables: getTables(state.entities.tables)
+  tables: getTables(state.entities.tables),
+  tablesByCode: getByCodeTables(state.entities.tables)
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -129,6 +130,7 @@ class TablesWorkspace extends Component {
             open={this.state.openTableInputModal}
             onClose={this.handleCloseTableInputModal}
             onSubmit={this.handleSubmitTableInputModal}
+            tablesByCode={this.props.tablesByCode}
           />
 
         </WideColumnWorkspace>
