@@ -21,6 +21,7 @@ import {SingleLineAdder} from './forms'
 import {TableCodeLabel, TableEntriesCountLabel, TemplateLabel, TagLabel, TagWeightLabel} from './labels'
 import {COLORS} from '../constants/colors'
 import {EMPTY_REGEX, VALID_TABLE_NAME_REGEX, VALID_TABLE_CODE_REGEX, VALID_TABLE_DESCRIPTION_REGEX} from '../constants/regex'
+import {ERRORS} from '../constants/strings'
 import './components.css';
 
 class TableDetailsSegment extends Component {
@@ -103,7 +104,7 @@ class TableDetailsSegment extends Component {
         this.setState({
           value: {...this.state.value, 'name': value},
           valid: {...this.state.valid, 'name': false},
-          error: {...this.state.error, 'name': 'Name is required'}
+          error: {...this.state.error, 'name': ERRORS.REQUIRED}
         })
         return
       }
@@ -116,7 +117,7 @@ class TableDetailsSegment extends Component {
         return
       }
       this.setState({
-        error: {...this.state.error, 'name': 'May contain only letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?'}
+        error: {...this.state.error, 'name': ERRORS.TABLE_NAME_INVALID_CHAR}
       })
       return
     }
@@ -127,7 +128,7 @@ class TableDetailsSegment extends Component {
         this.setState({
           value: {...this.state.value, 'code': adjValue},
           valid: {...this.state.valid, 'code': false},
-          error: {...this.state.error, 'code': 'CODE is required'}
+          error: {...this.state.error, 'code': ERRORS.REQUIRED}
         })
         return
       }
@@ -136,7 +137,7 @@ class TableDetailsSegment extends Component {
           this.setState({
             value: {...this.state.value, 'code': adjValue},
             valid: {...this.state.valid, 'code': false},
-            error: {...this.state.error, 'code': adjValue + ' is already assigned to another table'}
+            error: {...this.state.error, 'code': ERRORS.TABLE_CODE_DUPLICATE}
           })
           return
         }
@@ -148,7 +149,7 @@ class TableDetailsSegment extends Component {
         return
       }
       this.setState({
-        error: {...this.state.error, 'code': 'May contain only capital letters or underscore'}
+        error: {...this.state.error, 'code': ERRORS.TABLE_CODE_INVALID_CHAR}
       })
       return
     }
@@ -158,7 +159,7 @@ class TableDetailsSegment extends Component {
         this.setState({
           value: {...this.state.value, 'description': value},
           valid: {...this.state.valid, 'description': false},
-          error: {...this.state.error, 'description': 'Description is required'}
+          error: {...this.state.error, 'description': ERRORS.REQUIRED}
         })
         return
       }
@@ -171,7 +172,7 @@ class TableDetailsSegment extends Component {
         return
       }
       this.setState({
-        error: {...this.state.error, 'description': 'May contain only letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?'}
+        error: {...this.state.error, 'description': ERRORS.TABLE_DESCRIPTION_INVALID_CHAR}
       })
       return
     }

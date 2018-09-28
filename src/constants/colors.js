@@ -3,4 +3,5 @@ export const COLORS = {
   TERRITORY_TAG: 'orange',
   OTHER_TAG: 'teal',
   BLACKLIST_TAG: 'red',
+  SUBMIT_BUTTON: 'blue',
 }
