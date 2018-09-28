@@ -8,6 +8,7 @@ import {
   Label,
   Message,
   Modal,
+  Popup,
   Transition
 } from 'semantic-ui-react';
 import routes from '../constants/routes.json'
@@ -191,35 +192,59 @@ class TableInputModal extends Component {
             <Header as='h3' content='Add New Table' />
           </Modal.Header>
           <Modal.Content scrolling>
-            <Form onSubmit={this.handleSubmit} error={this.state.error.name || this.state.error.code || this.state.error.description}>
-              <Form.Input 
-                name='name'
-                label='Name' 
-                autoFocus
-                transparent
-                placeholder='Enter name of table...' 
-                value={this.state.value.name}
-                onChange={this.handleChange}
+            <Form onSubmit={this.handleSubmit}>
+              <Popup
+                trigger={
+                  <Form.Input 
+                    name='name'
+                    label='Name'
+                    error={this.state.error.name} 
+                    autoFocus
+                    transparent
+                    placeholder='Enter name of table...' 
+                    value={this.state.value.name}
+                    onChange={this.handleChange}
+                  />
+                }
+                content={this.state.error.name}
+                open={this.state.error.name}
+                position='left center'
+                size='small'
               />
-              <Message error size='tiny' content={this.state.error.name} />
-              <Form.Input 
-                name='code'
-                label='CODE' 
-                transparent
-                placeholder='Enter reference CODE for table...' 
-                value={this.state.value.code}
-                onChange={this.handleChange} 
+              <Popup
+                trigger={
+                  <Form.Input 
+                    name='code'
+                    label='CODE' 
+                    error={this.state.error.code} 
+                    transparent
+                    placeholder='Enter reference CODE for table...' 
+                    value={this.state.value.code}
+                    onChange={this.handleChange} 
+                  />
+                }
+                content={this.state.error.code}
+                open={this.state.error.code}
+                position='left center'
+                size='small'
               />
-              <Message error size='tiny' content={this.state.error.code} />
-              <Form.Input
-                name='description'
-                label='Description'
-                transparent
-                placeholder='Enter description of the table...' 
-                value={this.state.value.description}
-                onChange={this.handleChange}
+              <Popup
+                trigger={
+                  <Form.Input
+                    name='description'
+                    label='Description'
+                    error={this.state.error.description} 
+                    transparent
+                    placeholder='Enter description of the table...' 
+                    value={this.state.value.description}
+                    onChange={this.handleChange}
+                  />
+                }
+                content={this.state.error.description}
+                open={this.state.error.description}
+                position='left center'
+                size='small'
               />
-              <Message error size='tiny' content={this.state.error.description} />
               <HiddenSubmitButton />
             </Form>
           </Modal.Content>
