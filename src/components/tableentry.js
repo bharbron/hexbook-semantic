@@ -545,6 +545,7 @@ function TableEntryEditLimit(props) {
           toggle
           name='limitToggle'
           value={props.enabled}
+          checked={props.enabled}
           onChange={props.onChange}
         />
         <Form.Input 
