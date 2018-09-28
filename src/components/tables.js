@@ -6,6 +6,7 @@ import {
   Header,
   Input,
   Label,
+  Message,
   Modal,
   Transition
 } from 'semantic-ui-react';
@@ -188,7 +189,7 @@ class TableInputModal extends Component {
             <Header as='h3' content='Add New Table' />
           </Modal.Header>
           <Modal.Content scrolling>
-            <Form onSubmit={this.handleSubmit}>
+            <Form onSubmit={this.handleSubmit} error={this.state.error.name || this.state.error.code || this.state.error.description}>
               <Form.Input 
                 name='name'
                 label='Name' 
@@ -198,6 +199,7 @@ class TableInputModal extends Component {
                 value={this.state.value.name}
                 onChange={this.handleChange}
               />
+              <Message error size='tiny' content={this.state.error.name} />
               <Form.Input 
                 name='code'
                 label='CODE' 
@@ -206,6 +208,7 @@ class TableInputModal extends Component {
                 value={this.state.value.code}
                 onChange={this.handleChange} 
               />
+              <Message error size='tiny' content={this.state.error.code} />
               <Form.Input
                 name='description'
                 label='Description'
@@ -214,6 +217,7 @@ class TableInputModal extends Component {
                 value={this.state.value.description}
                 onChange={this.handleChange}
               />
+              <Message error size='tiny' content={this.state.error.description} />
               <HiddenSubmitButton />
             </Form>
           </Modal.Content>
