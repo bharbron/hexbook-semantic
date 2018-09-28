@@ -10,8 +10,8 @@ import {
   Input,
   Label,
   List,
-  Message,
   Modal,
+  Popup,
   Segment,
   Table,
   Transition
@@ -273,18 +273,26 @@ function TableDetailsListItem(props) {
         <List.Description>
         {!props.editMode && props.content}   {!props.editMode && <Icon link name='pencil' onClick={(e) => props.onClick(e, props.name)} />}
         {props.editMode && 
-          <Form error={props.error} onSubmit={() => props.onSubmit(props.name)}>
-            <Form.Input
-              name={props.name}
-              focus
-              size='tiny'
-              autoFocus
-              value={props.value}
-              onChange={props.onChange}
-              onKeyDown={(event) => props.onKeyDown(event, props.name)}
-              onBlur={(event) => props.onBlur(event, props.name)}
+          <Form onSubmit={() => props.onSubmit(props.name)}>
+            <Popup
+              trigger={
+                <Form.Input
+                  name={props.name}
+                  focus
+                  size='tiny'
+                  autoFocus
+                  value={props.value}
+                  error={props.error}
+                  onChange={props.onChange}
+                  onKeyDown={(event) => props.onKeyDown(event, props.name)}
+                  onBlur={(event) => props.onBlur(event, props.name)}
+                />
+              }
+              content={props.error}
+              open={props.error}
+              position='left center'
+              size='small'
             />
-            <Message error size='tiny' content={props.error} />
           </Form>}
         </List.Description>
       </List.Content>
