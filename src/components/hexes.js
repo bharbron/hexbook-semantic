@@ -7,8 +7,9 @@ import {
   Segment,
   Transition
 } from 'semantic-ui-react';
-import { SingleLineAdder } from './forms'
-import { ListWithDeletableItems } from './lists'
+import {SingleLineAdder} from './forms'
+import {TableCodeLabel} from './labels'
+import {ListWithDeletableItems} from './lists'
 
 import './components.css';
 
@@ -31,8 +32,6 @@ function HexDefinitionSegment(props) {
       <Segment.Group>
         <Segment>
           <Header content='Hex Definition' subheader='What details should be randomly generated for each hex.' />
-        </Segment>
-        <Segment>
           <ListWithDeletableItems 
             bulleted='true' 
             items={ 
@@ -52,7 +51,7 @@ function HexDefinitionSegment(props) {
           />
         </Segment>
         <Segment>
-          <Label color='grey'>[[]]<Label.Detail>HEX</Label.Detail></Label>
+          <TableCodeLabel code='HEX' />
         </Segment>
         <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
           <Dropdown.Menu direction='left'>

@@ -1,55 +1,62 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-
+import React, {Component} from 'react';
+import {push} from 'connected-react-router'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import {
   Card,
   Dropdown,
   Label
 } from 'semantic-ui-react';
-import { WideColumnWorkspace } from '../components/workspaces'
-import { FloatingActionButton, FloatingWorkspaceMenu } from '../components/floatingcontrols'
-import { TableSummaryCardGroup, TableInputModal } from '../components/tables'
-
+import {WideColumnWorkspace} from '../components/workspaces'
+import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
+import {TableSummaryCardGroup, TableInputModal} from '../components/tables'
+import {addTable, deleteTable} from '../actions/tables'
+import {getTables, getByCodeTables} from '../selectors/tables'
 import './containers.css';
 
 const mapStateToProps = state => ({
+  tables: getTables(state.entities.tables),
+  tablesByCode: getByCodeTables(state.entities.tables)
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  changePage: url => push(url),
+  addTable,
+  deleteTable,
 }, dispatch)
 
 class TablesWorkspace extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      openTableInputModal: false,
-    };
+  state = {
+    openTableInputModal: false,
+  }
 
-    this.handleCloseTableInputModal = this.handleCloseTableInputModal.bind(this)
-    this.handleSubmitTableInputModal = this.handleSubmitTableInputModal.bind(this)
-    this.handleClickAddTableButton = this.handleClickAddTableButton.bind(this)
-  };
-
-  handleCloseTableInputModal() {
+  handleCloseTableInputModal = () => {
     this.setState({openTableInputModal: false})
   }
 
-  handleSubmitTableInputModal(name, code, description) {
+  handleSubmitTableInputModal = (name, code, description) => {
     console.log('handleSubmitTableInputModal')
     console.log(name)
     console.log(code)
-    console.log(description)
+    console.log(description) 
+    this.setState({openTableInputModal: false})
+    this.props.addTable(name, code, description)
   }
 
-  handleClickAddTableButton() {
+  handleClickAddTableButton = () => {
     this.setState({openTableInputModal: true})
+  }
+
+  handleClickTableSummaryCard = (url) => {
+    this.props.changePage(url)
   }
     
   render() {
     return (
       <div id='TablesWorkspace'>
         <WideColumnWorkspace>
+          <TableSummaryCardGroup tables={this.props.tables} onClick={this.handleClickTableSummaryCard} />
+
           <Card.Group>
 
             <Card link>
@@ -80,314 +87,13 @@ class TablesWorkspace extends Component {
               </Card.Content>
             </Card>
 
-            <Card link>
-              <Card.Content>
-                <Card.Header>Magic Items</Card.Header>
-                <Card.Meta>MAGIC_ITEMS</Card.Meta>
-                <Card.Description>Items that hold some kind of magic power.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>10</Label>
-                  <Label color='grey'>Static</Label>
-                  <Label color='olive'>Generator<Label.Detail>40</Label.Detail></Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                  <Label color='olive'>Generator<Label.Detail>30</Label.Detail></Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Foobar</Card.Header>
-                <Card.Meta>FOOBAR</Card.Meta>
-                <Card.Description>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>15</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
           </Card.Group>
 
           <TableInputModal 
             open={this.state.openTableInputModal}
             onClose={this.handleCloseTableInputModal}
             onSubmit={this.handleSubmitTableInputModal}
+            tablesByCode={this.props.tablesByCode}
           />
 
         </WideColumnWorkspace>

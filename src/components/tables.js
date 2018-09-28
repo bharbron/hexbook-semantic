@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Button,
   Card,
@@ -6,63 +6,55 @@ import {
   Header,
   Input,
   Label,
+  Message,
   Modal,
   Transition
 } from 'semantic-ui-react';
-
+import routes from '../constants/routes.json'
+import {HiddenSubmitButton} from './forms'
+import {TableEntriesCountLabel, TemplateLabel} from './labels'
+import {COLORS} from '../constants/colors'
+import {EMPTY_REGEX, VALID_TABLE_NAME_REGEX, VALID_TABLE_CODE_REGEX, VALID_TABLE_DESCRIPTION_REGEX} from '../constants/regex'
+import {ERRORS} from '../constants/strings'
 import './components.css';
 
 function TableSummaryLabels(props) {
   return (
     <Label.Group>
-      <Label circular>{props.table.entries.length}</Label>
+      <TableEntriesCountLabel count={props.table.entries.length} />
+      {props.table.template && <TemplateLabel template={props.table.template.name} />}
     </Label.Group>
   );
 }
 
 function TableSummaryCard(props) {
   return (
-    <Card link>
-      <Card.Content>
-        <Card.Header>{props.table.name}</Card.Header>
-        <Card.Meta>{props.table.code}</Card.Meta>
-        <Card.Description>{props.table.description}</Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <TableSummaryLabels table={this.props.table} />
-      </Card.Content>
-    </Card>
+    <Transition transitionOnMount='true' animation='fade up'>
+      <Card link onClick={() => props.onClick(routes.TABLE_DETAILS + '/' + props.table.id)}>
+        <Card.Content>
+          <Card.Header>{props.table.name}</Card.Header>
+          <Card.Meta>{props.table.code}</Card.Meta>
+          <Card.Description>{props.table.description}</Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <TableSummaryLabels table={props.table} />
+        </Card.Content>
+      </Card>
+    </Transition>
   );
 }
 
 function TableSummaryCardGroup(props) {
   return (
-    <Card.Group children={this.props.tables.map(table => <TableSummaryCard table={table} />)} />
+    <Card.Group children={props.tables.map(table => <TableSummaryCard table={table} onClick={props.onClick} />)} />
   );
 }
 
 class TableInputModal extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      valueName: '',
-      valueCode: '',
-      valueDescription: '',
-      nameValid: false,
-      codeValid: false,
-      descriptionValid: false,
-      addButtonColor: null,
-      addButtonDisabled: true
-    }
-
-    this.handleChangeName = this.handleChangeName.bind(this);
-    this.handleChangeCode = this.handleChangeCode.bind(this);
-    this.handleChangeDescription = this.handleChangeDescription.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
-    this.addButtonColor = this.addButtonColor.bind(this);
-    this.addButtonDisabled = this.addButtonDisabled.bind(this);
+  state = {
+    value: {name: '', code: '', description: ''},
+    valid: {name: false, code: false, description: false},
+    error: {name: null, code: null, description: null},
   }
 
   static defaultProps = {
@@ -70,56 +62,125 @@ class TableInputModal extends Component {
     onSubmit: (name, code, description) => console.log(`default onSubmit: ${name}; ${code}; ${description}`)
   }
 
-  handleChangeName(event) {
-    if (event.target.value) {
-      this.setState({valueName: event.target.value, nameValid: true})
+  handleChange = (event, {name, value}) => {
+    /*
+    In general:
+    1. Make any "adjustments" to the input, e.g. autocapitalization
+    2. Match against regex (which allows empty input)
+    3. If match, perform any more detailed checks, e.g. is the value already in use somewhere
+    4. If okay, update state
+
+    If it fails at any step, set any appropriate error text
+    */
+    if (name === 'name') {
+      if (value.match(EMPTY_REGEX)) {
+        this.setState({
+          value: {...this.state.value, 'name': value},
+          valid: {...this.state.valid, 'name': false},
+          error: {...this.state.error, 'name': ERRORS.REQUIRED}
+        })
+        return
+      }
+      if (value.match(VALID_TABLE_NAME_REGEX)) {
+        this.setState({
+          value: {...this.state.value, 'name': value},
+          valid: {...this.state.valid, 'name': true},
+          error: {...this.state.error, 'name': null}
+        })
+        return
+      }
+      this.setState({
+        error: {...this.state.error, 'name': ERRORS.TABLE_NAME_INVALID_CHAR}
+      })
+      return
     }
-    else {
-      this.setState({valueName: event.target.value, nameValid: false})
+
+    if (name === 'code') {
+      const adjValue = value.toUpperCase()
+      if (adjValue.match(EMPTY_REGEX)) {
+        this.setState({
+          value: {...this.state.value, 'code': adjValue},
+          valid: {...this.state.valid, 'code': false},
+          error: {...this.state.error, 'code': ERRORS.REQUIRED}
+        })
+        return
+      }
+      if (adjValue.match(VALID_TABLE_CODE_REGEX)) {
+        if (this.props.tablesByCode[adjValue]) {
+          this.setState({
+            value: {...this.state.value, 'code': adjValue},
+            valid: {...this.state.valid, 'code': false},
+            error: {...this.state.error, 'code': ERRORS.TABLE_CODE_DUPLICATE}
+          })
+          return
+        }
+        this.setState({
+          value: {...this.state.value, 'code': adjValue},
+          valid: {...this.state.valid, 'code': true},
+          error: {...this.state.error, 'code': null}
+        })
+        return
+      }
+      this.setState({
+        error: {...this.state.error, 'code': ERRORS.TABLE_CODE_INVALID_CHAR}
+      })
+      return
+    }
+
+    if (name === 'description') {
+      if (value.match(EMPTY_REGEX)) {
+        this.setState({
+          value: {...this.state.value, 'description': value},
+          valid: {...this.state.valid, 'description': false},
+          error: {...this.state.error, 'description': ERRORS.REQUIRED}
+        })
+        return
+      }
+      if (value.match(VALID_TABLE_DESCRIPTION_REGEX)) {
+        this.setState({
+          value: {...this.state.value, 'description': value},
+          valid: {...this.state.valid, 'description': true},
+          error: {...this.state.error, 'description': null}
+        })
+        return
+      }
+      this.setState({
+        error: {...this.state.error, 'description': ERRORS.TABLE_DESCRIPTION_INVALID_CHAR}
+      })
+      return
     }
   }
 
-  handleChangeCode(event) {
-    if (event.target.value) {
-      this.setState({valueCode: event.target.value, codeValid: true})
-    }
-    else {
-      this.setState({valueCode: event.target.value, codeValid: false})
-    }
-  }
-
-  handleChangeDescription(event) {
-    if (event.target.value) {
-      this.setState({valueDescription: event.target.value, descriptionValid: true})
-    }
-    else {
-      this.setState({valueDescription: event.target.value, descriptionValid: false})
+  handleSubmit = () => {
+    if (this.state.valid.name && this.state.valid.code && this.state.valid.description) {
+      this.setState({
+        error: {name: null, code: null, description: null},
+        valid: {name: false, code: false, description: false},
+        value: {name: '', code: '', description: ''}
+      })
+      this.props.onSubmit(this.state.value.name, this.state.value.code, this.state.value.description)
     }
   }
 
-  handleSubmit() {
-    const name = this.state.valueName
-    const code = this.state.valueCode
-    const description = this.state.valueDescription
-    this.setState({valueName: '', valueCode: '', valueDescription: '', nameValid: false, codeValid: false, descriptionValid: false})
-    this.props.onSubmit(name, code, description)
-  }
-
-  handleClose() {
+  handleClose = () => {
     this.props.onClose()
   }
 
-  handleCancel() {
-    this.setState({valueName: '', valueCode: '', valueDescription: ''})
+  handleCancel = () => {
+    this.setState({
+        error: {name: null, code: null, description: null},
+        valid: {name: true, code: true, description: true},
+        value: {name: '', code: '', description: ''}
+      })
     this.props.onClose()
   }
 
-  addButtonColor() {
-    return ( this.state.nameValid && this.state.codeValid && this.state.descriptionValid ) ? 'blue' : null
+  addButtonColor = () => {
+    return (this.state.valid.name && this.state.valid.code && this.state.valid.description) ? COLORS.SUBMIT_BUTTON : null
   }
 
-  addButtonDisabled() {
-    return ( this.state.nameValid && this.state.codeValid && this.state.descriptionValid ) ? false : true
+  addButtonDisabled = () => {
+    return (this.state.valid.name && this.state.valid.code && this.state.valid.description) ? false : true
   }
 
   render() {
@@ -130,28 +191,36 @@ class TableInputModal extends Component {
             <Header as='h3' content='Add New Table' />
           </Modal.Header>
           <Modal.Content scrolling>
-            <Form>
+            <Form onSubmit={this.handleSubmit} error={this.state.error.name || this.state.error.code || this.state.error.description}>
               <Form.Input 
+                name='name'
                 label='Name' 
+                autoFocus
                 transparent
                 placeholder='Enter name of table...' 
-                value={this.state.valueName}
-                onChange={this.handleChangeName} 
+                value={this.state.value.name}
+                onChange={this.handleChange}
               />
+              <Message error size='tiny' content={this.state.error.name} />
               <Form.Input 
+                name='code'
                 label='CODE' 
                 transparent
                 placeholder='Enter reference CODE for table...' 
-                value={this.state.valueCode}
-                onChange={this.handleChangeCode} 
+                value={this.state.value.code}
+                onChange={this.handleChange} 
               />
+              <Message error size='tiny' content={this.state.error.code} />
               <Form.Input
+                name='description'
                 label='Description'
                 transparent
                 placeholder='Enter description of the table...' 
-                value={this.state.valueDescription}
-                onChange={this.handleChangeDescription}
+                value={this.state.value.description}
+                onChange={this.handleChange}
               />
+              <Message error size='tiny' content={this.state.error.description} />
+              <HiddenSubmitButton />
             </Form>
           </Modal.Content>
           <Modal.Actions>

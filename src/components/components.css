@@ -25,7 +25,7 @@
 #TextAreaInputModalSave {}
 
 .TextAreaInputModal div.scrolling.content {
-	padding: 0rem 1rem 0rem 1rem!important;
+	padding: 0rem 1.5rem 0rem 1.5rem!important;
 }
 
 .TextAreaInputModal div.scrolling.content form div textarea {
@@ -35,5 +35,27 @@
 }
 
 .ui.modal.TextAreaInputModal>.actions {
+	background: inherit;
+}
+
+#TableInputModalCancel {}
+
+#TableInputModalCancel.button {
+	background-color: inherit;
+}
+
+#TableInputModalSave {}
+
+.TableInputModal div.scrolling.content {
+	padding: 0rem 1.5rem 0rem 1.5rem!important;
+}
+
+.TableInputModal div.scrolling.content form div textarea {
+	min-height: 15rem;
+	border: 0px;
+	padding: 0px;
+}
+
+.ui.modal.TableInputModal>.actions {
 	background: inherit;
 }

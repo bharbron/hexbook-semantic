@@ -80,10 +80,10 @@
 				"terrain_tag": "412", // HEX table only
 				"territory_tag": "14", // HEX table only
 				"add_tags": ["82", "12"],
-				"remove_tags": ["32", "53"],
+				"tag_blacklist": ["32", "53"],
 				"weight": "3",
 				"tag_weights": ["7589", "..."],
-				"max_occurrences": "12"
+				"limit": "12"
 			}
 		},
 		"allIds": ["123"]

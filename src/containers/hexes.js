@@ -143,8 +143,8 @@ class HexesWorkspace extends Component {
 
           <Transition transitionOnMount='true' animation='fade up'>
           <Segment>
-            <Header content='Hex Map' subheader='Mapping of hex coordinates to terrain and territory' />
-            <Table selectable compact='very' striped fixed singleLine>
+            <Header content='Hex Map' subheader='Mapping of map coordinates to terrain and territory' />
+            <Table basic='very' compact='very' fixed singleLine>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>
@@ -165,7 +165,7 @@ class HexesWorkspace extends Component {
               </Table.Body>
             </Table>
 
-            <Table selectable compact='very' striped fixed singleLine>
+            <Table basic='very' compact='very' fixed singleLine>
               <Table.Header>
                 <Table.Row>
                   <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>
