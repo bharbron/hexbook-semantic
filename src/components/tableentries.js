@@ -42,9 +42,9 @@ function TableEntriesSegment(props) {
 
 function TableEntriesTable(props) {
   return (
-    <Table basic='very' compact='very' striped>
+    <Table basic='very' compact='very' selectable>
       <Table.Header>
-        <Table.Row>
+        <Table.Row verticalAlign='bottom'>
           <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>
           <Table.HeaderCell><Icon name='balance scale' /></Table.HeaderCell>
           <Table.HeaderCell>Result</Table.HeaderCell>
@@ -71,7 +71,7 @@ function TableEntriesTable(props) {
 
 function TableEntriesTableRow(props) {
   return (
-    <Table.Row key={props.tableEntry.id}>
+    <Table.Row key={props.tableEntry.id} verticalAlign='top'>
       <Table.Cell><Checkbox /></Table.Cell>
       <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>{props.tableEntry.weight}</Table.Cell>
       <Table.Cell onClick={() => props.onClickEntry(props.tableEntry.id)}>{props.tableEntry.text}</Table.Cell>
