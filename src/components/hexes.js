@@ -29,7 +29,7 @@ class HexDefinitionSegment extends Component {
       this.setState({value: value, valid: false, error: null})
       return
     }
-    if (value.match(REGEX.VALID_TABLE_DEFINITION)) {
+    if (value.match(REGEX.TABLE_DEFINITION)) {
       this.setState({value: value, valid: true, error: null})
       return
     }
@@ -58,7 +58,7 @@ class HexDefinitionSegment extends Component {
   render() {
     return (
       <Transition transitionOnMount='true' animation='fade up'>
-        <Segment.Group>
+        <Segment.Group className='HexDefinitionSegment'>
           <Segment>
             <Header content='Hex Definition' subheader='What details should be randomly generated for each hex.' />
             <ListWithDeletableItems 
@@ -107,10 +107,6 @@ class HexMapSegment extends Component {
     error: null
   }
 
-  static defaultProps = {
-    onSubmit: () => console.log('default onSubmit')
-  }
-
   handleSubmit = (event) => {
     if (this.state.valid) {
       const value = this.state.value
@@ -129,15 +125,15 @@ class HexMapSegment extends Component {
       this.setState({value: value, valid: false, error: 'coordinates required'})
       return
     }
-    if (coordinates && !coordinates.match(REGEX.VALID_HEX_MAP_COORDINATES)) {
+    if (coordinates && !coordinates.match(REGEX.HEX_MAP_COORDINATES)) {
       this.setState({value: value, valid: false, error: 'bad coordinate'})
       return
     }
-    if (terrain && !terrain.match(REGEX.VALID_HEX_MAP_TERRAIN)) {
+    if (terrain && !terrain.match(REGEX.HEX_MAP_TERRAIN)) {
       this.setState({value: value, valid: false, error: 'bad terrain'})
       return
     }
-    if (territory && !territory.match(REGEX.VALID_HEX_MAP_TERRITORY)) {
+    if (territory && !territory.match(REGEX.HEX_MAP_TERRITORY)) {
       this.setState({value: value, valid: false, error: 'bad territory'})
       return
     }
@@ -188,9 +184,9 @@ class HexMapSegment extends Component {
 
 function HexMapTable(props) {
   return (
-    <Table basic='very' compact='very' fixed singleLine className='HexMapTable'>
+    <Table basic='very' compact='very' singleLine selectable className='HexMapTable'>
       <Table.Header>
-        <Table.Row>
+        <Table.Row verticalAlign='bottom'>
           <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>
           <Table.HeaderCell>Coordinates</Table.HeaderCell>
           <Table.HeaderCell>Terrain</Table.HeaderCell>
@@ -200,9 +196,7 @@ function HexMapTable(props) {
       </Table.Header>
       <Transition.Group as={Table.Body}>
         {props.hexes.map(
-          hex => <HexMapTableRow
-            hex={hex}
-          />
+          hex => <HexMapTableRow hex={hex} />
         )}
       </Transition.Group>
     </Table>
@@ -211,7 +205,7 @@ function HexMapTable(props) {
 
 function HexMapTableRow(props) {
   return (
-    <Table.Row key={props.hex.coordinates} verticalAlign='top'>
+    <Table.Row key={props.hex.coordinates} verticalAlign='top' className='HexMapTableRow'>
       <Table.Cell><Checkbox /></Table.Cell>
       <Table.Cell>{props.hex.coordinates}</Table.Cell>
       <Table.Cell>{props.hex.terrain}</Table.Cell>

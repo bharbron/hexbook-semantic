@@ -48,7 +48,7 @@ class TableDetailsWorkspace extends Component {
   }
 
   handleSubmitAddEntry = (value) => {
-    if (value.match(REGEX.VALID_TABLE_ENTRY)) {
+    if (value.match(REGEX.TABLE_ENTRY)) {
       const entry = value.split(',')
       const weight = entry[0]
       const text = entry.slice(1).join(',')
@@ -64,7 +64,7 @@ class TableDetailsWorkspace extends Component {
     this.setState({openTableEntriesInputModal: false})
     const lines = value.split('\n')
     for (let i = 0; i < lines.length; i++) {
-      if (lines[i].match(REGEX.VALID_TABLE_ENTRY)) {
+      if (lines[i].match(REGEX.TABLE_ENTRY)) {
         const entry = lines[i].split(',')
         const weight = entry[0]
         const text = entry.slice(1).join(',')

@@ -105,7 +105,7 @@ class TableEntryEditModal extends Component {
     /*
     Handling input in the basic weight or text fields
     */
-    if (name == 'weight' && value.match(REGEX.VALID_INTEGER)) {
+    if (name == 'weight' && value.match(REGEX.INTEGER)) {
       this.setState({weight: value, changed: true})
     }
     if (name == 'text') {
@@ -249,7 +249,7 @@ class TableEntryEditModal extends Component {
     if (name == 'limitToggle') {
       this.setState({limitEnabled: !this.state.limitEnabled, changed: true})
     }
-    if (name == 'limit' && value.match(REGEX.VALID_INTEGER)) {
+    if (name == 'limit' && value.match(REGEX.INTEGER)) {
       this.setState({limit: value, changed: true})
     }
   }
@@ -424,7 +424,7 @@ class TagWeightAdder extends Component {
   }
 
   handleChange = (event, {name, value}) => {
-    if (name == 'weight' && value.match(REGEX.VALID_INTEGER)) {
+    if (name == 'weight' && value.match(REGEX.INTEGER)) {
       this.setState({weight: value})
     }
     if (name == 'tag') {

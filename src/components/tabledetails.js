@@ -108,7 +108,7 @@ class TableDetailsSegment extends Component {
         })
         return
       }
-      if (value.match(REGEX.VALID_TABLE_NAME)) {
+      if (value.match(REGEX.TABLE_NAME)) {
         this.setState({
           value: {...this.state.value, 'name': value},
           valid: {...this.state.valid, 'name': true},
@@ -132,7 +132,7 @@ class TableDetailsSegment extends Component {
         })
         return
       }
-      if (adjValue.match(REGEX.VALID_TABLE_CODE)) {
+      if (adjValue.match(REGEX.TABLE_CODE)) {
         if (adjValue !== this.props.table.code && this.props.tablesByCode[adjValue] ) {
           this.setState({
             value: {...this.state.value, 'code': adjValue},
@@ -163,7 +163,7 @@ class TableDetailsSegment extends Component {
         })
         return
       }
-      if (value.match(REGEX.VALID_TABLE_DESCRIPTION)) {
+      if (value.match(REGEX.TABLE_DESCRIPTION)) {
         this.setState({
           value: {...this.state.value, 'description': value},
           valid: {...this.state.valid, 'description': true},
