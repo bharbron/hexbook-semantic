@@ -48,7 +48,7 @@ function TableEntriesTable(props) {
           <Table.HeaderCell></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
-      <Transition.Group as={Table.Body}>
+      <Table.Body>
         {props.tableEntries && props.tableEntries.map(
           entry => <TableEntriesTableRow 
             tableEntry={entry}
@@ -57,7 +57,7 @@ function TableEntriesTable(props) {
             onClickClone={props.onClickClone}
           />
         )}
-      </Transition.Group>
+      </Table.Body>
     </Table>
   )
 }

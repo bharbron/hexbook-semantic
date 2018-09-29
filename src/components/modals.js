@@ -5,7 +5,6 @@ import {
   Header,
   Modal,
   TextArea,
-  Transition,
 } from 'semantic-ui-react';
 
 import './components.css';
@@ -49,37 +48,35 @@ class TextAreaInputModal extends Component {
 
   render() {
     return (
-      <Transition animation='fly up' mountOnShow unmountOnHide='true' visible={this.props.open}>
-        <Modal size='tiny' open={true} onClose={this.handleClose} className='TextAreaInputModal'>
-          <Modal.Header style={{ borderBottom: '0px' }}>
-            <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
-          </Modal.Header>
-          <Modal.Content scrolling>
-            <Form>
-              <Form.Field>
-                <TextArea
-                  autoHeight
-                  autoFocus
-                  placeholder={this.props.placeholder}
-                  value={this.state.value}
-                  onChange={this.handleChange}
-                />
-              </Form.Field>
-            </Form>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button id='TextAreaInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
-            <Button 
-              id='TextAreaInputModalSave' 
-              color={this.state.primaryColor} 
-              disabled={this.state.primaryDisabled} 
-              onClick={this.handleSubmit}
-            >
-              {this.props.primaryText}
-            </Button>
-          </Modal.Actions>
-        </Modal>
-      </Transition>
+      <Modal size='tiny' open={this.props.open} onClose={this.handleClose} className='TextAreaInputModal'>
+        <Modal.Header style={{ borderBottom: '0px' }}>
+          <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
+        </Modal.Header>
+        <Modal.Content scrolling>
+          <Form>
+            <Form.Field>
+              <TextArea
+                autoHeight
+                autoFocus
+                placeholder={this.props.placeholder}
+                value={this.state.value}
+                onChange={this.handleChange}
+              />
+            </Form.Field>
+          </Form>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button id='TextAreaInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
+          <Button 
+            id='TextAreaInputModalSave' 
+            color={this.state.primaryColor} 
+            disabled={this.state.primaryDisabled} 
+            onClick={this.handleSubmit}
+          >
+            {this.props.primaryText}
+          </Button>
+        </Modal.Actions>
+      </Modal>
     )
   }
 }
