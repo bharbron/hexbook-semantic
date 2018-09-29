@@ -3,12 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {
   Dropdown,
-  Header,
   Icon,
-  Input,
-  Label,
-  Segment,
-  Transition
 } from 'semantic-ui-react';
 import {WideColumnWorkspace} from '../components/workspaces'
 import {TagsSegment} from '../components/tags'
@@ -29,21 +24,14 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 class TagsWorkspace extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleSubmitOtherTag = this.handleSubmitOtherTag.bind(this)
-    this.handleRemoveOtherTag = this.handleRemoveOtherTag.bind(this)
-  };
-
-  handleSubmitOtherTag(tag) {
+  handleSubmitOtherTag = (tag) => {
     const tagRegEx = /^[a-z]+$/
     if ( tag.match(tagRegEx) ) {
       this.props.addOtherTag(tag)
     }
   }
 
-  handleRemoveOtherTag(tag) {
+  handleRemoveOtherTag = (tag) => {
     console.log(`tag ${tag}`)
     this.props.deleteOtherTag(tag)
   }

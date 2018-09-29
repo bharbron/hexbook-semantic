@@ -1,5 +1,5 @@
 import {combineReducers } from 'redux'
-import {ADD_HEX, ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION} from '../actions/hexes'
+import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION} from '../actions/hexes'
 import {UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
 import {arrayWithPush, arrayWithItemRemoved} from './helpers'
 

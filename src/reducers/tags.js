@@ -1,6 +1,5 @@
-import { combineReducers } from 'redux'
-import { ADD_HEX, UPDATE_HEX_TAGS } from '../actions/hexes'
-import { ADD_OTHER_TAG, DELETE_OTHER_TAG } from '../actions/tags'
+import {ADD_HEX, UPDATE_HEX_TAGS} from '../actions/hexes'
+import {ADD_OTHER_TAG, DELETE_OTHER_TAG} from '../actions/tags'
 
 // Tags is a little special in that it doesn't divide byId and allIds into separate reducers
 // There are certain actions where allIds would need to make decisions based on contents of tags in byId
@@ -45,13 +44,13 @@ function addHex(state, action) {
   //have to do these separately in case terrain and territory have the same value
   if (terrain) {
     newAllIds = [
-      ...newAllIds.filter(id => id != terrain),
+      ...newAllIds.filter(id => id !== terrain),
       terrain
     ]
   }
   if (territory) {
     newAllIds = [
-      ...newAllIds.filter(id => id != territory),
+      ...newAllIds.filter(id => id !== territory),
       territory
     ]
   }
@@ -76,7 +75,7 @@ function updateHexTags(state, action) {
     [oldTerrain]: {
       ...newById[oldTerrain],
       terrainHexes: [
-        ...newById[oldTerrain].terrainHexes.filter(hex => hex != coordinates)
+        ...newById[oldTerrain].terrainHexes.filter(hex => hex !== coordinates)
       ]
     }
   }
@@ -86,7 +85,7 @@ function updateHexTags(state, action) {
     [oldTerritory]: {
       ...newById[oldTerritory],
       territoryHexes: [
-        ...newById[oldTerritory].territoryHexes.filter(hex => hex != coordinates)
+        ...newById[oldTerritory].territoryHexes.filter(hex => hex !== coordinates)
       ]
     }
   }
@@ -111,13 +110,13 @@ function updateHexTags(state, action) {
   //have to do these separately in case terrain and territory have the same value
   if (newTerrain) {
     newAllIds = [
-      ...newAllIds.filter(id => id != newTerrain),
+      ...newAllIds.filter(id => id !== newTerrain),
       newTerrain
     ]
   }
   if (newTerritory) {
     newAllIds = [
-      ...newAllIds.filter(id => id != newTerritory),
+      ...newAllIds.filter(id => id !== newTerritory),
       newTerritory
     ]
   }
@@ -145,7 +144,7 @@ function addOtherTag(state, action) {
       }
     },
     allIds: [
-      ...state.allIds.filter(id => id != tag),
+      ...state.allIds.filter(id => id !== tag),
       tag
     ]
   }
@@ -159,7 +158,7 @@ function deleteOtherTag(state, action) {
       [tag]: null
     },
     allIds: [
-      ...state.allIds.filter(id => id != tag)
+      ...state.allIds.filter(id => id !== tag)
     ]
   }
 }
@@ -168,7 +167,7 @@ function createOrUpdateTerrainTag(tagsById, coordinates, terrain) {
   if ( tagsById[terrain] ) {
     return ({
       ...tagsById[terrain],
-      terrainHexes: [...tagsById[terrain].terrainHexes.filter(id => id != coordinates), coordinates]
+      terrainHexes: [...tagsById[terrain].terrainHexes.filter(id => id !== coordinates), coordinates]
     })
   }
   else {
@@ -185,7 +184,7 @@ function createOrUpdateTerritoryTag(tagsById, coordinates, territory) {
   if ( tagsById[territory] ) {
     return ({
       ...tagsById[territory],
-      territoryHexes: [...tagsById[territory].territoryHexes.filter(id => id != coordinates), coordinates]
+      territoryHexes: [...tagsById[territory].territoryHexes.filter(id => id !== coordinates), coordinates]
     })
   }
   else {

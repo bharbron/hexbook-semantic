@@ -4,27 +4,23 @@ import {
   Card,
   Form,
   Header,
-  Input,
   Label,
-  Message,
   Modal,
+  Popup,
   Transition
 } from 'semantic-ui-react';
 import routes from '../constants/routes.json'
 import {HiddenSubmitButton} from './forms'
-import {TableEntriesCountLabel, TemplateLabel} from './labels'
+import {TableEntriesCountLabel, TableCodeLabel, TemplateLabel} from './labels'
 import {COLORS} from '../constants/colors'
-import {EMPTY_REGEX, VALID_TABLE_NAME_REGEX, VALID_TABLE_CODE_REGEX, VALID_TABLE_DESCRIPTION_REGEX} from '../constants/regex'
+import {REGEX} from '../constants/regex'
 import {ERRORS} from '../constants/strings'
 import './components.css';
 
-function TableSummaryLabels(props) {
+function TableSummaryCardGroup(props) {
   return (
-    <Label.Group>
-      <TableEntriesCountLabel count={props.table.entries.length} />
-      {props.table.template && <TemplateLabel template={props.table.template.name} />}
-    </Label.Group>
-  );
+    <Card.Group children={props.tables.map(table => <TableSummaryCard table={table} onClick={props.onClick} />)} />
+  )
 }
 
 function TableSummaryCard(props) {
@@ -33,7 +29,6 @@ function TableSummaryCard(props) {
       <Card link onClick={() => props.onClick(routes.TABLE_DETAILS + '/' + props.table.id)}>
         <Card.Content>
           <Card.Header>{props.table.name}</Card.Header>
-          <Card.Meta>{props.table.code}</Card.Meta>
           <Card.Description>{props.table.description}</Card.Description>
         </Card.Content>
         <Card.Content extra>
@@ -44,9 +39,13 @@ function TableSummaryCard(props) {
   );
 }
 
-function TableSummaryCardGroup(props) {
+function TableSummaryLabels(props) {
   return (
-    <Card.Group children={props.tables.map(table => <TableSummaryCard table={table} onClick={props.onClick} />)} />
+    <Label.Group>
+      <TableEntriesCountLabel count={props.table.entries.length} />
+      <TableCodeLabel code={props.table.code} />
+      {props.table.template && <TemplateLabel template={props.table.template.name} />}
+    </Label.Group>
   );
 }
 
@@ -73,7 +72,7 @@ class TableInputModal extends Component {
     If it fails at any step, set any appropriate error text
     */
     if (name === 'name') {
-      if (value.match(EMPTY_REGEX)) {
+      if (value.match(REGEX.EMPTY)) {
         this.setState({
           value: {...this.state.value, 'name': value},
           valid: {...this.state.valid, 'name': false},
@@ -81,7 +80,7 @@ class TableInputModal extends Component {
         })
         return
       }
-      if (value.match(VALID_TABLE_NAME_REGEX)) {
+      if (value.match(REGEX.TABLE_NAME)) {
         this.setState({
           value: {...this.state.value, 'name': value},
           valid: {...this.state.valid, 'name': true},
@@ -97,7 +96,7 @@ class TableInputModal extends Component {
 
     if (name === 'code') {
       const adjValue = value.toUpperCase()
-      if (adjValue.match(EMPTY_REGEX)) {
+      if (adjValue.match(REGEX.EMPTY)) {
         this.setState({
           value: {...this.state.value, 'code': adjValue},
           valid: {...this.state.valid, 'code': false},
@@ -105,7 +104,7 @@ class TableInputModal extends Component {
         })
         return
       }
-      if (adjValue.match(VALID_TABLE_CODE_REGEX)) {
+      if (adjValue.match(REGEX.TABLE_CODE)) {
         if (this.props.tablesByCode[adjValue]) {
           this.setState({
             value: {...this.state.value, 'code': adjValue},
@@ -128,7 +127,7 @@ class TableInputModal extends Component {
     }
 
     if (name === 'description') {
-      if (value.match(EMPTY_REGEX)) {
+      if (value.match(REGEX.EMPTY)) {
         this.setState({
           value: {...this.state.value, 'description': value},
           valid: {...this.state.valid, 'description': false},
@@ -136,7 +135,7 @@ class TableInputModal extends Component {
         })
         return
       }
-      if (value.match(VALID_TABLE_DESCRIPTION_REGEX)) {
+      if (value.match(REGEX.TABLE_DESCRIPTION)) {
         this.setState({
           value: {...this.state.value, 'description': value},
           valid: {...this.state.valid, 'description': true},
@@ -190,36 +189,60 @@ class TableInputModal extends Component {
           <Modal.Header style={{ borderBottom: '0px' }}>
             <Header as='h3' content='Add New Table' />
           </Modal.Header>
-          <Modal.Content scrolling>
-            <Form onSubmit={this.handleSubmit} error={this.state.error.name || this.state.error.code || this.state.error.description}>
-              <Form.Input 
-                name='name'
-                label='Name' 
-                autoFocus
-                transparent
-                placeholder='Enter name of table...' 
-                value={this.state.value.name}
-                onChange={this.handleChange}
+          <Modal.Content>
+            <Form onSubmit={this.handleSubmit}>
+              <Popup
+                trigger={
+                  <Form.Input 
+                    name='name'
+                    label='Name'
+                    error={this.state.error.name} 
+                    autoFocus
+                    transparent
+                    placeholder='Enter name of table...' 
+                    value={this.state.value.name}
+                    onChange={this.handleChange}
+                  />
+                }
+                content={this.state.error.name}
+                open={this.state.error.name}
+                position='left center'
+                size='small'
               />
-              <Message error size='tiny' content={this.state.error.name} />
-              <Form.Input 
-                name='code'
-                label='CODE' 
-                transparent
-                placeholder='Enter reference CODE for table...' 
-                value={this.state.value.code}
-                onChange={this.handleChange} 
+              <Popup
+                trigger={
+                  <Form.Input 
+                    name='code'
+                    label='CODE' 
+                    error={this.state.error.code} 
+                    transparent
+                    placeholder='Enter reference CODE for table...' 
+                    value={this.state.value.code}
+                    onChange={this.handleChange} 
+                  />
+                }
+                content={this.state.error.code}
+                open={this.state.error.code}
+                position='left center'
+                size='small'
               />
-              <Message error size='tiny' content={this.state.error.code} />
-              <Form.Input
-                name='description'
-                label='Description'
-                transparent
-                placeholder='Enter description of the table...' 
-                value={this.state.value.description}
-                onChange={this.handleChange}
+              <Popup
+                trigger={
+                  <Form.Input
+                    name='description'
+                    label='Description'
+                    error={this.state.error.description} 
+                    transparent
+                    placeholder='Enter description of the table...' 
+                    value={this.state.value.description}
+                    onChange={this.handleChange}
+                  />
+                }
+                content={this.state.error.description}
+                open={this.state.error.description}
+                position='left center'
+                size='small'
               />
-              <Message error size='tiny' content={this.state.error.description} />
               <HiddenSubmitButton />
             </Form>
           </Modal.Content>

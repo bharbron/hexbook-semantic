@@ -1,8 +1,7 @@
 import {combineReducers} from 'redux'
 import {arrayWithPush} from './helpers'
-import {ADD_HEX, ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION} from '../actions/hexes'
+import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION} from '../actions/hexes'
 import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
-import {arrayWithItemRemoved} from './helpers'
 
 function byId(state=null, action) {
   console.log(state)
@@ -28,7 +27,7 @@ function allIds(state=null, action) {
 function byIdAddHexDefinition(state, action) {
   return {
     ...state,
-    ['HEX']: {
+    'HEX': {
       ...state['HEX'],
       entryDetails: [...state['HEX'].entryDetails, action.payload.newEntryDetailId]
     }
@@ -38,9 +37,9 @@ function byIdAddHexDefinition(state, action) {
 function byIdDeleteHexDefinition(state, action) {
   return {
     ...state,
-    ['HEX']: {
+    'HEX': {
       ...state['HEX'],
-      entryDetails: [...state['HEX'].entryDetails.filter(item => item != action.payload.entryDetailId)]
+      entryDetails: [...state['HEX'].entryDetails.filter(item => item !== action.payload.entryDetailId)]
     }
   }
 }

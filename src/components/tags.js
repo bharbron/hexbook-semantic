@@ -1,9 +1,6 @@
 import React from 'react';
 import {
-  Dropdown,
   Header,
-  Icon,
-  Input,
   Label,
   Segment,
   Transition

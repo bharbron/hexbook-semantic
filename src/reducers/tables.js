@@ -36,7 +36,7 @@ function byIdAddHex(state, action) {
       ...state['HEX'],
       entries: [
         //avoid duplicates
-        ...state['HEX'].entries.filter(item => item != action.payload.coordinates),
+        ...state['HEX'].entries.filter(item => item !== action.payload.coordinates),
         action.payload.coordinates
       ].sort() //keep in coordinate order
     }
@@ -96,7 +96,7 @@ function allIdsAddTable(state, action) {
 
 function allIdsDeleteTable(state, action) {
   return ([
-    ...state.filter(id => id != action.payload.id)
+    ...state.filter(id => id !== action.payload.id)
   ])
 }
 

@@ -23,6 +23,7 @@ function getByTagColors(tags) {
       if (tags.byId[id].terrainHexes.length >0) {
         colorsByTag[id] = COLORS.TERRAIN_TAG
       }
+      return true
     }
   )
   return colorsByTag

@@ -1,5 +1,3 @@
-import store from '../store/store'
-
 const uuidv4 = require('uuid/v4');
 
 /* action types */

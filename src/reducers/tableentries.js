@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import {arrayWithPush, arrayWithInsertAtIndex} from './helpers'
+import {arrayWithPush} from './helpers'
 import {ADD_HEX, UPDATE_HEX_TAGS} from '../actions/hexes'
 import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
 
@@ -105,7 +105,7 @@ function byIdUpdateTableEntry(state, action) {
 
 function allIdsAddHex(state, action) {
   const coordinates = action.payload.coordinates
-  return [...state.filter(item => item != coordinates), coordinates]
+  return [...state.filter(item => item !== coordinates), coordinates]
 }
 
 function allIdsAddTableEntry(state, action) {

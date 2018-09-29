@@ -1,26 +1,16 @@
 import React, {Component} from 'react';
 import {
-  Button,
-  Card,
-  Checkbox,
-  Dropdown,
   Form,
   Header,
   Icon,
-  Input,
   Label,
   List,
-  Message,
-  Modal,
+  Popup,
   Segment,
-  Table,
   Transition
 } from 'semantic-ui-react';
-import {DirectInputTableCell} from './datatables'
-import {SingleLineAdder} from './forms'
-import {TableCodeLabel, TableEntriesCountLabel, TemplateLabel, TagLabel, TagWeightLabel} from './labels'
-import {COLORS} from '../constants/colors'
-import {EMPTY_REGEX, VALID_TABLE_NAME_REGEX, VALID_TABLE_CODE_REGEX, VALID_TABLE_DESCRIPTION_REGEX} from '../constants/regex'
+import {TableCodeLabel, TableEntriesCountLabel, TemplateLabel} from './labels'
+import {REGEX} from '../constants/regex'
 import {ERRORS} from '../constants/strings'
 import './components.css';
 
@@ -100,7 +90,7 @@ class TableDetailsSegment extends Component {
     If it fails at any step, set any appropriate error text
     */
     if (name === 'name') {
-      if (value.match(EMPTY_REGEX)) {
+      if (value.match(REGEX.EMPTY)) {
         this.setState({
           value: {...this.state.value, 'name': value},
           valid: {...this.state.valid, 'name': false},
@@ -108,7 +98,7 @@ class TableDetailsSegment extends Component {
         })
         return
       }
-      if (value.match(VALID_TABLE_NAME_REGEX)) {
+      if (value.match(REGEX.TABLE_NAME)) {
         this.setState({
           value: {...this.state.value, 'name': value},
           valid: {...this.state.valid, 'name': true},
@@ -124,7 +114,7 @@ class TableDetailsSegment extends Component {
 
     if (name === 'code') {
       const adjValue = value.toUpperCase()
-      if (adjValue.match(EMPTY_REGEX)) {
+      if (adjValue.match(REGEX.EMPTY)) {
         this.setState({
           value: {...this.state.value, 'code': adjValue},
           valid: {...this.state.valid, 'code': false},
@@ -132,7 +122,7 @@ class TableDetailsSegment extends Component {
         })
         return
       }
-      if (adjValue.match(VALID_TABLE_CODE_REGEX)) {
+      if (adjValue.match(REGEX.TABLE_CODE)) {
         if (adjValue !== this.props.table.code && this.props.tablesByCode[adjValue] ) {
           this.setState({
             value: {...this.state.value, 'code': adjValue},
@@ -155,7 +145,7 @@ class TableDetailsSegment extends Component {
     }
 
     if (name === 'description') {
-      if (value.match(EMPTY_REGEX)) {
+      if (value.match(REGEX.EMPTY)) {
         this.setState({
           value: {...this.state.value, 'description': value},
           valid: {...this.state.valid, 'description': false},
@@ -163,7 +153,7 @@ class TableDetailsSegment extends Component {
         })
         return
       }
-      if (value.match(VALID_TABLE_DESCRIPTION_REGEX)) {
+      if (value.match(REGEX.TABLE_DESCRIPTION)) {
         this.setState({
           value: {...this.state.value, 'description': value},
           valid: {...this.state.valid, 'description': true},
@@ -273,18 +263,26 @@ function TableDetailsListItem(props) {
         <List.Description>
         {!props.editMode && props.content}   {!props.editMode && <Icon link name='pencil' onClick={(e) => props.onClick(e, props.name)} />}
         {props.editMode && 
-          <Form error={props.error} onSubmit={() => props.onSubmit(props.name)}>
-            <Form.Input
-              name={props.name}
-              focus
-              size='tiny'
-              autoFocus
-              value={props.value}
-              onChange={props.onChange}
-              onKeyDown={(event) => props.onKeyDown(event, props.name)}
-              onBlur={(event) => props.onBlur(event, props.name)}
+          <Form onSubmit={() => props.onSubmit(props.name)}>
+            <Popup
+              trigger={
+                <Form.Input
+                  name={props.name}
+                  focus
+                  size='tiny'
+                  autoFocus
+                  value={props.value}
+                  error={props.error}
+                  onChange={props.onChange}
+                  onKeyDown={(event) => props.onKeyDown(event, props.name)}
+                  onBlur={(event) => props.onBlur(event, props.name)}
+                />
+              }
+              content={props.error}
+              open={props.error}
+              position='left center'
+              size='small'
             />
-            <Message error size='tiny' content={props.error} />
           </Form>}
         </List.Description>
       </List.Content>

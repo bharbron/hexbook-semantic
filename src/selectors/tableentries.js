@@ -22,6 +22,7 @@ export function getFullTableEntriesLookup(stateEntities) {
   const fullTableEntries = {}
   stateEntities.tableEntries.allIds.map(id => {
     fullTableEntries[id] = getFullTableEntryById(stateEntities, id)
+    return true
   })
   return fullTableEntries
 }
