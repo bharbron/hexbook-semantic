@@ -257,12 +257,10 @@ class TableEntryEditModal extends Component {
   render () {
     return (
       <Modal open={this.props.open} onClose={this.handleClose} className='TableEntryEditModal'>
-        {console.log('this.state')}
-        {console.log(this.state)}
         <Modal.Header style={{ borderBottom: '0px' }}>
           <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
         </Modal.Header>
-        <Modal.Content scrolling>
+        <Modal.Content>
           <Divider horizontal>Required</Divider>
           <TableEntryEditBasic weight={this.state.weight} text={this.state.text} onChange={this.handleChangeBasic} />
           <Divider horizontal>Optional</Divider>

@@ -13,19 +13,16 @@ import {
 } from 'semantic-ui-react';
 import routes from '../constants/routes.json'
 import {HiddenSubmitButton} from './forms'
-import {TableEntriesCountLabel, TemplateLabel} from './labels'
+import {TableEntriesCountLabel, TableCodeLabel, TemplateLabel} from './labels'
 import {COLORS} from '../constants/colors'
 import {REGEX} from '../constants/regex'
 import {ERRORS} from '../constants/strings'
 import './components.css';
 
-function TableSummaryLabels(props) {
+function TableSummaryCardGroup(props) {
   return (
-    <Label.Group>
-      <TableEntriesCountLabel count={props.table.entries.length} />
-      {props.table.template && <TemplateLabel template={props.table.template.name} />}
-    </Label.Group>
-  );
+    <Card.Group children={props.tables.map(table => <TableSummaryCard table={table} onClick={props.onClick} />)} />
+  )
 }
 
 function TableSummaryCard(props) {
@@ -34,7 +31,6 @@ function TableSummaryCard(props) {
       <Card link onClick={() => props.onClick(routes.TABLE_DETAILS + '/' + props.table.id)}>
         <Card.Content>
           <Card.Header>{props.table.name}</Card.Header>
-          <Card.Meta>{props.table.code}</Card.Meta>
           <Card.Description>{props.table.description}</Card.Description>
         </Card.Content>
         <Card.Content extra>
@@ -45,9 +41,13 @@ function TableSummaryCard(props) {
   );
 }
 
-function TableSummaryCardGroup(props) {
+function TableSummaryLabels(props) {
   return (
-    <Card.Group children={props.tables.map(table => <TableSummaryCard table={table} onClick={props.onClick} />)} />
+    <Label.Group>
+      <TableEntriesCountLabel count={props.table.entries.length} />
+      <TableCodeLabel code={props.table.code} />
+      {props.table.template && <TemplateLabel template={props.table.template.name} />}
+    </Label.Group>
   );
 }
 
@@ -191,7 +191,7 @@ class TableInputModal extends Component {
           <Modal.Header style={{ borderBottom: '0px' }}>
             <Header as='h3' content='Add New Table' />
           </Modal.Header>
-          <Modal.Content scrolling>
+          <Modal.Content>
             <Form onSubmit={this.handleSubmit}>
               <Popup
                 trigger={

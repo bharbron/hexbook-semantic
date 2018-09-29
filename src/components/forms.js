@@ -28,9 +28,6 @@ class SingleLineAdderV2 extends Component {
   render () {
     return (
       <Form onSubmit={this.props.onSubmit}>
-        {console.log('SingleLineAdderV2')}
-        {console.log('this.props')}
-        {console.log(this.props)}
         <Form.Field>
           <Popup
             trigger={
@@ -42,7 +39,8 @@ class SingleLineAdderV2 extends Component {
                     disabled={this.adderDisabled()}
                     color={this.iconColor()}
                     link={this.isLink()}
-                    onClick={this.props.onSubmit} />
+                    onClick={this.props.onSubmit} 
+                  />
                 }
                 iconPosition='left'
                 transparent
