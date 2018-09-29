@@ -5,7 +5,7 @@ import {
   Popup,
   Ref,
 } from 'semantic-ui-react';
-
+import {COLORS} from '../constants/colors'
 import './components.css';
 
 class SingleLineAdderV2 extends Component {
@@ -21,7 +21,7 @@ class SingleLineAdderV2 extends Component {
   }
 
   iconColor = () => {
-    return (this.props.valid) ? 'blue' : null
+    return (this.props.valid) ? COLORS.SUBMIT_BUTTON : null
   }
 
   isLink = () => {
