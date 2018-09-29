@@ -5,12 +5,12 @@ import {
   Icon,
   Label,
   List,
-  Popup,
   Ref,
   Segment,
   Transition
 } from 'semantic-ui-react';
 import {TableCodeLabel, TableEntriesCountLabel, TemplateLabel} from './labels'
+import {InputErrorPopup} from './forms'
 import {REGEX} from '../constants/regex'
 import {ERRORS} from '../constants/strings'
 import './components.css';
@@ -289,13 +289,7 @@ class TableDetailsListItem extends Component {
                   onBlur={(event) => this.props.onBlur(event, this.props.name)}
                 />
               </Ref>
-              <Popup
-                context={this.state.node}
-                content={this.props.error}
-                open={this.props.error}
-                position='left center'
-                size='small'
-              />
+              <InputErrorPopup context={this.state.node} error={this.props.error} />
             </Form>}
           </List.Description>
         </List.Content>

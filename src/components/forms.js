@@ -4,7 +4,6 @@ import {
   Icon,
   Popup,
   Ref,
-  Segment,
 } from 'semantic-ui-react';
 
 import './components.css';
@@ -59,13 +58,7 @@ class SingleLineAdderV2 extends Component {
               onBlur={this.props.onBlur}
             />
           </Ref>
-          <Popup
-            context={this.state.node}
-            content={this.props.error}
-            open={this.props.error}
-            position='left center'
-            size='small'
-          />
+          <InputErrorPopup context={this.state.node} error={this.props.error} />
         </Form.Field>
       </Form>
     )
@@ -146,4 +139,17 @@ function HiddenSubmitButton(props) {
   return <input type='submit' style={{visibility: 'hidden', position: 'fixed', bottom: '0rem', left: '0rem'}}/>
 }
 
-export {SingleLineAdder, SingleLineAdderV2, HiddenSubmitButton}
+function InputErrorPopup(props) {
+  return (
+    <Popup
+      context={props.context}
+      content={props.error}
+      open={props.error}
+      position='left center'
+      size='tiny'
+      inverted
+    />
+  )
+}
+
+export {SingleLineAdder, SingleLineAdderV2, HiddenSubmitButton, InputErrorPopup}

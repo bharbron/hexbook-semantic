@@ -6,12 +6,11 @@ import {
   Header,
   Label,
   Modal,
-  Popup,
   Ref,
   Transition
 } from 'semantic-ui-react';
 import routes from '../constants/routes.json'
-import {HiddenSubmitButton} from './forms'
+import {HiddenSubmitButton, InputErrorPopup} from './forms'
 import {TableEntriesCountLabel, TableCodeLabel, TemplateLabel} from './labels'
 import {COLORS} from '../constants/colors'
 import {REGEX} from '../constants/regex'
@@ -217,13 +216,7 @@ class TableInputModal extends Component {
                   onChange={this.handleChange}
                 />
               </Ref>
-              <Popup
-                context={this.state.nameNode}
-                content={this.state.error.name}
-                open={this.state.error.name}
-                position='left center'
-                size='tiny'
-              />
+              <InputErrorPopup context={this.state.nameNode} error={this.state.error.name} />
               <Ref innerRef={this.handleCodeRef}>
                 <Form.Input
                   name='code'
@@ -235,13 +228,7 @@ class TableInputModal extends Component {
                   onChange={this.handleChange} 
                 />
               </Ref>
-              <Popup
-                context={this.state.codeNode}
-                content={this.state.error.code}
-                open={this.state.error.code}
-                position='left center'
-                size='tiny'
-              />
+              <InputErrorPopup context={this.state.codeNode} error={this.state.error.code} />
               <Ref innerRef={this.handleDescriptionRef}>
                 <Form.Input
                   name='description'
@@ -253,13 +240,7 @@ class TableInputModal extends Component {
                   onChange={this.handleChange}
                 />
               </Ref>
-              <Popup
-                context={this.state.descriptionNode}
-                content={this.state.error.description}
-                open={this.state.error.description}
-                position='left center'
-                size='tiny'
-              />
+              <InputErrorPopup context={this.state.descriptionNode} error={this.state.error.description} />
               <HiddenSubmitButton />
             </Form>
           </Modal.Content>
