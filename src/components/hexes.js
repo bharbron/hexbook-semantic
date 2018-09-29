@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
 import {
+  Checkbox,
   Dropdown,
   Header,
   Icon,
   Label,
   Segment,
+  Table,
   Transition
 } from 'semantic-ui-react';
 import {SingleLineAdder, SingleLineAdderV2} from './forms'
 import {TableCodeLabel} from './labels'
 import {ListWithDeletableItems} from './lists'
-import {EMPTY_REGEX, VALID_TABLE_DEFINITION_REGEX} from '../constants/regex'
+import {REGEX} from '../constants/regex'
 import {ERRORS} from '../constants/strings'
 
 import './components.css';
@@ -23,15 +25,15 @@ class HexDefinitionSegment extends Component {
   }
 
   handleChange = (event, {name, value}) => {
-    if (value.match(EMPTY_REGEX)) {
+    if (value.match(REGEX.EMPTY)) {
       this.setState({value: value, valid: false, error: null})
       return
     }
-    if (value.match(VALID_TABLE_DEFINITION_REGEX)) {
+    if (value.match(REGEX.VALID_TABLE_DEFINITION)) {
       this.setState({value: value, valid: true, error: null})
       return
     }
-    this.setState({valid: false, error: ERRORS.HEX_DEFINTION_INVALID_CHAR})
+    this.setState({value: value, valid: false, error: ERRORS.HEX_DEFINTION_INVALID_CHAR})
     return
   }
 
@@ -71,7 +73,7 @@ class HexDefinitionSegment extends Component {
                 )
               }
             />
-            <SingleLineAdderV2 
+            <SingleLineAdderV2
               name='hexdefinition'
               placeholder='Enter [[NEW]] hex detail...'
               value={this.state.value}
@@ -98,4 +100,125 @@ class HexDefinitionSegment extends Component {
   }
 }
 
-export {HexDefinitionSegment}
+class HexMapSegment extends Component {
+  state = {
+    value: '',
+    valid: false,
+    error: null
+  }
+
+  static defaultProps = {
+    onSubmit: () => console.log('default onSubmit')
+  }
+
+  handleSubmit = (event) => {
+    if (this.state.valid) {
+      const value = this.state.value
+      this.setState({value: '', valid: false, error: null})
+      this.props.onSubmit(value)
+    }
+  }
+
+  handleChange = (event, {name, value}) => {
+    if (value.match(REGEX.EMPTY)) {
+      this.setState({value: value, valid: false, error: null})
+      return
+    }
+    const [coordinates, terrain, territory] = value.split(',')
+    if (!coordinates || coordinates.match(REGEX.EMPTY)) {
+      this.setState({value: value, valid: false, error: 'coordinates required'})
+      return
+    }
+    if (coordinates && !coordinates.match(REGEX.VALID_HEX_MAP_COORDINATES)) {
+      this.setState({value: value, valid: false, error: 'bad coordinate'})
+      return
+    }
+    if (terrain && !terrain.match(REGEX.VALID_HEX_MAP_TERRAIN)) {
+      this.setState({value: value, valid: false, error: 'bad terrain'})
+      return
+    }
+    if (territory && !territory.match(REGEX.VALID_HEX_MAP_TERRITORY)) {
+      this.setState({value: value, valid: false, error: 'bad territory'})
+      return
+    }
+    this.setState({value: value, valid: true, error: null})
+    return
+  }
+
+  handleKeyDown = (event) => {
+    //exit on escape
+    if (event.keyCode === 27) {
+      this.setState({value: '', valid: false, error: null})
+    }
+  }
+
+  handleBlur = (event) => {
+  }
+
+  render() {
+    return (
+      <Transition transitionOnMount='true' animation='fade up'>
+        <Segment className='HexMapSegment'>
+          <Header content='Hex Map' subheader='Mapping of map coordinates to terrain and territory' />
+          <HexMapTable hexes={this.props.hexes} />
+          <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
+            <Dropdown.Menu direction='left'>
+              <Dropdown.Item text='Import hex[es] ...' />
+              <Dropdown.Item text='Export hexes ...' />
+              <Dropdown.Item text='Edit selected hex[es] ...' />
+              <Dropdown.Item text='Delete selected hex[es]' />
+            </Dropdown.Menu>
+          </Dropdown>
+          <SingleLineAdderV2
+            name='hexmap'
+            placeholder='coordinate,terrain,territory'
+            value={this.state.value}
+            valid={this.state.valid}
+            error={this.state.error}
+            onSubmit={this.handleSubmit}
+            onChange={this.handleChange}
+            onKeyDown={this.handleKeyDown}
+            onBlur={this.handleBlur}
+          />
+        </Segment>
+      </Transition>
+    )
+  }
+}
+
+function HexMapTable(props) {
+  return (
+    <Table basic='very' compact='very' fixed singleLine className='HexMapTable'>
+      <Table.Header>
+        <Table.Row>
+          <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>
+          <Table.HeaderCell>Coordinates</Table.HeaderCell>
+          <Table.HeaderCell>Terrain</Table.HeaderCell>
+          <Table.HeaderCell>Territory</Table.HeaderCell>
+          <Table.HeaderCell>Definition Override</Table.HeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Transition.Group as={Table.Body}>
+        {props.hexes.map(
+          hex => <HexMapTableRow
+            hex={hex}
+          />
+        )}
+      </Transition.Group>
+    </Table>
+  )
+}
+
+function HexMapTableRow(props) {
+  return (
+    <Table.Row key={props.hex.coordinates} verticalAlign='top'>
+      <Table.Cell><Checkbox /></Table.Cell>
+      <Table.Cell>{props.hex.coordinates}</Table.Cell>
+      <Table.Cell>{props.hex.terrain}</Table.Cell>
+      <Table.Cell>{props.hex.territory}</Table.Cell>
+      <Table.Cell></Table.Cell>
+    </Table.Row>
+  )
+}
+
+export {HexDefinitionSegment, HexMapSegment}

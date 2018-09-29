@@ -22,7 +22,7 @@ import {FloatingActionButton} from '../components/floatingcontrols'
 import {TextAreaInputModal} from '../components/modals'
 import {ListWithDeletableItems} from '../components/lists'
 import {DirectInputTableCell} from '../components/datatables'
-import {HexDefinitionSegment} from '../components/hexes'
+import {HexDefinitionSegment, HexMapSegment} from '../components/hexes'
 import {getHexes, getHexDefinitions} from '../selectors/hexes'
 
 import { 
@@ -127,6 +127,11 @@ class HexesWorkspace extends Component {
             hexDefinitions={this.props.hexDefinitions}
             onSubmit={this.handleSubmitHexDefinitionInput}
             onDelete={this.handleClickDeleteHexDefinition}
+          />
+
+          <HexMapSegment 
+            hexes={this.props.hexes}
+            onSubmit={this.handleSubmitHexInput} 
           />
 
           <Transition transitionOnMount='true' animation='fade up'>

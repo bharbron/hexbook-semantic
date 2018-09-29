@@ -18,7 +18,7 @@ import {getByCodeTables} from '../selectors/tables'
 import {getTableId, getFullTableById} from '../selectors/tabledetails'
 import {getFullTableEntriesLookup} from '../selectors/tableentries'
 import {getByTagColors} from '../selectors/tags'
-import {VALID_TABLE_ENTRY_REGEX} from '../constants/regex'
+import {REGEX} from '../constants/regex'
 import './containers.css';
 
 const mapStateToProps = state => ({
@@ -48,7 +48,7 @@ class TableDetailsWorkspace extends Component {
   }
 
   handleSubmitAddEntry = (value) => {
-    if (value.match(VALID_TABLE_ENTRY_REGEX)) {
+    if (value.match(REGEX.VALID_TABLE_ENTRY)) {
       const entry = value.split(',')
       const weight = entry[0]
       const text = entry.slice(1).join(',')
@@ -64,7 +64,7 @@ class TableDetailsWorkspace extends Component {
     this.setState({openTableEntriesInputModal: false})
     const lines = value.split('\n')
     for (let i = 0; i < lines.length; i++) {
-      if (lines[i].match(VALID_TABLE_ENTRY_REGEX)) {
+      if (lines[i].match(REGEX.VALID_TABLE_ENTRY)) {
         const entry = lines[i].split(',')
         const weight = entry[0]
         const text = entry.slice(1).join(',')

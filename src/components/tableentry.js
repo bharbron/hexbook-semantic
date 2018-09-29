@@ -13,7 +13,7 @@ import {
 import './components.css';
 import {TagLabel, TagWeightLabel} from './labels'
 import {COLORS} from '../constants/colors'
-import {VALID_INTEGER_REGEX} from '../constants/regex'
+import {REGEX} from '../constants/regex'
 
 const uuidv4 = require('uuid/v4');
 
@@ -105,7 +105,7 @@ class TableEntryEditModal extends Component {
     /*
     Handling input in the basic weight or text fields
     */
-    if (name == 'weight' && value.match(VALID_INTEGER_REGEX)) {
+    if (name == 'weight' && value.match(REGEX.VALID_INTEGER)) {
       this.setState({weight: value, changed: true})
     }
     if (name == 'text') {
@@ -249,7 +249,7 @@ class TableEntryEditModal extends Component {
     if (name == 'limitToggle') {
       this.setState({limitEnabled: !this.state.limitEnabled, changed: true})
     }
-    if (name == 'limit' && value.match(VALID_INTEGER_REGEX)) {
+    if (name == 'limit' && value.match(REGEX.VALID_INTEGER)) {
       this.setState({limit: value, changed: true})
     }
   }
@@ -424,7 +424,7 @@ class TagWeightAdder extends Component {
   }
 
   handleChange = (event, {name, value}) => {
-    if (name == 'weight' && value.match(VALID_INTEGER_REGEX)) {
+    if (name == 'weight' && value.match(REGEX.VALID_INTEGER)) {
       this.setState({weight: value})
     }
     if (name == 'tag') {

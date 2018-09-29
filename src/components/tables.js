@@ -15,7 +15,7 @@ import routes from '../constants/routes.json'
 import {HiddenSubmitButton} from './forms'
 import {TableEntriesCountLabel, TemplateLabel} from './labels'
 import {COLORS} from '../constants/colors'
-import {EMPTY_REGEX, VALID_TABLE_NAME_REGEX, VALID_TABLE_CODE_REGEX, VALID_TABLE_DESCRIPTION_REGEX} from '../constants/regex'
+import {REGEX} from '../constants/regex'
 import {ERRORS} from '../constants/strings'
 import './components.css';
 
@@ -74,7 +74,7 @@ class TableInputModal extends Component {
     If it fails at any step, set any appropriate error text
     */
     if (name === 'name') {
-      if (value.match(EMPTY_REGEX)) {
+      if (value.match(REGEX.EMPTY)) {
         this.setState({
           value: {...this.state.value, 'name': value},
           valid: {...this.state.valid, 'name': false},
@@ -82,7 +82,7 @@ class TableInputModal extends Component {
         })
         return
       }
-      if (value.match(VALID_TABLE_NAME_REGEX)) {
+      if (value.match(REGEX.VALID_TABLE_NAME)) {
         this.setState({
           value: {...this.state.value, 'name': value},
           valid: {...this.state.valid, 'name': true},
@@ -98,7 +98,7 @@ class TableInputModal extends Component {
 
     if (name === 'code') {
       const adjValue = value.toUpperCase()
-      if (adjValue.match(EMPTY_REGEX)) {
+      if (adjValue.match(REGEX.EMPTY)) {
         this.setState({
           value: {...this.state.value, 'code': adjValue},
           valid: {...this.state.valid, 'code': false},
@@ -106,7 +106,7 @@ class TableInputModal extends Component {
         })
         return
       }
-      if (adjValue.match(VALID_TABLE_CODE_REGEX)) {
+      if (adjValue.match(REGEX.VALID_TABLE_CODE)) {
         if (this.props.tablesByCode[adjValue]) {
           this.setState({
             value: {...this.state.value, 'code': adjValue},
@@ -129,7 +129,7 @@ class TableInputModal extends Component {
     }
 
     if (name === 'description') {
-      if (value.match(EMPTY_REGEX)) {
+      if (value.match(REGEX.EMPTY)) {
         this.setState({
           value: {...this.state.value, 'description': value},
           valid: {...this.state.valid, 'description': false},
@@ -137,7 +137,7 @@ class TableInputModal extends Component {
         })
         return
       }
-      if (value.match(VALID_TABLE_DESCRIPTION_REGEX)) {
+      if (value.match(REGEX.VALID_TABLE_DESCRIPTION)) {
         this.setState({
           value: {...this.state.value, 'description': value},
           valid: {...this.state.valid, 'description': true},
