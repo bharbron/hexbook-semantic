@@ -193,11 +193,11 @@ function HexMapTable(props) {
           <Table.HeaderCell>Definition Override</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
-      <Transition.Group as={Table.Body}>
+      <Table.Body>
         {props.hexes.map(
           hex => <HexMapTableRow hex={hex} />
         )}
-      </Transition.Group>
+      </Table.Body>
     </Table>
   )
 }
