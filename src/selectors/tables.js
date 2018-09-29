@@ -4,7 +4,7 @@ function getTables(stateTables) {
     const tableId = stateTables.allIds[i]
     const table = stateTables.byId[tableId]
     // Don't include the 'HEX' table. We manage that separately from other tables.
-    if (tableId != 'HEX') {
+    if (tableId !== 'HEX') {
       tables.push({
         id: table.id,
         name: table.name,
@@ -23,6 +23,7 @@ function getByCodeTables(stateTables) {
   stateTables.allIds.map(
     id => {
       tablesByCode[id] = stateTables.byId[id]
+      return true
     }
   )
   return tablesByCode

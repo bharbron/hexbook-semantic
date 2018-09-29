@@ -105,8 +105,8 @@ class SingleLineAdder extends Component {
   }
 
   render () {
-    const iconColor = (this.state.value == '') ? null : 'blue'
-    const isLink = (this.state.value == '') ? false : true
+    const iconColor = (this.state.value === '') ? null : 'blue'
+    const isLink = (this.state.value === '') ? false : true
 
     return (
       <Form onSubmit={this.handleSubmit}>

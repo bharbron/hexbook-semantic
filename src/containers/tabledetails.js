@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import {
-  Card,
-  Dropdown,
-  Label,
-} from 'semantic-ui-react';
 import {WideColumnWorkspace} from '../components/workspaces'
-import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
+import {FloatingActionButton} from '../components/floatingcontrols'
 import {TextAreaInputModal} from '../components/modals'
 import {TableDetailsSegment} from '../components/tabledetails'
 import {TableEntriesSegment} from '../components/tableentries'

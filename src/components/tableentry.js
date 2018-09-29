@@ -8,7 +8,6 @@ import {
   Label,
   List,
   Modal,
-  Transition
 } from 'semantic-ui-react';
 import './components.css';
 import {TagLabel, TagWeightLabel} from './labels'
@@ -105,10 +104,10 @@ class TableEntryEditModal extends Component {
     /*
     Handling input in the basic weight or text fields
     */
-    if (name == 'weight' && value.match(REGEX.INTEGER)) {
+    if (name === 'weight' && value.match(REGEX.INTEGER)) {
       this.setState({weight: value, changed: true})
     }
-    if (name == 'text') {
+    if (name === 'text') {
       this.setState({text: value, changed: true})
     }
   }
@@ -134,7 +133,7 @@ class TableEntryEditModal extends Component {
     this.setState({
       changed: true,
       entryDetails: [
-        ...this.state.entryDetails.filter(detail => detail.id != id)
+        ...this.state.entryDetails.filter(detail => detail.id !== id)
       ]
     })
   }
@@ -156,7 +155,7 @@ class TableEntryEditModal extends Component {
         }
       ].sort(this.compareTagWeights),
       tagOptions: [
-        ...this.state.tagOptions.filter(tagOption => tagOption.key != tag)
+        ...this.state.tagOptions.filter(tagOption => tagOption.key !== tag)
       ]
     })
   }
@@ -184,7 +183,7 @@ class TableEntryEditModal extends Component {
     this.setState({
       changed: true,
       tagWeights: [
-        ...this.state.tagWeights.filter(tw => tw.id != tagWeight.id)
+        ...this.state.tagWeights.filter(tw => tw.id !== tagWeight.id)
       ],
       tagOptions: [
         ...this.state.tagOptions,
@@ -220,7 +219,7 @@ class TableEntryEditModal extends Component {
         tag
       ].sort(), 
       tagOptions: [
-        ...this.state.tagOptions.filter(tagOption => tagOption.key != tag)
+        ...this.state.tagOptions.filter(tagOption => tagOption.key !== tag)
       ]
     })
   }
@@ -233,7 +232,7 @@ class TableEntryEditModal extends Component {
     this.setState({
       changed: true,
       tagBlacklist: [
-        ...this.state.tagBlacklist.filter(t => t != tag)
+        ...this.state.tagBlacklist.filter(t => t !== tag)
       ],
       tagOptions: [
         ...this.state.tagOptions,
@@ -246,10 +245,10 @@ class TableEntryEditModal extends Component {
     /*
     Manages changes to the Max Occurences section
     */
-    if (name == 'limitToggle') {
+    if (name === 'limitToggle') {
       this.setState({limitEnabled: !this.state.limitEnabled, changed: true})
     }
-    if (name == 'limit' && value.match(REGEX.INTEGER)) {
+    if (name === 'limit' && value.match(REGEX.INTEGER)) {
       this.setState({limit: value, changed: true})
     }
   }
@@ -422,10 +421,10 @@ class TagWeightAdder extends Component {
   }
 
   handleChange = (event, {name, value}) => {
-    if (name == 'weight' && value.match(REGEX.INTEGER)) {
+    if (name === 'weight' && value.match(REGEX.INTEGER)) {
       this.setState({weight: value})
     }
-    if (name == 'tag') {
+    if (name === 'tag') {
       this.setState({tag: value})
     }
   }
@@ -497,7 +496,7 @@ class BlacklistAdder extends Component {
   }
 
   handleChange = (event, {name, value}) => {
-    if (name == 'tag') {
+    if (name === 'tag') {
       this.setState({tag: value})
     }
   }

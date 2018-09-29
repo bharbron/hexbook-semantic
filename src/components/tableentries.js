@@ -1,23 +1,16 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
-  Button,
-  Card,
   Checkbox,
-  Dropdown,
-  Form,
   Header,
   Icon,
-  Input,
   Label,
   List,
-  Modal,
   Segment,
   Table,
   Transition
 } from 'semantic-ui-react';
-import {DirectInputTableCell} from './datatables'
 import {SingleLineAdder} from './forms'
-import {TableCodeLabel, TableEntriesCountLabel, TemplateLabel, TagLabel, TagWeightLabel} from './labels'
+import {TagLabel, TagWeightLabel} from './labels'
 import {COLORS} from '../constants/colors'
 import './components.css';
 

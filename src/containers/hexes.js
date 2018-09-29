@@ -2,26 +2,16 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {
-  Button,
   Checkbox,
-  Dropdown,
-  Form,
   Header,
   Icon,
-  Input,
-  Label,
-  List,
-  Modal,
   Segment,
   Table,
   Transition
 } from 'semantic-ui-react';
 import {WideColumnWorkspace} from '../components/workspaces'
-import {SingleLineAdder} from '../components/forms'
 import {FloatingActionButton} from '../components/floatingcontrols'
 import {TextAreaInputModal} from '../components/modals'
-import {ListWithDeletableItems} from '../components/lists'
-import {DirectInputTableCell} from '../components/datatables'
 import {HexDefinitionSegment, HexMapSegment} from '../components/hexes'
 import {REGEX} from '../constants/regex'
 import {getHexes, getHexDefinitions} from '../selectors/hexes'
@@ -85,12 +75,13 @@ class HexesWorkspace extends Component {
         let [newCoordinates, newTerrain, newTerritory] = line.split(',')
         if (!newCoordinates || newCoordinates.match(REGEX.EMPTY) || !newCoordinates.match(REGEX.HEX_MAP_COORDINATES)) {
           //can't have a hex with invalid coordinates, so do nothing
-          return
+          return false
         }
         newCoordinates = newCoordinates.toUpperCase()
         newTerrain = newTerrain && newTerrain.match(REGEX.HEX_MAP_TERRAIN) ? newTerrain : undefined
         newTerritory = newTerritory && newTerritory.match(REGEX.HEX_MAP_TERRITORY) ? newTerritory : undefined
         this.props.addHex(newCoordinates, newTerrain, newTerritory)
+        return true
       }
     )
   }

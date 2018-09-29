@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   Icon,
   List,
   Transition
 } from 'semantic-ui-react';
-
 import './components.css';
 
 class ListWithDeletableItems extends Component {
@@ -17,7 +16,7 @@ class ListWithDeletableItems extends Component {
     items: []
   };
 
-  render () {
+  render() {
     return (
       <Transition.Group as={List} animation={this.props.animation} size={this.props.size} bulleted={this.props.bulleted}>
         { this.props.items.map(({key, header, description, content, onClick}) => 

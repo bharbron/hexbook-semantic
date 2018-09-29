@@ -4,12 +4,11 @@ import {
   Dropdown,
   Header,
   Icon,
-  Label,
   Segment,
   Table,
   Transition
 } from 'semantic-ui-react';
-import {SingleLineAdder, SingleLineAdderV2} from './forms'
+import {SingleLineAdderV2} from './forms'
 import {TableCodeLabel} from './labels'
 import {ListWithDeletableItems} from './lists'
 import {REGEX} from '../constants/regex'

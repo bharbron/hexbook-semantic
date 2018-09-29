@@ -1,10 +1,6 @@
-import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import React, {Component} from 'react';
+import {Route} from 'react-router-dom';
 import routes from './constants/routes.json'
-
-import {
-  Transition,
-} from 'semantic-ui-react';
 
 import HomeWorkspace from './containers/home'
 import HexesWorkspace from './containers/hexes'
