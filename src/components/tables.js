@@ -6,11 +6,11 @@ import {
   Header,
   Label,
   Modal,
-  Popup,
+  Ref,
   Transition
 } from 'semantic-ui-react';
 import routes from '../constants/routes.json'
-import {HiddenSubmitButton} from './forms'
+import {HiddenSubmitButton, InputErrorPopup} from './forms'
 import {TableEntriesCountLabel, TableCodeLabel, TemplateLabel} from './labels'
 import {COLORS} from '../constants/colors'
 import {REGEX} from '../constants/regex'
@@ -61,6 +61,10 @@ class TableInputModal extends Component {
     onSubmit: (name, code, description) => console.log(`default onSubmit: ${name}; ${code}; ${description}`)
   }
 
+  nameRef = React.createRef()
+  codeRef = React.createRef()
+  descriptionRef = React.createRef()
+
   handleChange = (event, {name, value}) => {
     /*
     In general:
@@ -89,6 +93,8 @@ class TableInputModal extends Component {
         return
       }
       this.setState({
+        value: {...this.state.value, 'name': value},
+        valid: {...this.state.valid, 'name': false},
         error: {...this.state.error, 'name': ERRORS.TABLE_NAME_INVALID_CHAR}
       })
       return
@@ -121,6 +127,8 @@ class TableInputModal extends Component {
         return
       }
       this.setState({
+        value: {...this.state.value, 'code': adjValue},
+        valid: {...this.state.valid, 'code': false},
         error: {...this.state.error, 'code': ERRORS.TABLE_CODE_INVALID_CHAR}
       })
       return
@@ -144,6 +152,8 @@ class TableInputModal extends Component {
         return
       }
       this.setState({
+        value: {...this.state.value, 'description': value},
+        valid: {...this.state.valid, 'description': false},
         error: {...this.state.error, 'description': ERRORS.TABLE_DESCRIPTION_INVALID_CHAR}
       })
       return
@@ -174,6 +184,10 @@ class TableInputModal extends Component {
     this.props.onClose()
   }
 
+  handleNameRef = nameNode => this.setState({nameNode})
+  handleCodeRef = codeNode => this.setState({codeNode})
+  handleDescriptionRef = descriptionNode => this.setState({descriptionNode})
+
   addButtonColor = () => {
     return (this.state.valid.name && this.state.valid.code && this.state.valid.description) ? COLORS.SUBMIT_BUTTON : null
   }
@@ -184,65 +198,49 @@ class TableInputModal extends Component {
 
   render() {
     return (
-      <Transition animation='fly up' mountOnShow unmountOnHide='true' visible={this.props.open}>
-        <Modal size='tiny' open={true} onClose={this.handleClose} className='TableInputModal'>
+        <Modal size='tiny' open={this.props.open} onClose={this.handleClose} className='TableInputModal'>
           <Modal.Header style={{ borderBottom: '0px' }}>
             <Header as='h3' content='Add New Table' />
           </Modal.Header>
           <Modal.Content>
             <Form onSubmit={this.handleSubmit}>
-              <Popup
-                trigger={
-                  <Form.Input 
-                    name='name'
-                    label='Name'
-                    error={this.state.error.name} 
-                    autoFocus
-                    transparent
-                    placeholder='Enter name of table...' 
-                    value={this.state.value.name}
-                    onChange={this.handleChange}
-                  />
-                }
-                content={this.state.error.name}
-                open={this.state.error.name}
-                position='left center'
-                size='small'
-              />
-              <Popup
-                trigger={
-                  <Form.Input 
-                    name='code'
-                    label='CODE' 
-                    error={this.state.error.code} 
-                    transparent
-                    placeholder='Enter reference CODE for table...' 
-                    value={this.state.value.code}
-                    onChange={this.handleChange} 
-                  />
-                }
-                content={this.state.error.code}
-                open={this.state.error.code}
-                position='left center'
-                size='small'
-              />
-              <Popup
-                trigger={
-                  <Form.Input
-                    name='description'
-                    label='Description'
-                    error={this.state.error.description} 
-                    transparent
-                    placeholder='Enter description of the table...' 
-                    value={this.state.value.description}
-                    onChange={this.handleChange}
-                  />
-                }
-                content={this.state.error.description}
-                open={this.state.error.description}
-                position='left center'
-                size='small'
-              />
+              <Ref innerRef={this.handleNameRef}>
+                <Form.Input 
+                  name='name'
+                  label='Name'
+                  error={this.state.error.name} 
+                  autoFocus
+                  transparent
+                  placeholder='Enter name of table...' 
+                  value={this.state.value.name}
+                  onChange={this.handleChange}
+                />
+              </Ref>
+              <InputErrorPopup context={this.state.nameNode} error={this.state.error.name} />
+              <Ref innerRef={this.handleCodeRef}>
+                <Form.Input
+                  name='code'
+                  label='CODE' 
+                  error={this.state.error.code} 
+                  transparent
+                  placeholder='Enter reference CODE for table...' 
+                  value={this.state.value.code}
+                  onChange={this.handleChange} 
+                />
+              </Ref>
+              <InputErrorPopup context={this.state.codeNode} error={this.state.error.code} />
+              <Ref innerRef={this.handleDescriptionRef}>
+                <Form.Input
+                  name='description'
+                  label='Description'
+                  error={this.state.error.description} 
+                  transparent
+                  placeholder='Enter description of the table...' 
+                  value={this.state.value.description}
+                  onChange={this.handleChange}
+                />
+              </Ref>
+              <InputErrorPopup context={this.state.descriptionNode} error={this.state.error.description} />
               <HiddenSubmitButton />
             </Form>
           </Modal.Content>
@@ -251,7 +249,6 @@ class TableInputModal extends Component {
             <Button id='TableInputModalSave' color={this.addButtonColor()} disabled={this.addButtonDisabled()} onClick={this.handleSubmit}>ADD</Button>
           </Modal.Actions>
         </Modal>
-      </Transition>
     );
   }
 }

@@ -5,11 +5,12 @@ import {
   Icon,
   Label,
   List,
-  Popup,
+  Ref,
   Segment,
   Transition
 } from 'semantic-ui-react';
 import {TableCodeLabel, TableEntriesCountLabel, TemplateLabel} from './labels'
+import {InputErrorPopup} from './forms'
 import {REGEX} from '../constants/regex'
 import {ERRORS} from '../constants/strings'
 import './components.css';
@@ -107,6 +108,8 @@ class TableDetailsSegment extends Component {
         return
       }
       this.setState({
+        value: {...this.state.value, 'name': value},
+        valid: {...this.state.valid, 'name': false},
         error: {...this.state.error, 'name': ERRORS.TABLE_NAME_INVALID_CHAR}
       })
       return
@@ -139,6 +142,8 @@ class TableDetailsSegment extends Component {
         return
       }
       this.setState({
+        value: {...this.state.value, 'code': adjValue},
+        valid: {...this.state.valid, 'code': false},
         error: {...this.state.error, 'code': ERRORS.TABLE_CODE_INVALID_CHAR}
       })
       return
@@ -162,6 +167,8 @@ class TableDetailsSegment extends Component {
         return
       }
       this.setState({
+        value: {...this.state.value, 'description': value},
+        valid: {...this.state.valid, 'description': false},
         error: {...this.state.error, 'description': ERRORS.TABLE_DESCRIPTION_INVALID_CHAR}
       })
       return
@@ -255,39 +262,40 @@ function TableDetailsList(props) {
   );
 }
 
-function TableDetailsListItem(props) {
-  return (
-    <List.Item>
-      <List.Content>
-        <List.Header>{props.header}</List.Header>
-        <List.Description>
-        {!props.editMode && props.content}   {!props.editMode && <Icon link name='pencil' onClick={(e) => props.onClick(e, props.name)} />}
-        {props.editMode && 
-          <Form onSubmit={() => props.onSubmit(props.name)}>
-            <Popup
-              trigger={
+class TableDetailsListItem extends Component {
+  state = {}
+
+  handleRef = node => this.setState({ node })
+
+  render() {
+    return (
+      <List.Item>
+        <List.Content>
+          <List.Header>{this.props.header}</List.Header>
+          <List.Description>
+          {!this.props.editMode && this.props.content}   {!this.props.editMode && <Icon link name='pencil' onClick={(e) => this.props.onClick(e, this.props.name)} />}
+          {this.props.editMode && 
+            <Form onSubmit={() => this.props.onSubmit(this.props.name)}>
+              <Ref innerRef={this.handleRef}>
                 <Form.Input
-                  name={props.name}
+                  name={this.props.name}
                   focus
                   size='tiny'
                   autoFocus
-                  value={props.value}
-                  error={props.error}
-                  onChange={props.onChange}
-                  onKeyDown={(event) => props.onKeyDown(event, props.name)}
-                  onBlur={(event) => props.onBlur(event, props.name)}
+                  value={this.props.value}
+                  error={this.props.error}
+                  onChange={this.props.onChange}
+                  onKeyDown={(event) => this.props.onKeyDown(event, this.props.name)}
+                  onBlur={(event) => this.props.onBlur(event, this.props.name)}
                 />
-              }
-              content={props.error}
-              open={props.error}
-              position='left center'
-              size='small'
-            />
-          </Form>}
-        </List.Description>
-      </List.Content>
-    </List.Item>
-  )
+              </Ref>
+              <InputErrorPopup context={this.state.node} error={this.props.error} />
+            </Form>}
+          </List.Description>
+        </List.Content>
+      </List.Item>
+    )
+  }
 }
 
 function TableDetailsLabels(props) {
