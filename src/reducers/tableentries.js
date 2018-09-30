@@ -72,6 +72,7 @@ function byIdDeleteOtherTag(state, action) {
     te => {
       newState[te.id].addTags = arrayWithItemRemoved(newState[te.id].addTags, tag)
       newState[te.id].tagBlacklist = arrayWithItemRemoved(newState[te.id].tagBlacklist, tag)
+      return true
     }
   )
   return newState
