@@ -4,21 +4,24 @@ import {
   Form,
   Header,
   Icon,
-  Label,
   List,
   Modal,
 } from 'semantic-ui-react';
 import './components.css';
-import {TagLabel, TagWeightLabel} from './labels'
-import {COLORS} from '../constants/colors'
 import {REGEX} from '../constants/regex'
+
+const uuidv4 = require('uuid/v4');
 
 class HexEditModal extends Component {
   state = {
       changed: false,
       coordinates: (this.props.hex) ? this.props.hex.coordinates: undefined,
       terrain: (this.props.hex) ? this.props.hex.terrain : undefined,
+      terrainValid: true,
+      terrainError: null,
       territory: (this.props.hex) ? this.props.hex.territory : undefined,
+      territoryValid: true,
+      territoyError: null,
       overrideEnabled: (this.props.hex && this.props.hex.entryDetails) ? true : false,
       entryDetails: (this.props.hex && this.props.hex.entryDetails) ? [...this.props.hex.entryDetails] : [],
   }
@@ -32,21 +35,75 @@ class HexEditModal extends Component {
     /*
     Determine whether or not the primary SAVE button should be enabled based on what data has been input or changed
     */
-    return (this.state.changed ) ? false : true
+    return (this.state.changed && this.state.terrainValid && this.state.territoryValid) ? false : true
   }
 
   handleClose = () => {
     /*
     Closing the modal
     */
+    this.setState({
+      changed: false,
+      coordinates: (this.props.hex) ? this.props.hex.coordinates: undefined,
+      terrain: (this.props.hex) ? this.props.hex.terrain : undefined,
+      terrainValid: true,
+      terrainError: null,
+      territory: (this.props.hex) ? this.props.hex.territory : undefined,
+      territoryValid: true,
+      territoyError: null,
+      overrideEnabled: (this.props.hex && this.props.hex.entryDetails) ? true : false,
+      entryDetails: (this.props.hex && this.props.hex.entryDetails) ? [...this.props.hex.entryDetails] : [],
+    })
     this.props.onClose()
   }
 
-  handleCancel = () => {
+  handleChangeBasic = (event, {name, value}) => {
+    if (name === 'terrain') {
+      if (value.match(REGEX.EMPTY) || value.match(REGEX.HEX_MAP_TERRAIN)) {
+        this.setState({changed: true, terrain: value, terrainValid: true, terrainError: null})
+        return
+      }
+      this.setState({changed: true, terrain: value, terrainValid: false, terrainError: 'bad terrain'})
+    }
+    if (name === 'territory') {
+      if (value.match(REGEX.EMPTY) || value.match(REGEX.HEX_MAP_TERRITORY)) {
+        this.setState({changed: true, territory: value, territoryValid: true, territoryError: null})
+        return
+      }
+      this.setState({changed: true, territory: value, territoryValid: false, territoryError: 'bad territory'})
+    }
+  }
+
+  handleChangeDetails = (event, {name, value}) => {
+    if (name === 'overrideToggle') {
+      this.setState({changed: true, overrideEnabled: !this.state.overrideEnabled})
+    }
+  }
+
+  handleSubmitDetails = (text) => {
     /*
-    Clicking the modal cancel button
+    Add a newly submitted entry template detail.
+    Need to assign a new uuid to it so we can track it.
     */
-    this.props.onClose()
+    this.setState({
+      changed: true,
+      entryDetails: [
+        ...this.state.entryDetails,
+        {id: uuidv4(), 'text': text}
+      ]
+    })
+  }
+
+  handleRemoveDetails = (id) => {
+    /*
+    Remove an entry detail based on the given id (uuid)
+    */
+    this.setState({
+      changed: true,
+      entryDetails: [
+        ...this.state.entryDetails.filter(detail => detail.id !== id)
+      ]
+    })
   }
 
   render () {
@@ -63,14 +120,15 @@ class HexEditModal extends Component {
             onChange={this.handleChangeBasic} 
           />
           <HexEditDetails
-            enabled={this.state.limitEnabled}
-            entryDetails={this.state.entryDetails} 
+            enabled={this.state.overrideEnabled}
+            entryDetails={this.state.entryDetails}
+            onChange={this.handleChangeDetails}
             onSubmit={this.handleSubmitDetails} 
             onRemove={this.handleRemoveDetails} 
           />
         </Modal.Content>
         <Modal.Actions>
-          <Button id='TextAreaInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
+          <Button id='TextAreaInputModalCancel' onClick={this.handleClose}>CANCEL</Button>
           <Button 
             id='TextAreaInputModalSave' 
             primary={!this.primaryDisabled()} 
@@ -128,17 +186,25 @@ function HexEditDetails(props) {
           onChange={props.onChange}
         />
       </Form>
-      <List bulleted size='large'>
-        {props.entryDetails.map(
-          entryDetail => <EntryDetailListItem entryDetail={entryDetail} onRemove={props.onRemove} />
-        )}
-      </List>
-      <EntryDetailAdder onSubmit={props.onSubmit} />
+      {props.enabled && <HexDetailsList entryDetails={props.entryDetails} onRemove={props.onRemove} onSubmit={props.onSubmit} />}
     </div>
   )
 }
 
-function EntryDetailListItem(props) {
+function HexDetailsList(props) {
+  return (
+    <div className='HexDetailsList'>
+      <List bulleted size='large'>
+        {props.entryDetails.map(
+          entryDetail => <HexDetailListItem entryDetail={entryDetail} onRemove={props.onRemove} />
+        )}
+      </List>
+      <HexDetailAdder onSubmit={props.onSubmit} />
+    </div>
+  )
+}
+
+function HexDetailListItem(props) {
   return (
     <List.Item key={props.entryDetail.id}>
       {props.entryDetail.text} <Icon link name='minus circle' color='grey' onClick={() => props.onRemove(props.entryDetail.id)} />
@@ -146,12 +212,12 @@ function EntryDetailListItem(props) {
   )
 }
 
-class EntryDetailAdder extends Component {
+class HexDetailAdder extends Component {
   state = {
     value: ''
   }
 
-  adderDisabled = () => {
+  buttonDisabled = () => {
     return (this.state.value) ? false : true
   }
 
@@ -167,14 +233,14 @@ class EntryDetailAdder extends Component {
 
   render () {
     return (
-      <Form className='EntryDetailAdder' onSubmit={this.handleSubmit}>
+      <Form className='HexDetailAdder' onSubmit={this.handleSubmit}>
         <Form.Group>
           <Form.Button 
             type='submit' 
             inline 
             circular 
             icon='plus' 
-            disabled={this.adderDisabled()}
+            disabled={this.buttonDisabled()}
           />
           <Form.Input
             name='newDetail'
