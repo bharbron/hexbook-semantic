@@ -6,8 +6,10 @@ import {
   Icon,
   List,
   Modal,
+  Ref,
 } from 'semantic-ui-react';
 import './components.css';
+import {InputErrorPopup} from './forms'
 import {REGEX} from '../constants/regex'
 
 const uuidv4 = require('uuid/v4');
@@ -147,6 +149,8 @@ class HexEditModal extends Component {
             coordinates={this.state.coordinates}
             terrain={this.state.terrain}
             territory={this.state.territory}
+            terrainError={this.state.terrainError}
+            territoryError={this.state.territoryError}
             onChange={this.handleChangeBasic} 
           />
           <HexEditDetails
@@ -173,34 +177,49 @@ class HexEditModal extends Component {
   }
 }
 
-function HexEditBasic(props) {
-  return (
-    <Form className='HexEditBasic'>
-      <Header as='h4' content='Tags' subheader='Terrain and territory tags (if any) for this hex' />
-      <Form.Group>
-        <Form.Input
-          name='terrain'
-          inline
-          width={6}
-          placeholder='terrain'
-          icon='tag'
-          iconPosition='left'
-          value={props.terrain}
-          onChange={props.onChange}
-        />
-        <Form.Input
-          name='territory'
-          inline
-          width={6}
-          placeholder='territory'
-          icon='tag'
-          iconPosition='left'
-          value={props.territory}
-          onChange={props.onChange}
-        />
-        </Form.Group>
-    </Form>
-  );
+class HexEditBasic extends Component {
+  state = {}
+
+  handleTerrainRef = nodeTerrain => this.setState({ nodeTerrain })
+  handleTerritoryRef = nodeTerritory => this.setState({ nodeTerritory })
+
+  render() {
+    return (
+      <Form className='HexEditBasic'>
+        <Header as='h4' content='Tags' subheader='Terrain and territory tags (if any) for this hex' />
+        <Form.Group>
+          <Ref innerRef={this.handleTerrainRef}>
+            <Form.Input
+              name='terrain'
+              inline
+              width={6}
+              placeholder='terrain'
+              icon='tag'
+              iconPosition='left'
+              value={this.props.terrain}
+              error={this.props.terrainError}
+              onChange={this.props.onChange}
+            />
+          </Ref>
+          <InputErrorPopup context={this.state.nodeTerrain} error={this.props.terrainError} />
+          <Ref innerRef={this.handleTerritoryRef}>
+            <Form.Input
+              name='territory'
+              inline
+              width={6}
+              placeholder='territory'
+              icon='tag'
+              iconPosition='left'
+              value={this.props.territory}
+              error={this.props.territoryError}
+              onChange={this.props.onChange}
+            />
+          </Ref>
+          <InputErrorPopup context={this.state.nodeTerritory} error={this.props.territoryError} />
+          </Form.Group>
+      </Form>
+    );
+  }
 }
 
 function HexEditDetails(props) {
