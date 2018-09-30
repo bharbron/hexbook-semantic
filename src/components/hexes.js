@@ -5,6 +5,7 @@ import {
   Header,
   Icon,
   Label,
+  List,
   Segment,
   Table,
   Transition
@@ -211,8 +212,22 @@ function HexMapTableRow(props) {
       <Table.Cell onClick={() => props.onClick(props.hex.coordinates)}>{props.hex.coordinates}</Table.Cell>
       <Table.Cell onClick={() => props.onClick(props.hex.coordinates)}>{props.hex.terrain}</Table.Cell>
       <Table.Cell onClick={() => props.onClick(props.hex.coordinates)}>{props.hex.territory}</Table.Cell>
-      <Table.Cell onClick={() => props.onClick(props.hex.coordinates)}></Table.Cell>
+      <Table.Cell onClick={() => props.onClick(props.hex.coordinates)}>
+        <HexDetailsList entryDetails={props.hex.entryDetails} />
+      </Table.Cell>
     </Table.Row>
+  )
+}
+
+function HexDetailsList(props) {
+  return (
+    <List bulleted size='small'>
+      {props.entryDetails.map(
+        ed => <List.Item key={ed.id}>
+          {ed.text}
+        </List.Item>
+      )}
+    </List>
   )
 }
 
