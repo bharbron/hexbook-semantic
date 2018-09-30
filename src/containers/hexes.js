@@ -105,15 +105,17 @@ class HexesWorkspace extends Component {
     this.setState({openHexMapInputModal: true})
   }
 
-  handleSubmitTag = (coordinates, terrain, territory) => {
-    this.props.updateHexTags(coordinates, terrain, territory)
-  }
-
   handleCloseHexEditModal = () => {
     this.setState({openHexEditModal: false})
   }
 
-  handleSubmitHexEditModal = (hex) => {
+  handleSubmitHexEditModal = (hex, prevHex) => {
+    console.log('hexes.handleSubmitHexEditModal')
+    console.log('hex')
+    console.log(hex)
+    console.log('prevHex')
+    console.log(prevHex)
+    this.setState({openHexEditModal: false})
     alert('handleSubmitHexEditModal')
   }
 

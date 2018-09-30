@@ -50,6 +50,9 @@ function getFullHexById(stateEntities, id) {
       hex['entryDetails'] = entryDetailsIds.map(id => getFullEntryDetailById(stateEntities, id))
     }
   }
+  else {
+    hex['entryDetails'] = []
+  }
   return hex
 }
 

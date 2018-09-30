@@ -14,16 +14,29 @@ const uuidv4 = require('uuid/v4');
 
 class HexEditModal extends Component {
   state = {
-      changed: false,
-      coordinates: (this.props.hex) ? this.props.hex.coordinates: undefined,
-      terrain: (this.props.hex) ? this.props.hex.terrain : undefined,
-      terrainValid: true,
-      terrainError: null,
-      territory: (this.props.hex) ? this.props.hex.territory : undefined,
-      territoryValid: true,
-      territoyError: null,
-      overrideEnabled: (this.props.hex && this.props.hex.entryDetails) ? true : false,
-      entryDetails: (this.props.hex && this.props.hex.entryDetails) ? [...this.props.hex.entryDetails] : [],
+    changed: false,
+    coordinates: (this.props.hex) ? this.props.hex.coordinates: undefined,
+    terrain: (this.props.hex) ? this.props.hex.terrain : undefined,
+    terrainValid: true,
+    terrainError: null,
+    territory: (this.props.hex) ? this.props.hex.territory : undefined,
+    territoryValid: true,
+    territoyError: null,
+    overrideEnabled: (this.props.hex && this.props.hex.entryDetails && this.props.hex.entryDetails.length > 0) ? true : false,
+    entryDetails: (this.props.hex && this.props.hex.entryDetails) ? [...this.props.hex.entryDetails] : [],
+  }
+
+  initialState = {
+    changed: false,
+    coordinates: (this.props.hex) ? this.props.hex.coordinates: undefined,
+    terrain: (this.props.hex) ? this.props.hex.terrain : undefined,
+    terrainValid: true,
+    terrainError: null,
+    territory: (this.props.hex) ? this.props.hex.territory : undefined,
+    territoryValid: true,
+    territoyError: null,
+    overrideEnabled: (this.props.hex && this.props.hex.entryDetails && this.props.hex.entryDetails.length > 0) ? true : false,
+    entryDetails: (this.props.hex && this.props.hex.entryDetails) ? [...this.props.hex.entryDetails] : [],
   }
 
   static defaultProps = {
@@ -42,18 +55,7 @@ class HexEditModal extends Component {
     /*
     Closing the modal
     */
-    this.setState({
-      changed: false,
-      coordinates: (this.props.hex) ? this.props.hex.coordinates: undefined,
-      terrain: (this.props.hex) ? this.props.hex.terrain : undefined,
-      terrainValid: true,
-      terrainError: null,
-      territory: (this.props.hex) ? this.props.hex.territory : undefined,
-      territoryValid: true,
-      territoyError: null,
-      overrideEnabled: (this.props.hex && this.props.hex.entryDetails) ? true : false,
-      entryDetails: (this.props.hex && this.props.hex.entryDetails) ? [...this.props.hex.entryDetails] : [],
-    })
+    this.setState({...this.initialState})
     this.props.onClose()
   }
 
@@ -106,6 +108,34 @@ class HexEditModal extends Component {
     })
   }
 
+  handleSubmit = (event) => {
+    /*
+    Clicking the save button
+    Assemble all the bits of data into a hex object
+    Send that to this.props.onSubmit()
+    */
+    const terrain = (this.state.terrain) ? this.state.terrain.toLowerCase() : undefined
+    const territory = (this.state.territory) ? this.state.territory.toLowerCase() : undefined
+    const prevHex = this.props.hex
+    const hex = {
+      ...this.props.hex,
+      terrain: terrain,
+      territory: territory,
+      addTags: [terrain, territory],
+      entryDetails: (this.state.overrideEnabled) ? [...this.state.entryDetails] : [],
+    }
+    //we enabled override for a hex that wasn't previously overridden. need a new group ID
+    if (this.state.overrideEnabled && this.props.hex.entryDetailsGroup === 'HEX') {
+      hex['entryDetailsGroup'] = uuidv4()
+    }
+    //no override, so use the default 'HEX' group ID
+    if (!this.state.overrideEnabled) {
+      hex['entryDetailsGroup'] = 'HEX'
+    }
+    this.setState({...this.initialState})
+    this.props.onSubmit(hex, prevHex)
+  }
+
   render () {
     return (
       <Modal open={this.props.open} onClose={this.handleClose} className='HexEditModal'>
@@ -145,7 +175,7 @@ class HexEditModal extends Component {
 
 function HexEditBasic(props) {
   return (
-    <Form className='TableEntryEditBasic'>
+    <Form className='HexEditBasic'>
       <Header as='h4' content='Tags' subheader='Terrain and territory tags (if any) for this hex' />
       <Form.Group>
         <Form.Input
@@ -175,7 +205,7 @@ function HexEditBasic(props) {
 
 function HexEditDetails(props) {
   return (
-    <div className='TableEntryEditDetails'>
+    <div className='HexEditDetails'>
       <Header as='h4' content='Hex Definition Override' subheader='Override the global hex definition with details specific to this hex' />
       <Form>
         <Form.Radio
@@ -206,7 +236,7 @@ function HexDetailsList(props) {
 
 function HexDetailListItem(props) {
   return (
-    <List.Item key={props.entryDetail.id}>
+    <List.Item key={props.entryDetail.id} className='HexDetailListItem'>
       {props.entryDetail.text} <Icon link name='minus circle' color='grey' onClick={() => props.onRemove(props.entryDetail.id)} />
     </List.Item>
   )
