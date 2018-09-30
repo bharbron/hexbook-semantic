@@ -23,7 +23,7 @@ class HexEditModal extends Component {
     terrainError: null,
     territory: (this.props.hex) ? this.props.hex.territory : undefined,
     territoryValid: true,
-    territoyError: null,
+    territoryError: null,
     overrideEnabled: (this.props.hex && this.props.hex.entryDetails && this.props.hex.entryDetails.length > 0) ? true : false,
     entryDetails: (this.props.hex && this.props.hex.entryDetails) ? [...this.props.hex.entryDetails] : [],
   }
@@ -36,7 +36,7 @@ class HexEditModal extends Component {
     terrainError: null,
     territory: (this.props.hex) ? this.props.hex.territory : undefined,
     territoryValid: true,
-    territoyError: null,
+    territoryError: null,
     overrideEnabled: (this.props.hex && this.props.hex.entryDetails && this.props.hex.entryDetails.length > 0) ? true : false,
     entryDetails: (this.props.hex && this.props.hex.entryDetails) ? [...this.props.hex.entryDetails] : [],
   }
@@ -127,14 +127,17 @@ class HexEditModal extends Component {
       entryDetails: (this.state.overrideEnabled) ? [...this.state.entryDetails] : [],
     }
     //we enabled override for a hex that wasn't previously overridden. need a new group ID
-    if (this.state.overrideEnabled && this.props.hex.entryDetailsGroup === 'HEX') {
+    if (this.state.overrideEnabled && this.props.hex.entryDetailsGroup === 'HEX' && this.state.entryDetails.length > 0) {
       hex['entryDetailsGroup'] = uuidv4()
     }
     //no override, so use the default 'HEX' group ID
-    if (!this.state.overrideEnabled) {
+    if (!this.state.overrideEnabled || this.state.entryDetails.length === 0) {
       hex['entryDetailsGroup'] = 'HEX'
+      // also wipe the entryDetails to fix an edge case where they reappear if you immediatley reopen the modal for the same hex
+      this.setState({overrideEnabled: false, entryDetails: []})
     }
     this.setState({changed: false})
+
     this.props.onSubmit(hex, prevHex)
   }
 
