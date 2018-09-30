@@ -31,11 +31,11 @@ class HexDefinitionSegment extends Component {
       this.setState({value: value, valid: false, error: null})
       return
     }
-    if (value.match(REGEX.TABLE_DEFINITION)) {
+    if (value.match(REGEX.ENTRY_DETAIL)) {
       this.setState({value: value, valid: true, error: null})
       return
     }
-    this.setState({value: value, valid: false, error: ERRORS.HEX_DEFINTION_INVALID_CHAR})
+    this.setState({value: value, valid: false, error: ERRORS.ENTRY_DETAIL_INVALID_CHAR})
     return
   }
 
@@ -221,7 +221,7 @@ function HexMapTableRow(props) {
 
 function HexDetailsList(props) {
   return (
-    <List bulleted size='small'>
+    <List bulleted size='tiny'>
       {props.entryDetails.map(
         ed => <List.Item key={ed.id}>
           {ed.text}

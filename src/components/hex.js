@@ -10,6 +10,7 @@ import {
 } from 'semantic-ui-react';
 import './components.css';
 import {InputErrorPopup} from './forms'
+import {ERRORS} from '../constants/strings'
 import {REGEX} from '../constants/regex'
 
 const uuidv4 = require('uuid/v4');
@@ -266,22 +267,36 @@ function HexDetailListItem(props) {
 
 class HexDetailAdder extends Component {
   state = {
-    value: ''
+    value: '',
+    valid: false,
+    error: null,
   }
 
   buttonDisabled = () => {
-    return (this.state.value) ? false : true
+    return (this.state.valid) ? false : true
   }
 
   handleChange = (event, {name, value}) => {
-    this.setState({value: value})
+    if (value.match(REGEX.EMPTY)) {
+      this.setState({value: value, valid: false, error: null})
+      return
+    }
+    if (value.match(REGEX.ENTRY_DETAIL)) {
+      this.setState({value: value, valid: true, error: null})
+      return
+    }
+    this.setState({value: value, valid: false, error: ERRORS.ENTRY_DETAIL_INVALID_CHAR})
   }
 
   handleSubmit = () => {
-    const value = this.state.value
-    this.setState({value: ''})
-    this.props.onSubmit(value)
+    if (this.state.valid) {
+      const value = this.state.value
+      this.setState({value: '', valid: false, error: null})
+      this.props.onSubmit(value)
+    }
   }
+
+  handleRef = node => this.setState({ node })
 
   render () {
     return (
@@ -294,14 +309,18 @@ class HexDetailAdder extends Component {
             icon='plus' 
             disabled={this.buttonDisabled()}
           />
-          <Form.Input
-            name='newDetail'
-            width={16}
-            placeholder='Enter new detail...'
-            onChange={this.handleChange}
-            onKeyDown={this.handleKeyDown}
-            value={this.state.value}
-          />
+          <Ref innerRef={this.handleRef}>
+            <Form.Input
+              name='newDetail'
+              width={16}
+              placeholder='Enter new detail...'
+              onChange={this.handleChange}
+              onKeyDown={this.handleKeyDown}
+              value={this.state.value}
+              error={this.state.error}
+            />
+          </Ref>
+          <InputErrorPopup context={this.state.node} error={this.state.error} />
         </Form.Group>
       </Form>
     )

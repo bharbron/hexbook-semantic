@@ -248,7 +248,7 @@ class TableEntryEditModal extends Component {
     if (name === 'limitToggle') {
       this.setState({limitEnabled: !this.state.limitEnabled, changed: true})
     }
-    if (name === 'limit' && value.match(REGEX.INTEGER)) {
+    if (name === 'limit' && value.match(REGEX.ENTRY_LIMIT)) {
       this.setState({limit: value, changed: true})
     }
   }
@@ -421,7 +421,7 @@ class TagWeightAdder extends Component {
   }
 
   handleChange = (event, {name, value}) => {
-    if (name === 'weight' && value.match(REGEX.INTEGER)) {
+    if (name === 'weight' && value.match(REGEX.TAG_WEIGHT)) {
       this.setState({weight: value})
     }
     if (name === 'tag') {
