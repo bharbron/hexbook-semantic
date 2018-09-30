@@ -1,4 +1,4 @@
-import {ADD_HEX, UPDATE_HEX_TAGS} from '../actions/hexes'
+import {ADD_HEX, UPDATE_HEX} from '../actions/hexes'
 import {ADD_OTHER_TAG, DELETE_OTHER_TAG} from '../actions/tags'
 
 // Tags is a little special in that it doesn't divide byId and allIds into separate reducers
@@ -8,7 +8,7 @@ function tagsReducer(state=null, action) {
   console.log(action)
   switch (action.type) {
     case ADD_HEX: return addHex(state, action)
-    case UPDATE_HEX_TAGS: return updateHexTags(state, action)
+    case UPDATE_HEX: return updateHex(state, action)
     case ADD_OTHER_TAG: return addOtherTag(state, action)
     case DELETE_OTHER_TAG: return deleteOtherTag(state, action)
     default: return state
@@ -61,70 +61,8 @@ function addHex(state, action) {
   }
 }
 
-function updateHexTags(state, action) {
-  const coordinates = action.payload.coordinates
-  const newTerrain = action.payload.newTerrain
-  const newTerritory = action.payload.newTerritory
-  
-  let newById = {...state.byId}
-  //remove the old tags
-  //have to do these separately in case terrain and territory have the same value
-  const oldTerrain = getTerrainTagAtCoordinates(state, coordinates)
-  newById = {
-    ...newById,
-    [oldTerrain]: {
-      ...newById[oldTerrain],
-      terrainHexes: [
-        ...newById[oldTerrain].terrainHexes.filter(hex => hex !== coordinates)
-      ]
-    }
-  }
-  const oldTerritory = getTerritoryTagAtCoordinates(state, coordinates)
-  newById = {
-    ...newById,
-    [oldTerritory]: {
-      ...newById[oldTerritory],
-      territoryHexes: [
-        ...newById[oldTerritory].territoryHexes.filter(hex => hex !== coordinates)
-      ]
-    }
-  }
-
-  //add new tags
-  //have to do these separately in case terrain and territory have the same value
-  //There was a bug where 'undefined' tags were ending up in the store, so we need to filter those out
-  if (newTerrain) {
-    newById = {
-      ...newById,
-      [newTerrain]: createOrUpdateTerrainTag(newById, coordinates, newTerrain)
-    }
-  }
-  if (newTerritory) {
-    newById = {
-      ...newById,
-      [newTerritory]: createOrUpdateTerritoryTag(newById, coordinates, newTerritory)
-    }
-  }
-
-  let newAllIds = [...state.allIds]
-  //have to do these separately in case terrain and territory have the same value
-  if (newTerrain) {
-    newAllIds = [
-      ...newAllIds.filter(id => id !== newTerrain),
-      newTerrain
-    ]
-  }
-  if (newTerritory) {
-    newAllIds = [
-      ...newAllIds.filter(id => id !== newTerritory),
-      newTerritory
-    ]
-  }
-
-  return {
-    byId: newById,
-    allIds: newAllIds
-  }
+function updateHex(state, action) {
+  return state
 }
 
 function addOtherTag(state, action) {

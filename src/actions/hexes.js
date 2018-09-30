@@ -5,7 +5,7 @@ const uuidv4 = require('uuid/v4');
 export const ADD_HEX_DEFINITION = 'ADD_HEX_DEFINITION'
 export const DELETE_HEX_DEFINITION = 'DELETE_HEX_DEFINITION'
 export const ADD_HEX = 'ADD_HEX'
-export const UPDATE_HEX_TAGS = 'UPDATE_HEX_TAGS'
+export const UPDATE_HEX = 'UPDATE_HEX'
 
 /* other constants */
 
@@ -20,7 +20,6 @@ export const VisibilityFilters = {
 /* action creators */
 
 export function addHexDefinition(newEntryDetailText) {
-  console.log(`newEntryDetailText: ${newEntryDetailText}`)
   return { type: ADD_HEX_DEFINITION, payload: {'newEntryDetailText': newEntryDetailText, 'newEntryDetailId': uuidv4()} }
 }
 
@@ -41,15 +40,10 @@ export function addHex(coordinates, terrain, territory) {
   } }
 }
 
-export function updateHexTags(coordinates, newTerrain, newTerritory) {
+export function updateHex (hex, prevHex) {
   /*
-  :param coordinate: coordinates (tableEntry ID) of the hex we're updating tags on
-  :param newTerrain: new terrain tag ID of the hex
-  :param newTerritory: new territory tag ID of the hex
+  :param hex: "full" hex definition of the new hex (see hex selector for schema)
+  :param prevHex: "ful" hex definition of the hex that is being updated
   */
-  return { type: UPDATE_HEX_TAGS, payload: {
-    'coordinates': coordinates, 
-    'newTerrain': newTerrain, 
-    'newTerritory': newTerritory,
-  } }
+  return {type: UPDATE_HEX, payload: {hex: hex, prevHex: prevHex}}
 }

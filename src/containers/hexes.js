@@ -20,8 +20,8 @@ import {getHexes, getHexDefinitions, getByIdHexes} from '../selectors/hexes'
 import { 
   addHexDefinition, 
   deleteHexDefinition, 
-  addHex, 
-  updateHexTags
+  addHex,
+  updateHex,
 } from '../actions/hexes'
 
 import './containers.css';
@@ -36,7 +36,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addHexDefinition,
   deleteHexDefinition,
   addHex,
-  updateHexTags,
+  updateHex,
 }, dispatch)
 
 class HexesWorkspace extends Component {
@@ -116,7 +116,7 @@ class HexesWorkspace extends Component {
     console.log('prevHex')
     console.log(prevHex)
     this.setState({openHexEditModal: false})
-    alert('handleSubmitHexEditModal')
+    this.props.updateHex(hex, prevHex)
   }
 
   render() {
@@ -133,31 +133,6 @@ class HexesWorkspace extends Component {
             onSubmit={this.handleSubmitHexInput}
             onClickHex={this.handleClickHex}
           />
-          <Transition transitionOnMount='true' animation='fade up'>
-            <Segment>
-              <Header content='Hex Map' subheader='Mapping of map coordinates to terrain and territory' />
-              <Table basic='very' compact='very' fixed singleLine>
-                <Table.Header>
-                  <Table.Row>
-                    <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>
-                    <Table.HeaderCell>Coordinates</Table.HeaderCell>
-                    <Table.HeaderCell>Terrain</Table.HeaderCell>
-                    <Table.HeaderCell>Territory</Table.HeaderCell>
-                    <Table.HeaderCell>Definition Override</Table.HeaderCell>
-                  </Table.Row>
-                </Table.Header>
-                <Table.Body>
-                  <Table.Row>
-                    <Table.Cell><Checkbox /></Table.Cell>
-                    <Table.Cell>0103</Table.Cell>
-                    <Table.Cell>forest</Table.Cell>
-                    <Table.Cell>hearts</Table.Cell>
-                    <Table.Cell><Icon color='yellow' name='flag' /> sed do eiusmod [[TEMPOR]] incididunt</Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              </Table>
-            </Segment>
-          </Transition>
           <TextAreaInputModal
             header='Add to Hex Map'
             subheader='One hex per line, no spaces, all lowercase' 
