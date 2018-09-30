@@ -12,9 +12,10 @@ import {
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton} from '../components/floatingcontrols'
 import {TextAreaInputModal} from '../components/modals'
+import {HexEditModal} from '../components/hex'
 import {HexDefinitionSegment, HexMapSegment} from '../components/hexes'
 import {REGEX} from '../constants/regex'
-import {getHexes, getHexDefinitions} from '../selectors/hexes'
+import {getHexes, getHexDefinitions, getByIdHexes} from '../selectors/hexes'
 
 import { 
   addHexDefinition, 
@@ -26,8 +27,9 @@ import {
 import './containers.css';
 
 const mapStateToProps = state => ({
-  hexes: getHexes(state),
-  hexDefinitions: getHexDefinitions(state),
+  hexes: getHexes(state.entities),
+  hexesById: getByIdHexes(state.entities),
+  hexDefinitions: getHexDefinitions(state.entities),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -40,6 +42,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 class HexesWorkspace extends Component {
   state = {
     openHexMapInputModal: false,
+    openHexEditModal: false,
+    editingTableEntryId: null
   }
 
   handleSubmitHexDefinitionInput = (value) => {
@@ -94,6 +98,14 @@ class HexesWorkspace extends Component {
     this.props.updateHexTags(coordinates, terrain, territory)
   }
 
+  handleCloseHexEditModal = () => {
+    this.setState({openHexEditModal: false})
+  }
+
+  handleSubmitHexEditModal = (hex) => {
+    alert('handleSubmitHexEditModal')
+  }
+
   render() {
     return (
       <div id='HexesWorkspace'>
@@ -139,6 +151,14 @@ class HexesWorkspace extends Component {
             open={this.state.openHexMapInputModal}
             onClose={this.handleCloseHexMapInputModal}
             onSubmit={this.handleSubmitHexMapInputModal}
+          />
+          <HexEditModal
+            key={this.state.editingHexId} //This is IMPORTANT! https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key
+            header={this.state.editingHexId+ ' > Edit Hex'}
+            hex={this.props.hexes[this.state.editingTableEntryId]}
+            open={this.state.openHexEditModal}
+            onClose={this.handleCloseHexEditModal}
+            onSubmit={this.handleSubmitHexEditModal}
           />
         </WideColumnWorkspace>
         <FloatingActionButton icon='plus' color='google plus' onClick={this.handleClickAddToHexMapButton} /> 
