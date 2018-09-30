@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {
-  Checkbox,
-  Header,
-  Icon,
-  Segment,
-  Table,
-  Transition
-} from 'semantic-ui-react';
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton} from '../components/floatingcontrols'
 import {TextAreaInputModal} from '../components/modals'
@@ -16,13 +8,7 @@ import {HexEditModal} from '../components/hex'
 import {HexDefinitionSegment, HexMapSegment} from '../components/hexes'
 import {REGEX} from '../constants/regex'
 import {getHexes, getHexDefinitions, getByIdHexes} from '../selectors/hexes'
-
-import { 
-  addHexDefinition, 
-  deleteHexDefinition, 
-  addHex,
-  updateHex,
-} from '../actions/hexes'
+import {addHexDefinition, deleteHexDefinition, addHex, updateHex} from '../actions/hexes'
 
 import './containers.css';
 
