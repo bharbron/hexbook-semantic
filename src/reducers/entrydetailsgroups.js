@@ -53,7 +53,6 @@ function byIdUpdateHex(state, action) {
   const entryDetailsGroup = action.payload.hex.entryDetailsGroup
   const prevEntryDetailsGroup = action.payload.prevHex.entryDetailsGroup
   const entryDetails = action.payload.hex.entryDetails
-  const prevEntryDetails = action.payload.prevHex.entryDetails
   if (prevEntryDetailsGroup === 'HEX' && entryDetailsGroup === 'HEX') {
     // Still using global hex definition, so nothing to do here
     return state
@@ -145,8 +144,6 @@ function allIdsUpdateHex(state, action) {
   */
   const entryDetailsGroup = action.payload.hex.entryDetailsGroup
   const prevEntryDetailsGroup = action.payload.prevHex.entryDetailsGroup
-  const entryDetails = action.payload.hex.entryDetails
-  const prevEntryDetails = action.payload.prevHex.entryDetails
   if (prevEntryDetailsGroup === 'HEX' && entryDetailsGroup === 'HEX') {
     // Still using global hex definition, so nothing to do here
     return state

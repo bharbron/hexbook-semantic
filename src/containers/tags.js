@@ -7,9 +7,12 @@ import {
 } from 'semantic-ui-react';
 import {WideColumnWorkspace} from '../components/workspaces'
 import {TagsSegment} from '../components/tags'
+import {SingleLineAdderV2} from '../components/forms'
 import {getTerrainTags, getTerritoryTags, getOtherTags} from '../selectors/tags'
 import {addOtherTag, deleteOtherTag} from '../actions/tags'
 import {COLORS} from '../constants/colors'
+import {REGEX} from '../constants/regex'
+import {ERRORS} from '../constants/strings'
 import './containers.css';
 
 const mapStateToProps = state => ({
@@ -24,23 +27,47 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 class TagsWorkspace extends Component {
-  handleSubmitOtherTag = (tag) => {
-    const tagRegEx = /^[a-z]+$/
-    if ( tag.match(tagRegEx) ) {
-      this.props.addOtherTag(tag)
-    }
+  state = {
+    valueOther: '',
+    validOther: false,
+    errorOther: null,
   }
 
-  handleRemoveOtherTag = (tag) => {
-    console.log(`tag ${tag}`)
+  handleRemoveOther = (tag) => {
     this.props.deleteOtherTag(tag)
   }
 
-  render() {
-    console.log(`terrainTags: ${this.props.terrainTags}`)
-    console.log(`territoryTags: ${this.props.territoryTags}`)
-    console.log(`otherTags: ${this.props.otherTags}`)
 
+  handleSubmitOther = (event) => {
+    if (this.state.validOther) {
+      const tag = this.state.valueOther
+      this.setState({valueOther: '', validOther: false, errorOther: null})
+      this.props.addOtherTag(tag.toLowerCase())
+    }
+  }
+
+  handleChangeOther = (event, {name, value}) => {
+    if (value.match(REGEX.EMPTY)) {
+      this.setState({valueOther: value, validOther: false, errorOther: null})
+      return
+    }
+    if (value.match(REGEX.TAG_NAME)) {
+      this.setState({valueOther: value, validOther: true, errorOther: null})
+      return
+    }
+    this.setState({valueOther: value, validOther: false, errorOther: ERRORS.TAG_INVALID_CHAR})
+  }
+
+  handleBlur = (event) => {}
+
+  handleKeyDown = (event) => {
+    //exit on escape
+    if (event.keyCode === 27) {
+      this.setState({valueOther: '', validOther: false, errorOther: null})
+    }
+  }
+
+  render() {
     return (
       <div id='TagsWorkspace'>
         <WideColumnWorkspace>
@@ -64,16 +91,29 @@ class TagsWorkspace extends Component {
           subheader='Any other user-defined tags that table rolls may by filtered by.'
           color={COLORS.OTHER_TAG}
           tags={this.props.otherTags}
-          onSubmit={this.handleSubmitOtherTag}
-          placeholder='enter new tag...'
-          onRemove={this.handleRemoveOtherTag}
-          dropdown={<Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
+          onRemove={this.handleRemoveOther}
+          dropdown={
+            <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
               <Dropdown.Menu direction='left'>
                 <Dropdown.Item text='Import tag[s] ...' />
                 <Dropdown.Item text='Export tags ...' />
                 <Dropdown.Item text='Delete all tags' />
               </Dropdown.Menu>
-            </Dropdown>}
+            </Dropdown>
+          }
+          adder={
+            <SingleLineAdderV2
+              name='other'
+              placeholder='enter new tag...'
+              value={this.state.valueOther}
+              valid={this.state.validOther}
+              error={this.state.errorOther}
+              onSubmit={this.handleSubmitOther}
+              onChange={this.handleChangeOther}
+              onKeyDown={this.handleKeyDownOther}
+              onBlur={this.handleBlurOther}
+            />
+          }
         />
 
         </WideColumnWorkspace>

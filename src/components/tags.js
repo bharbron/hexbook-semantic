@@ -5,27 +5,26 @@ import {
   Segment,
   Transition
 } from 'semantic-ui-react';
-import {SingleLineAdder} from './forms'
 import {TagLabel} from './labels'
 import './components.css';
 
 function TagsSegment(props) {
   return (
     <Transition transitionOnMount='true' animation='fade up'>
-      <Segment.Group>
+      <Segment.Group className='TagsSegment'>
         <Segment>
           <Header content={props.header} subheader={props.subheader} />
         </Segment>
         <Segment>
           <Label.Group tag size='large' color={props.color}>
-            { props.tags.map( (tag) => <TagLabel tag={tag} onRemove={props.onRemove} /> ) }
+            {props.tags.map((tag) => <TagLabel tag={tag} onRemove={props.onRemove} />)}
           </Label.Group>
-          { props.onSubmit && <SingleLineAdder onSubmit={props.onSubmit} placeholder={props.placeholder} /> }
+          {props.adder}
         </Segment>
-        { props.dropdown }
+        {props.dropdown}
       </Segment.Group>
     </Transition>
   );
 }
 
-export { TagsSegment }
+export {TagsSegment}

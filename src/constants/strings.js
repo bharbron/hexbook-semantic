@@ -1,10 +1,10 @@
 export const ERRORS = {
   REQUIRED: 'Required field',
-  HEX_COORDINATE_INVALID_CHAR: 'Coordinates may contain only letters and numbers',
-  TAG_INVALID_CHAR: 'Tags may contain only letters',
+  HEX_COORDINATE_INVALID_CHAR: 'Coordinates may only contain letters and numbers',
+  TAG_INVALID_CHAR: 'Tags may only contain letters',
   ENTRY_DETAIL_INVALID_CHAR: 'Backslashes not allowed',
-  TABLE_NAME_INVALID_CHAR: 'May contain only letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?',
-  TABLE_CODE_INVALID_CHAR: 'May contain only capital letters or underscore',
+  TABLE_NAME_INVALID_CHAR: 'May only contain letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?',
+  TABLE_CODE_INVALID_CHAR: 'May only contain capital letters or underscore',
   TABLE_DESCRIPTION_INVALID_CHAR: 'May contain only letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?',
-  TABLE_CODE_DUPLICATE: 'Code is already assigned to another table',
+  TABLE_CODE_DUPLICATE: 'Code is already used by a different table',
 }
