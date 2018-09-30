@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import {arrayWithPush} from './helpers'
+import {arrayWithPush, arrayWithItemRemoved} from './helpers'
 import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX} from '../actions/hexes'
 import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
 
@@ -65,7 +65,7 @@ function byIdUpdateHex(state, action) {
       ...state,
       [entryDetailsGroup]: {
         id: entryDetailsGroup,
-        entryDetails: [...entryDetails]
+        entryDetails: entryDetails.map(ed => ed.id)
       }
     }
   }
@@ -87,7 +87,7 @@ function byIdUpdateHex(state, action) {
       [prevEntryDetailsGroup]: undefined,
       [entryDetailsGroup]: {
         id: entryDetailsGroup,
-        entryDetails: [...entryDetails]
+        entryDetails: entryDetails.map(ed => ed.id)
       }
     }
   }
@@ -140,7 +140,37 @@ function byIdUpdateTableEntry(state, action) {
 }
 
 function allIdsUpdateHex(state, action) {
-  //TODO TODO
+  /*
+  1. Either add, remove, or update depending on difference in entryDetailsGroup between hex and prevHex
+  */
+  const entryDetailsGroup = action.payload.hex.entryDetailsGroup
+  const prevEntryDetailsGroup = action.payload.prevHex.entryDetailsGroup
+  const entryDetails = action.payload.hex.entryDetails
+  const prevEntryDetails = action.payload.prevHex.entryDetails
+  if (prevEntryDetailsGroup === 'HEX' && entryDetailsGroup === 'HEX') {
+    // Still using global hex definition, so nothing to do here
+    return state
+  }
+  if (prevEntryDetailsGroup === 'HEX' && entryDetailsGroup !== 'HEX') {
+    // Was previously using global hex definitions, but now overriding those
+    // Need to add the new entryDetailsGroup
+    return arrayWithPush(state, entryDetailsGroup)
+  }
+  if (prevEntryDetailsGroup !== 'HEX' && entryDetailsGroup === 'HEX') {
+    // Was previously overriding definitions, but have toggled back to using global hex definitions
+    // Need to delete the previous entryDetailsGroup
+    return arrayWithItemRemoved(state, prevEntryDetailsGroup)
+  }
+  if (prevEntryDetailsGroup !== 'HEX' && entryDetailsGroup !== 'HEX') {
+    // Was previously overriding hex definitions, and still are
+    // In theory, prevEntryDetailsGroup and entryDetailsGroup should be equal
+    // due to the way we manage toggling on the UI side
+    // But to be safe, delete prevEntryDetailsGroup, and add the new entryDetailsGroup
+    const newState = arrayWithItemRemoved(state, prevEntryDetailsGroup)
+    return arrayWithPush(newState, entryDetailsGroup)
+  }
+  // If for some reason we didn't catch something earlier
+  console.log("This shouldn't have happened. Reduction of UPDATE_HEX for entrydetailsgroups wasn't caught.")
   return state
 }
 

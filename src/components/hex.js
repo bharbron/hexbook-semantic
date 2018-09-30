@@ -134,7 +134,7 @@ class HexEditModal extends Component {
     if (!this.state.overrideEnabled) {
       hex['entryDetailsGroup'] = 'HEX'
     }
-    this.setState({...this.initialState})
+    this.setState({changed: false})
     this.props.onSubmit(hex, prevHex)
   }
 

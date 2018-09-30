@@ -46,7 +46,18 @@ function byIdAddHex(state, action) {
 }
 
 function byIdUpdateHex(state, action) {
-  return state
+  /*
+  Update the things that we allow changes to: terrain/territory tags and entryDetailsGroup (hex definition override)
+  */
+  const hex = action.payload.hex
+  return ({
+    ...state,
+    [hex.id]: {
+      ...state[hex.id],
+      entryDetailsGroup: hex.entryDetailsGroup,
+      addTags: hex.addTags,
+    }
+  })
 }
 
 function byIdAddTableEntry(state, action) {
