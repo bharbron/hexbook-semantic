@@ -1,6 +1,8 @@
 export const ERRORS = {
   REQUIRED: 'Required field',
-  HEX_DEFINTION_INVALID_CHAR: 'Backslashes not allowed',
+  HEX_COORDINATE_INVALID_CHAR: 'Coordinates may contain only letters and numbers',
+  TAG_INVALID_CHAR: 'Tags may contain only letters',
+  ENTRY_DETAIL_INVALID_CHAR: 'Backslashes not allowed',
   TABLE_NAME_INVALID_CHAR: 'May contain only letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?',
   TABLE_CODE_INVALID_CHAR: 'May contain only capital letters or underscore',
   TABLE_DESCRIPTION_INVALID_CHAR: 'May contain only letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?',

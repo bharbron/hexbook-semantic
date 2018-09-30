@@ -85,7 +85,7 @@ function TableEntriesTableRow(props) {
 
 function EntryDetailsList(props) {
   return (
-    <List bulleted size='small'>
+    <List bulleted size='tiny'>
       {props.entryDetails.map(
         ed => <List.Item key={ed.id}>
           {ed.text}

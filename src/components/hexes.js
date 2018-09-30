@@ -4,6 +4,8 @@ import {
   Dropdown,
   Header,
   Icon,
+  Label,
+  List,
   Segment,
   Table,
   Transition
@@ -11,6 +13,7 @@ import {
 import {SingleLineAdderV2} from './forms'
 import {TableCodeLabel} from './labels'
 import {ListWithDeletableItems} from './lists'
+import {COLORS} from '../constants/colors'
 import {REGEX} from '../constants/regex'
 import {ERRORS} from '../constants/strings'
 
@@ -28,11 +31,11 @@ class HexDefinitionSegment extends Component {
       this.setState({value: value, valid: false, error: null})
       return
     }
-    if (value.match(REGEX.TABLE_DEFINITION)) {
+    if (value.match(REGEX.ENTRY_DETAIL)) {
       this.setState({value: value, valid: true, error: null})
       return
     }
-    this.setState({value: value, valid: false, error: ERRORS.HEX_DEFINTION_INVALID_CHAR})
+    this.setState({value: value, valid: false, error: ERRORS.ENTRY_DETAIL_INVALID_CHAR})
     return
   }
 
@@ -59,7 +62,7 @@ class HexDefinitionSegment extends Component {
       <Transition transitionOnMount='true' animation='fade up'>
         <Segment.Group className='HexDefinitionSegment'>
           <Segment>
-            <Header content='Hex Definition' subheader='What details should be randomly generated for each hex.' />
+            <Header content='Hex Definition' subheader='What details should be randomly generated for all hexes' />
             <ListWithDeletableItems 
               bulleted='true' 
               items={ 
@@ -121,19 +124,19 @@ class HexMapSegment extends Component {
     }
     const [coordinates, terrain, territory] = value.split(',')
     if (!coordinates || coordinates.match(REGEX.EMPTY)) {
-      this.setState({value: value, valid: false, error: 'coordinates required'})
+      this.setState({value: value, valid: false, error: ERRORS.REQUIRED})
       return
     }
     if (coordinates && !coordinates.match(REGEX.HEX_MAP_COORDINATES)) {
-      this.setState({value: value, valid: false, error: 'bad coordinate'})
+      this.setState({value: value, valid: false, error: ERRORS.HEX_COORDINATE_INVALID_CHAR})
       return
     }
     if (terrain && !terrain.match(REGEX.HEX_MAP_TERRAIN)) {
-      this.setState({value: value, valid: false, error: 'bad terrain'})
+      this.setState({value: value, valid: false, error: ERRORS.TAG_INVALID_CHAR})
       return
     }
     if (territory && !territory.match(REGEX.HEX_MAP_TERRITORY)) {
-      this.setState({value: value, valid: false, error: 'bad territory'})
+      this.setState({value: value, valid: false, error: ERRORS.TAG_INVALID_CHAR})
       return
     }
     this.setState({value: value, valid: true, error: null})
@@ -155,7 +158,7 @@ class HexMapSegment extends Component {
       <Transition transitionOnMount='true' animation='fade up'>
         <Segment className='HexMapSegment'>
           <Header content='Hex Map' subheader='Mapping of map coordinates to terrain and territory' />
-          <HexMapTable hexes={this.props.hexes} />
+          <HexMapTable hexes={this.props.hexes} onClickHex={this.props.onClickHex} />
           <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
             <Dropdown.Menu direction='left'>
               <Dropdown.Item text='Import hex[es] ...' />
@@ -188,14 +191,14 @@ function HexMapTable(props) {
         <Table.Row verticalAlign='bottom'>
           <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>
           <Table.HeaderCell>Coordinates</Table.HeaderCell>
-          <Table.HeaderCell>Terrain</Table.HeaderCell>
-          <Table.HeaderCell>Territory</Table.HeaderCell>
+          <Table.HeaderCell><Label color={COLORS.TERRAIN_TAG} tag>Terrain</Label></Table.HeaderCell>
+          <Table.HeaderCell><Label color={COLORS.TERRITORY_TAG} tag>Territory</Label></Table.HeaderCell>
           <Table.HeaderCell>Definition Override</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
         {props.hexes.map(
-          hex => <HexMapTableRow hex={hex} />
+          hex => <HexMapTableRow hex={hex} onClick={props.onClickHex} />
         )}
       </Table.Body>
     </Table>
@@ -206,11 +209,25 @@ function HexMapTableRow(props) {
   return (
     <Table.Row key={props.hex.coordinates} verticalAlign='top' className='HexMapTableRow'>
       <Table.Cell><Checkbox /></Table.Cell>
-      <Table.Cell>{props.hex.coordinates}</Table.Cell>
-      <Table.Cell>{props.hex.terrain}</Table.Cell>
-      <Table.Cell>{props.hex.territory}</Table.Cell>
-      <Table.Cell></Table.Cell>
+      <Table.Cell onClick={() => props.onClick(props.hex.coordinates)}>{props.hex.coordinates}</Table.Cell>
+      <Table.Cell onClick={() => props.onClick(props.hex.coordinates)}>{props.hex.terrain}</Table.Cell>
+      <Table.Cell onClick={() => props.onClick(props.hex.coordinates)}>{props.hex.territory}</Table.Cell>
+      <Table.Cell onClick={() => props.onClick(props.hex.coordinates)}>
+        <HexDetailsList entryDetails={props.hex.entryDetails} />
+      </Table.Cell>
     </Table.Row>
+  )
+}
+
+function HexDetailsList(props) {
+  return (
+    <List bulleted size='tiny'>
+      {props.entryDetails.map(
+        ed => <List.Item key={ed.id}>
+          {ed.text}
+        </List.Item>
+      )}
+    </List>
   )
 }
 

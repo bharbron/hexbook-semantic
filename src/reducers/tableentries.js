@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 import {arrayWithPush} from './helpers'
-import {ADD_HEX, UPDATE_HEX_TAGS} from '../actions/hexes'
+import {ADD_HEX, UPDATE_HEX} from '../actions/hexes'
 import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
 
 function byId(state=null, action) {
@@ -8,7 +8,7 @@ function byId(state=null, action) {
   console.log(action)
   switch (action.type) {
     case ADD_HEX: return byIdAddHex(state, action)
-    case UPDATE_HEX_TAGS: return byIdUpdateHexTags(state, action)
+    case UPDATE_HEX: return byIdUpdateHex(state, action)
     case ADD_TABLE_ENTRY: return byIdAddTableEntry(state, action)
     case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
     default: return state
@@ -45,12 +45,17 @@ function byIdAddHex(state, action) {
   return state
 }
 
-function byIdUpdateHexTags(state, action) {
+function byIdUpdateHex(state, action) {
+  /*
+  Update the things that we allow changes to: terrain/territory tags and entryDetailsGroup (hex definition override)
+  */
+  const hex = action.payload.hex
   return ({
     ...state,
-    [action.payload.coordinates] : {
-      ...state[action.payload.coordinates],
-      addTags: [action.payload.newTerrain, action.payload.newTerritory],
+    [hex.id]: {
+      ...state[hex.id],
+      entryDetailsGroup: hex.entryDetailsGroup,
+      addTags: hex.addTags,
     }
   })
 }
