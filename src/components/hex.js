@@ -65,17 +65,17 @@ class HexEditModal extends Component {
   handleChangeBasic = (event, {name, value}) => {
     if (name === 'terrain') {
       if (value.match(REGEX.EMPTY) || value.match(REGEX.HEX_MAP_TERRAIN)) {
-        this.setState({changed: true, terrain: value, terrainValid: true, terrainError: null})
+        this.setState({changed: true, terrain: value.toLowerCase(), terrainValid: true, terrainError: null})
         return
       }
-      this.setState({changed: true, terrain: value, terrainValid: false, terrainError: 'bad terrain'})
+      this.setState({changed: true, terrain: value.toLowerCase(), terrainValid: false, terrainError: 'bad terrain'})
     }
     if (name === 'territory') {
       if (value.match(REGEX.EMPTY) || value.match(REGEX.HEX_MAP_TERRITORY)) {
-        this.setState({changed: true, territory: value, territoryValid: true, territoryError: null})
+        this.setState({changed: true, territory: value.toLowerCase(), territoryValid: true, territoryError: null})
         return
       }
-      this.setState({changed: true, territory: value, territoryValid: false, territoryError: 'bad territory'})
+      this.setState({changed: true, territory: value.toLowerCase(), territoryValid: false, territoryError: 'bad territory'})
     }
   }
 

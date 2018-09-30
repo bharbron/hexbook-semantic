@@ -62,7 +62,7 @@ class HexDefinitionSegment extends Component {
       <Transition transitionOnMount='true' animation='fade up'>
         <Segment.Group className='HexDefinitionSegment'>
           <Segment>
-            <Header content='Hex Definition' subheader='What details should be randomly generated for each hex.' />
+            <Header content='Hex Definition' subheader='What details should be randomly generated for all hexes' />
             <ListWithDeletableItems 
               bulleted='true' 
               items={ 
@@ -124,19 +124,19 @@ class HexMapSegment extends Component {
     }
     const [coordinates, terrain, territory] = value.split(',')
     if (!coordinates || coordinates.match(REGEX.EMPTY)) {
-      this.setState({value: value, valid: false, error: 'coordinates required'})
+      this.setState({value: value, valid: false, error: ERRORS.REQUIRED})
       return
     }
     if (coordinates && !coordinates.match(REGEX.HEX_MAP_COORDINATES)) {
-      this.setState({value: value, valid: false, error: 'bad coordinate'})
+      this.setState({value: value, valid: false, error: ERRORS.HEX_COORDINATE_INVALID_CHAR})
       return
     }
     if (terrain && !terrain.match(REGEX.HEX_MAP_TERRAIN)) {
-      this.setState({value: value, valid: false, error: 'bad terrain'})
+      this.setState({value: value, valid: false, error: ERRORS.TAG_INVALID_CHAR})
       return
     }
     if (territory && !territory.match(REGEX.HEX_MAP_TERRITORY)) {
-      this.setState({value: value, valid: false, error: 'bad territory'})
+      this.setState({value: value, valid: false, error: ERRORS.TAG_INVALID_CHAR})
       return
     }
     this.setState({value: value, valid: true, error: null})

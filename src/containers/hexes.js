@@ -62,8 +62,8 @@ class HexesWorkspace extends Component {
       return
     }
     newCoordinates = newCoordinates.toUpperCase()
-    newTerrain = newTerrain && newTerrain.match(REGEX.HEX_MAP_TERRAIN) ? newTerrain : undefined
-    newTerritory = newTerritory && newTerritory.match(REGEX.HEX_MAP_TERRITORY) ? newTerritory : undefined
+    newTerrain = newTerrain && newTerrain.match(REGEX.HEX_MAP_TERRAIN) ? newTerrain.toLowerCase() : undefined
+    newTerritory = newTerritory && newTerritory.match(REGEX.HEX_MAP_TERRITORY) ? newTerritory.toLowerCase() : undefined
     this.props.addHex(newCoordinates, newTerrain, newTerritory)
   }
 
@@ -82,8 +82,8 @@ class HexesWorkspace extends Component {
           return false
         }
         newCoordinates = newCoordinates.toUpperCase()
-        newTerrain = newTerrain && newTerrain.match(REGEX.HEX_MAP_TERRAIN) ? newTerrain : undefined
-        newTerritory = newTerritory && newTerritory.match(REGEX.HEX_MAP_TERRITORY) ? newTerritory : undefined
+        newTerrain = newTerrain && newTerrain.match(REGEX.HEX_MAP_TERRAIN) ? newTerrain.toLowerCase() : undefined
+        newTerritory = newTerritory && newTerritory.match(REGEX.HEX_MAP_TERRITORY) ? newTerritory.toLowerCase() : undefined
         this.props.addHex(newCoordinates, newTerrain, newTerritory)
         return true
       }
