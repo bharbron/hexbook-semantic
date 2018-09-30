@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {
   Button,
-  Divider,
   Form,
   Header,
   Icon,
@@ -17,6 +16,7 @@ import {REGEX} from '../constants/regex'
 class HexEditModal extends Component {
   state = {
       changed: false,
+      coordinates: (this.props.hex) ? this.props.hex.coordinates: undefined,
       terrain: (this.props.hex) ? this.props.hex.terrain : undefined,
       territory: (this.props.hex) ? this.props.hex.territory : undefined,
       overrideEnabled: (this.props.hex && this.props.hex.entryDetails) ? true : false,
@@ -56,14 +56,12 @@ class HexEditModal extends Component {
           <Header as='h3' content={this.props.header} subheader={this.props.subheader} />
         </Modal.Header>
         <Modal.Content>
-          <Divider horizontal>Basic</Divider>
           <HexEditBasic
-            coordinates={this.props.coordinates}
+            coordinates={this.state.coordinates}
             terrain={this.state.terrain}
             territory={this.state.territory}
             onChange={this.handleChangeBasic} 
           />
-          <Divider horizontal>Advanced</Divider>
           <HexEditDetails
             enabled={this.state.limitEnabled}
             entryDetails={this.state.entryDetails} 
@@ -90,25 +88,15 @@ class HexEditModal extends Component {
 function HexEditBasic(props) {
   return (
     <Form className='TableEntryEditBasic'>
-      <Header as='h4' content='Basic' subheader='Generic weight and main text for this result.' />
+      <Header as='h4' content='Tags' subheader='Terrain and territory tags (if any) for this hex' />
       <Form.Group>
-        <Form.Input
-          name='coordinates'
-          transparent
-          inline
-          width={4}
-          placeholder='coordinates'
-          icon='tag'
-          iconPosition='lett'
-          value={props.coordinates}
-        />
         <Form.Input
           name='terrain'
           inline
           width={6}
           placeholder='terrain'
           icon='tag'
-          iconPosition='lett'
+          iconPosition='left'
           value={props.terrain}
           onChange={props.onChange}
         />
@@ -118,7 +106,7 @@ function HexEditBasic(props) {
           width={6}
           placeholder='territory'
           icon='tag'
-          iconPosition='lett'
+          iconPosition='left'
           value={props.territory}
           onChange={props.onChange}
         />

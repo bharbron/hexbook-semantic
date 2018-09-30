@@ -43,7 +43,7 @@ class HexesWorkspace extends Component {
   state = {
     openHexMapInputModal: false,
     openHexEditModal: false,
-    editingTableEntryId: null
+    editingHexId: null
   }
 
   handleSubmitHexDefinitionInput = (value) => {
@@ -90,6 +90,17 @@ class HexesWorkspace extends Component {
     )
   }
 
+  handleClickHex = (id) => {
+    /*
+    A hex was clicked in the table. Let's open the hex edit modal
+    id: The hex id
+    */
+    this.setState({
+      openHexEditModal: true,
+      editingHexId: id,
+    })
+  }
+
   handleClickAddToHexMapButton = () => {
     this.setState({openHexMapInputModal: true})
   }
@@ -117,7 +128,8 @@ class HexesWorkspace extends Component {
           />
           <HexMapSegment 
             hexes={this.props.hexes}
-            onSubmit={this.handleSubmitHexInput} 
+            onSubmit={this.handleSubmitHexInput}
+            onClickHex={this.handleClickHex}
           />
           <Transition transitionOnMount='true' animation='fade up'>
             <Segment>
@@ -155,7 +167,7 @@ class HexesWorkspace extends Component {
           <HexEditModal
             key={this.state.editingHexId} //This is IMPORTANT! https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key
             header={this.state.editingHexId+ ' > Edit Hex'}
-            hex={this.props.hexes[this.state.editingTableEntryId]}
+            hex={this.props.hexesById[this.state.editingHexId]}
             open={this.state.openHexEditModal}
             onClose={this.handleCloseHexEditModal}
             onSubmit={this.handleSubmitHexEditModal}

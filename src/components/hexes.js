@@ -4,6 +4,7 @@ import {
   Dropdown,
   Header,
   Icon,
+  Label,
   Segment,
   Table,
   Transition
@@ -11,6 +12,7 @@ import {
 import {SingleLineAdderV2} from './forms'
 import {TableCodeLabel} from './labels'
 import {ListWithDeletableItems} from './lists'
+import {COLORS} from '../constants/colors'
 import {REGEX} from '../constants/regex'
 import {ERRORS} from '../constants/strings'
 
@@ -155,7 +157,7 @@ class HexMapSegment extends Component {
       <Transition transitionOnMount='true' animation='fade up'>
         <Segment className='HexMapSegment'>
           <Header content='Hex Map' subheader='Mapping of map coordinates to terrain and territory' />
-          <HexMapTable hexes={this.props.hexes} />
+          <HexMapTable hexes={this.props.hexes} onClickHex={this.props.onClickHex} />
           <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
             <Dropdown.Menu direction='left'>
               <Dropdown.Item text='Import hex[es] ...' />
@@ -188,14 +190,14 @@ function HexMapTable(props) {
         <Table.Row verticalAlign='bottom'>
           <Table.HeaderCell style={{ width: '3rem' }}><Checkbox /></Table.HeaderCell>
           <Table.HeaderCell>Coordinates</Table.HeaderCell>
-          <Table.HeaderCell>Terrain</Table.HeaderCell>
-          <Table.HeaderCell>Territory</Table.HeaderCell>
+          <Table.HeaderCell><Label color={COLORS.TERRAIN_TAG} tag>Terrain</Label></Table.HeaderCell>
+          <Table.HeaderCell><Label color={COLORS.TERRITORY_TAG} tag>Territory</Label></Table.HeaderCell>
           <Table.HeaderCell>Definition Override</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
         {props.hexes.map(
-          hex => <HexMapTableRow hex={hex} />
+          hex => <HexMapTableRow hex={hex} onClick={props.onClickHex} />
         )}
       </Table.Body>
     </Table>
@@ -206,10 +208,10 @@ function HexMapTableRow(props) {
   return (
     <Table.Row key={props.hex.coordinates} verticalAlign='top' className='HexMapTableRow'>
       <Table.Cell><Checkbox /></Table.Cell>
-      <Table.Cell>{props.hex.coordinates}</Table.Cell>
-      <Table.Cell>{props.hex.terrain}</Table.Cell>
-      <Table.Cell>{props.hex.territory}</Table.Cell>
-      <Table.Cell></Table.Cell>
+      <Table.Cell onClick={() => props.onClick(props.hex.coordinates)}>{props.hex.coordinates}</Table.Cell>
+      <Table.Cell onClick={() => props.onClick(props.hex.coordinates)}>{props.hex.terrain}</Table.Cell>
+      <Table.Cell onClick={() => props.onClick(props.hex.coordinates)}>{props.hex.territory}</Table.Cell>
+      <Table.Cell onClick={() => props.onClick(props.hex.coordinates)}></Table.Cell>
     </Table.Row>
   )
 }
