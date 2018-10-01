@@ -30,7 +30,10 @@ function byIdDeleteOtherTag(state, action) {
   Object.values(newState).map(
     tw => {
       if (tw.tag === tag) {
-        newState[tw.id] = undefined
+        newState[tw.id] = {
+          ...newState[tw.id],
+          tag: undefined
+        }
       }
       return true
     }
