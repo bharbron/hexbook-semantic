@@ -1,10 +1,12 @@
 import {combineReducers} from 'redux'
+import {DELETE_OTHER_TAG} from '../actions/tags'
 import {UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
 
 function byId(state=null, action) {
   console.log(state)
   console.log(action)
   switch (action.type) {
+    case DELETE_OTHER_TAG: return byIdDeleteOtherTag(state, action)
     case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
     default: return state
   }
@@ -17,6 +19,26 @@ function allIds(state=null, action) {
     case UPDATE_TABLE_ENTRY: return allIdsUpdateTableEntry(state, action)
     default: return state
   }
+}
+
+function byIdDeleteOtherTag(state, action) {
+  /*
+  Remove any tagWeights related to the deleted tag
+  */
+  const tag = action.payload.tag
+  const newState = {...state}
+  Object.values(newState).map(
+    tw => {
+      if (tw.tag === tag) {
+        newState[tw.id] = {
+          ...newState[tw.id],
+          tag: undefined
+        }
+      }
+      return true
+    }
+  )
+  return newState
 }
 
 function byIdUpdateTableEntry(state, action) {

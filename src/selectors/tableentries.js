@@ -10,7 +10,17 @@ export function getFullTableEntryById(stateEntities, id) {
     }
   }
   if (tableEntry.tagWeights) {
-    tableEntry['tagWeights'] = tableEntry['tagWeights'].map(id => getFullTagWeightById(stateEntities, id))
+    const tagWeights = []
+    tableEntry['tagWeights'].map(
+      id => {
+        const tagWeight = getFullTagWeightById(stateEntities, id)
+        if (tagWeight) {
+          tagWeights.push(tagWeight)
+        }
+        return true
+      }
+    )
+    tableEntry['tagWeights'] = tagWeights
   }
   return tableEntry
 }
