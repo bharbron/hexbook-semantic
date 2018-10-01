@@ -8,7 +8,7 @@ import {
 import {COLORS} from '../constants/colors'
 import './components.css';
 
-class SingleLineAdderV2 extends Component {
+class SingleLineAdder extends Component {
   state = {}
 
   static defaultProps = {
@@ -82,4 +82,4 @@ function InputErrorPopup(props) {
   )
 }
 
-export {SingleLineAdderV2, HiddenSubmitButton, InputErrorPopup}
+export {SingleLineAdder, HiddenSubmitButton, InputErrorPopup}
