@@ -10,7 +10,7 @@ import {
   Table,
   Transition
 } from 'semantic-ui-react';
-import {SingleLineAdderV2} from './forms'
+import {SingleLineAdder} from './forms'
 import {TableCodeLabel} from './labels'
 import {ListWithDeletableItems} from './lists'
 import {COLORS} from '../constants/colors'
@@ -75,7 +75,7 @@ class HexDefinitionSegment extends Component {
                 )
               }
             />
-            <SingleLineAdderV2
+            <SingleLineAdder
               name='hexdefinition'
               placeholder='Enter [[NEW]] hex detail...'
               value={this.state.value}
@@ -167,7 +167,7 @@ class HexMapSegment extends Component {
               <Dropdown.Item text='Delete selected hex[es]' />
             </Dropdown.Menu>
           </Dropdown>
-          <SingleLineAdderV2
+          <SingleLineAdder
             name='hexmap'
             placeholder='coordinate,terrain,territory'
             value={this.state.value}
