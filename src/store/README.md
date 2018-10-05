@@ -30,6 +30,8 @@ Following that guideline, instead of setting `tagWeights.byId[id of object where
 
 The alternative to this guideline is to joing `byId` and `allIds` under a single reducer, which quickly turns ugly.
 
+## Example Schema
+
 ```
 entities: {
   tables: {
