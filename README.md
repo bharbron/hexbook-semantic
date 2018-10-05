@@ -32,7 +32,7 @@ When entering table results, hex definitions, etc. the following syntax is used:
 
 `There is a [[LANDMARK]] on the horizon` = Roll a random result on the table with code `LANDMARK` and insert the text
 
-`A [[MONSTER:+night,-friendly]] waits in ambust` = Add the `night` tag to the filter, remove the `friendly` tag from the filter, roll a random result on the `MONSTER` table, insert the text
+`A [[MONSTER:+night,-friendly]] waits in ambush` = Add the `night` tag to the filter, remove the `friendly` tag from the filter, roll a random result on the `MONSTER` table, insert the text
 
 `He is carrying [[TREASURE:-ALL,+magic]]` = Remove all tags from the filter, add the `magic` tag to the filter, roll on the `TREASURE`, insert result
 
