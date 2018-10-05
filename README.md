@@ -164,4 +164,4 @@ The data model/schema will change slightly between data in the Redux store, data
 
 ### Final processing schema
 
-[Link](./FINALIZE.md)
+TBD
