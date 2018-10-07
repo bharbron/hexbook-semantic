@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React, {Component} from 'react';
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 
 import {
   Card,
@@ -9,12 +9,15 @@ import {
   List,
   Transition
 } from 'semantic-ui-react';
-import { WideColumnWorkspace } from '../components/workspaces'
-import { FloatingActionButton, FloatingWorkspaceMenu } from '../components/floatingcontrols'
+import {WideColumnWorkspace} from '../components/workspaces'
+import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
+import {TemplateCardsGroup} from '../components/templates'
+import {getByIdTemplates} from '../selectors/templates'
 
 import './containers.css';
 
 const mapStateToProps = state => ({
+  templates: getByIdTemplates(state.entities),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -25,6 +28,8 @@ class TemplatesWorkspace extends Component {
     return (
       <div id='TemplatesWorkspace'>
         <WideColumnWorkspace>
+
+          <TemplateCardsGroup templates={this.props.templates} />
 
           <Card.Group itemsPerRow='2' doubling>
 

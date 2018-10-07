@@ -12,16 +12,16 @@ const initialState = {
   entities: {
     tables: {
       byId: {
-        "HEX": {
-          id: "HEX",
-          code: "HEX",
-          name: "Hex Map",
-          description: "Mapping of hex coordinates to terrain and territory",
-          template: "HEX",
+        'HEX': {
+          id: 'HEX',
+          code: 'HEX',
+          name: 'Hex Map',
+          description: 'Mapping of hex coordinates to terrain and territory',
+          template: 'HEX',
           entries: [],
         }
       },
-      allIds: ["HEX"]
+      allIds: ['HEX']
     },
     tableEntries: {
       byId: {},
@@ -29,12 +29,12 @@ const initialState = {
     },
     entryDetailsGroups: {
       byId: {
-        "HEX": {
-          id: "HEX",
+        'HEX': {
+          id: 'HEX',
           entryDetails: []
         }
       },
-      allIds: ["HEX"]
+      allIds: ['HEX']
     },
     entryDetails: {
       byId: {},
@@ -50,36 +50,25 @@ const initialState = {
     },
     templates: {
       byId: {
-        "HEX": {
-          id: "HEX",
-          name: "Hexes",
-          description: "Template for printing the index of hexes",
-          table: "HEX",
-          properties: [UUID.TEMPLATE_HEXES_COLUMNS, UUID.TEMPLATE_HEXES_WHITESPACE],
+        'HEX': {
+          id: 'HEX',
+          name: 'Hexes',
+          description: 'Template for printing the index of hexes',
+          table: 'HEX',
+          pluginId: UUID.TEMPLATE_HEXES_PLUGIN_ID,
+          properties: {
+            'columns': '2',
+            'whitespace': '4',
+          },
           metadata: {
-            "text": "h2",
-            "entryDetails": [],
-            "references": "h3"
+            'text': 'h2',
+            'entryDetails': [],
+            'references': 'h3'
           }
         }
       },
-      "allIds": ["HEX"]
+      'allIds': ['HEX']
     },
-    templateProperties: {
-      byId: {
-        [UUID.TEMPLATE_HEXES_COLUMNS]: {
-          id: UUID.TEMPLATE_HEXES_COLUMNS,
-          property: "Columns",
-          value: "2"
-        },
-        [UUID.TEMPLATE_HEXES_WHITESPACE]: {
-          id: UUID.TEMPLATE_HEXES_WHITESPACE,
-          property: "Whitespace",
-          "value": "4"
-        }
-      },
-      allIds: [UUID.TEMPLATE_HEXES_COLUMNS, UUID.TEMPLATE_HEXES_WHITESPACE]
-    }
   },
 
   /* UI state */
