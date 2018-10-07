@@ -26,6 +26,10 @@ function TemplateLabel(props) {
   return <Label color='violet'><Icon name='puzzle' /><Label.Detail>{props.template}</Label.Detail></Label>
 }
 
+function TemplatePropertyLabel(props) {
+  return <Label color='teal'>{props.property}<Label.Detail>{props.value}</Label.Detail></Label>
+}
+
 function TagWeightLabel(props) {
   return (
     <Label 
@@ -38,4 +42,4 @@ function TagWeightLabel(props) {
   )
 }
 
-export {TagLabel, TableCodeLabel, TableEntriesCountLabel, TemplateLabel, TagWeightLabel}
+export {TagLabel, TableCodeLabel, TableEntriesCountLabel, TemplateLabel, TemplatePropertyLabel, TagWeightLabel}

@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory'
+import {UUID} from '../constants/uuid'
 import rootReducer from '../reducers'
 
 export const history = createHistory()
@@ -52,12 +53,32 @@ const initialState = {
         "HEX": {
           id: "HEX",
           name: "Hexes",
-          description: "Template for printing the list of hexes",
+          description: "Template for printing the index of hexes",
           table: "HEX",
-          otherTemplateStuff: null
+          properties: [UUID.TEMPLATE_HEXES_COLUMNS, UUID.TEMPLATE_HEXES_WHITESPACE],
+          metadata: {
+            "text": "h2",
+            "entryDetails": [],
+            "references": "h3"
+          }
         }
       },
       "allIds": ["HEX"]
+    },
+    templateProperties: {
+      byId: {
+        [UUID.TEMPLATE_HEXES_COLUMNS]: {
+          id: UUID.TEMPLATE_HEXES_COLUMNS,
+          property: "Columns",
+          value: "2"
+        },
+        [UUID.TEMPLATE_HEXES_WHITESPACE]: {
+          id: UUID.TEMPLATE_HEXES_WHITESPACE,
+          property: "Whitespace",
+          "value": "4"
+        }
+      },
+      allIds: [UUID.TEMPLATE_HEXES_COLUMNS, UUID.TEMPLATE_HEXES_WHITESPACE]
     }
   },
 
