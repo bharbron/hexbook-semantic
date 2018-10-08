@@ -59,3 +59,40 @@
 .ui.modal.TableInputModal>.actions {
 	background: inherit;
 }
+
+.TemplateCard table {
+  font-family: 'IM Fell English', serif;
+}
+
+.TemplateCard table {
+  font-family: 'IM Fell English', serif;
+  table-layout: auto;
+  border-collapse: collapse;
+}
+.TemplateCard table tr:nth-child(even) {
+    background-color: #d0d0d0;
+}
+.TemplateCard table th, table td {
+  padding: 2pt 8pt 1pt 8pt;
+}
+.TemplateCard table th {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 1.1rem;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: bottom;
+  background-color: #ffffff;
+}
+.TemplateCard table td {
+  text-align: left;
+  vertical-align: top;
+}
+
+.TemplateCard h1,
+.TemplateCard h2,
+.TemplateCard h3,
+.TemplateCard h4,
+.TemplateCard h5,
+.TemplateCard p {
+  font-family: 'IM Fell English', serif;
+}

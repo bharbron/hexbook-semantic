@@ -8,3 +8,37 @@ export const ERRORS = {
   TABLE_DESCRIPTION_INVALID_CHAR: 'May contain only letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?',
   TABLE_CODE_DUPLICATE: 'Code is already used by a different table',
 }
+
+export const TEMPLATE_PREVIEW = {
+  TEXT: 'Lorem ipsum',
+  ENTRY_DETAILS: [
+    'dolor sit amet',
+    'consectetur adipiscing elit',
+    'Nunc et sollicitudin sem',
+    'Sed blandit suscipit justo',
+    'nec finibus felis vestibulum nec',
+    'Pellentesque habitant morbi tristique',
+    'senectus et netus et malesuada fames ac turpis egestas',
+    'Sed massa arcu',
+    'molestie a massa ut',
+    'viverra dapibus enim',
+    'Praesent non dui vehicula',
+    'auctor leo sit amet, euismod erat',
+    'Cras tincidunt convallis lectus at auctor',
+    'Nulla condimentum ipsum in accumsan rhoncus',
+    'Cras imperdiet maximus feugiat',
+    'Mauris porttitor at leo sed viverra',
+    'Ut sem velit',
+    'finibus non lectus sit amet',
+    'mollis finibus erat',
+    'Nam dictum venenatis auctor',
+    'Duis aliquet ante in felis auctor aliquam',
+    'Mauris hendrerit interdum neque',
+    'id rhoncus nisi maximus bibendum',
+    'Ut sagittis eget nisi id viverra',
+    'Nulla elementum erat id lobortis sollicitudin',
+    'Maecenas quis rutrum ante',
+    'ac interdum sapien',
+  ],
+  REFERENCES: 'See: ####, ####'
+}

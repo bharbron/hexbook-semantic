@@ -7,7 +7,7 @@ import {
   List,
   Transition
 } from 'semantic-ui-react';
-import {TableCodeLabel, TemplateLabel, TemplatePropertyLabel} from './labels'
+import {TableCodeLabel, TemplatePluginLabel, TemplatePropertyLabel} from './labels'
 import './components.css';
 
 function TemplateCardsGroup(props) {
@@ -31,7 +31,7 @@ function TemplateCard(props) {
           <PreviewComponent template={props.template} />
         </Card.Content>
         <Card.Content extra>
-          <TemplateLabels template={props.template} />
+          <TemplateLabels template={props.template} plugin={props.plugin} />
         </Card.Content>
       </Card>
     </Transition>
@@ -42,7 +42,7 @@ function TemplateLabels(props) {
   return (
     <Label.Group>
       <TableCodeLabel code={props.template.table} />
-      <TemplateLabel template='Index' />
+      <TemplatePluginLabel template='Index' color={props.plugin.color} />
       {Object.keys(props.template.properties).map(
         p => <TemplatePropertyLabel property={p} value={props.template.properties[p]} />
       )}

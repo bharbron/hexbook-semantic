@@ -63,7 +63,7 @@ const initialState = {
           },
           metadata: {
             'text': 'h2',
-            'entryDetails': [],
+            'entryDetails': ['h4', 'p', 'p', 'p'],
             'references': 'h3'
           }
         }
@@ -79,6 +79,7 @@ const initialState = {
         [UUID.TEMPLATE_HEXES_PLUGIN_ID]: {
           id: UUID.TEMPLATE_HEXES_PLUGIN_ID,
           preview: IndexPreview,
+          color: 'violet',
         },
       },
       allIds: [UUID.TEMPLATE_HEXES_PLUGIN_ID]
