@@ -35,3 +35,16 @@ export function getFullTemplateById(state, id) {
   }
   return template
 }
+
+export function getByNameTemplates(state) {
+  const templates = {}
+  state.entities.templates.allIds.forEach(
+    id => {
+      const template = getFullTemplateById(state, id)
+      if (template) {
+        templates[template.name] = template
+      }
+    }
+  )
+  return templates
+}

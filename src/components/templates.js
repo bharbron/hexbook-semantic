@@ -15,6 +15,8 @@ import {
 import {InputErrorPopup} from './forms'
 import {TableCodeLabel, TemplatePluginLabel, TemplatePropertyLabel} from './labels'
 import {COLORS} from '../constants/colors'
+import {REGEX} from '../constants/regex'
+import {ERRORS} from '../constants/strings'
 import './components.css';
 
 function TemplateCardsGroup(props) {
@@ -95,6 +97,81 @@ class TemplateInputModal extends Component {
     return (this.state.valid.name && this.state.valid.description && this.state.valid.plugin && this.state.valid.table) ? false : true
   }
 
+  handleChange = (event, {name, value}) => {
+    if (name === 'name') {
+      if (value.match(REGEX.EMPTY)) {
+        // name is required
+        this.setState({
+          value: {...this.state.value, 'name': value},
+          valid: {...this.state.valid, 'name': false},
+          error: {...this.state.error, 'name': ERRORS.REQUIRED}
+        })
+        return
+      }
+      if (value.match(REGEX.TEMPLATE_NAME)) {
+        if (this.props.templatesByName[value]) {
+          this.setState({
+            value: {...this.state.value, 'name': value},
+            valid: {...this.state.valid, 'name': false},
+            error: {...this.state.error, 'name': ERRORS.TEMPLATE_NAME_DUPLICATE}
+          })
+          return
+        }
+        this.setState({
+          value: {...this.state.value, 'name': value},
+          valid: {...this.state.valid, 'name': true},
+          error: {...this.state.error, 'name': null}
+        })
+        return
+      }
+      this.setState({
+        value: {...this.state.value, 'name': value},
+        valid: {...this.state.valid, 'name': false},
+        error: {...this.state.error, 'name': ERRORS.TEMPLATE_NAME_INVALID_CHAR}
+      })
+      return
+    }
+    if (name === 'description') {
+      if (value.match(REGEX.EMPTY)) {
+        // description is not required, allowed to be empty
+        this.setState({
+          value: {...this.state.value, 'description': value},
+          valid: {...this.state.valid, 'description': true},
+          error: {...this.state.error, 'description': null}
+        })
+        return
+      }
+      if (value.match(REGEX.TEMPLATE_DESCRIPTION)) {
+        this.setState({
+          value: {...this.state.value, 'description': value},
+          valid: {...this.state.valid, 'description': true},
+          error: {...this.state.error, 'description': null}
+        })
+        return
+      }
+      this.setState({
+        value: {...this.state.value, 'description': value},
+        valid: {...this.state.valid, 'description': false},
+        error: {...this.state.error, 'description': ERRORS.TEMPLATE_DESCRIPTION_INVALID_CHAR}
+      })
+      return
+    }
+    if (name === 'plugin') {
+      this.setState({
+        value: {...this.state.value, 'plugin': value},
+        valid: {...this.state.valid, 'plugin': true},
+      })
+      return
+    }
+    if (name === 'table') {
+      this.setState({
+        value: {...this.state.value, 'table': value},
+        valid: {...this.state.valid, 'table': true},
+      })
+      return
+    }
+  }
+
   handleClose = () => {
     this.props.onClose()
   }
@@ -107,6 +184,9 @@ class TemplateInputModal extends Component {
     })
     this.props.onClose()
   }
+
+  handleNameRef = nameNode => this.setState({nameNode})
+  handleDescriptionRef = descriptionNode => this.setState({descriptionNode})
 
   render() {
     return (
@@ -128,7 +208,7 @@ class TemplateInputModal extends Component {
                   onChange={this.handleChange}
                 />
               </Ref>
-              <InputErrorPopup context={this.state.codeNode} error={this.state.error.code} />
+              <InputErrorPopup context={this.state.nameNode} error={this.state.error.name} />
               <Ref innerRef={this.handleDescriptionRef}>
                 <Form.Input
                   name='description'

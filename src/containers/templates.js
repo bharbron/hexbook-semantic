@@ -13,7 +13,7 @@ import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
 import {TemplateCardsGroup, TemplateInputModal} from '../components/templates'
 import {getByCodeTables} from '../selectors/tables'
-import {getByIdTemplates} from '../selectors/templates'
+import {getByIdTemplates, getByNameTemplates} from '../selectors/templates'
 import {getByIdTemplatePlugins, getByNameTemplatePlugins} from '../selectors/templateplugins'
 
 import './containers.css';
@@ -21,6 +21,7 @@ import './containers.css';
 const mapStateToProps = state => ({
   tablesByCode: getByCodeTables(state.entities.tables),
   templates: getByIdTemplates(state),
+  templatesByName: getByNameTemplates(state),
   templatePluginsByName: getByNameTemplatePlugins(state),
 })
 
@@ -93,7 +94,8 @@ class TemplatesWorkspace extends Component {
             open={this.state.openTemplateInputModal} 
             onClose={this.handleCloseTemplateInputModal}
             tablesByCode={this.props.tablesByCode} 
-            pluginsByName={this.props.templatePluginsByName} 
+            pluginsByName={this.props.templatePluginsByName}
+            templatesByName={this.props.templatesByName}
           />
 
         </WideColumnWorkspace>

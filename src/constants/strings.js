@@ -7,6 +7,9 @@ export const ERRORS = {
   TABLE_CODE_INVALID_CHAR: 'May only contain capital letters or underscore',
   TABLE_DESCRIPTION_INVALID_CHAR: 'May contain only letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?',
   TABLE_CODE_DUPLICATE: 'Code is already used by a different table',
+  TEMPLATE_NAME_INVALID_CHAR: 'May only contain letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?',
+  TEMPLATE_NAME_DUPLICATE: 'Name is already used by a different template',
+  TEMPLATE_DESCRIPTION_INVALID_CHAR: 'May only contain letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?',
 }
 
 export const TEMPLATE_PREVIEW = {
