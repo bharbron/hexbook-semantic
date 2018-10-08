@@ -17,7 +17,7 @@ function IndexPreview(props) {
   }
   return (
     <List className='IndexPreview'>
-      <IndexPreviewListItem content={TEMPLATE_PREVIEW.TEXT} renderAs={props.template.metadata.text} />
+      <IndexPreviewListItem content='1234' renderAs={props.template.metadata.text} />
       {previewEntryDetails.map(
         ped => <IndexPreviewListItem content={ped.content} renderAs={ped.renderAs} />
       )}
@@ -28,7 +28,7 @@ function IndexPreview(props) {
 }
 
 function IndexPreviewListItem(props) {
-  const $renderAs = props.renderAs
+  const $renderAs = props.renderAs //need the '$'' so that the variable can be used in place of a component name
   return <List.Item><$renderAs>{props.content}</$renderAs></List.Item>
 }
 

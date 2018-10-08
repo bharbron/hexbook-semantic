@@ -62,9 +62,9 @@ const initialState = {
             'whitespace': '4',
           },
           metadata: {
-            'text': 'h2',
-            'entryDetails': ['h4', 'p', 'p', 'p'],
-            'references': 'h3'
+            'text': 'h1',
+            'entryDetails': ['h3', 'p', 'h4', 'p'],
+            'references': 'h2'
           }
         }
       },
