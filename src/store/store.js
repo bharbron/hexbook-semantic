@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory'
+import {IndexPreview} from '../components/templateplugins'
 import {UUID} from '../constants/uuid'
 import rootReducer from '../reducers'
 
@@ -72,7 +73,17 @@ const initialState = {
   },
 
   /* UI state */
-  ui: {}
+  ui: {
+    templatePlugins: {
+      byId: {
+        [UUID.TEMPLATE_HEXES_PLUGIN_ID]: {
+          id: UUID.TEMPLATE_HEXES_PLUGIN_ID,
+          preview: IndexPreview,
+        },
+      },
+      allIds: [UUID.TEMPLATE_HEXES_PLUGIN_ID]
+    }
+  }
 }
 
 const enhancers = []

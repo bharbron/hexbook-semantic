@@ -15,24 +15,20 @@ function TemplateCardsGroup(props) {
     <Card.Group 
       itemsPerRow='2' 
       doubling 
-      children={props.templates.map(template => <TemplateCard template={template} />)} 
+      children={props.templates.map(template => <TemplateCard template={template} plugin={props.plugins[template.pluginId]} />)} 
       className='TemplateCardsGroup' 
     />
   )
 }
 
 function TemplateCard(props) {
+  const PreviewComponent = props.plugin.preview
   return (
     <Transition transitionOnMount='true' animation='fade up'>
       <Card link className='TemplateCard'>
         <Card.Content header={props.template.name} meta={props.template.description} />
         <Card.Content>
-          <List>
-            <List.Item><h3>Lorem ipsum [[DOLLAR]] sit amet, consectetur</h3></List.Item>
-            <List.Item><p>[[CONSECTETUR]] adipiscing elit</p></List.Item>
-            <List.Item><h4>sed do eiusmod [[TEMPOR]] incididunt</h4></List.Item>
-            <List.Item><p>See: ####, ####</p></List.Item>
-          </List>
+          <PreviewComponent template={props.template} />
         </Card.Content>
         <Card.Content extra>
           <TemplateLabels template={props.template} />

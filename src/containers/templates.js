@@ -13,11 +13,13 @@ import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
 import {TemplateCardsGroup} from '../components/templates'
 import {getByIdTemplates} from '../selectors/templates'
+import {getByIdTemplatePlugins} from '../selectors/templateplugins'
 
 import './containers.css';
 
 const mapStateToProps = state => ({
   templates: getByIdTemplates(state.entities),
+  templatePlugins: getByIdTemplatePlugins(state.ui),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -29,7 +31,7 @@ class TemplatesWorkspace extends Component {
       <div id='TemplatesWorkspace'>
         <WideColumnWorkspace>
 
-          <TemplateCardsGroup templates={this.props.templates} />
+          <TemplateCardsGroup templates={this.props.templates} plugins={this.props.templatePlugins} />
 
           <Card.Group itemsPerRow='2' doubling>
 
