@@ -20,12 +20,16 @@ function getTables(stateTables) {
 
 function getByCodeTables(stateTables) {
   const tablesByCode = {}
-  stateTables.allIds.map(
+  stateTables.allIds.forEach(
     id => {
-      tablesByCode[id] = stateTables.byId[id]
-      return true
+      if (stateTables.byId[id]) { 
+        tablesByCode[stateTables.byId[id].code] = stateTables.byId[id]
+      }
     }
   )
+  console.log('selectors.tables.getByCodeTables')
+  console.log('tablesByCode')
+  console.log(tablesByCode)
   return tablesByCode
 }
 

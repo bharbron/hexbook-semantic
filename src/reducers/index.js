@@ -5,6 +5,8 @@ import entryDetailsGroupsReducer from './entrydetailsgroups'
 import entryDetailsReducer from './entrydetails'
 import tagsReducer from './tags'
 import tagWeightsReducer from './tagweights'
+import templatesReducer from './templates'
+import templatePluginsReducer from './templateplugins'
 
 const entitiesReducer = combineReducers({
   tables: tablesReducer,
@@ -13,8 +15,14 @@ const entitiesReducer = combineReducers({
   entryDetails: entryDetailsReducer,
   tags: tagsReducer,
   tagWeights: tagWeightsReducer,
+  templates: templatesReducer,
+})
+
+const uiReducer = combineReducers({
+  templatePlugins: templatePluginsReducer,
 })
 
 export default combineReducers({
   entities: entitiesReducer,
+  ui: uiReducer
 })

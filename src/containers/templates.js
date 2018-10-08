@@ -12,14 +12,17 @@ import {
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
 import {TemplateCardsGroup, TemplateInputModal} from '../components/templates'
+import {getByCodeTables} from '../selectors/tables'
 import {getByIdTemplates} from '../selectors/templates'
-import {getByIdTemplatePlugins} from '../selectors/templateplugins'
+import {getByIdTemplatePlugins, getByNameTemplatePlugins} from '../selectors/templateplugins'
 
 import './containers.css';
 
 const mapStateToProps = state => ({
+  tablesByCode: getByCodeTables(state.entities.tables),
   templates: getByIdTemplates(state.entities),
   templatePlugins: getByIdTemplatePlugins(state.ui),
+  templatePluginsByName: getByNameTemplatePlugins(state),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -27,7 +30,15 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 class TemplatesWorkspace extends Component {
   state = {
-    openTemplateInputModal: true,
+    openTemplateInputModal: false,
+  }
+
+  handleClickAddTemplateButton = () => {
+    this.setState({openTemplateInputModal: true})
+  }
+
+  handleCloseTemplateInputModal = () => {
+    this.setState({openTemplateInputModal: false})
   }
 
   render() {
@@ -79,7 +90,12 @@ class TemplatesWorkspace extends Component {
 
           </Card.Group>
 
-          <TemplateInputModal open={this.state.openTemplateInputModal} />
+          <TemplateInputModal 
+            open={this.state.openTemplateInputModal} 
+            onClose={this.handleCloseTemplateInputModal}
+            tablesByCode={this.props.tablesByCode} 
+            pluginsByName={this.props.templatePluginsByName} 
+          />
 
         </WideColumnWorkspace>
 
@@ -88,7 +104,7 @@ class TemplatesWorkspace extends Component {
           <Dropdown.Item text='Export templates ...' />
           <Dropdown.Item text='Delete all templates' />
         </FloatingWorkspaceMenu>
-        <FloatingActionButton icon='plus' color='google plus' />
+        <FloatingActionButton icon='plus' color='google plus' onClick={this.handleClickAddTemplateButton} />
         
       </div>
     );

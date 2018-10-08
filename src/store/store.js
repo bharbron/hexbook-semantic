@@ -78,6 +78,7 @@ const initialState = {
       byId: {
         [UUID.TEMPLATE_HEXES_PLUGIN_ID]: {
           id: UUID.TEMPLATE_HEXES_PLUGIN_ID,
+          name: 'Index',
           preview: IndexPreview,
           color: 'violet',
         },

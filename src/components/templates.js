@@ -49,7 +49,7 @@ function TemplateLabels(props) {
   return (
     <Label.Group>
       <TableCodeLabel code={props.template.table} />
-      <TemplatePluginLabel template='Index' color={props.plugin.color} />
+      <TemplatePluginLabel template={props.plugin.name} color={props.plugin.color} />
       {Object.keys(props.template.properties).map(
         p => <TemplatePropertyLabel property={p} value={props.template.properties[p]} />
       )}
@@ -58,16 +58,31 @@ function TemplateLabels(props) {
 }
 
 class TemplateInputModal extends Component {
+  static defaultProps = {
+    open: false,
+    onSubmit: (name, description) => console.log(`default onSubmit`)
+  }
+  
   state = {
     value: {name: '', description: '', plugin: '', table: ''},
     valid: {name: false, description: false, plugin: false, table: false},
     error: {name: null, description: null, plugin: false, table: null},
   }
 
-  static defaultProps = {
-    open: false,
-    onSubmit: (name, description) => console.log(`default onSubmit`)
-  }
+  nameRef = React.createRef()
+  descriptionRef = React.createRef()
+
+  pluginOptions = Object.keys(this.props.pluginsByName).sort().map(
+    p => {
+      return {key: p, value: p, text: p}
+    }
+  )
+
+  tableOptions = Object.keys(this.props.tablesByCode).sort().map(
+    t => {
+      return {key: t, value: t, text: t}
+    }
+  )
 
   addButtonColor = () => {
     return (this.state.valid.name && this.state.valid.description && this.state.valid.plugin && this.state.valid.table) ? COLORS.SUBMIT_BUTTON : null
@@ -77,8 +92,18 @@ class TemplateInputModal extends Component {
     return (this.state.valid.name && this.state.valid.description && this.state.valid.plugin && this.state.valid.table) ? false : true
   }
 
-  nameRef = React.createRef()
-  descriptionRef = React.createRef()
+  handleClose = () => {
+    this.props.onClose()
+  }
+
+  handleCancel = () => {
+    this.setState({
+      value: {name: '', description: '', plugin: '', table: ''},
+      valid: {name: false, description: false, plugin: false, table: false},
+      error: {name: null, description: null, plugin: false, table: null},
+    })
+    this.props.onClose()
+  }
 
   render() {
     return (
@@ -118,7 +143,7 @@ class TemplateInputModal extends Component {
                 inline
                 placeholder='Template Type' 
                 search
-                options={this.props.pluginOptions}
+                options={this.pluginOptions}
                 value={this.state.value.plugin}
                 onChange={this.handleChange} 
               />
@@ -127,7 +152,7 @@ class TemplateInputModal extends Component {
                 inline
                 placeholder='Table' 
                 search
-                options={this.props.tableOptions}
+                options={this.tableOptions}
                 value={this.state.value.table}
                 onChange={this.handleChange} 
               />
