@@ -1,17 +1,17 @@
-export function getByIdTemplatePlugins(stateUI) {
+export function getByIdTemplatePlugins(state) {
   const templatePlugins = {}
-  stateUI.templatePlugins.allIds.forEach(
+  state.ui.templatePlugins.allIds.forEach(
     id => {
-      if (stateUI.templatePlugins.byId[id]) {
-        templatePlugins[id] = stateUI.templatePlugins.byId[id]
+      if (state.ui.templatePlugins.byId[id]) {
+        templatePlugins[id] = state.ui.templatePlugins.byId[id]
       }
     }
   )
   return templatePlugins
 }
 
-export function getTemplatePluginById(stateUI, id) {
-  return {...stateUI.templatePlugins.byId[id]}
+export function getTemplatePluginById(state, id) {
+  return {...state.ui.templatePlugins.byId[id]}
 }
 
 export function getByNameTemplatePlugins(state) {

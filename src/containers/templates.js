@@ -20,8 +20,7 @@ import './containers.css';
 
 const mapStateToProps = state => ({
   tablesByCode: getByCodeTables(state.entities.tables),
-  templates: getByIdTemplates(state.entities),
-  templatePlugins: getByIdTemplatePlugins(state.ui),
+  templates: getByIdTemplates(state),
   templatePluginsByName: getByNameTemplatePlugins(state),
 })
 
@@ -46,7 +45,7 @@ class TemplatesWorkspace extends Component {
       <div id='TemplatesWorkspace'>
         <WideColumnWorkspace>
 
-          <TemplateCardsGroup templates={this.props.templates} plugins={this.props.templatePlugins} />
+          <TemplateCardsGroup templates={this.props.templates} />
 
           <Card.Group itemsPerRow='2' doubling>
 

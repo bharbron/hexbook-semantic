@@ -27,7 +27,7 @@ function TemplateLabel(props) {
 }
 
 function TemplatePluginLabel(props) {
-  return <Label color={props.color}>{props.template}</Label>
+  return <Label color={props.plugin.color}>{props.plugin.name}</Label>
 }
 
 function TemplatePropertyLabel(props) {

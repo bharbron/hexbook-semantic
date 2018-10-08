@@ -1,9 +1,11 @@
-export function getByIdTemplates(stateEntities) {
-  const hexesTemplate = getFullTemplateById(stateEntities, 'HEX')
+import {getTemplatePluginById} from './templateplugins'
+
+export function getByIdTemplates(state) {
+  const hexesTemplate = getFullTemplateById(state, 'HEX')
   const otherTemplates = []
-  stateEntities.templates.allIds.forEach(
+  state.entities.templates.allIds.forEach(
     templateId => {
-      const template = getFullTemplateById(stateEntities, templateId)
+      const template = getFullTemplateById(state, templateId)
       if (templateId !== 'HEX' && template) {
         otherTemplates.push(template)
       }
@@ -26,6 +28,10 @@ function compareTemplates(a, b) {
   return 0
 }
 
-export function getFullTemplateById(stateEntities, id) {
-  return {...stateEntities.templates.byId[id]}
+export function getFullTemplateById(state, id) {
+  const template = {...state.entities.templates.byId[id]}
+  if (template.plugin) {
+    template.plugin = getTemplatePluginById(state, template.plugin)
+  }
+  return template
 }

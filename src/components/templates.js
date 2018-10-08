@@ -22,14 +22,17 @@ function TemplateCardsGroup(props) {
     <Card.Group 
       itemsPerRow='2' 
       doubling 
-      children={props.templates.map(template => <TemplateCard template={template} plugin={props.plugins[template.pluginId]} />)} 
+      children={props.templates.map(template => <TemplateCard template={template} />)} 
       className='TemplateCardsGroup' 
     />
   )
 }
 
 function TemplateCard(props) {
-  const PreviewComponent = props.plugin.preview
+  console.log('components.templates.TemplateCard')
+  console.log('props')
+  console.log(props)
+  const PreviewComponent = props.template.plugin.preview
   return (
     <Transition transitionOnMount='true' animation='fade up'>
       <Card link className='TemplateCard'>
@@ -38,7 +41,7 @@ function TemplateCard(props) {
           <PreviewComponent template={props.template} />
         </Card.Content>
         <Card.Content extra>
-          <TemplateLabels template={props.template} plugin={props.plugin} />
+          <TemplateLabels template={props.template} />
         </Card.Content>
       </Card>
     </Transition>
@@ -49,7 +52,7 @@ function TemplateLabels(props) {
   return (
     <Label.Group>
       <TableCodeLabel code={props.template.table} />
-      <TemplatePluginLabel template={props.plugin.name} color={props.plugin.color} />
+      <TemplatePluginLabel plugin={props.template.plugin} />
       {Object.keys(props.template.properties).map(
         p => <TemplatePropertyLabel property={p} value={props.template.properties[p]} />
       )}
