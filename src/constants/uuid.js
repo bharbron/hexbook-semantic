@@ -1,0 +1,3 @@
+export const UUID = {
+  TEMPLATE_INDEX_PLUGIN_ID: '6bc02305-3785-41b7-baf8-097d35532a69',
+}

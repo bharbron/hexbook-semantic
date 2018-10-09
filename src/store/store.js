@@ -2,6 +2,8 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory'
+import {IndexPreview} from '../components/templateplugins'
+import {UUID} from '../constants/uuid'
 import rootReducer from '../reducers'
 
 export const history = createHistory()
@@ -11,16 +13,16 @@ const initialState = {
   entities: {
     tables: {
       byId: {
-        "HEX": {
-          id: "HEX",
-          code: "HEX",
-          name: "Hex Map",
-          description: "Mapping of hex coordinates to terrain and territory",
-          template: "HEX",
+        'HEX': {
+          id: 'HEX',
+          code: 'HEX',
+          name: 'Hex Map',
+          description: 'Mapping of hex coordinates to terrain and territory',
+          template: 'HEX',
           entries: [],
         }
       },
-      allIds: ["HEX"]
+      allIds: ['HEX']
     },
     tableEntries: {
       byId: {},
@@ -28,12 +30,12 @@ const initialState = {
     },
     entryDetailsGroups: {
       byId: {
-        "HEX": {
-          id: "HEX",
+        'HEX': {
+          id: 'HEX',
           entryDetails: []
         }
       },
-      allIds: ["HEX"]
+      allIds: ['HEX']
     },
     entryDetails: {
       byId: {},
@@ -49,20 +51,50 @@ const initialState = {
     },
     templates: {
       byId: {
-        "HEX": {
-          id: "HEX",
-          name: "Hexes",
-          description: "Template for printing the list of hexes",
-          table: "HEX",
-          otherTemplateStuff: null
+        'HEX': {
+          id: 'HEX',
+          name: 'Hexes',
+          description: 'Template for printing the index of hexes',
+          plugin: UUID.TEMPLATE_INDEX_PLUGIN_ID,
+          table: 'HEX',
+          properties: {
+            'columns': '2',
+            'whitespace': '4',
+          },
+          metadata: {
+            'text': 'h1',
+            'entryDetails': ['h3', 'p', 'h4', 'p'],
+            'references': 'h2'
+          }
         }
       },
-      "allIds": ["HEX"]
-    }
+      'allIds': ['HEX']
+    },
   },
 
   /* UI state */
-  ui: {}
+  ui: {
+    templatePlugins: {
+      byId: {
+        [UUID.TEMPLATE_INDEX_PLUGIN_ID]: {
+          id: UUID.TEMPLATE_INDEX_PLUGIN_ID,
+          name: 'Index',
+          preview: IndexPreview,
+          color: 'violet',
+          defaultProperties: {
+            'columns': '2',
+            'whitespace': '4',
+          },
+          defaultMetadata: {
+            'text': 'h1',
+            'entryDetails': [],
+            'references': 'h2'
+          }
+        },
+      },
+      allIds: [UUID.TEMPLATE_INDEX_PLUGIN_ID]
+    }
+  }
 }
 
 const enhancers = []

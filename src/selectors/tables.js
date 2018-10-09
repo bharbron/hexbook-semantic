@@ -1,4 +1,7 @@
-function getTables(stateTables) {
+import {getTemplateById} from './templates'
+import {getTemplatePluginById} from './templateplugins'
+
+export function getTables(stateTables) {
   const tables = []
   for (let i = 0; i < stateTables.allIds.length; i++) {
     const tableId = stateTables.allIds[i]
@@ -18,15 +21,30 @@ function getTables(stateTables) {
   return tables
 }
 
-function getByCodeTables(stateTables) {
+export function getByCodeTables(stateTables) {
   const tablesByCode = {}
-  stateTables.allIds.map(
+  stateTables.allIds.forEach(
     id => {
-      tablesByCode[id] = stateTables.byId[id]
-      return true
+      if (stateTables.byId[id]) { 
+        tablesByCode[stateTables.byId[id].code] = stateTables.byId[id]
+      }
     }
   )
   return tablesByCode
 }
 
-export {getTables, getByCodeTables}
+export function getTableById(state, id) {
+  return {...state.entities.tables.byId[id]}
+}
+
+export function getFullTableById(state, id) {
+  const table = getTableById(state, id)
+  if (table.template) {
+    // Have to be careful here. Can't query the "full" template, as it will cause an infinite loop
+    table.template = getTemplateById(state, table.template)
+    if (table.template.plugin) {
+      table.template.plugin = getTemplatePluginById(state, table.template.plugin)
+    }
+  }
+  return table
+}

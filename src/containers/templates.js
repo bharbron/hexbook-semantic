@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React, {Component} from 'react';
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 
 import {
   Card,
@@ -9,52 +9,65 @@ import {
   List,
   Transition
 } from 'semantic-ui-react';
-import { WideColumnWorkspace } from '../components/workspaces'
-import { FloatingActionButton, FloatingWorkspaceMenu } from '../components/floatingcontrols'
+import {addTemplate} from '../actions/templates'
+import {WideColumnWorkspace} from '../components/workspaces'
+import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
+import {TemplateCardsGroup, TemplateInputModal} from '../components/templates'
+import {getByCodeTables} from '../selectors/tables'
+import {getByIdTemplates, getByNameTemplates} from '../selectors/templates'
+import {getByIdTemplatePlugins, getByNameTemplatePlugins} from '../selectors/templateplugins'
 
 import './containers.css';
 
 const mapStateToProps = state => ({
+  tablesByCode: getByCodeTables(state.entities.tables),
+  templates: getByIdTemplates(state),
+  templatesByName: getByNameTemplates(state),
+  templatePluginsByName: getByNameTemplatePlugins(state),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  addTemplate,
 }, dispatch)
 
 class TemplatesWorkspace extends Component {
+  state = {
+    openTemplateInputModal: false,
+  }
+
+  handleClickAddTemplateButton = () => {
+    this.setState({openTemplateInputModal: true})
+  }
+
+  handleCloseTemplateInputModal = () => {
+    this.setState({openTemplateInputModal: false})
+  }
+
+  handleSubmitTemplateInputModal = (value) => {
+    this.setState({openTemplateInputModal: false})
+    this.props.addTemplate(
+      value.name, 
+      value.description, 
+      this.props.templatePluginsByName[value.plugin].id, 
+      this.props.tablesByCode[value.table].id,
+      this.props.templatePluginsByName[value.plugin].defaultProperties,
+      this.props.templatePluginsByName[value.plugin].defaultMetadata,
+    )
+  }
+
   render() {
     return (
       <div id='TemplatesWorkspace'>
         <WideColumnWorkspace>
 
-          <Card.Group itemsPerRow='2' doubling>
-
-          <Transition transitionOnMount='true' animation='fade up'>
-            <Card link>
-              <Card.Content header='Hexes' meta='Template for printing the list of hexes' />
-              <Card.Content className='templateCard'>
-                <List>
-                  <List.Item><h3>Lorem ipsum [[DOLLAR]] sit amet, consectetur</h3></List.Item>
-                  <List.Item><p>[[CONSECTETUR]] adipiscing elit</p></List.Item>
-                  <List.Item><h4>sed do eiusmod [[TEMPOR]] incididunt</h4></List.Item>
-                  <List.Item><p>See: ####, ####</p></List.Item>
-                </List>
-              </Card.Content>
-              <Card.Content extra>
-                <Label color='grey'>[[]]<Label.Detail>HEX</Label.Detail></Label>
-                <Label color='violet'>Two Column</Label>
-                <Label color='teal'>Whitespace<Label.Detail>4</Label.Detail></Label>
-              </Card.Content>
-            </Card>
-          </Transition>
-
-          </Card.Group> 
+          <TemplateCardsGroup templates={this.props.templates} />
 
           <Card.Group itemsPerRow='2' doubling>
 
           <Transition transitionOnMount='true' animation='fade up'>
             <Card link>
               <Card.Content header='Key NPCs' meta='Template for printing the list of important NPCs' />
-              <Card.Content className='templateCard'>
+              <Card.Content className='TemplateCard'>
                 <List>
                   <List.Item><h2>Lorem ipsum [[DOLLAR]] sit amet, consectetur</h2></List.Item>
                   <List.Item><p>[[CONSECTETUR]] adipiscing elit</p></List.Item>
@@ -72,7 +85,7 @@ class TemplatesWorkspace extends Component {
           <Transition transitionOnMount='true' animation='fade up'>
             <Card link>
               <Card.Content header='Magic Items' meta='Template for printing an index of magic items' />
-              <Card.Content className='templateCard'>
+              <Card.Content className='TemplateCard'>
                 <table>
                   <tr><th>d##</th><th>Result</th></tr>
                   <tr><td>1-##</td><td><p>Lorem ipsum [[DOLLAR]] sit amet</p></td></tr>
@@ -89,24 +102,17 @@ class TemplatesWorkspace extends Component {
             </Card>
           </Transition>
 
-          <Transition transitionOnMount='true' animation='fade up'>
-            <Card link>
-              <Card.Content header='Foobars' meta='Template for printing an index of foobars' />
-              <Card.Content className='templateCard'>
-                <List>
-                  <List.Item><h4>Lorem ipsum [[DOLLAR]] sit amet, consectetur</h4></List.Item>
-                  <List.Item><p>[[CONSECTETUR]] adipiscing elit</p></List.Item>
-                </List>
-              </Card.Content>
-              <Card.Content extra>
-                <Label color='grey'>[[]]<Label.Detail>FOOBAR</Label.Detail></Label>
-                <Label color='violet'>One Column</Label>
-                <Label color='teal'>Whitespace<Label.Detail>4</Label.Detail></Label>
-              </Card.Content>
-            </Card>
-          </Transition>
+          </Card.Group>
 
-          </Card.Group> 
+          <TemplateInputModal 
+            open={this.state.openTemplateInputModal} 
+            onClose={this.handleCloseTemplateInputModal}
+            tablesByCode={this.props.tablesByCode} 
+            pluginsByName={this.props.templatePluginsByName}
+            templatesByName={this.props.templatesByName}
+            onSubmit={this.handleSubmitTemplateInputModal}
+          />
+
         </WideColumnWorkspace>
 
         <FloatingWorkspaceMenu>
@@ -114,7 +120,7 @@ class TemplatesWorkspace extends Component {
           <Dropdown.Item text='Export templates ...' />
           <Dropdown.Item text='Delete all templates' />
         </FloatingWorkspaceMenu>
-        <FloatingActionButton icon='plus' color='google plus' />
+        <FloatingActionButton icon='plus' color='google plus' onClick={this.handleClickAddTemplateButton} />
         
       </div>
     );
