@@ -16,9 +16,9 @@ import {ERRORS} from '../constants/strings'
 import './containers.css';
 
 const mapStateToProps = state => ({
-  terrainTags: getTerrainTags(state.entities.tags),
-  territoryTags: getTerritoryTags(state.entities.tags),
-  otherTags: getOtherTags(state.entities.tags),
+  terrainTags: getTerrainTags(state),
+  territoryTags: getTerritoryTags(state),
+  otherTags: getOtherTags(state),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

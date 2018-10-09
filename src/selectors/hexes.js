@@ -1,29 +1,29 @@
 import {getFullEntryDetailById} from './entrydetails'
 
-function getHexes(stateEntities) { 
+function getHexes(state) { 
   /*
   Return an array of "full" hexes
   */
-  return stateEntities.tables.byId['HEX'].entries.map(
-    id => getFullHexById(stateEntities, id)
+  return state.entities.tables.byId['HEX'].entries.map(
+    id => getFullHexById(state, id)
   )
 }
 
-function getByIdHexes(stateEntities) {
+function getByIdHexes(state) {
   /*
   Return a lookup object of "full" hexes
   */
   const hexesById = {}
-  stateEntities.tables.byId['HEX'].entries.map(
+  state.entities.tables.byId['HEX'].entries.map(
     id => {
-      hexesById[id] = getFullHexById(stateEntities, id)
+      hexesById[id] = getFullHexById(state, id)
       return true
     }
   )
   return hexesById
 }
 
-function getFullHexById(stateEntities, id) {
+function getFullHexById(state, id) {
   /*
   Return the "full" hex for the given ID, i.e. follow all realtionships and include
   the details of those related objects as well
@@ -39,15 +39,15 @@ function getFullHexById(stateEntities, id) {
     ]
   }
   */
-  const hex = {...stateEntities.tableEntries.byId[id]}
+  const hex = {...state.entities.tableEntries.byId[id]}
   hex['coordinates'] = id
   hex['terrain'] = hex.addTags[0]
   hex['territory'] = hex.addTags[1]
   // If the hex is using global hex definitions, i.e. the 'HEX' entryDetailsGroup, don't pull in any entryDetails
   if (hex.entryDetailsGroup && hex.entryDetailsGroup !== 'HEX') {
-    const entryDetailsIds = stateEntities.entryDetailsGroups.byId[hex.entryDetailsGroup].entryDetails
+    const entryDetailsIds = state.entities.entryDetailsGroups.byId[hex.entryDetailsGroup].entryDetails
     if (entryDetailsIds) {
-      hex['entryDetails'] = entryDetailsIds.map(id => getFullEntryDetailById(stateEntities, id))
+      hex['entryDetails'] = entryDetailsIds.map(id => getFullEntryDetailById(state, id))
     }
   }
   else {
@@ -56,11 +56,11 @@ function getFullHexById(stateEntities, id) {
   return hex
 }
 
-function getHexDefinitions(stateEntities) {
+function getHexDefinitions(state) {
   const hexDefinitions = []
-  for (let i = 0; i < stateEntities.entryDetailsGroups.byId['HEX'].entryDetails.length; i++) {
-    const entryDetailsId = stateEntities.entryDetailsGroups.byId['HEX'].entryDetails[i]
-    hexDefinitions.push({id: entryDetailsId, text: stateEntities.entryDetails.byId[entryDetailsId].text})
+  for (let i = 0; i < state.entities.entryDetailsGroups.byId['HEX'].entryDetails.length; i++) {
+    const entryDetailsId = state.entities.entryDetailsGroups.byId['HEX'].entryDetails[i]
+    hexDefinitions.push({id: entryDetailsId, text: state.entities.entryDetails.byId[entryDetailsId].text})
   }
   return hexDefinitions
 };

@@ -1,26 +1,26 @@
 import {COLORS} from '../constants/colors'
 
-function getTerrainTags(tags) { 
-  return tags.allIds.filter(id => id && tags.byId[id].terrainHexes.length > 0 ).sort()
+function getTerrainTags(state) { 
+  return state.entities.tags.allIds.filter(id => id && state.entities.tags.byId[id].terrainHexes.length > 0 ).sort()
 };
 
-function getTerritoryTags(tags) {
-  return tags.allIds.filter(id => id && tags.byId[id].territoryHexes.length > 0 ).sort()
+function getTerritoryTags(state) {
+  return state.entities.tags.allIds.filter(id => id && state.entities.tags.byId[id].territoryHexes.length > 0 ).sort()
 };
 
-function getOtherTags(tags) {
-  return tags.allIds.filter(id => id && tags.byId[id].terrainHexes.length <= 0 && tags.byId[id].territoryHexes.length <= 0 ).sort()
+function getOtherTags(state) {
+  return state.entities.tags.allIds.filter(id => id && state.entities.tags.byId[id].terrainHexes.length <= 0 && state.entities.tags.byId[id].territoryHexes.length <= 0 ).sort()
 };
 
-function getByTagColors(tags) {
+function getByTagColors(state) {
   const colorsByTag = {}
-  tags.allIds.map(
+  state.entities.tags.allIds.map(
     id => {
       colorsByTag[id] = COLORS.OTHER_TAG
-      if (tags.byId[id].territoryHexes.length > 0) {
+      if (state.entities.tags.byId[id].territoryHexes.length > 0) {
         colorsByTag[id] = COLORS.TERRITORY_TAG
       }
-      if (tags.byId[id].terrainHexes.length >0) {
+      if (state.entities.tags.byId[id].terrainHexes.length >0) {
         colorsByTag[id] = COLORS.TERRAIN_TAG
       }
       return true
@@ -29,4 +29,8 @@ function getByTagColors(tags) {
   return colorsByTag
 };
 
-export {getTerrainTags, getTerritoryTags, getOtherTags, getByTagColors}
+function getAllTagIds(state) {
+  return [...state.entities.tags.allIds]
+}
+
+export {getTerrainTags, getTerritoryTags, getOtherTags, getByTagColors, getAllTagIds}

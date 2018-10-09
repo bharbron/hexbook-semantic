@@ -12,17 +12,17 @@ import {addTableEntry, updateTableEntry} from '../actions/tabledetails'
 import {getByCodeTables} from '../selectors/tables'
 import {getTableId, getFullTableById} from '../selectors/tabledetails'
 import {getFullTableEntriesLookup} from '../selectors/tableentries'
-import {getByTagColors} from '../selectors/tags'
+import {getByTagColors, getAllTagIds} from '../selectors/tags'
 import {REGEX} from '../constants/regex'
 import './containers.css';
 
 const mapStateToProps = state => ({
-  tablesByCode: getByCodeTables(state.entities.tables),
+  tablesByCode: getByCodeTables(state),
   tableId: getTableId(state.router),
-  table: getFullTableById(state.entities, getTableId(state.router)),
-  tableEntriesById: getFullTableEntriesLookup(state.entities),
-  allTagIds: state.entities.tags.allIds,
-  colorsByTag: getByTagColors(state.entities.tags),
+  table: getFullTableById(state, getTableId(state.router)),
+  tableEntriesById: getFullTableEntriesLookup(state),
+  allTagIds: getAllTagIds(state),
+  colorsByTag: getByTagColors(state),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

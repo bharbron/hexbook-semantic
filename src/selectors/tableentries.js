@@ -1,19 +1,19 @@
 import {getFullEntryDetailById} from './entrydetails'
 import {getFullTagWeightById} from './tagweights'
 
-export function getFullTableEntryById(stateEntities, id) {
-  const tableEntry = {...stateEntities.tableEntries.byId[id]}
+export function getFullTableEntryById(state, id) {
+  const tableEntry = {...state.entities.tableEntries.byId[id]}
   if (tableEntry.entryDetailsGroup) {
-    const entryDetailsIds = stateEntities.entryDetailsGroups.byId[tableEntry.entryDetailsGroup].entryDetails
+    const entryDetailsIds = state.entities.entryDetailsGroups.byId[tableEntry.entryDetailsGroup].entryDetails
     if (entryDetailsIds) {
-      tableEntry['entryDetails'] = entryDetailsIds.map(id => getFullEntryDetailById(stateEntities, id))
+      tableEntry['entryDetails'] = entryDetailsIds.map(id => getFullEntryDetailById(state, id))
     }
   }
   if (tableEntry.tagWeights) {
     const tagWeights = []
     tableEntry['tagWeights'].map(
       id => {
-        const tagWeight = getFullTagWeightById(stateEntities, id)
+        const tagWeight = getFullTagWeightById(state, id)
         if (tagWeight) {
           tagWeights.push(tagWeight)
         }
@@ -25,13 +25,13 @@ export function getFullTableEntryById(stateEntities, id) {
   return tableEntry
 }
 
-export function getFullTableEntriesLookup(stateEntities) {
+export function getFullTableEntriesLookup(state) {
   /*
   Return a byId lookup object of all "full" table entries
   */
   const fullTableEntries = {}
-  stateEntities.tableEntries.allIds.map(id => {
-    fullTableEntries[id] = getFullTableEntryById(stateEntities, id)
+  state.entities.tableEntries.allIds.map(id => {
+    fullTableEntries[id] = getFullTableEntryById(state, id)
     return true
   })
   return fullTableEntries
