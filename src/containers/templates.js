@@ -20,7 +20,7 @@ import {getByIdTemplatePlugins, getByNameTemplatePlugins} from '../selectors/tem
 import './containers.css';
 
 const mapStateToProps = state => ({
-  tablesByCode: getByCodeTables(state.entities.tables),
+  tablesByCode: getByCodeTables(state),
   templates: getByIdTemplates(state),
   templatesByName: getByNameTemplates(state),
   templatePluginsByName: getByNameTemplatePlugins(state),

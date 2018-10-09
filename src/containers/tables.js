@@ -15,8 +15,8 @@ import {getTables, getByCodeTables} from '../selectors/tables'
 import './containers.css';
 
 const mapStateToProps = state => ({
-  tables: getTables(state.entities.tables),
-  tablesByCode: getByCodeTables(state.entities.tables)
+  tables: getTables(state),
+  tablesByCode: getByCodeTables(state)
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

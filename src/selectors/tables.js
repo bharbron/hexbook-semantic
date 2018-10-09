@@ -1,11 +1,11 @@
 import {getTemplateById} from './templates'
 import {getTemplatePluginById} from './templateplugins'
 
-export function getTables(stateTables) {
+export function getTables(state) {
   const tables = []
-  for (let i = 0; i < stateTables.allIds.length; i++) {
-    const tableId = stateTables.allIds[i]
-    const table = stateTables.byId[tableId]
+  for (let i = 0; i < state.entities.tables.allIds.length; i++) {
+    const tableId = state.entities.tables.allIds[i]
+    const table = state.entities.tables.byId[tableId]
     // Don't include the 'HEX' table. We manage that separately from other tables.
     if (tableId !== 'HEX') {
       tables.push({
@@ -21,12 +21,12 @@ export function getTables(stateTables) {
   return tables
 }
 
-export function getByCodeTables(stateTables) {
+export function getByCodeTables(state) {
   const tablesByCode = {}
-  stateTables.allIds.forEach(
+  state.entities.tables.allIds.forEach(
     id => {
-      if (stateTables.byId[id]) { 
-        tablesByCode[stateTables.byId[id].code] = stateTables.byId[id]
+      if (state.entities.tables.byId[id]) { 
+        tablesByCode[state.entities.tables.byId[id].code] = state.entities.tables.byId[id]
       }
     }
   )

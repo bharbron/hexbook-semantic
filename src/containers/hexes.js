@@ -13,9 +13,9 @@ import {addHexDefinition, deleteHexDefinition, addHex, updateHex} from '../actio
 import './containers.css';
 
 const mapStateToProps = state => ({
-  hexes: getHexes(state.entities),
-  hexesById: getByIdHexes(state.entities),
-  hexDefinitions: getHexDefinitions(state.entities),
+  hexes: getHexes(state),
+  hexesById: getByIdHexes(state),
+  hexDefinitions: getHexDefinitions(state),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
