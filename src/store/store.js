@@ -18,7 +18,7 @@ const initialState = {
           code: 'HEX',
           name: 'Hex Map',
           description: 'Mapping of hex coordinates to terrain and territory',
-          template: 'HEX',
+          templates: ['HEX'],
           entries: [],
         }
       },

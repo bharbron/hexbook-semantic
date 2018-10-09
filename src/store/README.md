@@ -41,7 +41,7 @@ entities: {
         code: "HEX",
         name: "Hex Map",
         description: "Mapping of hex coordinates to terrain and territory",
-        template: "HEX",
+        templates: "HEX",
         entries: ["0101", ...],
       },
       "1e7bea41-1885-4db7-84f1-1b0eee4c6adb": {
@@ -49,7 +49,7 @@ entities: {
         code: "NPC",
         name: "Random NPC",
         description: "A random, intelligent NPC"
-        template: undefined, // undefined if this table has no template attached to it
+        templates: [],
         entries: ["a92129a8-e3f4-4583-bcfa-dff3f957c123", ...]
       },
       ...
