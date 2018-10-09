@@ -1,3 +1,4 @@
+import {getTableById} from './tables'
 import {getTemplatePluginById} from './templateplugins'
 
 export function getByIdTemplates(state) {
@@ -28,8 +29,15 @@ function compareTemplates(a, b) {
   return 0
 }
 
+export function getTemplateById(state, id) {
+  return {...state.entities.templates.byId[id]}
+}
+
 export function getFullTemplateById(state, id) {
-  const template = {...state.entities.templates.byId[id]}
+  const template = getTemplateById(state, id)
+  if (template.table) {
+    template.table = getTableById(state, template.table)
+  }
   if (template.plugin) {
     template.plugin = getTemplatePluginById(state, template.plugin)
   }

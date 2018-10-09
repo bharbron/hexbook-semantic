@@ -12,7 +12,7 @@ import {
   Ref,
   Transition
 } from 'semantic-ui-react';
-import {InputErrorPopup} from './forms'
+import {HiddenSubmitButton, InputErrorPopup} from './forms'
 import {TableCodeLabel, TemplatePluginLabel, TemplatePropertyLabel} from './labels'
 import {COLORS} from '../constants/colors'
 import {REGEX} from '../constants/regex'
@@ -53,7 +53,7 @@ function TemplateCard(props) {
 function TemplateLabels(props) {
   return (
     <Label.Group>
-      <TableCodeLabel code={props.template.table} />
+      <TableCodeLabel code={props.template.table.code} />
       <TemplatePluginLabel plugin={props.template.plugin} />
       {Object.keys(props.template.properties).map(
         p => <TemplatePropertyLabel property={p} value={props.template.properties[p]} />
@@ -235,8 +235,8 @@ class TemplateInputModal extends Component {
               <InputErrorPopup context={this.state.descriptionNode} error={this.state.error.description} />
               <Form.Select 
                 name='plugin'
-                inline
-                placeholder='Template Type' 
+                label='Template Type'
+                placeholder='' 
                 search
                 options={this.pluginOptions}
                 value={this.state.value.plugin}
@@ -244,13 +244,14 @@ class TemplateInputModal extends Component {
               />
               <Form.Select 
                 name='table'
-                inline
-                placeholder='Table' 
+                label='Table'
+                placeholder='' 
                 search
                 options={this.tableOptions}
                 value={this.state.value.table}
                 onChange={this.handleChange} 
               />
+              <HiddenSubmitButton />
             </Form>
           </Modal.Content>
           <Modal.Actions>

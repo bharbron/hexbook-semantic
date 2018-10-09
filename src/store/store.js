@@ -55,8 +55,8 @@ const initialState = {
           id: 'HEX',
           name: 'Hexes',
           description: 'Template for printing the index of hexes',
-          table: 'HEX',
           plugin: UUID.TEMPLATE_INDEX_PLUGIN_ID,
+          table: 'HEX',
           properties: {
             'columns': '2',
             'whitespace': '4',
@@ -81,6 +81,15 @@ const initialState = {
           name: 'Index',
           preview: IndexPreview,
           color: 'violet',
+          defaultProperties: {
+            'columns': '2',
+            'whitespace': '4',
+          },
+          defaultMetadata: {
+            'text': 'h1',
+            'entryDetails': [],
+            'references': 'h2'
+          }
         },
       },
       allIds: [UUID.TEMPLATE_INDEX_PLUGIN_ID]

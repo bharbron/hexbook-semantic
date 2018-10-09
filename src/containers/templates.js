@@ -44,7 +44,15 @@ class TemplatesWorkspace extends Component {
   }
 
   handleSubmitTemplateInputModal = (value) => {
-    this.props.addTemplate(value.name, value.description, this.props.templatePluginsByName[value.plugin].id, this.props.tablesByCode[value.table].id)
+    this.setState({openTemplateInputModal: false})
+    this.props.addTemplate(
+      value.name, 
+      value.description, 
+      this.props.templatePluginsByName[value.plugin].id, 
+      this.props.tablesByCode[value.table].id,
+      this.props.templatePluginsByName[value.plugin].defaultProperties,
+      this.props.templatePluginsByName[value.plugin].defaultMetadata,
+    )
   }
 
   render() {

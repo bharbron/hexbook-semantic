@@ -29,6 +29,8 @@ function byIdAddTemplate(state, action) {
       description: action.payload.description,
       plugin: action.payload.plugin,
       table: action.payload.table,
+      properties: action.payload.properties,
+      metadata: action.payload.metadata,
     }
   }
 }
