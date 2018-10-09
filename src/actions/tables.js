@@ -11,7 +11,7 @@ export const UPDATE_TABLE = 'UPDATE_TABLE'
 /* action creators */
 
 export function addTable(name, code, description) {
-  return {type: 'ADD_TABLE', payload: {'id': uuidv4(), 'name': name, 'code': code, 'description': description}}
+  return {type: ADD_TABLE, payload: {'id': uuidv4(), 'name': name, 'code': code, 'description': description}}
 }
 
 export function deleteTable(id) {

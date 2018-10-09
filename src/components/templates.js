@@ -172,6 +172,18 @@ class TemplateInputModal extends Component {
     }
   }
 
+  handleSubmit = () => {
+    if (this.state.valid.name && this.state.valid.description && this.state.valid.plugin && this.state.valid.table) {
+      const value = this.state.value
+      this.setState({
+        value: {name: '', description: '', plugin: '', table: ''},
+        valid: {name: false, description: false, plugin: false, table: false},
+        error: {name: null, description: null, plugin: false, table: null},
+      })
+      this.props.onSubmit(value)
+    }
+  }
+
   handleClose = () => {
     this.props.onClose()
   }

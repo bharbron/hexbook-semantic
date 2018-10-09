@@ -9,6 +9,7 @@ import {
   List,
   Transition
 } from 'semantic-ui-react';
+import {addTemplate} from '../actions/templates'
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
 import {TemplateCardsGroup, TemplateInputModal} from '../components/templates'
@@ -26,6 +27,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  addTemplate,
 }, dispatch)
 
 class TemplatesWorkspace extends Component {
@@ -39,6 +41,10 @@ class TemplatesWorkspace extends Component {
 
   handleCloseTemplateInputModal = () => {
     this.setState({openTemplateInputModal: false})
+  }
+
+  handleSubmitTemplateInputModal = (value) => {
+    this.props.addTemplate(value.name, value.description, this.props.templatePluginsByName[value.plugin].id, this.props.tablesByCode[value.table].id)
   }
 
   render() {
@@ -96,6 +102,7 @@ class TemplatesWorkspace extends Component {
             tablesByCode={this.props.tablesByCode} 
             pluginsByName={this.props.templatePluginsByName}
             templatesByName={this.props.templatesByName}
+            onSubmit={this.handleSubmitTemplateInputModal}
           />
 
         </WideColumnWorkspace>
