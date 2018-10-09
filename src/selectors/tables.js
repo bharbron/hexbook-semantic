@@ -1,24 +1,33 @@
-import {getTemplateById} from './templates'
-import {getTemplatePluginById} from './templateplugins'
+import {getFullTemplateById} from './templates'
 
 export function getTables(state) {
-  const tables = []
-  for (let i = 0; i < state.entities.tables.allIds.length; i++) {
-    const tableId = state.entities.tables.allIds[i]
-    const table = state.entities.tables.byId[tableId]
-    // Don't include the 'HEX' table. We manage that separately from other tables.
-    if (tableId !== 'HEX') {
-      tables.push({
-        id: table.id,
-        name: table.name,
-        code: table.code,
-        description: table.description,
-        entries: table.entries,
-        template: table.template
-      })
+  const hexTable = getFullTableById(state, 'HEX')
+  const otherTables = []
+  state.entities.tables.allIds.forEach(
+    id => {
+      if (id !== 'HEX') {
+        const table = getFullTableById(state, id)
+        if (table) {
+          otherTables.push(table)
+        }
+      }
     }
+  )
+  // TODO: Alphabetize everything but the 'Hexes' table, then put the 'Hexes' table at the head of the array
+  return [hexTable].concat(otherTables.sort(compareTemplates))
+}
+
+function compareTemplates(a, b) {
+  /*
+  For sorting an array of tables by their table names
+  */
+  if (a.name < b.name) {
+    return -1
   }
-  return tables
+  if (a.name > b.name) {
+    return 1
+  }
+  return 0
 }
 
 export function getByCodeTables(state) {
@@ -26,7 +35,7 @@ export function getByCodeTables(state) {
   state.entities.tables.allIds.forEach(
     id => {
       if (state.entities.tables.byId[id]) { 
-        tablesByCode[state.entities.tables.byId[id].code] = state.entities.tables.byId[id]
+        tablesByCode[state.entities.tables.byId[id].code] = getFullTableById(state, id)
       }
     }
   )
@@ -40,11 +49,7 @@ export function getTableById(state, id) {
 export function getFullTableById(state, id) {
   const table = getTableById(state, id)
   if (table.template) {
-    // Have to be careful here. Can't query the "full" template, as it will cause an infinite loop
-    table.template = getTemplateById(state, table.template)
-    if (table.template.plugin) {
-      table.template.plugin = getTemplatePluginById(state, table.template.plugin)
-    }
+    table.template = getFullTemplateById(state, table.template)
   }
   return table
 }

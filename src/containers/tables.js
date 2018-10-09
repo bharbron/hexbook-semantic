@@ -15,7 +15,8 @@ import {getTables, getByCodeTables} from '../selectors/tables'
 import './containers.css';
 
 const mapStateToProps = state => ({
-  tables: getTables(state),
+  // We don't want to manage the HEX table on this screen, so filter it out
+  tables: [...getTables(state).filter(t => t.code !== 'HEX')],
   tablesByCode: getByCodeTables(state)
 })
 
