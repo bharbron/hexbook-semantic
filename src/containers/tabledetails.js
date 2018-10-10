@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import React, {Component} from 'react';
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton} from '../components/floatingcontrols'
 import {TextAreaInputModal} from '../components/modals'
@@ -9,8 +9,8 @@ import {TableEntriesSegment} from '../components/tableentries'
 import {TableEntryEditModal} from '../components/tableentry'
 import {updateTable} from '../actions/tables'
 import {addTableEntry, updateTableEntry} from '../actions/tabledetails'
-import {getByCodeTables} from '../selectors/tables'
-import {getTableId, getFullTableById} from '../selectors/tabledetails'
+import {getByCodeTables, getFullTableById} from '../selectors/tables'
+import {getTableIdFromRoute} from '../selectors/tabledetails'
 import {getFullTableEntriesLookup} from '../selectors/tableentries'
 import {getByTagColors, getAllTagIds} from '../selectors/tags'
 import {REGEX} from '../constants/regex'
@@ -18,8 +18,8 @@ import './containers.css';
 
 const mapStateToProps = state => ({
   tablesByCode: getByCodeTables(state),
-  tableId: getTableId(state.router),
-  table: getFullTableById(state, getTableId(state.router)),
+  tableId: getTableIdFromRoute(state.router),
+  table: getFullTableById(state, getTableIdFromRoute(state.router)),
   tableEntriesById: getFullTableEntriesLookup(state),
   allTagIds: getAllTagIds(state),
   colorsByTag: getByTagColors(state),

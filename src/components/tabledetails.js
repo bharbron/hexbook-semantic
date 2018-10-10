@@ -303,7 +303,7 @@ function TableDetailsLabels(props) {
     <Label.Group>
       {props.table.entries && <TableEntriesCountLabel count={props.table.entries.length} />}
       <TableCodeLabel code={props.table.code} />
-      {props.table.template && <TemplateLabel template={props.table.template.name} />}
+      {props.table.templates.map(template => <TemplateLabel template={template} />)}
     </Label.Group>
   )
 }

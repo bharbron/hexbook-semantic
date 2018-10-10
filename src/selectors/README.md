@@ -60,14 +60,16 @@ fullTable = {
   code: "NPC",
   name: "Random NPC",
   description: "A random, intelligent NPC"
-  template: { //drill down by ID!
-    id: "c601934b-0c71-487d-8274-9ff63cd86f24",
-    name: "Important NPC", // we really only need the template "name" on the tables screen, but its just as easy to pull all of the information as we drill into the reference
-    description: "Template for printing a full list of all the important NPCs in the campaigh",
-    table: "1e7bea41-1885-4db7-84f1-1b0eee4c6adb",
-    internalId: "7b50f4e2-4aee-4b01-b6ea-e6bff16ab61f",
-    metadata: {...}
-  },
+  templates: [
+    { //drill down by ID!
+      id: "c601934b-0c71-487d-8274-9ff63cd86f24",
+      name: "Important NPC", // we really only need the template "name" on the tables screen, but its just as easy to pull all of the information as we drill into the reference
+      description: "Template for printing a full list of all the important NPCs in the campaigh",
+      table: "1e7bea41-1885-4db7-84f1-1b0eee4c6adb",
+      internalId: "7b50f4e2-4aee-4b01-b6ea-e6bff16ab61f",
+      metadata: {...}
+    },
+  ],
   entries: [
     {
       id: "a92129a8-e3f4-4583-bcfa-dff3f957c123",
