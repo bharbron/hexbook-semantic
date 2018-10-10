@@ -1,3 +1,4 @@
+import {getFullTableEntryById} from './tableentries'
 import {getFullTemplateById} from './templates'
 
 export function getTables(state) {
@@ -47,9 +48,8 @@ export function getTableById(state, id) {
 }
 
 export function getFullTableById(state, id) {
-  const table = getTableById(state, id)
-  if (table.template) {
-    table.template = getFullTemplateById(state, table.template)
-  }
+  const table = {...state.entities.tables.byId[id]} //make a ...copy so we don't mutate the state
+  table.templates = table.templates.map(templateId => getFullTemplateById(state, templateId))
+  table.entries = table.entries.map(tableId => getFullTableEntryById(state, tableId))
   return table
 }
