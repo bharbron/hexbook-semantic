@@ -1,8 +1,9 @@
 import {combineReducers} from 'redux'
-import {arrayWithPush} from './helpers'
+import {arrayWithPush, arrayWithUniquePush} from './helpers'
 import {ADD_HEX} from '../actions/hexes'
 import {ADD_TABLE, DELETE_TABLE, UPDATE_TABLE} from '../actions/tables'
 import {ADD_TABLE_ENTRY} from '../actions/tabledetails'
+import {ADD_TEMPLATE, DELETE_TEMPLATE} from '../actions/templates'
 
 function byId(state=null, action) {
   console.log(state)
@@ -13,6 +14,7 @@ function byId(state=null, action) {
     case DELETE_TABLE: return byIdDeleteTable(state, action)
     case UPDATE_TABLE: return byIdUpdateTable(state, action)
     case ADD_TABLE_ENTRY: return byIdAddTableEntry(state, action)
+    case ADD_TEMPLATE: return byIdAddTemplate(state, action)
     default: return state
   }
 }
@@ -83,6 +85,16 @@ function byIdAddTableEntry(state, action) {
     [tableId]: {
       ...state[tableId],
       entries: arrayWithPush(state[tableId].entries, action.payload.tableEntryId)
+    }
+  })
+}
+
+function byIdAddTemplate(state, action) {
+  return ({
+    ...state,
+    [action.payload.table]: {
+      ...state[action.payload.table],
+      templates: arrayWithUniquePush(state[action.payload.table].templates, action.payload.id)
     }
   })
 }
