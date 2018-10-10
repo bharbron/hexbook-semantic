@@ -23,7 +23,7 @@ function TableEntriesCountLabel(props) {
 }
 
 function TemplateLabel(props) {
-  return <Label color='violet'><Icon name='puzzle' />{props.template.name}</Label>
+  return <Label color={props.template.plugin.color}><Icon name='puzzle' />{props.template.name}</Label>
 }
 
 function TemplatePluginLabel(props) {

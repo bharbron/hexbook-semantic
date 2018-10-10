@@ -11,7 +11,7 @@ import {
   Transition
 } from 'semantic-ui-react';
 import {SingleLineAdderV2} from './forms'
-import {TableCodeLabel} from './labels'
+import {TableCodeLabel, TemplateLabel} from './labels'
 import {ListWithDeletableItems} from './lists'
 import {COLORS} from '../constants/colors'
 import {REGEX} from '../constants/regex'
@@ -88,7 +88,10 @@ class HexDefinitionSegment extends Component {
             />
           </Segment>
           <Segment>
-            <TableCodeLabel code='HEX' />
+            <Label.Group>
+              <TableCodeLabel code={this.props.hexTable.code} />
+              {this.props.hexTable.templates.map(template => <TemplateLabel template={template} />)}
+            </Label.Group>
           </Segment>
           <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
             <Dropdown.Menu direction='left'>

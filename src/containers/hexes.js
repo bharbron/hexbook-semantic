@@ -7,12 +7,14 @@ import {TextAreaInputModal} from '../components/modals'
 import {HexEditModal} from '../components/hex'
 import {HexDefinitionSegment, HexMapSegment} from '../components/hexes'
 import {REGEX} from '../constants/regex'
+import {getFullTableById} from '../selectors/tables'
 import {getHexes, getHexDefinitions, getByIdHexes} from '../selectors/hexes'
 import {addHexDefinition, deleteHexDefinition, addHex, updateHex} from '../actions/hexes'
 
 import './containers.css';
 
 const mapStateToProps = state => ({
+  hexTable: getFullTableById(state, 'HEX'),
   hexes: getHexes(state),
   hexesById: getByIdHexes(state),
   hexDefinitions: getHexDefinitions(state),
@@ -110,11 +112,12 @@ class HexesWorkspace extends Component {
       <div id='HexesWorkspace'>
         <WideColumnWorkspace>
           <HexDefinitionSegment
+            hexTable={this.props.hexTable}
             hexDefinitions={this.props.hexDefinitions}
             onSubmit={this.handleSubmitHexDefinitionInput}
             onDelete={this.handleClickDeleteHexDefinition}
           />
-          <HexMapSegment 
+          <HexMapSegment
             hexes={this.props.hexes}
             onSubmit={this.handleSubmitHexInput}
             onClickHex={this.handleClickHex}
