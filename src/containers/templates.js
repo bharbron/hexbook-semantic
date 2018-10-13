@@ -129,6 +129,7 @@ class TemplatesWorkspace extends Component {
           <TemplateEditModal
             key={this.state.editingTemplate.id} //This is IMPORTANT! https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#recommendation-fully-uncontrolled-component-with-a-key
             template={this.state.editingTemplate}
+            templatesByName={this.props.templatesByName}
             open={this.state.openTemplateEditModal}
             onClose={this.handleCloseTemplateEditModal}
           />

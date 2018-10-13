@@ -75,7 +75,7 @@ class TemplateEditModal extends Component {
     }
   }
 
-  handleChange = (event, {name, value}) => {
+  handleChangeBasic = (event, {name, value}) => {
     if (name === 'name') {
       if (value.match(REGEX.EMPTY)) {
         // name is required
@@ -86,7 +86,7 @@ class TemplateEditModal extends Component {
         return
       }
       if (value.match(REGEX.TEMPLATE_NAME)) {
-        if (this.props.templatesByName[value]) {
+        if (value !== this.props.template.name && this.props.templatesByName[value]) {
           this.setState({
             changed: true,
             name: {value: value, valid: false, error: ERRORS.TEMPLATE_NAME_DUPLICATE}
@@ -149,11 +149,12 @@ class TemplateEditModal extends Component {
     return (
       <Modal open={this.props.open} onClose={this.handleClose} className='TemplateEditModal'>
         <Modal.Header style={{ borderBottom: '0px' }}>
-          <Header as='h3' content={this.props.template.name} subheader={this.props.template.description} />
+          <Header as='h3' content={this.props.template.name + ' > Edit'} subheader='Edit template settings below' />
         </Modal.Header>
         <Modal.Content>
           <TemplateEditBasic
             name={this.state.name}
+            disabled={this.props.template.id === 'HEX'} // Basic settings for the default 'HEX' template are set in place
             description={this.state.description}
             onChange={this.handleChangeBasic} 
           />
@@ -190,11 +191,11 @@ class TemplateEditBasic extends Component {
   render() {
     return (
       <Form className='TemplateEditBasic'>
-        <Header as='h4' content='Basic' subheader='Generic details about this template.' />
         <Ref innerRef={this.handleNameRef}>
           <Form.Input 
             name='name'
             label='Name'
+            disabled={this.props.disabled}
             error={this.props.name.error} 
             autoFocus
             placeholder='Enter name for the template...'
@@ -207,6 +208,7 @@ class TemplateEditBasic extends Component {
           <Form.Input
             name='description'
             label='Description'
+            disabled={this.props.disabled}
             error={this.props.description.error}
             placeholder='Enter description for the template...' 
             value={this.props.description.value}

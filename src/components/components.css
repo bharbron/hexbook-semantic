@@ -96,3 +96,7 @@
 .TemplateCard p {
   font-family: 'IM Fell English', serif;
 }
+
+#TemplatesWorkspace > div.ui.padded.grid.WorkspaceGrid > div > div.fourteen.wide.column.WideColumnWorkspace > div.ui.doubling.two.cards.TemplateCardsGroup > a {
+  color: rgba(0,0,0,0.68);
+}
