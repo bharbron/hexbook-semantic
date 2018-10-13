@@ -1,0 +1,222 @@
+import React, {Component} from 'react';
+import {
+  Button,
+  Divider,
+  Form,
+  Header,
+  Icon,
+  Label,
+  List,
+  Modal,
+  Ref,
+} from 'semantic-ui-react';
+import {InputErrorPopup} from './forms'
+import {TableCodeLabel, TemplatePluginLabel, TemplatePropertyLabel} from './labels'
+import {COLORS} from '../constants/colors'
+import {REGEX} from '../constants/regex'
+import {ERRORS} from '../constants/strings'
+import './components.css';
+
+const uuidv4 = require('uuid/v4');
+
+class TemplateEditModal extends Component {
+  state = {
+      changed: false,
+      name: {
+        value: (this.props.template) ? this.props.template.name : '',
+        valid: false,
+        error: null
+      },
+      description: {
+        value: (this.props.template) ? this.props.template.description : '',
+        valid: false, 
+        error: null
+      },
+      properties: {
+        value: (this.props.template) ? this.props.template.properties : {},
+        valid: false, 
+        error: null
+      },
+      metadata: {
+        value: (this.props.template) ? this.props.template.metadata : {},
+        valid: false, 
+        error: null
+      },
+  }
+
+  primaryDisabled = () => {
+    /*
+    Determine whether or not the primary SAVE button should be enabled based on what data has been input or changed
+    */
+    return (this.state.changed, this.state.name.valid && this.state.description.valid && this.state.properties.valid && this.state.metadata.valid) ? false : true
+  }
+
+  handleClose = () => {
+    /*
+    Closing the modal
+    */
+    // Reset state to defaults
+    this.props.onClose()
+  }
+
+  handleCancel = () => {
+    /*
+    Clicking the modal cancel button
+    */
+    // Reset state to defaults
+    this.props.onClose()
+  }
+
+  handleSubmit = () => {
+    if (this.state.changed, this.state.name.valid && this.state.description.valid && this.state.properties.valid && this.state.metadata.valid) {
+      // assemble the updated template
+      const template = undefined
+      this.props.onSubmit(template)
+    }
+  }
+
+  handleChange = (event, {name, value}) => {
+    if (name === 'name') {
+      if (value.match(REGEX.EMPTY)) {
+        // name is required
+        this.setState({
+          changed: true,
+          name: {value: value, valid: false, error: ERRORS.REQUIRED}
+        })
+        return
+      }
+      if (value.match(REGEX.TEMPLATE_NAME)) {
+        if (this.props.templatesByName[value]) {
+          this.setState({
+            changed: true,
+            name: {value: value, valid: false, error: ERRORS.TEMPLATE_NAME_DUPLICATE}
+          })
+          return
+        }
+        this.setState({
+          changed: true,
+          name: {value: value, valid: true, error: null}
+        })
+        return
+      }
+      this.setState({
+        changed: true,
+        name: {value: value, valid: false, error: ERRORS.TEMPLATE_NAME_INVALID_CHAR}
+      })
+      return
+    }
+    if (name === 'description') {
+      if (value.match(REGEX.EMPTY)) {
+        // description is not required, allowed to be empty
+        this.setState({
+          changed: true,
+          description: {value: value, valid: true, error: null}
+        })
+        return
+      }
+      if (value.match(REGEX.TEMPLATE_DESCRIPTION)) {
+        this.setState({
+          changed: true,
+          description: {value: value, valid: true, error: null}
+        })
+        return
+      }
+      this.setState({
+        changed: true,
+        description: {value: value, valid: false, error: ERRORS.TEMPLATE_DESCRIPTION_INVALID_CHAR}
+      })
+      return
+    }
+  }
+
+  handleChangeProperties = ({value, valid, error}) => {
+    this.setState({
+      changed: true,
+      properties: {value: value, valid: valid, error: error}
+    })
+  }
+
+  handleChangeMetadata = ({value, valid, error}) => {
+    this.setState({
+      changed: true,
+      metadata: {value: value, valid: valid, error: error}
+    })
+  }
+
+  render () {
+    //const EditPropertiesComponent = props.template.plugin.editProperties
+    //const EditMetadataComponent = props.template.plugin.editMetadata
+    return (
+      <Modal open={this.props.open} onClose={this.handleClose} className='TemplateEditModal'>
+        <Modal.Header style={{ borderBottom: '0px' }}>
+          <Header as='h3' content={this.props.template.name} subheader={this.props.template.description} />
+        </Modal.Header>
+        <Modal.Content>
+          <TemplateEditBasic
+            name={this.state.name}
+            description={this.state.description}
+            onChange={this.handleChangeBasic} 
+          />
+          <Divider horizontal>Properties</Divider>
+          {/*<EditPropertiesComponent template={this.props.template} onChange={this.handleChangeProperties} />*/}
+          <Divider horizontal>Metadata</Divider>
+          {/*<EditMetadataComponent template={this.props.template} onChange={this.handleChangeMetadata} />*/}
+        </Modal.Content>
+        <Modal.Actions>
+          <Button id='TemplateEditModalCancel' onClick={this.handleCancel}>CANCEL</Button>
+          <Button 
+            id='TemplateEditModalSave'
+            primary={!this.primaryDisabled()} 
+            disabled={this.primaryDisabled()} 
+            onClick={this.handleSubmit}
+          >
+            SAVE
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    )
+  }
+}
+
+class TemplateEditBasic extends Component {
+  state = {}
+
+  nameRef = React.createRef()
+  descriptionRef = React.createRef()
+
+  handleNameRef = nameNode => this.setState({nameNode})
+  handleDescriptionRef = descriptionNode => this.setState({descriptionNode})
+
+  render() {
+    return (
+      <Form className='TemplateEditBasic'>
+        <Header as='h4' content='Basic' subheader='Generic details about this template.' />
+        <Ref innerRef={this.handleNameRef}>
+          <Form.Input 
+            name='name'
+            label='Name'
+            error={this.props.name.error} 
+            autoFocus
+            placeholder='Enter name for the template...'
+            value={this.props.name.value}
+            onChange={this.props.onChange}
+          />
+        </Ref>
+        <InputErrorPopup context={this.state.nameNode} error={this.props.name.error} />
+        <Ref innerRef={this.handleDescriptionRef}>
+          <Form.Input
+            name='description'
+            label='Description'
+            error={this.props.description.error}
+            placeholder='Enter description for the template...' 
+            value={this.props.description.value}
+            onChange={this.props.onChange}
+          />
+        </Ref>
+        <InputErrorPopup context={this.state.descriptionNode} error={this.props.description.error} />
+      </Form>
+    )
+  }
+}
+
+export {TemplateEditModal}
