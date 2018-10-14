@@ -9,7 +9,7 @@ import {
   List,
   Transition
 } from 'semantic-ui-react';
-import {addTemplate} from '../actions/templates'
+import {addTemplate, updateTemplate} from '../actions/templates'
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatingcontrols'
 import {TemplateEditModal} from '../components/template'
@@ -29,6 +29,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   addTemplate,
+  updateTemplate,
 }, dispatch)
 
 class TemplatesWorkspace extends Component {
@@ -73,6 +74,18 @@ class TemplatesWorkspace extends Component {
       openTemplateEditModal: false,
       editingTemplate: {id: undefined},
     })
+  }
+
+  handleSubmitTemplateEditModal = (template, prevTemplate) => {
+    /*
+    1. Close the modal
+    2. Dispatch the updated template and the previous template to the action creator
+    */
+    this.setState({
+      openTemplateEditModal: false,
+      editingTemplate: {id: undefined},
+    })
+    this.props.updateTemplate(template, prevTemplate)
   }
 
   render() {
@@ -132,6 +145,7 @@ class TemplatesWorkspace extends Component {
             templatesByName={this.props.templatesByName}
             open={this.state.openTemplateEditModal}
             onClose={this.handleCloseTemplateEditModal}
+            onSubmit={this.handleSubmitTemplateEditModal}
           />
         </WideColumnWorkspace>
         <FloatingWorkspaceMenu>

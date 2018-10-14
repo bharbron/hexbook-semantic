@@ -69,9 +69,17 @@ class TemplateEditModal extends Component {
 
   handleSubmit = () => {
     if (this.state.changed, this.state.name.valid && this.state.description.valid && this.state.properties.valid && this.state.metadata.valid) {
+      // capture the previous template
+      const prevTemplate = {...this.props.template} 
       // assemble the updated template
-      const template = undefined
-      this.props.onSubmit(template)
+      const template = {
+        ...this.props.template,
+        name: this.state.name,
+        description: this.state.description,
+        properties: {...this.state.properties},
+        metadata: {...this.state.metadata},
+      }
+      this.props.onSubmit(template, prevTemplate)
     }
   }
 
