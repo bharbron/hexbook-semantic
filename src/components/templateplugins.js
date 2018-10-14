@@ -69,25 +69,33 @@ class IndexEditProperties extends Component {
   ]
 
   handleChange = (event, {name, value}) => {
+    // We need a synchronously updated version of state as well, since we need to sync changes with the parent component
+    const syncState = {...this.state}
     if (name === 'columns') {
       this.setState({
         columns: {value: value, valid: true, error: null}
       })
+      syncState.columns = {value: value, valid: true, error: null}
     }
     if (name === 'whitespace') {
       this.setState({
         whitespace: {value: value, valid: true, error: null}
       })
+      syncState.whitespace = {value: value, valid: true, error: null}
     }
+    this.sendPropertiesToParent(syncState)
+  }
+
+  sendPropertiesToParent = (syncState) => {
     // The parent component needs to know about the values as well,
     // so assemble them as a 'properties' object and send them up
     const properties = {
-      columns: this.state.columns.value,
-      whitespace: this.state.whitespace.value,
+      columns: syncState.columns.value,
+      whitespace: syncState.whitespace.value,
     }
     this.props.onChange({
       value: properties, 
-      valid: (this.state.columns.valid && this.state.whitespace.valid),
+      valid: (syncState.columns.valid && syncState.whitespace.valid),
       error: null,
     })
   }
@@ -157,53 +165,63 @@ class IndexEditMetadata extends Component {
     return optionTextByValue
   }
 
-  sendMetadataToParent = () => {
+  sendMetadataToParent = (syncState) => {
     // The parent component needs to know about the values as well,
     // so assemble them as a 'metadata' object and send them up
     const metadata = {
-      text: this.state.text.value,
-      entryDetails: this.state.entryDetails.value,
-      references: this.state.references.value,
+      text: syncState.text.value,
+      entryDetails: syncState.entryDetails.value,
+      references: syncState.references.value,
     }
     this.props.onChange({
       value: metadata,
-      valid: (this.state.text.valid && this.state.entryDetails.valid && this.state.references.valid),
+      valid: (syncState.text.valid && syncState.entryDetails.valid && syncState.references.valid),
       error: null,
     })
   }
 
   handleChange = (event, {name, value}) => {
+    // We need a synchronously updated version of state as well, since we need to sync changes with the parent component
+    const syncState = {...this.state}
     if (name === 'text') {
       this.setState({
         text: {value: value, valid: true, error: null}
       })
+      syncState.text = {value: value, valid: true, error: null}
     }
     if (name === 'references') {
       this.setState({
         references: {value: value, valid: true, error: null}
       })
+      syncState.references = {value: value, valid: true, error: null}
     }
-    this.sendMetadataToParent()
+    this.sendMetadataToParent(syncState)
   }
 
   handleAddEntryDetail = (value) => {
+    // We need a synchronously updated version of state as well, since we need to sync changes with the parent component
+    const syncState = {...this.state}
     this.setState({
       entryDetails: {
-        value: [...this.state.entryDetails.value, value],
-        valid: true,
-        error: null,
-      },
+        value: [...this.state.entryDetails.value, value], valid: true, error: null,
+      }
     })
-    this.sendMetadataToParent()
+    syncState.entryDetails = {
+      value: [...this.state.entryDetails.value, value], valid: true, error: null,
+    }
+    this.sendMetadataToParent(syncState)
   }
 
   handleRemoveEntryDetail = () => {
+    // We need a synchronously updated version of state as well, since we need to sync changes with the parent component
+    const syncState = {...this.state}
     const newEntryDetails = [...this.state.entryDetails.value]
     newEntryDetails.pop()
     this.setState({
       entryDetails: {value: newEntryDetails, valid: true, error: null}
     })
-    this.sendMetadataToParent()
+    syncState.entryDetails = {value: newEntryDetails, valid: true, error: null}
+    this.sendMetadataToParent(syncState)
   }
 
   render() {
