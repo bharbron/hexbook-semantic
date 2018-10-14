@@ -3,6 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {
   Form,
+  Header,
   List,
 } from 'semantic-ui-react';
 import {TEMPLATE_PREVIEW} from '../constants/strings'
@@ -84,7 +85,7 @@ class IndexEditProperties extends Component {
       whitespace: this.state.whitespace.value,
     }
     this.props.onChange({
-      properties: properties, 
+      value: properties, 
       valid: (this.state.columns.valid && this.state.whitespace.valid),
       error: null,
     })
@@ -93,6 +94,7 @@ class IndexEditProperties extends Component {
   render() {
     return (
       <Form className='IndexEditProperties'>
+        <Header as='h4' content='Properties' subheader='Number of columns per page and number of lines of whitespace after each index entry' />
         <Form.Group>
           <Form.Select 
             name='columns'
@@ -116,4 +118,103 @@ class IndexEditProperties extends Component {
   }
 }
 
-export {IndexPreview, IndexEditProperties}
+class IndexEditMetadata extends Component {
+  state = {
+    text: {
+      value: (this.props.template && this.props.template.metadata) ? this.props.template.metadata.text : 'h1',
+      valid: (this.props.template && this.props.template.metadata && this.props.template.metadata.text) ? true : false,
+      error: null,
+    },
+    entryDetails: {
+      value: (this.props.template && this.props.template.metadata) ? this.props.template.metadata.entryDetails : [],
+      valid: true,
+      error: null,
+    },
+    references: {
+      value: (this.props.template && this.props.template.metadata) ? this.props.template.metadata.references : null,
+      valid: true,
+      error: null,
+    },
+  }
+
+  formatOptions = [
+    {key: 'p', value: 'p', text: 'Normal text'},
+    {key: 'h1', value: 'h1', text: 'Heading 1'},
+    {key: 'h2', value: 'h2', text: 'Heading 2'},
+    {key: 'h3', value: 'h3', text: 'Heading 3'},
+    {key: 'h4', value: 'h4', text: 'Heading 4'},
+    {key: 'h5', value: 'h5', text: 'Heading 5'},
+  ]
+
+  handleChange = (event, {name, value}) => {
+    if (name === 'text') {
+      this.setState({
+        text: {value: value, valid: true, error: null}
+      })
+    }
+    if (name === 'references') {
+      this.setState({
+        references: {value: value, valid: true, error: null}
+      })
+    }
+    // The parent component needs to know about the values as well,
+    // so assemble them as a 'metadata' object and send them up
+    const metadata = {
+      text: this.state.text.value,
+      entryDetails: this.state.entryDetails.value,
+      references: this.state.references.value,
+    }
+    this.props.onChange({
+      value: metadata,
+      valid: (this.state.text.valid && this.state.entryDetails.valid && this.state.references.valid),
+      error: null,
+    })
+  }
+
+  render() {
+    return (
+      <Form className='IndexEditMetadata'>
+        {console.log('IndexEditMetadata')}
+        {console.log('this.props')}
+        {console.log(this.props)}
+        {console.log('this.state')}
+        {console.log(this.state)}
+        <Header as='h4' content='Entry' subheader='Formatting to apply to the primary text of each index entry, i.e. the hex coordinates, NPC name, etc.' />
+        <EditTextFormatting options={this.formatOptions} text={this.state.text} onChange={this.handleChange} />
+        <Header as='h4' content='Details' subheader='Formatting to apply to each additional line of detail for each index entry. Lines with no defined format default to "Normal" text.' />
+        <Header as='h4' content='References' subheader='Formatting to apply to the list of hexes that reference each index entry.' />
+        <EditReferencesFormatting options={this.formatOptions} references={this.state.references} onChange={this.handleChange} />
+      </Form>
+    )
+  }
+}
+
+function EditTextFormatting(props) {
+  return (
+    <Form.Group>
+      <Form.Select 
+        name='text'
+        placeholder=''
+        options={props.options}
+        value={props.text.value}
+        onChange={props.onChange} 
+      />
+    </Form.Group>
+  )
+}
+
+function EditReferencesFormatting(props) {
+  return (
+    <Form.Group>
+      <Form.Select 
+        name='references'
+        placeholder=''
+        options={props.options}
+        value={props.references.value}
+        onChange={props.onChange} 
+      />
+    </Form.Group>
+  )
+}
+
+export {IndexPreview, IndexEditProperties, IndexEditMetadata}

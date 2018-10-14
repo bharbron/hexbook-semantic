@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory'
-import {IndexPreview, IndexEditProperties} from '../components/templateplugins'
+import {IndexPreview, IndexEditProperties, IndexEditMetadata} from '../components/templateplugins'
 import {UUID} from '../constants/uuid'
 import rootReducer from '../reducers'
 
@@ -81,6 +81,7 @@ const initialState = {
           name: 'Index',
           preview: IndexPreview,
           editProperties: IndexEditProperties,
+          editMetadata: IndexEditMetadata,
           color: 'violet',
           defaultProperties: {
             'columns': 2,

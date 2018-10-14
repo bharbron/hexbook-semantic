@@ -148,7 +148,7 @@ class TemplateEditModal extends Component {
     console.log('this.props')
     console.log(this.props)
     const EditPropertiesComponent = (this.props.template.id) ? this.props.template.plugin.editProperties : undefined
-    //const EditMetadataComponent = props.template.plugin.editMetadata
+    const EditMetadataComponent = (this.props.template.id) ? this.props.template.plugin.editMetadata : undefined
     return (
       <Modal open={this.props.open} onClose={this.handleClose} className='TemplateEditModal'>
         <Modal.Header style={{ borderBottom: '0px' }}>
@@ -161,10 +161,8 @@ class TemplateEditModal extends Component {
             description={this.state.description}
             onChange={this.handleChangeBasic} 
           />
-          <Divider horizontal>Properties</Divider>
           <EditPropertiesComponent template={this.props.template} onChange={this.handleChangeProperties} />
-          <Divider horizontal>Metadata</Divider>
-          {/*<EditMetadataComponent template={this.props.template} onChange={this.handleChangeMetadata} />*/}
+          <EditMetadataComponent template={this.props.template} onChange={this.handleChangeMetadata} />
         </Modal.Content>
         <Modal.Actions>
           <Button id='TemplateEditModalCancel' onClick={this.handleCancel}>CANCEL</Button>
@@ -194,31 +192,37 @@ class TemplateEditBasic extends Component {
   render() {
     return (
       <Form className='TemplateEditBasic'>
-        <Ref innerRef={this.handleNameRef}>
-          <Form.Input 
-            name='name'
-            label='Name'
-            disabled={this.props.disabled}
-            error={this.props.name.error} 
-            autoFocus
-            placeholder='Enter name for the template...'
-            value={this.props.name.value}
-            onChange={this.props.onChange}
-          />
-        </Ref>
-        <InputErrorPopup context={this.state.nameNode} error={this.props.name.error} />
-        <Ref innerRef={this.handleDescriptionRef}>
-          <Form.Input
-            name='description'
-            label='Description'
-            disabled={this.props.disabled}
-            error={this.props.description.error}
-            placeholder='Enter description for the template...' 
-            value={this.props.description.value}
-            onChange={this.props.onChange}
-          />
-        </Ref>
-        <InputErrorPopup context={this.state.descriptionNode} error={this.props.description.error} />
+        <Form.Group>
+          <Ref innerRef={this.handleNameRef}>
+            <Form.Input 
+              name='name'
+              label='Name'
+              inline
+              width={4} 
+              disabled={this.props.disabled}
+              error={this.props.name.error} 
+              autoFocus
+              placeholder='Enter name for the template...'
+              value={this.props.name.value}
+              onChange={this.props.onChange}
+            />
+          </Ref>
+          <InputErrorPopup context={this.state.nameNode} error={this.props.name.error} />
+          <Ref innerRef={this.handleDescriptionRef}>
+            <Form.Input
+              name='description'
+              label='Description'
+              inline
+              width={12} 
+              disabled={this.props.disabled}
+              error={this.props.description.error}
+              placeholder='Enter description for the template...' 
+              value={this.props.description.value}
+              onChange={this.props.onChange}
+            />
+          </Ref>
+          <InputErrorPopup context={this.state.descriptionNode} error={this.props.description.error} />
+        </Form.Group>
       </Form>
     )
   }
