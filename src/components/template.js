@@ -24,22 +24,22 @@ class TemplateEditModal extends Component {
       changed: false,
       name: {
         value: (this.props.template) ? this.props.template.name : '',
-        valid: false,
+        valid: (this.props.template && this.props.template.name),
         error: null
       },
       description: {
         value: (this.props.template) ? this.props.template.description : '',
-        valid: false, 
+        valid: true, 
         error: null
       },
       properties: {
         value: (this.props.template) ? this.props.template.properties : {},
-        valid: false, 
+        valid: true, 
         error: null
       },
       metadata: {
         value: (this.props.template) ? this.props.template.metadata : {},
-        valid: false, 
+        valid: true, 
         error: null
       },
   }
@@ -48,7 +48,7 @@ class TemplateEditModal extends Component {
     /*
     Determine whether or not the primary SAVE button should be enabled based on what data has been input or changed
     */
-    return (this.state.changed, this.state.name.valid && this.state.description.valid && this.state.properties.valid && this.state.metadata.valid) ? false : true
+    return (this.state.changed && this.state.name.valid && this.state.description.valid && this.state.properties.valid && this.state.metadata.valid) ? false : true
   }
 
   handleClose = () => {
@@ -130,6 +130,13 @@ class TemplateEditModal extends Component {
   }
 
   handleChangeProperties = ({value, valid, error}) => {
+    console.log('components.template.TemplateEditModal.handleChangeProperties')
+    console.log('value')
+    console.log(value)
+    console.log('valid')
+    console.log(valid)
+    console.log('error')
+    console.log(error)
     this.setState({
       changed: true,
       properties: {value: value, valid: valid, error: error}
@@ -137,6 +144,13 @@ class TemplateEditModal extends Component {
   }
 
   handleChangeMetadata = ({value, valid, error}) => {
+    console.log('components.template.TemplateEditModal.handleChangeMetadata')
+    console.log('value')
+    console.log(value)
+    console.log('valid')
+    console.log(valid)
+    console.log('error')
+    console.log(error)
     this.setState({
       changed: true,
       metadata: {value: value, valid: valid, error: error}
