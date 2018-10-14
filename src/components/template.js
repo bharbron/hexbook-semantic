@@ -144,12 +144,15 @@ class TemplateEditModal extends Component {
   }
 
   render () {
-    //const EditPropertiesComponent = props.template.plugin.editProperties
+    console.log('components.template.TemplateEditModal')
+    console.log('this.props')
+    console.log(this.props)
+    const EditPropertiesComponent = (this.props.template.id) ? this.props.template.plugin.editProperties : undefined
     //const EditMetadataComponent = props.template.plugin.editMetadata
     return (
       <Modal open={this.props.open} onClose={this.handleClose} className='TemplateEditModal'>
         <Modal.Header style={{ borderBottom: '0px' }}>
-          <Header as='h3' content={this.props.template.name + ' > Edit'} subheader='Edit template settings below' />
+          <Header as='h3' content={this.props.template.name + ' > Edit Template'} />
         </Modal.Header>
         <Modal.Content>
           <TemplateEditBasic
@@ -159,7 +162,7 @@ class TemplateEditModal extends Component {
             onChange={this.handleChangeBasic} 
           />
           <Divider horizontal>Properties</Divider>
-          {/*<EditPropertiesComponent template={this.props.template} onChange={this.handleChangeProperties} />*/}
+          <EditPropertiesComponent template={this.props.template} onChange={this.handleChangeProperties} />
           <Divider horizontal>Metadata</Divider>
           {/*<EditMetadataComponent template={this.props.template} onChange={this.handleChangeMetadata} />*/}
         </Modal.Content>
