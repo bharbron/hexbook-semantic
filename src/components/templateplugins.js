@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {
   Form,
   Header,
+  Icon,
   List,
 } from 'semantic-ui-react';
 import {TEMPLATE_PREVIEW} from '../constants/strings'
@@ -171,6 +172,26 @@ class IndexEditMetadata extends Component {
     })
   }
 
+  handleRemoveEntryDetail = () => {
+    const newEntryDetails = [...this.state.entryDetails.value]
+    newEntryDetails.pop()
+    this.setState({
+      entryDetails: {value: newEntryDetails, valid: true, error: null}
+    })
+    // The parent component needs to know about the values as well,
+    // so assemble them as a 'metadata' object and send them up
+    const metadata = {
+      text: this.state.text.value,
+      entryDetails: this.state.entryDetails.value,
+      references: this.state.references.value,
+    }
+    this.props.onChange({
+      value: metadata,
+      valid: (this.state.text.valid && this.state.entryDetails.valid && this.state.references.valid),
+      error: null,
+    })
+  }
+
   render() {
     return (
       <Form className='IndexEditMetadata'>
@@ -181,7 +202,13 @@ class IndexEditMetadata extends Component {
         {console.log(this.state)}
         <Header as='h4' content='Entry' subheader='Formatting to apply to the primary text of each index entry, i.e. the hex coordinates, NPC name, etc.' />
         <EditTextFormatting options={this.formatOptions} text={this.state.text} onChange={this.handleChange} />
-        <Header as='h4' content='Details' subheader='Formatting to apply to each additional line of detail for each index entry. Lines with no defined format default to "Normal" text.' />
+        <Header as='h4' content='Details' subheader='Formatting to apply to each additional line of detail for each index entry. Lines with no defined format default to "Normal text".' />
+        <EditEntryDetailsFormatting 
+          options={this.formatOptions} 
+          entryDetails={this.state.entryDetails} 
+          onChange={this.handleChange} 
+          onRemove={this.handleRemoveEntryDetail}
+        />
         <Header as='h4' content='References' subheader='Formatting to apply to the list of hexes that reference each index entry.' />
         <EditReferencesFormatting options={this.formatOptions} references={this.state.references} onChange={this.handleChange} />
       </Form>
@@ -194,7 +221,6 @@ function EditTextFormatting(props) {
     <Form.Group>
       <Form.Select 
         name='text'
-        placeholder=''
         options={props.options}
         value={props.text.value}
         onChange={props.onChange} 
@@ -203,12 +229,37 @@ function EditTextFormatting(props) {
   )
 }
 
+function EditEntryDetailsFormatting(props) {
+  return (
+    <div className='EditEntryDetailsFormatting'>
+      <List size='large'>
+        {props.entryDetails.value.map(
+          (entryDetail, index, entryDetails) => 
+            <EntryDetailFormattingListItem 
+              index={index} 
+              entryDetail={entryDetail} 
+              onRemove={props.onRemove}
+              last={(index + 1 === entryDetails.length)}
+            />
+        )}
+      </List>
+    </div>
+  )
+}
+
+function EntryDetailFormattingListItem(props) {
+  return (
+    <List.Item key={props.index + '_' + props.entryDetail}>
+      {props.entryDetail}: Detail Line {props.index + 1} {props.last && <Icon link name='minus circle' color='grey' onClick={props.onRemove} />}
+    </List.Item>
+  )
+}
+
 function EditReferencesFormatting(props) {
   return (
     <Form.Group>
       <Form.Select 
         name='references'
-        placeholder=''
         options={props.options}
         value={props.references.value}
         onChange={props.onChange} 
