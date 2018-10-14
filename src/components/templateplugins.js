@@ -147,17 +147,17 @@ class IndexEditMetadata extends Component {
     {key: 'h5', value: 'h5', text: 'Heading 5'},
   ]
 
-  handleChange = (event, {name, value}) => {
-    if (name === 'text') {
-      this.setState({
-        text: {value: value, valid: true, error: null}
-      })
-    }
-    if (name === 'references') {
-      this.setState({
-        references: {value: value, valid: true, error: null}
-      })
-    }
+  optionTextByValue = (options) => {
+    const optionTextByValue = {}
+    options.forEach(
+      option => {
+        optionTextByValue[option.value] = option.text
+      }
+    )
+    return optionTextByValue
+  }
+
+  sendMetadataToParent = () => {
     // The parent component needs to know about the values as well,
     // so assemble them as a 'metadata' object and send them up
     const metadata = {
@@ -172,24 +172,38 @@ class IndexEditMetadata extends Component {
     })
   }
 
+  handleChange = (event, {name, value}) => {
+    if (name === 'text') {
+      this.setState({
+        text: {value: value, valid: true, error: null}
+      })
+    }
+    if (name === 'references') {
+      this.setState({
+        references: {value: value, valid: true, error: null}
+      })
+    }
+    this.sendMetadataToParent()
+  }
+
+  handleAddEntryDetail = (value) => {
+    this.setState({
+      entryDetails: {
+        value: [...this.state.entryDetails.value, value],
+        valid: true,
+        error: null,
+      },
+    })
+    this.sendMetadataToParent()
+  }
+
   handleRemoveEntryDetail = () => {
     const newEntryDetails = [...this.state.entryDetails.value]
     newEntryDetails.pop()
     this.setState({
       entryDetails: {value: newEntryDetails, valid: true, error: null}
     })
-    // The parent component needs to know about the values as well,
-    // so assemble them as a 'metadata' object and send them up
-    const metadata = {
-      text: this.state.text.value,
-      entryDetails: this.state.entryDetails.value,
-      references: this.state.references.value,
-    }
-    this.props.onChange({
-      value: metadata,
-      valid: (this.state.text.valid && this.state.entryDetails.valid && this.state.references.valid),
-      error: null,
-    })
+    this.sendMetadataToParent()
   }
 
   render() {
@@ -202,11 +216,12 @@ class IndexEditMetadata extends Component {
         {console.log(this.state)}
         <Header as='h4' content='Entry' subheader='Formatting to apply to the primary text of each index entry, i.e. the hex coordinates, NPC name, etc.' />
         <EditTextFormatting options={this.formatOptions} text={this.state.text} onChange={this.handleChange} />
-        <Header as='h4' content='Details' subheader='Formatting to apply to each additional line of detail for each index entry. Lines with no defined format default to "Normal text".' />
+        <Header as='h4' content='Details' subheader='Formatting to apply to each line of detail for each index entry. Lines with no defined format default to "Normal text".' />
         <EditEntryDetailsFormatting 
-          options={this.formatOptions} 
+          options={this.formatOptions}
+          optionTextByValue={this.optionTextByValue(this.formatOptions)}
           entryDetails={this.state.entryDetails} 
-          onChange={this.handleChange} 
+          onSubmit={this.handleAddEntryDetail}
           onRemove={this.handleRemoveEntryDetail}
         />
         <Header as='h4' content='References' subheader='Formatting to apply to the list of hexes that reference each index entry.' />
@@ -237,12 +252,14 @@ function EditEntryDetailsFormatting(props) {
           (entryDetail, index, entryDetails) => 
             <EntryDetailFormattingListItem 
               index={index} 
-              entryDetail={entryDetail} 
+              entryDetail={entryDetail}
+              formatText={props.optionTextByValue[entryDetail]}
               onRemove={props.onRemove}
               last={(index + 1 === entryDetails.length)}
             />
         )}
       </List>
+      <EntryDetailFormattingAdder options={props.options} onSubmit={props.onSubmit} /> 
     </div>
   )
 }
@@ -250,9 +267,46 @@ function EditEntryDetailsFormatting(props) {
 function EntryDetailFormattingListItem(props) {
   return (
     <List.Item key={props.index + '_' + props.entryDetail}>
-      {props.entryDetail}: Detail Line {props.index + 1} {props.last && <Icon link name='minus circle' color='grey' onClick={props.onRemove} />}
+      Line {props.index + 1}: {props.formatText} {props.last && <Icon link name='minus circle' color='grey' onClick={props.onRemove} />}
     </List.Item>
   )
+}
+
+class EntryDetailFormattingAdder extends Component {
+  state = {
+    value: 'p'
+  }
+
+  handleChange = (event, {name, value}) => {
+    this.setState({value: value})
+  }
+
+  handleSubmit = () => {
+    const value = this.state.value
+    this.setState({value: 'p'})
+    this.props.onSubmit(value)
+  }
+
+  render() {
+    return (
+      <Form className='EntryDetailFormattingAdder' onSubmit={this.handleSubmit}>
+        <Form.Group>
+          <Form.Button 
+            type='submit' 
+            inline 
+            circular 
+            icon='plus' 
+          />
+          <Form.Select 
+            name='entrydetail'
+            options={this.props.options}
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
+        </Form.Group>
+      </Form>
+    )
+  }
 }
 
 function EditReferencesFormatting(props) {

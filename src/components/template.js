@@ -144,9 +144,6 @@ class TemplateEditModal extends Component {
   }
 
   render () {
-    console.log('components.template.TemplateEditModal')
-    console.log('this.props')
-    console.log(this.props)
     const EditPropertiesComponent = (this.props.template.id) ? this.props.template.plugin.editProperties : undefined
     const EditMetadataComponent = (this.props.template.id) ? this.props.template.plugin.editMetadata : undefined
     return (
