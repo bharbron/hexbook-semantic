@@ -7,6 +7,7 @@ function byId(state=null, action) {
   console.log(action)
   switch (action.type) {
     case ADD_TEMPLATE: return byIdAddTemplate(state, action)
+    case UPDATE_TEMPLATE: return byIdUpdateTemplate(state, action)
     default: return state
   }
 }
@@ -31,6 +32,27 @@ function byIdAddTemplate(state, action) {
       table: action.payload.table,
       properties: action.payload.properties,
       metadata: action.payload.metadata,
+    }
+  }
+}
+
+function byIdUpdateTemplate(state, action) {
+  console.log('selectors.template.byIdUpdateTemplate')
+  console.log('state')
+  console.log(state)
+  console.log('action')
+  console.log(action)
+  const template = action.payload.template
+  return {
+    ...state,
+    [template.id]: {
+      id: template.id,
+      name: template.name,
+      description: template.description,
+      plugin: template.plugin.id,
+      table: template.table.id,
+      properties: {...template.properties},
+      metadata: {...template.metadata},
     }
   }
 }

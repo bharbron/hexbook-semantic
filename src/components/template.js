@@ -74,10 +74,10 @@ class TemplateEditModal extends Component {
       // assemble the updated template
       const template = {
         ...this.props.template,
-        name: this.state.name,
-        description: this.state.description,
-        properties: {...this.state.properties},
-        metadata: {...this.state.metadata},
+        name: this.state.name.value,
+        description: this.state.description.value,
+        properties: {...this.state.properties.value},
+        metadata: {...this.state.metadata.value},
       }
       this.props.onSubmit(template, prevTemplate)
     }
