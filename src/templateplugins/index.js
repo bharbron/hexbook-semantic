@@ -8,7 +8,7 @@ import {
   List,
 } from 'semantic-ui-react';
 import {TEMPLATE_PREVIEW} from '../constants/strings'
-import './components.css';
+import './templateplugins.css';
 
 function IndexPreview(props) {
   const previewEntryDetails = []
