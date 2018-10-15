@@ -160,7 +160,7 @@ class HexMapSegment extends Component {
     return (
       <Transition transitionOnMount='true' animation='fade up'>
         <Segment className='HexMapSegment'>
-          <Header content='Hex Map' subheader='Mapping of map coordinates to terrain and territory' />
+          <Header content='Hex Map' subheader='Mapping of hex coordinates to terrain and territory' />
           <HexMapTable hexes={this.props.hexes} onClickHex={this.props.onClickHex} />
           <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
             <Dropdown.Menu direction='left'>

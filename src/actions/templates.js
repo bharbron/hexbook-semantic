@@ -11,7 +11,8 @@ export const UPDATE_TEMPLATE = 'UPDATE_TEMPLATE'
 /* action creators */
 
 export function addTemplate(name, description, plugin, table, properties, metadata) {
-  return {type: ADD_TEMPLATE, 
+  return {
+    type: ADD_TEMPLATE, 
     payload: {
       'id': uuidv4(), 
       'name': name, 
@@ -28,15 +29,11 @@ export function deleteTemplate(id) {
   return {type: DELETE_TEMPLATE, payload: {'id': id}}
 }
 
-export function updateTemplate(name, description, plugin, table, properties, metadata, prevTemplate) {
-  return {type: UPDATE_TEMPLATE, 
+export function updateTemplate(template, prevTemplate) {
+  return {
+    type: UPDATE_TEMPLATE, 
     payload: {
-      'name': name, 
-      'description': description, 
-      'plugin': plugin, 
-      'table': table, 
-      'properties': properties,
-      'metadata': metadata,
+      template: template,
       prevTemplate: prevTemplate
     }
   }
