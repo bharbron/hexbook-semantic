@@ -36,18 +36,7 @@ function IndexPreviewListItem(props) {
 }
 
 class IndexEditProperties extends Component {
-  state = {
-    columns: {
-      value: (this.props.template && this.props.template.properties) ? this.props.template.properties.columns : undefined,
-      valid: (this.props.template && this.props.template.properties && this.props.template.properties.columns) ? true : false,
-      error: null,
-    },
-    whitespace: {
-      value: (this.props.template && this.props.template.properties) ? this.props.template.properties.whitespace : undefined,
-      valid: (this.props.template && this.props.template.properties && this.props.template.properties.whitespace) ? true : false,
-      error: null,
-    }
-  }
+  state = {}
 
   columnOptions = [
     {key: 1, value: 1, text: 1},
@@ -69,35 +58,23 @@ class IndexEditProperties extends Component {
   ]
 
   handleChange = (event, {name, value}) => {
-    // We need a synchronously updated version of state as well, since we need to sync changes with the parent component
-    const syncState = {...this.state}
+    const properties = {...this.props.properties}
+    const valid = {...this.props.valid}
+    const error = {...this.props.error}
     if (name === 'columns') {
-      this.setState({
-        columns: {value: value, valid: true, error: null}
-      })
-      syncState.columns = {value: value, valid: true, error: null}
+      properties.columns = value
+      valid.columns = true
+      error.columns = null
+      this.props.onChange(properties, valid, error)
+      return
     }
     if (name === 'whitespace') {
-      this.setState({
-        whitespace: {value: value, valid: true, error: null}
-      })
-      syncState.whitespace = {value: value, valid: true, error: null}
+      properties.whitespace = value
+      valid.whitespace = true
+      error.whitespace = null
+      this.props.onChange(properties, valid, error)
+      return
     }
-    this.sendPropertiesToParent(syncState)
-  }
-
-  sendPropertiesToParent = (syncState) => {
-    // The parent component needs to know about the values as well,
-    // so assemble them as a 'properties' object and send them up
-    const properties = {
-      columns: syncState.columns.value,
-      whitespace: syncState.whitespace.value,
-    }
-    this.props.onChange({
-      value: properties, 
-      valid: (syncState.columns.valid && syncState.whitespace.valid),
-      error: null,
-    })
   }
 
   render() {
@@ -110,7 +87,7 @@ class IndexEditProperties extends Component {
             label='Columns'
             placeholder=''
             options={this.columnOptions}
-            value={this.state.columns.value}
+            value={this.props.properties.columns}
             onChange={this.handleChange} 
           />
           <Form.Select 
@@ -118,7 +95,7 @@ class IndexEditProperties extends Component {
             label='Whitespace'
             placeholder=''
             options={this.whitespaceOptions}
-            value={this.state.whitespace.value}
+            value={this.props.properties.whitespace}
             onChange={this.handleChange} 
           />
         </Form.Group>
@@ -128,23 +105,7 @@ class IndexEditProperties extends Component {
 }
 
 class IndexEditMetadata extends Component {
-  state = {
-    text: {
-      value: (this.props.template && this.props.template.metadata) ? this.props.template.metadata.text : 'h1',
-      valid: (this.props.template && this.props.template.metadata && this.props.template.metadata.text) ? true : false,
-      error: null,
-    },
-    entryDetails: {
-      value: (this.props.template && this.props.template.metadata) ? this.props.template.metadata.entryDetails : [],
-      valid: true,
-      error: null,
-    },
-    references: {
-      value: (this.props.template && this.props.template.metadata) ? this.props.template.metadata.references : null,
-      valid: true,
-      error: null,
-    },
-  }
+  state = {}
 
   formatOptions = [
     {key: 'p', value: 'p', text: 'Normal text'},
@@ -165,85 +126,71 @@ class IndexEditMetadata extends Component {
     return optionTextByValue
   }
 
-  sendMetadataToParent = (syncState) => {
-    // The parent component needs to know about the values as well,
-    // so assemble them as a 'metadata' object and send them up
-    const metadata = {
-      text: syncState.text.value,
-      entryDetails: syncState.entryDetails.value,
-      references: syncState.references.value,
-    }
-    this.props.onChange({
-      value: metadata,
-      valid: (syncState.text.valid && syncState.entryDetails.valid && syncState.references.valid),
-      error: null,
-    })
-  }
-
   handleChange = (event, {name, value}) => {
-    // We need a synchronously updated version of state as well, since we need to sync changes with the parent component
-    const syncState = {...this.state}
+    const metadata = {...this.props.metadata}
+    const valid = {...this.props.valid}
+    const error = {...this.props.error}
     if (name === 'text') {
-      this.setState({
-        text: {value: value, valid: true, error: null}
-      })
-      syncState.text = {value: value, valid: true, error: null}
+      metadata.text = value
+      valid.text = true
+      error.text = null
+      this.props.onChange(metadata, valid, error)
+      return
     }
     if (name === 'references') {
-      this.setState({
-        references: {value: value, valid: true, error: null}
-      })
-      syncState.references = {value: value, valid: true, error: null}
+      metadata.references = value
+      valid.references = true
+      error.references = null
+      this.props.onChange(metadata, valid, error)
+      return
     }
-    this.sendMetadataToParent(syncState)
   }
 
   handleAddEntryDetail = (value) => {
-    // We need a synchronously updated version of state as well, since we need to sync changes with the parent component
-    const syncState = {...this.state}
-    this.setState({
-      entryDetails: {
-        value: [...this.state.entryDetails.value, value], valid: true, error: null,
-      }
-    })
-    syncState.entryDetails = {
-      value: [...this.state.entryDetails.value, value], valid: true, error: null,
-    }
-    this.sendMetadataToParent(syncState)
+    const metadata = {...this.props.metadata}
+    const valid = {...this.props.valid}
+    const error = {...this.props.error}
+    metadata.entryDetails = [...this.props.metadata.entryDetails, value]
+    valid.entryDetails = true
+    error.entryDetails = null
+    this.props.onChange(metadata, valid, error)
   }
 
   handleRemoveEntryDetail = () => {
-    // We need a synchronously updated version of state as well, since we need to sync changes with the parent component
-    const syncState = {...this.state}
-    const newEntryDetails = [...this.state.entryDetails.value]
+    const metadata = {...this.props.metadata}
+    const valid = {...this.props.valid}
+    const error = {...this.props.error}
+    const newEntryDetails = [...this.props.metadata.entryDetails]
     newEntryDetails.pop()
-    this.setState({
-      entryDetails: {value: newEntryDetails, valid: true, error: null}
-    })
-    syncState.entryDetails = {value: newEntryDetails, valid: true, error: null}
-    this.sendMetadataToParent(syncState)
+    metadata.entryDetails = newEntryDetails
+    valid.entryDetails = true
+    error.entryDetails = null
+    this.props.onChange(metadata, valid, error)
   }
 
   render() {
     return (
       <Form className='IndexEditMetadata'>
-        {console.log('IndexEditMetadata')}
-        {console.log('this.props')}
-        {console.log(this.props)}
-        {console.log('this.state')}
-        {console.log(this.state)}
         <Header as='h4' content='Entry' subheader='Formatting to apply to the primary text of each index entry, i.e. the hex coordinates, NPC name, etc.' />
-        <EditTextFormatting options={this.formatOptions} text={this.state.text} onChange={this.handleChange} />
+        <EditTextFormatting 
+          options={this.formatOptions} 
+          text={this.props.metadata.text} 
+          onChange={this.handleChange} 
+        />
         <Header as='h4' content='Details' subheader='Formatting to apply to each line of detail for each index entry. Lines with no defined format default to "Normal text".' />
         <EditEntryDetailsFormatting 
           options={this.formatOptions}
           optionTextByValue={this.optionTextByValue(this.formatOptions)}
-          entryDetails={this.state.entryDetails} 
+          entryDetails={this.props.metadata.entryDetails} 
           onSubmit={this.handleAddEntryDetail}
           onRemove={this.handleRemoveEntryDetail}
         />
         <Header as='h4' content='References' subheader='Formatting to apply to the list of hexes that reference each index entry.' />
-        <EditReferencesFormatting options={this.formatOptions} references={this.state.references} onChange={this.handleChange} />
+        <EditReferencesFormatting 
+          options={this.formatOptions} 
+          references={this.props.metadata.references} 
+          onChange={this.handleChange} 
+        />
       </Form>
     )
   }
@@ -255,7 +202,7 @@ function EditTextFormatting(props) {
       <Form.Select 
         name='text'
         options={props.options}
-        value={props.text.value}
+        value={props.text}
         onChange={props.onChange} 
       />
     </Form.Group>
@@ -266,7 +213,7 @@ function EditEntryDetailsFormatting(props) {
   return (
     <div className='EditEntryDetailsFormatting'>
       <List size='large'>
-        {props.entryDetails.value.map(
+        {props.entryDetails.map(
           (entryDetail, index, entryDetails) => 
             <EntryDetailFormattingListItem 
               index={index} 
@@ -333,7 +280,7 @@ function EditReferencesFormatting(props) {
       <Form.Select 
         name='references'
         options={props.options}
-        value={props.references.value}
+        value={props.references}
         onChange={props.onChange} 
       />
     </Form.Group>
