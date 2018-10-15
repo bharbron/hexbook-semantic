@@ -34,21 +34,31 @@ class TemplateEditModal extends Component {
       },
       properties: {
         value: (this.props.template) ? this.props.template.properties : {},
-        valid: true, 
-        error: null
+        valid: {DEFAULT: true},
+        error: {DEFAULT: null},
       },
       metadata: {
         value: (this.props.template) ? this.props.template.metadata : {},
-        valid: true, 
-        error: null
+        valid: {DEFAULT: true},
+        error: {DEFAULT: null},
       },
+  }
+
+  propertiesValid = () => {
+    // Return false if any of the keys in properties are marked as invalid
+    return (Object.values(this.state.properties.valid).includes(false)) ? false : true
+  }
+
+  metadataValid = () => {
+    // Return false if any of the keys in metadata are marked as invalid
+    return (Object.values(this.state.metadata.valid).includes(false)) ? false : true
   }
 
   primaryDisabled = () => {
     /*
     Determine whether or not the primary SAVE button should be enabled based on what data has been input or changed
     */
-    return (this.state.changed && this.state.name.valid && this.state.description.valid && this.state.properties.valid && this.state.metadata.valid) ? false : true
+    return (this.state.changed && this.state.name.valid && this.state.description.valid && this.propertiesValid() && this.metadataValid()) ? false : true
   }
 
   handleClose = () => {
@@ -137,28 +147,14 @@ class TemplateEditModal extends Component {
     }
   }
 
-  handleChangeProperties = ({value, valid, error}) => {
-    console.log('components.template.TemplateEditModal.handleChangeProperties')
-    console.log('value')
-    console.log(value)
-    console.log('valid')
-    console.log(valid)
-    console.log('error')
-    console.log(error)
+  handleChangeProperties = (value, valid, error) => {
     this.setState({
       changed: true,
       properties: {value: value, valid: valid, error: error}
     })
   }
 
-  handleChangeMetadata = ({value, valid, error}) => {
-    console.log('components.template.TemplateEditModal.handleChangeMetadata')
-    console.log('value')
-    console.log(value)
-    console.log('valid')
-    console.log(valid)
-    console.log('error')
-    console.log(error)
+  handleChangeMetadata = (value, valid, error) => {
     this.setState({
       changed: true,
       metadata: {value: value, valid: valid, error: error}
@@ -180,8 +176,18 @@ class TemplateEditModal extends Component {
             description={this.state.description}
             onChange={this.handleChangeBasic} 
           />
-          <EditPropertiesComponent template={this.props.template} onChange={this.handleChangeProperties} />
-          <EditMetadataComponent template={this.props.template} onChange={this.handleChangeMetadata} />
+          <EditPropertiesComponent 
+            properties={this.state.properties.value}
+            valid={this.state.properties.valid}
+            error={this.state.properties.error}
+            onChange={this.handleChangeProperties} 
+          />
+          <EditMetadataComponent 
+            metadata={this.state.metadata.value}
+            valid={this.state.metadata.valid}
+            error={this.state.metadata.error}
+            onChange={this.handleChangeMetadata} 
+          />
         </Modal.Content>
         <Modal.Actions>
           <Button id='TemplateEditModalCancel' onClick={this.handleCancel}>CANCEL</Button>
