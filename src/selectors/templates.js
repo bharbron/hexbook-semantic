@@ -1,7 +1,7 @@
 import {getTableById} from './tables'
 import {getTemplatePluginById} from './templateplugins'
 
-export function getByIdTemplates(state) {
+export function getTemplates(state) {
   const hexesTemplate = getFullTemplateById(state, 'HEX')
   const otherTemplates = []
   state.entities.templates.allIds.forEach(

@@ -68,7 +68,18 @@ const initialState = {
           }
         }
       },
-      'allIds': ['HEX']
+      allIds: ['HEX'],
+    },
+    books: {
+      byId: {
+        [UUID.INITIAL_BOOK_ID]: {
+          id: UUID.INITIAL_BOOK_ID,
+          name: 'Book 1',
+          size: 'A5',
+          templates: ['HEX'],
+        }
+      },
+      allIds: [UUID.INITIAL_BOOK_ID]
     },
   },
 
