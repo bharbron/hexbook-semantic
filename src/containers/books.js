@@ -11,6 +11,7 @@ import {
   Select,
   Transition
 } from 'semantic-ui-react';
+import {updateBook} from '../actions/books'
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton} from '../components/floatingcontrols'
 import {BookCardsGroup} from '../components/books'
@@ -24,13 +25,17 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  updateBook,
 }, dispatch)
 
 class BooksWorkspace extends Component {
   state = {}
 
   handleSubmitSetting = (setting, value, book) => {
-    alert('containers.books.BooksWorkspace.handleSubmitSetting')
+    const newBook = {...book}
+    const prevBook = {...book}
+    newBook[setting] = value
+    this.props.updateBook(newBook, prevBook)
   }
 
   handleSubmitTemplate = (template, book) => {

@@ -73,7 +73,10 @@ function BookContentSettings(props) {
 }
 
 function BookSettingList(props) {
-  const sizeOptions = [{key: 'A5', value: 'A5', text: 'A5'}]
+  const sizeOptions = [
+    {key: 'A4', value: 'A4', text: 'A4'},
+    {key: 'A5', value: 'A5', text: 'A5'},
+  ]
   return (
     <List size='large' className='BookSettingList'>
       <BookSettingSelect name='Size' setting='size' value={props.book.size} options={sizeOptions} onSubmit={props.onSubmit} />
