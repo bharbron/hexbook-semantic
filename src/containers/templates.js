@@ -15,14 +15,14 @@ import {FloatingActionButton, FloatingWorkspaceMenu} from '../components/floatin
 import {TemplateEditModal} from '../components/template'
 import {TemplateCardsGroup, TemplateInputModal} from '../components/templates'
 import {getByCodeTables} from '../selectors/tables'
-import {getByIdTemplates, getByNameTemplates} from '../selectors/templates'
+import {getTemplates, getByNameTemplates} from '../selectors/templates'
 import {getByIdTemplatePlugins, getByNameTemplatePlugins} from '../selectors/templateplugins'
 
 import './containers.css';
 
 const mapStateToProps = state => ({
   tablesByCode: getByCodeTables(state),
-  templates: getByIdTemplates(state),
+  templates: getTemplates(state),
   templatesByName: getByNameTemplates(state),
   templatePluginsByName: getByNameTemplatePlugins(state),
 })
