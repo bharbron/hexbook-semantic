@@ -15,10 +15,12 @@ import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton} from '../components/floatingcontrols'
 import {BookCardsGroup} from '../components/books'
 import {getBooks} from '../selectors/books'
+import {getByNameTemplates} from '../selectors/templates'
 import './containers.css';
 
 const mapStateToProps = state => ({
   books: getBooks(state),
+  templatesByName: getByNameTemplates(state), 
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -31,6 +33,10 @@ class BooksWorkspace extends Component {
     console.log('containers.books.BooksWorkspace.handleSubmitSetting')
   }
 
+  handleSubmitTemplate = (template, book) => {}
+
+  handleRemoveTemplate = (template, book) => {}
+
   render() {
     console.log('containers.books.BooksWorkspace')
     console.log('this.props')
@@ -38,7 +44,13 @@ class BooksWorkspace extends Component {
     return (
       <div id='BooksWorkspace'>
         <WideColumnWorkspace>
-          <BookCardsGroup books={this.props.books} onSubmitSetting={this.handleSubmitSetting} />
+          <BookCardsGroup 
+            books={this.props.books} 
+            templatesByName={this.props.templatesByName} 
+            onSubmitSetting={this.handleSubmitSetting}
+            onSubmitTemplate={this.handleSubmitTemplate}
+            onRemoveTemplate={this.handleRemoveTemplate}
+          />
 
 
           <Card.Group itemsPerRow='2' doubling>

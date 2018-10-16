@@ -21,9 +21,6 @@ import {ERRORS} from '../constants/strings'
 import './components.css';
 
 function BookCardsGroup(props) {
-  console.log('BookCardsGroup')
-  console.log('props')
-  console.log(props)
   return (
     <Card.Group 
       className='BookCardsGroup' 
@@ -34,7 +31,10 @@ function BookCardsGroup(props) {
           book => 
             <BookCard 
               book={book}
+              templatesByName={props.templatesByName}
               onSubmitSetting={props.onSubmitSetting}
+              onSubmitTemplate={props.onSubmitTemplate}
+              onRemoveTemplate={props.onRemoveTemplate}
             />
         )
       } 
@@ -43,9 +43,6 @@ function BookCardsGroup(props) {
 }
 
 function BookCard(props) {
-  console.log('BookCard')
-  console.log('props')
-  console.log(props)
   return (
     <Transition transitionOnMount='true' animation='fade up'>
       <Card raised className='BookCard'>
@@ -53,21 +50,12 @@ function BookCard(props) {
           book={props.book} 
           onSubmit={(setting, value) => props.onSubmitSetting(setting, value, props.book)} 
         />
-
-        <Card.Content>
-          <List size='large'>
-            <List.Item>
-              <List.Icon name='puzzle' size='big' />
-              <List.Content>
-                <List.Header>Hexes</List.Header>
-                <List.Description>Template for printing the list of hexes <Icon link name='minus circle' color='grey' /></List.Description>
-              </List.Content>
-            </List.Item>
-          </List>
-          <Icon link name='plus circle' size='large' color='grey' />
-          <Select placeholder='Select a template' />
-        </Card.Content>
-
+        <BookContentTemplates 
+          book={props.book}
+          templatesByName={props.templatesByName}
+          onSubmitTemplate={props.onSubmitTemplate}
+          onRemoveTemplate={props.onRemoveTemplate}
+        />
       </Card>
     </Transition>
   )
@@ -75,7 +63,7 @@ function BookCard(props) {
 
 function BookContentSettings(props) {
   return(
-    <Card.Content>
+    <Card.Content className='BookContentSettings'>
       <Card.Header>{props.book.name}</Card.Header>
       <Card.Description>
         <BookSettingList book={props.book} onSubmit={props.onSubmit} />
@@ -120,7 +108,7 @@ class BookSettingSelect extends Component {
 
   render() {
     return (
-      <List.Item key={this.props.setting}>
+      <List.Item key={this.props.setting} className='BookSettingSelect'>
         <List.Content>
           <List.Header>{this.props.name}</List.Header>
           <List.Description>
@@ -142,6 +130,79 @@ class BookSettingSelect extends Component {
           </List.Description>
         </List.Content>
       </List.Item>
+    )
+  }
+}
+
+function BookContentTemplates(props) {
+  return (
+    <Card.Content className='BookContentTemplates'>
+      <BookTemplateList />
+      <BookTemplateAdder 
+        templatesByName={props.templatesByName}
+        onSubmit={props.onSubmitTemplate}
+      />
+    </Card.Content>
+  )
+}
+
+function BookTemplateList(props) {
+  return (
+    <List size='large' className='BookTemplateList'>
+      <List.Item>
+        <List.Icon name='puzzle' size='big' />
+        <List.Content>
+          <List.Header>Hexes</List.Header>
+          <List.Description>Template for printing the list of hexes <Icon link name='minus circle' color='grey' /></List.Description>
+        </List.Content>
+      </List.Item>
+    </List>
+  )
+}
+
+class BookTemplateAdder extends Component {
+  state = {value: null}
+
+  templateOptions = () => {
+    return Object.keys(this.props.templatesByName).sort().map(
+      name => {
+        return {key: name, value: name, text: name}
+      }
+    )
+  }
+
+  handleChange = (event, {name, value}) => {
+    this.setState({value: value})
+  }
+
+  handleSubmit = () => {
+    if (this.state.value) {
+      const value = this.state.value
+      this.setState({value: null})
+      this.props.onSubmit(value)
+    }
+  }
+
+  render() {
+    return (
+      <Form className='BookTemplateAdder' onSubmit={this.handleSubmit}>
+        <Form.Group>
+          <Form.Button 
+            type='submit' 
+            inline 
+            circular 
+            icon='plus' 
+            disabled={!this.state.value}
+          />
+          <Form.Select 
+            name='template'
+            placeholder='Select a template'
+            options={this.templateOptions()}
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
+        </Form.Group>
+      </Form>
     )
   }
 }
