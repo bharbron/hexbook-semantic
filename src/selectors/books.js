@@ -1,23 +1,32 @@
 import {getFullTemplateById} from './templates'
 
-export getBooks(state) {
-  return state.entities.books.allIds.map(id => getFullBookById(state, id)).sort(compareBooks)
+export function getBooks(state) {
+  const books = []
+  state.entities.books.allIds.forEach(
+    id => {
+      const book = getFullBookById(state, id)
+      if (book) {
+        books.push(book)
+      }
+    }
+  )
+  return books.sort(compareBooks)
 }
 
-export getByIdBooks(state) {
+export function getByIdBooks(state) {
   const booksById = {}
   state.entities.books.allIds.forEach(
     id => {
       const book = getFullBookById(state, id)
       if (book) {
-        bookById[id] = book
+        booksById[id] = book
       }
     }
   )
   return booksById
 }
 
-export getByNameBooks(state) {
+export function getByNameBooks(state) {
   const booksByName = {}
   state.entities.books.allIds.forEach(
     id => {
@@ -31,7 +40,7 @@ export getByNameBooks(state) {
 }
 
 export function getBookById(state, id) {
-  return {...state.entities.book.byId[id]}
+  return {...state.entities.books.byId[id]}
 }
 
 export function getFullBookById(state, id) {

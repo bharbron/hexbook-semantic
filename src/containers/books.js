@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-
+import React, {Component} from 'react';
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import {
   Button,
   Card,
@@ -12,22 +11,36 @@ import {
   Select,
   Transition
 } from 'semantic-ui-react';
-import { WideColumnWorkspace } from '../components/workspaces'
-import { FloatingActionButton } from '../components/floatingcontrols'
-
+import {WideColumnWorkspace} from '../components/workspaces'
+import {FloatingActionButton} from '../components/floatingcontrols'
+import {BookCardsGroup} from '../components/books'
+import {getBooks} from '../selectors/books'
 import './containers.css';
 
 const mapStateToProps = state => ({
+  books: getBooks(state),
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 class BooksWorkspace extends Component {
+  state = {}
+
+  handleSubmitSetting = (setting, value, book) => {
+    console.log('containers.books.BooksWorkspace.handleSubmitSetting')
+  }
+
   render() {
+    console.log('containers.books.BooksWorkspace')
+    console.log('this.props')
+    console.log(this.props)
     return (
       <div id='BooksWorkspace'>
         <WideColumnWorkspace>
+          <BookCardsGroup books={this.props.books} onSubmitSetting={this.handleSubmitSetting} />
+
+
           <Card.Group itemsPerRow='2' doubling>
 
           <Transition transitionOnMount='true' animation='fade up'>

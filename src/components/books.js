@@ -6,10 +6,11 @@ import {
   Card,
   Form,
   Header,
+  Icon,
   Label,
   List,
   Modal,
-  Ref,
+  Select,
   Transition
 } from 'semantic-ui-react';
 import {HiddenSubmitButton, InputErrorPopup} from './forms'
@@ -19,7 +20,10 @@ import {REGEX} from '../constants/regex'
 import {ERRORS} from '../constants/strings'
 import './components.css';
 
-export function BookCardsGroup(props) {
+function BookCardsGroup(props) {
+  console.log('BookCardsGroup')
+  console.log('props')
+  console.log(props)
   return (
     <Card.Group 
       className='BookCardsGroup' 
@@ -27,12 +31,11 @@ export function BookCardsGroup(props) {
       doubling 
       children={
         props.books.map(
-          book => {
+          book => 
             <BookCard 
               book={book}
-              onSubmitSetting={this.props.onSubmitSetting}
+              onSubmitSetting={props.onSubmitSetting}
             />
-          }
         )
       } 
     />
@@ -40,12 +43,15 @@ export function BookCardsGroup(props) {
 }
 
 function BookCard(props) {
+  console.log('BookCard')
+  console.log('props')
+  console.log(props)
   return (
     <Transition transitionOnMount='true' animation='fade up'>
       <Card raised className='BookCard'>
         <BookContentSettings 
-          book={this.props.book} 
-          onSubmit={(setting, value) => this.props.onSubmitSetting(setting, value, this.props.book)} 
+          book={props.book} 
+          onSubmit={(setting, value) => props.onSubmitSetting(setting, value, props.book)} 
         />
 
         <Card.Content>
@@ -70,9 +76,9 @@ function BookCard(props) {
 function BookContentSettings(props) {
   return(
     <Card.Content>
-      <Card.Header>{this.props.book.name}</Card.Header>
+      <Card.Header>{props.book.name}</Card.Header>
       <Card.Description>
-        <BookSettingList book={this.props.book} onSubmit={this.props.onSubmit} />
+        <BookSettingList book={props.book} onSubmit={props.onSubmit} />
       </Card.Description>
     </Card.Content>
   )
@@ -82,7 +88,7 @@ function BookSettingList(props) {
   const sizeOptions = [{key: 'A5', value: 'A5', text: 'A5'}]
   return (
     <List bulleted className='BookSettingList'>
-      <BookSettingSelect name='Size' setting='size' value={this.props.book.size} options={sizeOptions} onSubmit={this.props.onSubmit} />
+      <BookSettingSelect name='Size' setting='size' value={props.book.size} options={sizeOptions} onSubmit={props.onSubmit} />
     </List>
   )
 }
@@ -119,14 +125,16 @@ class BookSettingSelect extends Component {
         {!this.state.editMode && <Icon link name='pencil' onClick={this.handleClick} />}
         {this.state.editMode && 
           <Form>
-            <Form.Select
-              name={this.props.name}
-              options={this.props.options}
-              value={this.props.value}
-              onChange={this.handleChange}
-              onKeyDown={this.handleKeyDown}
-              onBlur={this.handleBlur}
-            />
+            <Form.Group>
+              <Form.Select
+                name={this.props.name}
+                options={this.props.options}
+                value={this.props.value}
+                onChange={this.handleChange}
+                onKeyDown={this.handleKeyDown}
+                onBlur={this.handleBlur}
+              />
+              </Form.Group>
           </Form>
         }
       </List.Item>
@@ -134,5 +142,4 @@ class BookSettingSelect extends Component {
   }
 }
 
-
-
+export {BookCardsGroup}
