@@ -30,12 +30,16 @@ class BooksWorkspace extends Component {
   state = {}
 
   handleSubmitSetting = (setting, value, book) => {
-    console.log('containers.books.BooksWorkspace.handleSubmitSetting')
+    alert('containers.books.BooksWorkspace.handleSubmitSetting')
   }
 
-  handleSubmitTemplate = (template, book) => {}
+  handleSubmitTemplate = (template, book) => {
+    alert('containers.books.BooksWorkspace.handleSubmitTemplate')
+  }
 
-  handleRemoveTemplate = (template, book) => {}
+  handleRemoveTemplate = (template, book) => {
+    alert('containers.books.BooksWorkspace.handleRemoveTemplate')
+  }
 
   render() {
     console.log('containers.books.BooksWorkspace')
@@ -54,37 +58,6 @@ class BooksWorkspace extends Component {
 
 
           <Card.Group itemsPerRow='2' doubling>
-
-          <Transition transitionOnMount='true' animation='fade up'>
-            <Card raised>
-              <Card.Content>
-                <Card.Header>Book 1</Card.Header>
-                <Card.Description>
-                  <List bulleted>
-                    <List.Item>Size: A5</List.Item>
-                  </List>
-                </Card.Description>
-              </Card.Content>
-              <Card.Content>
-                <List size='large'>
-                  <List.Item>
-                    <List.Icon name='puzzle' size='big' />
-                    <List.Content>
-                      <List.Header>Hexes</List.Header>
-                      <List.Description>Template for printing the list of hexes <Icon link name='minus circle' color='grey' /></List.Description>
-                    </List.Content>
-                  </List.Item>
-                </List>
-                <Icon link name='plus circle' size='large' color='grey' />
-                <Select placeholder='Select a template' />
-              </Card.Content>
-              <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
-                <Dropdown.Menu direction='left'>
-                  <Dropdown.Item text='Delete this book' />
-                </Dropdown.Menu>
-              </Dropdown>
-            </Card>
-          </Transition>
 
           <Transition transitionOnMount='true' animation='fade up'>
             <Card raised>

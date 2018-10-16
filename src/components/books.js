@@ -53,8 +53,8 @@ function BookCard(props) {
         <BookContentTemplates 
           book={props.book}
           templatesByName={props.templatesByName}
-          onSubmitTemplate={props.onSubmitTemplate}
-          onRemoveTemplate={props.onRemoveTemplate}
+          onSubmit={props.onSubmitTemplate}
+          onRemove={props.onRemoveTemplate}
         />
       </Card>
     </Transition>
@@ -137,10 +137,14 @@ class BookSettingSelect extends Component {
 function BookContentTemplates(props) {
   return (
     <Card.Content className='BookContentTemplates'>
-      <BookTemplateList />
+      <BookTemplateList 
+        book={props.book}
+        onRemove={props.onRemove}
+      />
       <BookTemplateAdder 
+        book={props.book}
         templatesByName={props.templatesByName}
-        onSubmit={props.onSubmitTemplate}
+        onSubmit={props.onSubmit}
       />
     </Card.Content>
   )
@@ -149,14 +153,26 @@ function BookContentTemplates(props) {
 function BookTemplateList(props) {
   return (
     <List size='large' className='BookTemplateList'>
-      <List.Item>
-        <List.Icon name='puzzle' size='big' />
-        <List.Content>
-          <List.Header>Hexes</List.Header>
-          <List.Description>Template for printing the list of hexes <Icon link name='minus circle' color='grey' /></List.Description>
-        </List.Content>
-      </List.Item>
+      {props.book.templates.map(
+        template => 
+          <BookTemplateListItem template={template} book={props.book} onRemove={props.onRemove} />
+        )
+      }
     </List>
+  )
+}
+
+function BookTemplateListItem(props) {
+  return (
+    <List.Item key={props.template.id} className='BookTemplateListItem'>
+      <List.Icon name='puzzle' size='big' />
+      <List.Content>
+        <List.Header>{props.template.name}</List.Header>
+        <List.Description>
+          {props.template.description} <Icon link name='minus circle' color='grey' onClick={() => props.onRemove(props.template, props.book)} />
+        </List.Description>
+      </List.Content>
+    </List.Item>
   )
 }
 
@@ -179,7 +195,7 @@ class BookTemplateAdder extends Component {
     if (this.state.value) {
       const value = this.state.value
       this.setState({value: null})
-      this.props.onSubmit(value)
+      this.props.onSubmit(this.props.templatesByName[value], this.props.book)
     }
   }
 
