@@ -87,7 +87,7 @@ function BookContentSettings(props) {
 function BookSettingList(props) {
   const sizeOptions = [{key: 'A5', value: 'A5', text: 'A5'}]
   return (
-    <List bulleted className='BookSettingList'>
+    <List size='large' className='BookSettingList'>
       <BookSettingSelect name='Size' setting='size' value={props.book.size} options={sizeOptions} onSubmit={props.onSubmit} />
     </List>
   )
@@ -121,22 +121,26 @@ class BookSettingSelect extends Component {
   render() {
     return (
       <List.Item key={this.props.setting}>
-        {this.props.name}: {!this.state.editMode && this.props.value}
-        {!this.state.editMode && <Icon link name='pencil' onClick={this.handleClick} />}
-        {this.state.editMode && 
-          <Form>
-            <Form.Group>
-              <Form.Select
-                name={this.props.name}
-                options={this.props.options}
-                value={this.props.value}
-                onChange={this.handleChange}
-                onKeyDown={this.handleKeyDown}
-                onBlur={this.handleBlur}
-              />
-              </Form.Group>
-          </Form>
-        }
+        <List.Content>
+          <List.Header>{this.props.name}</List.Header>
+          <List.Description>
+            {!this.state.editMode && this.props.value}  {!this.state.editMode && <Icon link name='pencil' onClick={this.handleClick} />}
+            {this.state.editMode && 
+              <Form>
+                <Form.Group>
+                  <Form.Select
+                    name={this.props.name}
+                    options={this.props.options}
+                    value={this.props.value}
+                    onChange={this.handleChange}
+                    onKeyDown={this.handleKeyDown}
+                    onBlur={this.handleBlur}
+                  />
+                </Form.Group>
+              </Form>
+            }
+          </List.Description>
+        </List.Content>
       </List.Item>
     )
   }
