@@ -10,6 +10,10 @@ export const UPDATE_BOOK = 'UPDATE_BOOK'
 
 /* action creators */
 
+export function addBook(name, size) {
+  return {type: ADD_BOOK, payload: {id: uuidv4(), name: name, size: size}}
+}
+
 export function deleteBook(book) {
   return {type: DELETE_BOOK, payload: {book: book}}
 }

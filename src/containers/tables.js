@@ -57,46 +57,12 @@ class TablesWorkspace extends Component {
       <div id='TablesWorkspace'>
         <WideColumnWorkspace>
           <TableSummaryCardGroup tables={this.props.tables} onClick={this.handleClickTableSummaryCard} />
-
-          <Card.Group>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Random Encounters</Card.Header>
-                <Card.Meta>ENCOUNTERS</Card.Meta>
-                <Card.Description>Table for any case where an encounter or NPC needs to be chosen at random.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>50</Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-            <Card link>
-              <Card.Content>
-                <Card.Header>Treasure</Card.Header>
-                <Card.Meta>TREASURE</Card.Meta>
-                <Card.Description>List of random valuable items.</Card.Description>
-              </Card.Content>
-              <Card.Content extra>
-                <Label.Group>
-                  <Label circular>12</Label>
-                  <Label color='grey'>Static</Label>
-                  <Label color='olive'>Generator<Label.Detail>50</Label.Detail></Label>
-                </Label.Group>
-              </Card.Content>
-            </Card>
-
-          </Card.Group>
-
           <TableInputModal 
             open={this.state.openTableInputModal}
             onClose={this.handleCloseTableInputModal}
             onSubmit={this.handleSubmitTableInputModal}
             tablesByCode={this.props.tablesByCode}
           />
-
         </WideColumnWorkspace>
 
         <FloatingWorkspaceMenu>
