@@ -9,7 +9,7 @@ import {
   Table,
   Transition
 } from 'semantic-ui-react';
-import {SingleLineAdderV2} from './forms'
+import {SingleLineAdder} from './forms'
 import {TagLabel, TagWeightLabel} from './labels'
 import {COLORS} from '../constants/colors'
 import {REGEX} from '../constants/regex'
@@ -81,7 +81,7 @@ class TableEntriesSegment extends Component {
               onClickEntry={this.props.onClickEntry}
               onClickClone={this.props.onClickClone}
             />
-            <SingleLineAdderV2 
+            <SingleLineAdder 
               name='addtableentry'
               placeholder='Weight,Result text'
               value={this.state.value}
