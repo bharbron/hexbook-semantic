@@ -11,10 +11,10 @@ import {
   Select,
   Transition
 } from 'semantic-ui-react';
-import {updateBook} from '../actions/books'
+import {addBook, updateBook} from '../actions/books'
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton} from '../components/floatingcontrols'
-import {BookCardsGroup} from '../components/books'
+import {BookCardsGroup, BookInputModal} from '../components/books'
 import {getBooks} from '../selectors/books'
 import {getByNameTemplates} from '../selectors/templates'
 import './containers.css';
@@ -25,11 +25,14 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  addBook,
   updateBook,
 }, dispatch)
 
 class BooksWorkspace extends Component {
-  state = {}
+  state = {
+    openBookInputModal: false,
+  }
 
   handleSubmitSetting = (setting, value, book) => {
     const newBook = {...book}
@@ -56,6 +59,19 @@ class BooksWorkspace extends Component {
     this.props.updateBook(newBook, prevBook)
   }
 
+  handleClickAddBookButton = () => {
+    this.setState({openBookInputModal: true})
+  }
+
+  handleCloseBookInputModal = () => {
+    this.setState({openBookInputModal: false})
+  }
+
+  handleSubmitBookInputModal = (name, size) => {
+    this.setState({openBookInputModal: false})
+    this.props.addBook(name, size)
+  }
+
   render() {
     console.log('containers.books.BooksWorkspace')
     console.log('this.props')
@@ -70,26 +86,27 @@ class BooksWorkspace extends Component {
             onSubmitTemplate={this.handleSubmitTemplate}
             onRemoveTemplate={this.handleRemoveTemplate}
           />
-
-
           <Card.Group itemsPerRow='2' doubling>
-
-          <Transition transitionOnMount='true' animation='fade up'>
-            <Card>
-              <Card.Content>
-                <Card.Header>Finalize</Card.Header>
-                <Card.Description>
-                  <Button circular icon='play' color='blue' size='large' />
-                </Card.Description>
-              </Card.Content>
-              <Progress percent={70} indicating attached='bottom' />
-            </Card>
-          </Transition>
-
+            <Transition transitionOnMount='true' animation='fade up'>
+              <Card>
+                <Card.Content>
+                  <Card.Header>Finalize</Card.Header>
+                  <Card.Description>
+                    <Button circular icon='play' color='blue' size='large' />
+                  </Card.Description>
+                </Card.Content>
+                <Progress percent={70} indicating attached='bottom' />
+              </Card>
+            </Transition>
           </Card.Group>
+          <BookInputModal 
+            open={this.state.openBookInputModal}
+            onClose={this.handleCloseBookInputModal}
+            onSubmit={this.handleSubmitBookInputModal}
+          />
         </WideColumnWorkspace>
 
-        <FloatingActionButton icon='plus' color='google plus' />
+        <FloatingActionButton icon='plus' color='google plus' onClick={this.handleClickAddBookButton} />
 
       </div>
     );

@@ -166,9 +166,9 @@ class HexEditModal extends Component {
           />
         </Modal.Content>
         <Modal.Actions>
-          <Button id='TextAreaInputModalCancel' onClick={this.handleClose}>CANCEL</Button>
+          <Button className='modalSecondaryButton' onClick={this.handleClose}>CANCEL</Button>
           <Button 
-            id='TextAreaInputModalSave' 
+            className='modalPrimaryButton'
             primary={!this.primaryDisabled()} 
             disabled={this.primaryDisabled()} 
             onClick={this.handleSubmit}

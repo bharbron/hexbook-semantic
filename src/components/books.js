@@ -11,6 +11,7 @@ import {
   Label,
   List,
   Modal,
+  Ref,
   Select,
   Transition
 } from 'semantic-ui-react';
@@ -234,4 +235,99 @@ class BookTemplateAdder extends Component {
   }
 }
 
-export {BookCardsGroup}
+class BookInputModal extends Component {
+  initialState = {
+    name: {value: null, valid: false, error: null},
+    size: {value: 'A5', valid: true, error: null},
+  }
+
+  state = {...this.initialState}
+
+  sizeOptions = [
+    {key: 'A4', value: 'A4', text: 'A4'},
+    {key: 'A5', value: 'A5', text: 'A5'},
+  ]
+
+  nameRef = React.createRef()
+  handleNameRef = nameNode => this.setState({nameNode})
+
+  valuesValid = () => {
+    return (this.state.name.valid && this.state.size.valid)
+  }
+
+  addButtonColor = () => {
+    return (this.valuesValid()) ? COLORS.SUBMIT_BUTTON : null
+  }
+
+  handleCancel = () => {
+    this.setState(this.initialState)
+    this.props.onClose()
+  }
+
+  handleClose = () => {
+    this.props.onClose()
+  }
+
+  handleSubmit = () => {
+    if (this.valuesValid()) {
+      const name = this.state.name.value
+      const size = this.state.size.value
+      this.setState(this.initialState)
+      this.props.onSubmit(name, size)
+    }
+  }
+
+  handleChange = (event, {name, value}) => {
+    if (name === 'name') {
+      this.setState({name: {value: value, valid: true, error: null}})
+      return
+    }
+    if (name === 'size') {
+      this.setState({size: {value: value, valid: true, error: null}})
+      return
+    }
+  }
+
+  render() {
+    return (
+        <Modal size='tiny' open={this.props.open} onClose={this.handleClose} className='BookInputModal'>
+          <Modal.Header style={{ borderBottom: '0px' }}>
+            <Header as='h3' content='Add New Book' />
+          </Modal.Header>
+          <Modal.Content>
+            <Form onSubmit={this.handleSubmit}>
+              <Ref innerRef={this.handleNameRef}>
+                <Form.Input 
+                  name='name'
+                  label='Name'
+                  error={this.state.name.error} 
+                  autoFocus
+                  transparent
+                  placeholder='Enter name for the book...'
+                  value={this.state.name.value}
+                  onChange={this.handleChange}
+                />
+              </Ref>
+              <InputErrorPopup context={this.state.nameNode} error={this.state.name.error} />
+              <Form.Select 
+                name='size'
+                label='Size'
+                placeholder='' 
+                search
+                options={this.sizeOptions}
+                value={this.state.size.value}
+                onChange={this.handleChange} 
+              />
+              <HiddenSubmitButton />
+            </Form>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button className='modalSecondaryButton' onClick={this.handleCancel}>CANCEL</Button>
+            <Button className='modalPrimaryButton' color={this.addButtonColor()} disabled={!(this.valuesValid())} onClick={this.handleSubmit}>ADD</Button>
+          </Modal.Actions>
+        </Modal>
+    );
+  }
+}
+
+export {BookCardsGroup, BookInputModal}
