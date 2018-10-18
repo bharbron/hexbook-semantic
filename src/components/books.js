@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {
   Button,
   Card,
+  Dropdown,
   Form,
   Header,
   Icon,
@@ -45,7 +46,7 @@ function BookCardsGroup(props) {
 function BookCard(props) {
   return (
     <Transition transitionOnMount='true' animation='fade up'>
-      <Card raised className='BookCard'>
+      <Card className='BookCard'>
         <BookContentSettings 
           book={props.book} 
           onSubmit={(setting, value) => props.onSubmitSetting(setting, value, props.book)} 
@@ -56,6 +57,11 @@ function BookCard(props) {
           onSubmit={props.onSubmitTemplate}
           onRemove={props.onRemoveTemplate}
         />
+        <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
+          <Dropdown.Menu direction='left'>
+            <Dropdown.Item text='Delete this book' />
+          </Dropdown.Menu>
+        </Dropdown>
       </Card>
     </Transition>
   )
@@ -73,7 +79,10 @@ function BookContentSettings(props) {
 }
 
 function BookSettingList(props) {
-  const sizeOptions = [{key: 'A5', value: 'A5', text: 'A5'}]
+  const sizeOptions = [
+    {key: 'A4', value: 'A4', text: 'A4'},
+    {key: 'A5', value: 'A5', text: 'A5'},
+  ]
   return (
     <List size='large' className='BookSettingList'>
       <BookSettingSelect name='Size' setting='size' value={props.book.size} options={sizeOptions} onSubmit={props.onSubmit} />
@@ -180,11 +189,13 @@ class BookTemplateAdder extends Component {
   state = {value: null}
 
   templateOptions = () => {
-    return Object.keys(this.props.templatesByName).sort().map(
+    const bookTemplateNames = this.props.book.templates.map(template => template.name)
+    const options = Object.keys(this.props.templatesByName).sort().map(
       name => {
         return {key: name, value: name, text: name}
       }
     )
+    return options.filter(option => !bookTemplateNames.includes(option.value))
   }
 
   handleChange = (event, {name, value}) => {

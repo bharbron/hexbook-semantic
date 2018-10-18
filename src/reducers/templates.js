@@ -37,11 +37,6 @@ function byIdAddTemplate(state, action) {
 }
 
 function byIdUpdateTemplate(state, action) {
-  console.log('selectors.template.byIdUpdateTemplate')
-  console.log('state')
-  console.log(state)
-  console.log('action')
-  console.log(action)
   const template = action.payload.template
   return {
     ...state,

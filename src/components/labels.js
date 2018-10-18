@@ -15,7 +15,7 @@ function TagLabel(props) {
 }
 
 function TableCodeLabel(props) {
-  return <Label color='grey'>[[]]<Label.Detail>{props.code}</Label.Detail></Label>
+  return <Label color='grey'><Icon name='list' />[[{props.code}]]</Label>
 }
 
 function TableEntriesCountLabel(props) {
