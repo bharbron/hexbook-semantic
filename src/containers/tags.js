@@ -7,7 +7,7 @@ import {
 } from 'semantic-ui-react';
 import {WideColumnWorkspace} from '../components/workspaces'
 import {TagsSegment} from '../components/tags'
-import {SingleLineAdderV2} from '../components/forms'
+import {SingleLineAdder} from '../components/forms'
 import {getTerrainTags, getTerritoryTags, getOtherTags} from '../selectors/tags'
 import {addOtherTag, deleteOtherTag} from '../actions/tags'
 import {COLORS} from '../constants/colors'
@@ -102,7 +102,7 @@ class TagsWorkspace extends Component {
             </Dropdown>
           }
           adder={
-            <SingleLineAdderV2
+            <SingleLineAdder
               name='other'
               placeholder='enter new tag...'
               value={this.state.valueOther}
