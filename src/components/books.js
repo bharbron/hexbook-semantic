@@ -279,7 +279,19 @@ class BookInputModal extends Component {
 
   handleChange = (event, {name, value}) => {
     if (name === 'name') {
-      this.setState({name: {value: value, valid: true, error: null}})
+      if (value.match(REGEX.EMPTY)) {
+        this.setState({name: {value: value, valid: false, error: ERRORS.REQUIRED}})
+        return
+      }
+      if (value.match(REGEX.BOOK_NAME)) {
+        if (this.props.booksByName[value]) {
+          this.setState({name: {value: value, valid: true, error: ERRORS.BOOK_NAME_DUPLICATE}})
+          return
+        }
+        this.setState({name: {value: value, valid: true, error: null}})
+        return
+      }
+      this.setState({name: {value: value, valid: false, error: ERRORS.BOOK_NAME_INVALID_CHAR}})
       return
     }
     if (name === 'size') {

@@ -15,12 +15,13 @@ import {addBook, updateBook} from '../actions/books'
 import {WideColumnWorkspace} from '../components/workspaces'
 import {FloatingActionButton} from '../components/floatingcontrols'
 import {BookCardsGroup, BookInputModal} from '../components/books'
-import {getBooks} from '../selectors/books'
+import {getBooks, getByNameBooks} from '../selectors/books'
 import {getByNameTemplates} from '../selectors/templates'
 import './containers.css';
 
 const mapStateToProps = state => ({
   books: getBooks(state),
+  booksByName: getByNameBooks(state),
   templatesByName: getByNameTemplates(state), 
 })
 
@@ -103,6 +104,7 @@ class BooksWorkspace extends Component {
             open={this.state.openBookInputModal}
             onClose={this.handleCloseBookInputModal}
             onSubmit={this.handleSubmitBookInputModal}
+            booksByName={this.props.booksByName}
           />
         </WideColumnWorkspace>
 

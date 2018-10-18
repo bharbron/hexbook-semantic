@@ -12,4 +12,5 @@ export const REGEX = {
   TAG_NAME: /^[A-Za-z]*$/,
   TEMPLATE_NAME: /^[A-Za-z0-9 !@#$%^&*()\-_=+'"<,>.?]+$/,
   TEMPLATE_DESCRIPTION: /^[A-Za-z0-9 !@#$%^&*()\-_=+'"<,>.?]+$/,
+  BOOK_NAME: /^[A-Za-z0-9 !@#$%^&*()\-_=+'"<,>.?]+$/,
 }

@@ -10,6 +10,8 @@ export const ERRORS = {
   TEMPLATE_NAME_INVALID_CHAR: 'May only contain letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?',
   TEMPLATE_NAME_DUPLICATE: 'Name is already used by a different template',
   TEMPLATE_DESCRIPTION_INVALID_CHAR: 'May only contain letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?',
+  BOOK_NAME_INVALID_CHAR: 'May only contain letters, numbers, spaces, or !@#$%^&*()-_=+\'"<,>.?',
+  BOOK_NAME_DUPLICATE: 'Name is already used by a different book',
 }
 
 export const TEMPLATE_PREVIEW = {
