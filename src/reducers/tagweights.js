@@ -27,7 +27,7 @@ function byIdDeleteOtherTag(state, action) {
   */
   const tag = action.payload.tag
   const newState = {...state}
-  Object.values(newState).map(
+  Object.values(newState).forEach(
     tw => {
       if (tw.tag === tag) {
         newState[tw.id] = {
@@ -35,7 +35,6 @@ function byIdDeleteOtherTag(state, action) {
           tag: undefined
         }
       }
-      return true
     }
   )
   return newState

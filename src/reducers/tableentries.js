@@ -68,11 +68,10 @@ function byIdDeleteOtherTag(state, action) {
   */
   const tag = action.payload.tag
   const newState = {...state}
-  Object.values(newState).map(
+  Object.values(newState).forEach(
     te => {
       newState[te.id].addTags = arrayWithItemRemoved(newState[te.id].addTags, tag)
       newState[te.id].tagBlacklist = arrayWithItemRemoved(newState[te.id].tagBlacklist, tag)
-      return true
     }
   )
   return newState

@@ -58,11 +58,6 @@ function BookCard(props) {
           onSubmit={props.onSubmitTemplate}
           onRemove={props.onRemoveTemplate}
         />
-        <Dropdown icon={<Icon name='ellipsis vertical' color='grey' />} style={{ position: 'absolute', top: '1rem', right: '1rem' }}>
-          <Dropdown.Menu direction='left'>
-            <Dropdown.Item text='Delete this book' />
-          </Dropdown.Menu>
-        </Dropdown>
       </Card>
     </Transition>
   )

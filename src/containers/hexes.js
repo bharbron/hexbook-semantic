@@ -62,18 +62,16 @@ class HexesWorkspace extends Component {
   handleSubmitHexMapInputModal = (value) => {
     this.setState({openHexMapInputModal: false})
     const lines = value.split('\n')
-    lines.map(
+    lines.forEach(
       line => {
         let [newCoordinates, newTerrain, newTerritory] = line.split(',')
         if (!newCoordinates || newCoordinates.match(REGEX.EMPTY) || !newCoordinates.match(REGEX.HEX_MAP_COORDINATES)) {
-          //can't have a hex with invalid coordinates, so do nothing
-          return false
+          return
         }
         newCoordinates = newCoordinates.toUpperCase()
         newTerrain = newTerrain && newTerrain.match(REGEX.HEX_MAP_TERRAIN) ? newTerrain.toLowerCase() : undefined
         newTerritory = newTerritory && newTerritory.match(REGEX.HEX_MAP_TERRITORY) ? newTerritory.toLowerCase() : undefined
         this.props.addHex(newCoordinates, newTerrain, newTerritory)
-        return true
       }
     )
   }

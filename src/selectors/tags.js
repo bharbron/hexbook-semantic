@@ -14,7 +14,7 @@ function getOtherTags(state) {
 
 function getByTagColors(state) {
   const colorsByTag = {}
-  state.entities.tags.allIds.map(
+  state.entities.tags.allIds.forEach(
     id => {
       colorsByTag[id] = COLORS.OTHER_TAG
       if (state.entities.tags.byId[id].territoryHexes.length > 0) {
@@ -23,7 +23,6 @@ function getByTagColors(state) {
       if (state.entities.tags.byId[id].terrainHexes.length >0) {
         colorsByTag[id] = COLORS.TERRAIN_TAG
       }
-      return true
     }
   )
   return colorsByTag
