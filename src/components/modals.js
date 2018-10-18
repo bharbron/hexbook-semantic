@@ -66,9 +66,9 @@ class TextAreaInputModal extends Component {
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button id='TextAreaInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
+          <Button className='modalSecondaryButton' onClick={this.handleCancel}>CANCEL</Button>
           <Button 
-            id='TextAreaInputModalSave' 
+            className='modalPrimaryButton'
             color={this.state.primaryColor} 
             disabled={this.state.primaryDisabled} 
             onClick={this.handleSubmit}

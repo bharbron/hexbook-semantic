@@ -16,13 +16,9 @@
 
 .NarrowColumnWorkspace {}
 
-#TextAreaInputModalCancel {}
-
-#TextAreaInputModalCancel.button {
+button.ui.button.modalSecondaryButton {
 	background-color: inherit;
 }
-
-#TextAreaInputModalSave {}
 
 .TextAreaInputModal div.scrolling.content {
 	padding: 0rem 1.5rem 0rem 1.5rem!important;
@@ -37,14 +33,6 @@
 .ui.modal.TextAreaInputModal>.actions {
 	background: inherit;
 }
-
-#TableInputModalCancel {}
-
-#TableInputModalCancel.button {
-	background-color: inherit;
-}
-
-#TableInputModalSave {}
 
 .TableInputModal div.scrolling.content {
 	padding: 0rem 1.5rem 0rem 1.5rem!important;

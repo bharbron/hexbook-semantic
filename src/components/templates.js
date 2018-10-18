@@ -252,8 +252,8 @@ class TemplateInputModal extends Component {
             </Form>
           </Modal.Content>
           <Modal.Actions>
-            <Button id='TableInputModalCancel' onClick={this.handleCancel}>CANCEL</Button>
-            <Button id='TableInputModalSave' color={this.addButtonColor()} disabled={this.addButtonDisabled()} onClick={this.handleSubmit}>ADD</Button>
+            <Button className='modalSecondaryButton' onClick={this.handleCancel}>CANCEL</Button>
+            <Button className='modalPrimaryButton' color={this.addButtonColor()} disabled={this.addButtonDisabled()} onClick={this.handleSubmit}>ADD</Button>
           </Modal.Actions>
         </Modal>
     );
