@@ -14,10 +14,9 @@ function getByIdHexes(state) {
   Return a lookup object of "full" hexes
   */
   const hexesById = {}
-  state.entities.tables.byId['HEX'].entries.map(
+  state.entities.tables.byId['HEX'].entries.forEach(
     id => {
       hexesById[id] = getFullHexById(state, id)
-      return true
     }
   )
   return hexesById

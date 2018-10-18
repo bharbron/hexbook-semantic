@@ -11,13 +11,12 @@ export function getFullTableEntryById(state, id) {
   }
   if (tableEntry.tagWeights) {
     const tagWeights = []
-    tableEntry['tagWeights'].map(
+    tableEntry['tagWeights'].forEach(
       id => {
         const tagWeight = getFullTagWeightById(state, id)
         if (tagWeight) {
           tagWeights.push(tagWeight)
         }
-        return true
       }
     )
     tableEntry['tagWeights'] = tagWeights
@@ -30,9 +29,10 @@ export function getFullTableEntriesLookup(state) {
   Return a byId lookup object of all "full" table entries
   */
   const fullTableEntries = {}
-  state.entities.tableEntries.allIds.map(id => {
-    fullTableEntries[id] = getFullTableEntryById(state, id)
-    return true
-  })
+  state.entities.tableEntries.allIds.forEach(
+    id => {
+      fullTableEntries[id] = getFullTableEntryById(state, id)
+    }
+  )
   return fullTableEntries
 }
