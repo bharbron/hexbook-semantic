@@ -241,7 +241,7 @@ class TemplateInputModal extends Component {
               />
               <Form.Select 
                 name='table'
-                label='Table'
+                label='Table Code'
                 placeholder='' 
                 search
                 options={this.tableOptions}
