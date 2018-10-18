@@ -237,7 +237,7 @@ class BookTemplateAdder extends Component {
 
 class BookInputModal extends Component {
   initialState = {
-    name: {value: null, valid: false, error: null},
+    name: {value: '', valid: false, error: null},
     size: {value: 'A5', valid: true, error: null},
   }
 
