@@ -6,6 +6,7 @@ export const ADD_HEX_DEFINITION = 'ADD_HEX_DEFINITION'
 export const DELETE_HEX_DEFINITION = 'DELETE_HEX_DEFINITION'
 export const ADD_HEX = 'ADD_HEX'
 export const UPDATE_HEX = 'UPDATE_HEX'
+export const DELETE_HEX = 'DELETE_HEX'
 
 /* other constants */
 
@@ -40,10 +41,17 @@ export function addHex(coordinates, terrain, territory) {
   } }
 }
 
-export function updateHex (hex, prevHex) {
+export function updateHex(hex, prevHex) {
   /*
   :param hex: "full" hex definition of the new hex (see hex selector for schema)
   :param prevHex: "ful" hex definition of the hex that is being updated
   */
   return {type: UPDATE_HEX, payload: {hex: hex, prevHex: prevHex}}
+}
+
+export function deleteHex(hex) {
+  /*
+  :param hex: "full" tableEntry object of the hex to delete
+  */
+  return {type: DELETE_HEX, payload: {hex: hex}}
 }

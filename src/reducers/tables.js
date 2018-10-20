@@ -71,9 +71,9 @@ function byIdUpdateTable(state, action) {
     ...state,
     [action.payload.prevTable.id]: {
       ...state[action.payload.prevTable.id],
-      name: action.payload.name,
-      code: action.payload.code,
-      description: action.payload.description
+      name: action.payload.table.name,
+      code: action.payload.table.code,
+      description: action.payload.table.description
     }
   })
 }

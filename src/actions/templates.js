@@ -25,8 +25,8 @@ export function addTemplate(name, description, plugin, table, properties, metada
   }
 }
 
-export function deleteTemplate(id) {
-  return {type: DELETE_TEMPLATE, payload: {'id': id}}
+export function deleteTemplate(template) {
+  return {type: DELETE_TEMPLATE, payload: {'template': template}}
 }
 
 export function updateTemplate(template, prevTemplate) {

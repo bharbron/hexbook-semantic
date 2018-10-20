@@ -109,7 +109,7 @@ function byIdUpdateTableEntry(state, action) {
   action.payload.tableEntry.tagWeights.map(
     tw => tagWeights.push(tw.id)
   )
-  const tableEntryId = action.payload.tableEntryId
+  const tableEntryId = action.payload.prevTableEntry.id
   const newState = {
     ...state,
     [tableEntryId]: {

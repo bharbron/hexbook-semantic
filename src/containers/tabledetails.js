@@ -38,8 +38,8 @@ class TableDetailsWorkspace extends Component {
       editingTableEntryId: null
   }
 
- handleSubmitEditDetails = (name, code, description) => {
-    this.props.updateTable(name, code, description, this.props.table)
+ handleSubmitEditDetails = (newTable) => {
+    this.props.updateTable(newTable, this.props.table)
   }
 
   handleSubmitAddEntry = (value) => {
