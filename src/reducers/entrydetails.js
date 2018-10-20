@@ -1,5 +1,5 @@
 import {combineReducers } from 'redux'
-import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX} from '../actions/hexes'
+import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX, DELETE_HEX} from '../actions/hexes'
 import {UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
 import {arrayWithPush, arrayWithItemRemoved} from './helpers'
 
@@ -11,6 +11,7 @@ function byId(state=null, action) {
     case DELETE_HEX_DEFINITION: return byIdDeleteHexDefinition(state, action)
     case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
     case UPDATE_HEX: return byIdUpdateHex(state, action)
+    case DELETE_HEX: return byIdDeleteHex(state, action)
     default: return state
   }
 }
@@ -23,6 +24,7 @@ function allIds(state=null, action) {
     case DELETE_HEX_DEFINITION: return allIdsDeleteHexDefinition(state, action)
     case UPDATE_TABLE_ENTRY: return allIdsUpdateTableEntry(state, action)
     case UPDATE_HEX: return allIdsUpdateHex(state, action)
+    case DELETE_HEX: return allIdsDeleteHex(state, action)
     default: return state
   }
 }
@@ -75,6 +77,19 @@ function byIdUpdateHex(state, action) {
   return newState
 }
 
+function byIdDeleteHex(state, action) {
+  /*
+  1. Remove all entryDetails found in hex
+  */
+  const newState = {
+    ...state
+  }
+  action.payload.hex.entryDetails.map(
+    ed => newState[ed.id] = undefined
+  )
+  return newState
+}
+
 function allIdsAddHexDefinition(state, action) {
   return ([...state, action.payload.newEntryDetailId])
 }
@@ -118,6 +133,20 @@ function allIdsUpdateHex(state, action) {
   for (let i = 0; i < entryDetails.length; i++) {
     newState = arrayWithPush(newState, entryDetails[i].id)
   }
+  return newState
+}
+
+function allIdsDeleteHex(state, action) {
+  /*
+  1. Remove all entryDetails found in hex
+  */
+  const entryDetails = action.payload.hex.entryDetails
+  let newState = [...state]
+  entryDetails.forEach(
+    ed => {
+      newState = arrayWithItemRemoved(newState, ed.id)
+    }
+  )
   return newState
 }
 

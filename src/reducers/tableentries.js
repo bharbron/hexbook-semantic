@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
-import {arrayWithPush, arrayWithItemRemoved} from './helpers'
-import {ADD_HEX, UPDATE_HEX} from '../actions/hexes'
+import {arrayWithPush, arrayWithUniquePush, arrayWithItemRemoved} from './helpers'
+import {ADD_HEX, UPDATE_HEX, DELETE_HEX} from '../actions/hexes'
 import {DELETE_OTHER_TAG} from '../actions/tags'
 import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
 
@@ -10,6 +10,7 @@ function byId(state=null, action) {
   switch (action.type) {
     case ADD_HEX: return byIdAddHex(state, action)
     case UPDATE_HEX: return byIdUpdateHex(state, action)
+    case DELETE_HEX: return byIdDeleteHex(state, action)
     case DELETE_OTHER_TAG: return byIdDeleteOtherTag(state, action)
     case ADD_TABLE_ENTRY: return byIdAddTableEntry(state, action)
     case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
@@ -22,6 +23,7 @@ function allIds(state=null, action) {
   console.log(action)
   switch (action.type) {
     case ADD_HEX: return allIdsAddHex(state, action)
+    case DELETE_HEX: return allIdsDeleteHex(state, action)
     case ADD_TABLE_ENTRY: return allIdsAddTableEntry(state, action)
     default: return state
   }
@@ -60,6 +62,17 @@ function byIdUpdateHex(state, action) {
       addTags: hex.addTags,
     }
   })
+}
+
+function byIdDeleteHex(state, action) {
+  /*
+  Remove the hex
+  */
+  const hex = action.payload.hex
+  return {
+    ...state,
+    [hex.id]: undefined
+  }
 }
 
 function byIdDeleteOtherTag(state, action) {
@@ -127,7 +140,12 @@ function byIdUpdateTableEntry(state, action) {
 
 function allIdsAddHex(state, action) {
   const coordinates = action.payload.coordinates
-  return [...state.filter(item => item !== coordinates), coordinates]
+  return arrayWithUniquePush(state, coordinates)
+}
+
+function allIdsDeleteHex(state, action) {
+  const hex = action.payload.hex
+  return arrayWithItemRemoved(state, hex.id)
 }
 
 function allIdsAddTableEntry(state, action) {

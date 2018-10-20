@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 import {arrayWithPush, arrayWithItemRemoved} from './helpers'
-import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX} from '../actions/hexes'
+import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX, DELETE_HEX} from '../actions/hexes'
 import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
 
 function byId(state=null, action) {
@@ -10,6 +10,7 @@ function byId(state=null, action) {
     case ADD_HEX_DEFINITION: return byIdAddHexDefinition(state, action)
     case DELETE_HEX_DEFINITION: return byIdDeleteHexDefinition(state, action)
     case UPDATE_HEX: return byIdUpdateHex(state, action)
+    case DELETE_HEX: return byIdDeleteHex(state, action)
     case ADD_TABLE_ENTRY: return byIdAddTableEntry(state, action)
     case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
     default: return state
@@ -21,6 +22,7 @@ function allIds(state=null, action) {
   console.log(action)
   switch (action.type) {
     case UPDATE_HEX: return allIdsUpdateHex(state, action)
+    case DELETE_HEX: return allIdsDeleteHex(state, action)
     case ADD_TABLE_ENTRY: return allIdsAddTableEntry(state, action)
     default: return state
   }
@@ -93,6 +95,21 @@ function byIdUpdateHex(state, action) {
   // If for some reason we didn't catch something earlier
   console.log("This shouldn't have happened. Reduction of UPDATE_HEX for entrydetailsgroups wasn't caught.")
   return state
+}
+
+function byIdDeleteHex(state, action) {
+  /*
+  1. Delete the entryDetailsGroup associated with the hex, unless it is group 'HEX'
+  */
+  // Global 'HEX' definitions, so don't remove anything
+  if (action.payload.hex.entryDetailsGroup === 'HEX') {
+    return {...state}
+  }
+  // Hex was not using the global hex group, so delete
+  return {
+    ...state,
+    [action.payload.hex.entryDetailsGroup]: undefined
+  }
 }
 
 function byIdAddTableEntry(state, action) {
@@ -169,6 +186,18 @@ function allIdsUpdateHex(state, action) {
   // If for some reason we didn't catch something earlier
   console.log("This shouldn't have happened. Reduction of UPDATE_HEX for entrydetailsgroups wasn't caught.")
   return state
+}
+
+function allIdsDeleteHex(state, action) {
+  /*
+  If hex was using global 'HEX' definitions group, do nothing. Otherwise, delete the entryDetailsGroup
+  */
+  if (action.payload.hex.entryDetailsGroup === 'HEX') {
+    return [...state]
+  }
+  else {
+    return arrayWithItemRemoved(state, action.payload.hex.entryDetailsGroup)
+  }
 }
 
 function allIdsAddTableEntry(state, action) {
