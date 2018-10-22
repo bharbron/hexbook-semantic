@@ -43,7 +43,7 @@ function byIdDeleteHexDefinition(state, action) {
     ...state,
     'HEX': {
       ...state['HEX'],
-      entryDetails: [...state['HEX'].entryDetails.filter(item => item !== action.payload.entryDetailId)]
+      entryDetails: [...state['HEX'].entryDetails.filter(item => item !== action.payload.entryDetail.id)]
     }
   }
 }

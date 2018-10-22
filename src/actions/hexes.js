@@ -24,8 +24,8 @@ export function addHexDefinition(newEntryDetailText) {
   return { type: ADD_HEX_DEFINITION, payload: {'newEntryDetailText': newEntryDetailText, 'newEntryDetailId': uuidv4()} }
 }
 
-export function deleteHexDefinition(entryDetailId) {
-  return { type: DELETE_HEX_DEFINITION, payload: {'entryDetailId': entryDetailId} }
+export function deleteHexDefinition(entryDetail) {
+  return { type: DELETE_HEX_DEFINITION, payload: {'entryDetail': entryDetail} }
 }
 
 export function addHex(coordinates, terrain, territory) {

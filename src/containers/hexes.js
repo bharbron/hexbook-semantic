@@ -38,8 +38,8 @@ class HexesWorkspace extends Component {
     this.props.addHexDefinition(value)
   }
 
-  handleClickDeleteHexDefinition = (id) => {
-    this.props.deleteHexDefinition(id)
+  handleClickDeleteHexDefinition = (entryDetail) => {
+    this.props.deleteHexDefinition(entryDetail)
   }
 
   handleSubmitHexInput = (value) => {

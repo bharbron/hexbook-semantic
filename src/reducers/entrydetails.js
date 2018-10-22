@@ -39,7 +39,7 @@ function byIdAddHexDefinition(state, action) {
 function byIdDeleteHexDefinition(state, action) {
   return ({
     ...state,
-    [action.payload.entryDetailId]: undefined
+    [action.payload.entryDetail.id]: undefined
   })
 }
 
@@ -95,7 +95,7 @@ function allIdsAddHexDefinition(state, action) {
 }
 
 function allIdsDeleteHexDefinition(state, action) {
-  return state.filter(item => item !== action.payload.entryDetailId)
+  return state.filter(item => item !== action.payload.entryDetail.id)
 }
 
 function allIdsUpdateTableEntry(state, action) {
