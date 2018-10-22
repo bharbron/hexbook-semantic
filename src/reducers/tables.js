@@ -2,7 +2,7 @@ import {combineReducers} from 'redux'
 import {arrayWithPush, arrayWithUniquePush, arrayWithItemRemoved} from './helpers'
 import {ADD_HEX, DELETE_HEX} from '../actions/hexes'
 import {ADD_TABLE, DELETE_TABLE, UPDATE_TABLE} from '../actions/tables'
-import {ADD_TABLE_ENTRY} from '../actions/tabledetails'
+import {ADD_TABLE_ENTRY} from '../actions/tableentries'
 import {ADD_TEMPLATE, DELETE_TEMPLATE} from '../actions/templates'
 
 function byId(state=null, action) {

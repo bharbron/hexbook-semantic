@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 import {DELETE_OTHER_TAG} from '../actions/tags'
-import {UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
+import {UPDATE_TABLE_ENTRY} from '../actions/tableentries'
 
 function byId(state=null, action) {
   console.log(state)

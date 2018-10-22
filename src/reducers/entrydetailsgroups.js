@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux'
 import {arrayWithPush, arrayWithItemRemoved} from './helpers'
 import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX, DELETE_HEX} from '../actions/hexes'
-import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
+import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY} from '../actions/tableentries'
 
 function byId(state=null, action) {
   console.log(state)

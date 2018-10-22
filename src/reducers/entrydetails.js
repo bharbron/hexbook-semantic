@@ -1,6 +1,6 @@
 import {combineReducers } from 'redux'
 import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX, DELETE_HEX} from '../actions/hexes'
-import {UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
+import {UPDATE_TABLE_ENTRY} from '../actions/tableentries'
 import {arrayWithPush, arrayWithItemRemoved} from './helpers'
 
 function byId(state=null, action) {
