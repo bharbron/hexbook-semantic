@@ -1,4 +1,4 @@
-import {ADD_HEX, UPDATE_HEX} from '../actions/hexes'
+import {ADD_HEX, UPDATE_HEX, DELETE_HEX} from '../actions/hexes'
 import {ADD_OTHER_TAG, DELETE_OTHER_TAG} from '../actions/tags'
 import {arrayWithUniquePush, arrayWithItemRemoved} from './helpers'
 
@@ -10,6 +10,7 @@ function tagsReducer(state=null, action) {
   switch (action.type) {
     case ADD_HEX: return addHex(state, action)
     case UPDATE_HEX: return updateHex(state, action)
+    case DELETE_HEX: return deleteHex(state, action)
     case ADD_OTHER_TAG: return addOtherTag(state, action)
     case DELETE_OTHER_TAG: return deleteOtherTag(state, action)
     default: return state
@@ -115,6 +116,31 @@ function updateHex(state, action) {
     }
   }
 
+  return {
+    byId: newById,
+    allIds: newAllIds
+  }
+}
+
+function deleteHex(state, action) {
+  //remove terrainHex/territoryHex reference for the hex
+  const hex = action.payload.hex
+  const terrain = hex.addTags[0]
+  const territory = hex.addTags[1]
+  const newById = {...state.byId}
+  const newAllIds = [...state.allIds]
+  if (terrain) {
+    newById[terrain] = {
+      ...newById[terrain],
+      terrainHexes: arrayWithItemRemoved(newById[terrain].terrainHexes, hex.id)
+    }
+  }
+  if (territory) {
+    newById[territory] = {
+      ...newById[territory],
+      territoryHexes: arrayWithItemRemoved(newById[territory].territoryHexes, hex.id)
+    }
+  }
   return {
     byId: newById,
     allIds: newAllIds

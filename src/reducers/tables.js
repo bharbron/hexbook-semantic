@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
-import {arrayWithPush, arrayWithUniquePush} from './helpers'
-import {ADD_HEX} from '../actions/hexes'
+import {arrayWithPush, arrayWithUniquePush, arrayWithItemRemoved} from './helpers'
+import {ADD_HEX, DELETE_HEX} from '../actions/hexes'
 import {ADD_TABLE, DELETE_TABLE, UPDATE_TABLE} from '../actions/tables'
 import {ADD_TABLE_ENTRY} from '../actions/tabledetails'
 import {ADD_TEMPLATE, DELETE_TEMPLATE} from '../actions/templates'
@@ -10,6 +10,7 @@ function byId(state=null, action) {
   console.log(action)
   switch (action.type) {
     case ADD_HEX: return byIdAddHex(state, action)
+    case DELETE_HEX: return byIdDeleteHex(state, action)
     case ADD_TABLE: return byIdAddTable(state, action)
     case DELETE_TABLE: return byIdDeleteTable(state, action)
     case UPDATE_TABLE: return byIdUpdateTable(state, action)
@@ -43,6 +44,17 @@ function byIdAddHex(state, action) {
       ].sort() //keep in coordinate order
     }
   })
+}
+
+function byIdDeleteHex(state, action) {
+  const hex = action.payload.hex
+  return {
+    ...state,
+    'HEX': {
+      ...state['HEX'],
+      entries: arrayWithItemRemoved(state, hex.id)
+    }
+  }
 }
 
 function byIdAddTable(state, action) {
