@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux'
 import {arrayWithPush, arrayWithItemRemoved} from './helpers'
 import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX, DELETE_HEX} from '../actions/hexes'
-import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY} from '../actions/tableentries'
+import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY, DELETE_TABLE_ENTRY} from '../actions/tableentries'
 
 function byId(state=null, action) {
   console.log(state)
@@ -12,6 +12,7 @@ function byId(state=null, action) {
     case UPDATE_HEX: return byIdUpdateHex(state, action)
     case DELETE_HEX: return byIdDeleteHex(state, action)
     case ADD_TABLE_ENTRY: return byIdAddTableEntry(state, action)
+    case DELETE_TABLE_ENTRY: return byIdDeleteTableEntry(state, action)
     case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
     default: return state
   }
@@ -24,6 +25,7 @@ function allIds(state=null, action) {
     case UPDATE_HEX: return allIdsUpdateHex(state, action)
     case DELETE_HEX: return allIdsDeleteHex(state, action)
     case ADD_TABLE_ENTRY: return allIdsAddTableEntry(state, action)
+    case DELETE_TABLE_ENTRY: return allIdsDeleteTableEntry(state, action)
     default: return state
   }
 }
@@ -121,6 +123,15 @@ function byIdAddTableEntry(state, action) {
   }
 }
 
+function byIdDeleteTableEntry(state, action) {
+  // Delete the entryDetailsGroup associated with the tableEntry
+  const tableEntry = action.payload.tableEntry
+  return {
+    ...state,
+    [tableEntry.entryDetailsGroup]: undefined
+  }
+}
+
 function byIdUpdateTableEntry(state, action) {
   /*
   1. Remove all entryDetails found in the entryDetailsGroup of prevTableEntry
@@ -202,6 +213,10 @@ function allIdsDeleteHex(state, action) {
 
 function allIdsAddTableEntry(state, action) {
   return arrayWithPush(state, action.payload.entryDetailsGroupId)
+}
+
+function allIdsDeleteTableEntry(state, action) {
+  return arrayWithItemRemoved(state, action.payload.tableEntry.entryDetailsGroup)
 }
 
 export default combineReducers({byId: byId, allIds: allIds})

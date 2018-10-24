@@ -2,7 +2,7 @@ import {combineReducers} from 'redux'
 import {arrayWithPush, arrayWithUniquePush, arrayWithItemRemoved} from './helpers'
 import {ADD_HEX, UPDATE_HEX, DELETE_HEX} from '../actions/hexes'
 import {DELETE_OTHER_TAG} from '../actions/tags'
-import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY} from '../actions/tableentries'
+import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY, DELETE_TABLE_ENTRY} from '../actions/tableentries'
 
 function byId(state=null, action) {
   console.log(state)
@@ -14,6 +14,7 @@ function byId(state=null, action) {
     case DELETE_OTHER_TAG: return byIdDeleteOtherTag(state, action)
     case ADD_TABLE_ENTRY: return byIdAddTableEntry(state, action)
     case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
+    case DELETE_TABLE_ENTRY: return byIdDeleteTableEntry(state, action)
     default: return state
   }
 }
@@ -25,6 +26,7 @@ function allIds(state=null, action) {
     case ADD_HEX: return allIdsAddHex(state, action)
     case DELETE_HEX: return allIdsDeleteHex(state, action)
     case ADD_TABLE_ENTRY: return allIdsAddTableEntry(state, action)
+    case DELETE_TABLE_ENTRY: return allIdsDeleteTableEntry(state, action)
     default: return state
   }
 }
@@ -138,6 +140,15 @@ function byIdUpdateTableEntry(state, action) {
   return newState
 }
 
+function byIdDeleteTableEntry(state, action) {
+  // Remove the tableEntry
+  const tableEntry = action.payload.tableEntry
+  return {
+    ...state,
+    [tableEntry.id]: undefined
+  }
+}
+
 function allIdsAddHex(state, action) {
   const coordinates = action.payload.coordinates
   return arrayWithUniquePush(state, coordinates)
@@ -150,6 +161,10 @@ function allIdsDeleteHex(state, action) {
 
 function allIdsAddTableEntry(state, action) {
   return arrayWithPush(state, action.payload.tableEntryId)
+}
+
+function allIdsDeleteTableEntry(state, action) {
+  return arrayWithItemRemoved(state, action.payload.tableEntry.id)
 }
 
 export default combineReducers({byId: byId, allIds: allIds})

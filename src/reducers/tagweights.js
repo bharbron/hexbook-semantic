@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 import {DELETE_OTHER_TAG} from '../actions/tags'
-import {UPDATE_TABLE_ENTRY} from '../actions/tableentries'
+import {UPDATE_TABLE_ENTRY, DELETE_TABLE_ENTRY} from '../actions/tableentries'
 
 function byId(state=null, action) {
   console.log(state)
@@ -8,6 +8,7 @@ function byId(state=null, action) {
   switch (action.type) {
     case DELETE_OTHER_TAG: return byIdDeleteOtherTag(state, action)
     case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
+    case DELETE_TABLE_ENTRY: return byIdDeleteTableEntry(state, action)
     default: return state
   }
 }
@@ -17,6 +18,7 @@ function allIds(state=null, action) {
   console.log(action)
   switch (action.type) {
     case UPDATE_TABLE_ENTRY: return allIdsUpdateTableEntry(state, action)
+    case DELETE_TABLE_ENTRY: return allIdsDeleteTableEntry(state, action)
     default: return state
   }
 }
@@ -45,10 +47,7 @@ function byIdUpdateTableEntry(state, action) {
   1. Remove all tag weights found in prevTableEntry
   2. Add tag weights found in tableEntry
   */
-  const prevTagWeightIds = []
-  action.payload.prevTableEntry.tagWeights.map(
-    tw => prevTagWeightIds.push(tw.id)
-  )
+  const prevTagWeightIds = action.payload.prevTableEntry.tagWeights.map(tw => tw.id)
   const tagWeights = action.payload.tableEntry.tagWeights
   //remove prev
   const newState = {
@@ -64,22 +63,37 @@ function byIdUpdateTableEntry(state, action) {
   return newState
 }
 
+function byIdDeleteTableEntry(state, action) {
+  // Remove all tag weights found in tableEntry
+  const tableEntry = action.payload.tableEntry
+  const tagWeightIds = tableEntry.tagWeights.map(tw => tw.id)
+  const newState = {...state}
+  tagWeightIds.forEach(
+    id => {
+      newState[id] = undefined
+    }
+  )
+  return newState
+}
+
 function allIdsUpdateTableEntry(state, action) {
   /*
   1. Remove all tagWeight IDs found in prevTableEntry
   2. Add all tagWeight IDs found in tableEntry
   */
-  const prevTagWeightIds = []
-  action.payload.prevTableEntry.tagWeights.map(
-    tw => prevTagWeightIds.push(tw.id)
-  )
-  const tagWeightIds = []
-  action.payload.tableEntry.tagWeights.map(
-    tw => tagWeightIds.push(tw.id)
-  )
+  const prevTagWeightIds = action.payload.prevTableEntry.tagWeights.map(tw => tw.id)
+  const tagWeightIds = action.payload.tableEntry.tagWeights.map(tw => tw.id)
   return [
     ...state.filter(id => !(prevTagWeightIds.includes(id))), //remove prev
     ...tagWeightIds //add new
+  ]
+}
+
+function allIdsDeleteTableEntry(state, action) {
+  // Remove all tagWeight IDs found in tableEntry
+  const tagWeightIds = action.payload.tableEntry.tagWeights.map(tw => tw.id)
+  return [
+    ...state.filter(id => !(tagWeightIds.includes(id)))
   ]
 }
 
