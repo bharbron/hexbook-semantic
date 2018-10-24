@@ -1,6 +1,7 @@
 import {combineReducers } from 'redux'
 import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX, DELETE_HEX} from '../actions/hexes'
 import {UPDATE_TABLE_ENTRY, DELETE_TABLE_ENTRY} from '../actions/tableentries'
+import {DELETE_TABLE} from '../actions/tables'
 import {arrayWithPush, arrayWithItemRemoved} from './helpers'
 
 function byId(state=null, action) {
@@ -11,6 +12,7 @@ function byId(state=null, action) {
     case DELETE_HEX_DEFINITION: return byIdDeleteHexDefinition(state, action)
     case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
     case DELETE_TABLE_ENTRY: return byIdDeleteTableEntry(state, action)
+    case DELETE_TABLE: return byIdDeleteTable(state, action)
     case UPDATE_HEX: return byIdUpdateHex(state, action)
     case DELETE_HEX: return byIdDeleteHex(state, action)
     default: return state
@@ -25,6 +27,7 @@ function allIds(state=null, action) {
     case DELETE_HEX_DEFINITION: return allIdsDeleteHexDefinition(state, action)
     case UPDATE_TABLE_ENTRY: return allIdsUpdateTableEntry(state, action)
     case DELETE_TABLE_ENTRY: return allIdsDeleteTableEntry(state, action)
+    case DELETE_TABLE: return allIdsDeleteTable(state, action)
     case UPDATE_HEX: return allIdsUpdateHex(state, action)
     case DELETE_HEX: return allIdsDeleteHex(state, action)
     default: return state
@@ -68,6 +71,22 @@ function byIdDeleteTableEntry(state, action) {
   const newState = {...state}
   tableEntry.entryDetails.forEach(
     ed => newState[ed.id] = undefined
+  )
+  return newState
+}
+
+function byIdDeleteTable(state, action) {
+  // Remove all entryDetails found in all tableEntries in the table
+  const table = action.payload.table
+  const newState = {...state}
+  table.tableEntries.forEach(
+    te => {
+      te.entryDetails.forEach(
+        ed => {
+          newState[ed.id] = undefined
+        }
+      )
+    }
   )
   return newState
 }
@@ -132,6 +151,22 @@ function allIdsDeleteTableEntry(state, action) {
   tableEntry.entryDetails.forEach(
     ed => {
       newState = arrayWithItemRemoved(newState, ed.id)
+    }
+  )
+  return newState
+}
+
+function allIdsDeleteTable(state, action) {
+  // Remove all entryDetails found in all tableEntries in the table
+  const table = action.payload.table
+  let newState = [...state]
+  table.tableEntries.forEach(
+    te => {
+      te.entryDetails.forEach(
+        ed => {
+          newState = arrayWithItemRemoved(newState, ed.id)
+        }
+      )
     }
   )
   return newState

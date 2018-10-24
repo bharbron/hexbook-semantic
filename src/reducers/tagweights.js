@@ -1,6 +1,8 @@
 import {combineReducers} from 'redux'
 import {DELETE_OTHER_TAG} from '../actions/tags'
 import {UPDATE_TABLE_ENTRY, DELETE_TABLE_ENTRY} from '../actions/tableentries'
+import {DELETE_TABLE} from '../actions/tables'
+import {arrayWithItemRemoved} from './helpers'
 
 function byId(state=null, action) {
   console.log(state)
@@ -9,6 +11,7 @@ function byId(state=null, action) {
     case DELETE_OTHER_TAG: return byIdDeleteOtherTag(state, action)
     case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
     case DELETE_TABLE_ENTRY: return byIdDeleteTableEntry(state, action)
+    case DELETE_TABLE: return byIdDeleteTable(state, action)
     default: return state
   }
 }
@@ -19,6 +22,7 @@ function allIds(state=null, action) {
   switch (action.type) {
     case UPDATE_TABLE_ENTRY: return allIdsUpdateTableEntry(state, action)
     case DELETE_TABLE_ENTRY: return allIdsDeleteTableEntry(state, action)
+    case DELETE_TABLE: return allIdsDeleteTable(state, action)
     default: return state
   }
 }
@@ -66,11 +70,26 @@ function byIdUpdateTableEntry(state, action) {
 function byIdDeleteTableEntry(state, action) {
   // Remove all tag weights found in tableEntry
   const tableEntry = action.payload.tableEntry
-  const tagWeightIds = tableEntry.tagWeights.map(tw => tw.id)
   const newState = {...state}
-  tagWeightIds.forEach(
-    id => {
-      newState[id] = undefined
+  tableEntry.tagWeights.forEach(
+    tw => {
+      newState[tw.id] = undefined
+    }
+  )
+  return newState
+}
+
+function byIdDeleteTable(state, action) {
+  // Remove all tagWeights in all tableEntries in table
+  const table = action.payload.table
+  const newState = {...state}
+  table.tableEntries.forEach(
+    te => {
+      te.tagWeights.forEach(
+        tw => {
+          newState[tw.id] = undefined
+        }
+      )
     }
   )
   return newState
@@ -95,6 +114,22 @@ function allIdsDeleteTableEntry(state, action) {
   return [
     ...state.filter(id => !(tagWeightIds.includes(id)))
   ]
+}
+
+function allIdsDeleteTable(state, action) {
+  // Remove all tagWeights in all tableEntries in table
+  const table = action.payload.table
+  let newState = [...state]
+  table.tableEntries.forEach(
+    te => {
+      te.tagWeights.forEach(
+        tw => {
+          newState = arrayWithItemRemoved(newState, tw.id)
+        }
+      )
+    }
+  )
+  return newState
 }
 
 export default combineReducers({byId: byId, allIds: allIds})

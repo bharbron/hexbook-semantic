@@ -3,6 +3,7 @@ import {arrayWithPush, arrayWithUniquePush, arrayWithItemRemoved} from './helper
 import {ADD_HEX, UPDATE_HEX, DELETE_HEX} from '../actions/hexes'
 import {DELETE_OTHER_TAG} from '../actions/tags'
 import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY, DELETE_TABLE_ENTRY} from '../actions/tableentries'
+import {DELETE_TABLE} from '../actions/tables'
 
 function byId(state=null, action) {
   console.log(state)
@@ -15,6 +16,7 @@ function byId(state=null, action) {
     case ADD_TABLE_ENTRY: return byIdAddTableEntry(state, action)
     case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
     case DELETE_TABLE_ENTRY: return byIdDeleteTableEntry(state, action)
+    case DELETE_TABLE: return byIdDeleteTable(state, action)
     default: return state
   }
 }
@@ -27,6 +29,7 @@ function allIds(state=null, action) {
     case DELETE_HEX: return allIdsDeleteHex(state, action)
     case ADD_TABLE_ENTRY: return allIdsAddTableEntry(state, action)
     case DELETE_TABLE_ENTRY: return allIdsDeleteTableEntry(state, action)
+    case DELETE_TABLE: return allIdsDeleteTable(state, action)
     default: return state
   }
 }
@@ -149,6 +152,18 @@ function byIdDeleteTableEntry(state, action) {
   }
 }
 
+function byIdDeleteTable(state, action) {
+  // Remove all tableEntries in table
+  const table = action.payload.table
+  const newState = {...state}
+  table.tableEntries.forEach(
+    te => {
+      newState[te.id] = undefined
+    }
+  )
+  return newState
+}
+
 function allIdsAddHex(state, action) {
   const coordinates = action.payload.coordinates
   return arrayWithUniquePush(state, coordinates)
@@ -165,6 +180,18 @@ function allIdsAddTableEntry(state, action) {
 
 function allIdsDeleteTableEntry(state, action) {
   return arrayWithItemRemoved(state, action.payload.tableEntry.id)
+}
+
+function allIdsDeleteTable(state, action) {
+  // Remove all tableEntries in table
+  const table = action.payload.table
+  let newState = [...state]
+  table.tableEntries.forEach(
+    te => {
+      newState = arrayWithItemRemoved(newState, te.id)
+    }
+  )
+  return newState
 }
 
 export default combineReducers({byId: byId, allIds: allIds})

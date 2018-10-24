@@ -2,6 +2,7 @@ import {combineReducers} from 'redux'
 import {arrayWithPush, arrayWithItemRemoved} from './helpers'
 import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX, DELETE_HEX} from '../actions/hexes'
 import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY, DELETE_TABLE_ENTRY} from '../actions/tableentries'
+import {DELETE_TABLE} from '../actions/tables'
 
 function byId(state=null, action) {
   console.log(state)
@@ -14,6 +15,7 @@ function byId(state=null, action) {
     case ADD_TABLE_ENTRY: return byIdAddTableEntry(state, action)
     case DELETE_TABLE_ENTRY: return byIdDeleteTableEntry(state, action)
     case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
+    case DELETE_TABLE: return byIdDeleteTable(state, action)
     default: return state
   }
 }
@@ -26,6 +28,7 @@ function allIds(state=null, action) {
     case DELETE_HEX: return allIdsDeleteHex(state, action)
     case ADD_TABLE_ENTRY: return allIdsAddTableEntry(state, action)
     case DELETE_TABLE_ENTRY: return allIdsDeleteTableEntry(state, action)
+    case DELETE_TABLE: return allIdsDeleteTable(state, action)
     default: return state
   }
 }
@@ -166,6 +169,18 @@ function byIdUpdateTableEntry(state, action) {
   return newState
 }
 
+function byIdDeleteTable(state, action) {
+  // Delete the entryDetailsGroup associated with each tableEntry in the table
+  const table = action.payload.table
+  const newState = {...state}
+  table.tableEntries.forEach(
+    te => {
+      newState[te.entryDetailsGroup] = undefined
+    }
+  )
+  return newState
+}
+
 function allIdsUpdateHex(state, action) {
   /*
   1. Either add, remove, or update depending on difference in entryDetailsGroup between hex and prevHex
@@ -217,6 +232,18 @@ function allIdsAddTableEntry(state, action) {
 
 function allIdsDeleteTableEntry(state, action) {
   return arrayWithItemRemoved(state, action.payload.tableEntry.entryDetailsGroup)
+}
+
+function allIdsDeleteTable(state, action) {
+  // Delete the entryDetailsGroup associated with each tableEntry in the table
+  const table = action.payload.table
+  let newState = [...state]
+  table.tableEntries.forEach(
+    te => {
+      newState = arrayWithItemRemoved(newState, te.entryDetailsGroup)
+    }
+  )
+  return newState
 }
 
 export default combineReducers({byId: byId, allIds: allIds})

@@ -74,7 +74,7 @@ function byIdAddTable(state, action) {
 function byIdDeleteTable(state, action) {
   return ({
     ...state,
-    [action.payload.id]: null
+    [action.payload.table.id]: undefined
   })
 }
 
@@ -120,7 +120,7 @@ function allIdsAddTable(state, action) {
 
 function allIdsDeleteTable(state, action) {
   return ([
-    ...state.filter(id => id !== action.payload.id)
+    ...state.filter(id => id !== action.payload.table.id)
   ])
 }
 
