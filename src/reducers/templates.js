@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux'
 import {ADD_TEMPLATE, DELETE_TEMPLATE, UPDATE_TEMPLATE} from '../actions/templates'
+import {DELETE_TABLE} from '../actions/tables'
 import {arrayWithPush} from './helpers'
 
 function byId(state=null, action) {
@@ -8,6 +9,7 @@ function byId(state=null, action) {
   switch (action.type) {
     case ADD_TEMPLATE: return byIdAddTemplate(state, action)
     case UPDATE_TEMPLATE: return byIdUpdateTemplate(state, action)
+    case DELETE_TABLE: return byIdDeleteTable(state, action)
     default: return state
   }
 }
@@ -50,6 +52,25 @@ function byIdUpdateTemplate(state, action) {
       metadata: {...template.metadata},
     }
   }
+}
+
+function byIdDeleteTable(state, action) {
+  /*
+  Loop through all tables, remove any references to the table
+  */
+  const table = action.payload.table
+  const newState = {...state}
+  Object.keys(state).forEach(
+    template => {
+      if (template.table === table.id) {
+        newState[template.id] = {
+          ...newState[template.id],
+          table: undefined
+        }
+      }
+    }
+  )
+  return newState
 }
 
 function allIdsAddTemplate(state, action) {
