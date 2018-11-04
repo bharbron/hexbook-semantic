@@ -14,10 +14,10 @@ export function addTable(name, code, description) {
   return {type: ADD_TABLE, payload: {'id': uuidv4(), 'name': name, 'code': code, 'description': description}}
 }
 
-export function deleteTable(id) {
-  return {type: DELETE_TABLE, payload: {'id': id}}
+export function deleteTable(table) {
+  return {type: DELETE_TABLE, payload: {'table': table}}
 }
 
-export function updateTable(name, code, description, prevTable) {
-  return {type: UPDATE_TABLE, payload: {name: name, code: code, description: description, prevTable: prevTable}}
+export function updateTable(table, prevTable) {
+  return {type: UPDATE_TABLE, payload: {table: table, prevTable: prevTable}}
 }

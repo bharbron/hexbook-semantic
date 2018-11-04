@@ -70,7 +70,7 @@ class HexDefinitionSegment extends Component {
                   (hexDefinition) => ({
                     key: hexDefinition.id, 
                     content: hexDefinition.text, 
-                    onClick: () => this.props.onDelete(hexDefinition.id)
+                    onClick: () => this.props.onDelete(hexDefinition)
                   })
                 )
               }

@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux'
-import {arrayWithPush, arrayWithUniquePush} from './helpers'
-import {ADD_HEX} from '../actions/hexes'
+import {arrayWithPush, arrayWithUniquePush, arrayWithItemRemoved} from './helpers'
+import {ADD_HEX, DELETE_HEX} from '../actions/hexes'
 import {ADD_TABLE, DELETE_TABLE, UPDATE_TABLE} from '../actions/tables'
-import {ADD_TABLE_ENTRY} from '../actions/tabledetails'
+import {ADD_TABLE_ENTRY} from '../actions/tableentries'
 import {ADD_TEMPLATE, DELETE_TEMPLATE} from '../actions/templates'
 
 function byId(state=null, action) {
@@ -10,11 +10,13 @@ function byId(state=null, action) {
   console.log(action)
   switch (action.type) {
     case ADD_HEX: return byIdAddHex(state, action)
+    case DELETE_HEX: return byIdDeleteHex(state, action)
     case ADD_TABLE: return byIdAddTable(state, action)
     case DELETE_TABLE: return byIdDeleteTable(state, action)
     case UPDATE_TABLE: return byIdUpdateTable(state, action)
     case ADD_TABLE_ENTRY: return byIdAddTableEntry(state, action)
     case ADD_TEMPLATE: return byIdAddTemplate(state, action)
+    case DELETE_TEMPLATE: return byIdDeleteTemplate(state, action)
     default: return state
   }
 }
@@ -45,6 +47,17 @@ function byIdAddHex(state, action) {
   })
 }
 
+function byIdDeleteHex(state, action) {
+  const hex = action.payload.hex
+  return {
+    ...state,
+    'HEX': {
+      ...state['HEX'],
+      entries: arrayWithItemRemoved(state, hex.id)
+    }
+  }
+}
+
 function byIdAddTable(state, action) {
   return ({
     ...state,
@@ -62,7 +75,7 @@ function byIdAddTable(state, action) {
 function byIdDeleteTable(state, action) {
   return ({
     ...state,
-    [action.payload.id]: null
+    [action.payload.table.id]: undefined
   })
 }
 
@@ -71,9 +84,9 @@ function byIdUpdateTable(state, action) {
     ...state,
     [action.payload.prevTable.id]: {
       ...state[action.payload.prevTable.id],
-      name: action.payload.name,
-      code: action.payload.code,
-      description: action.payload.description
+      name: action.payload.table.name,
+      code: action.payload.table.code,
+      description: action.payload.table.description
     }
   })
 }
@@ -99,6 +112,18 @@ function byIdAddTemplate(state, action) {
   })
 }
 
+function byIdDeleteTemplate(state, action) {
+  // Remove the teplate from the table associate with the template
+  const template = action.payload.template
+  return {
+    ...state,
+    [template.table.id]: {
+      ...state[template.table.id],
+      templates: arrayWithItemRemoved(state[template.table.id].templates, template.id)
+    }
+  }
+}
+
 function allIdsAddTable(state, action) {
   return ([
     ...state,
@@ -108,7 +133,7 @@ function allIdsAddTable(state, action) {
 
 function allIdsDeleteTable(state, action) {
   return ([
-    ...state.filter(id => id !== action.payload.id)
+    ...state.filter(id => id !== action.payload.table.id)
   ])
 }
 

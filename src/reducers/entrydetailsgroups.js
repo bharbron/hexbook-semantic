@@ -1,7 +1,8 @@
 import {combineReducers} from 'redux'
 import {arrayWithPush, arrayWithItemRemoved} from './helpers'
-import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX} from '../actions/hexes'
-import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY} from '../actions/tabledetails'
+import {ADD_HEX_DEFINITION, DELETE_HEX_DEFINITION, UPDATE_HEX, DELETE_HEX} from '../actions/hexes'
+import {ADD_TABLE_ENTRY, UPDATE_TABLE_ENTRY, DELETE_TABLE_ENTRY} from '../actions/tableentries'
+import {DELETE_TABLE} from '../actions/tables'
 
 function byId(state=null, action) {
   console.log(state)
@@ -10,8 +11,11 @@ function byId(state=null, action) {
     case ADD_HEX_DEFINITION: return byIdAddHexDefinition(state, action)
     case DELETE_HEX_DEFINITION: return byIdDeleteHexDefinition(state, action)
     case UPDATE_HEX: return byIdUpdateHex(state, action)
+    case DELETE_HEX: return byIdDeleteHex(state, action)
     case ADD_TABLE_ENTRY: return byIdAddTableEntry(state, action)
+    case DELETE_TABLE_ENTRY: return byIdDeleteTableEntry(state, action)
     case UPDATE_TABLE_ENTRY: return byIdUpdateTableEntry(state, action)
+    case DELETE_TABLE: return byIdDeleteTable(state, action)
     default: return state
   }
 }
@@ -21,7 +25,10 @@ function allIds(state=null, action) {
   console.log(action)
   switch (action.type) {
     case UPDATE_HEX: return allIdsUpdateHex(state, action)
+    case DELETE_HEX: return allIdsDeleteHex(state, action)
     case ADD_TABLE_ENTRY: return allIdsAddTableEntry(state, action)
+    case DELETE_TABLE_ENTRY: return allIdsDeleteTableEntry(state, action)
+    case DELETE_TABLE: return allIdsDeleteTable(state, action)
     default: return state
   }
 }
@@ -41,7 +48,7 @@ function byIdDeleteHexDefinition(state, action) {
     ...state,
     'HEX': {
       ...state['HEX'],
-      entryDetails: [...state['HEX'].entryDetails.filter(item => item !== action.payload.entryDetailId)]
+      entryDetails: [...state['HEX'].entryDetails.filter(item => item !== action.payload.entryDetail.id)]
     }
   }
 }
@@ -95,12 +102,36 @@ function byIdUpdateHex(state, action) {
   return state
 }
 
+function byIdDeleteHex(state, action) {
+  /*
+  1. Delete the entryDetailsGroup associated with the hex, unless it is group 'HEX'
+  */
+  // Global 'HEX' definitions, so don't remove anything
+  if (action.payload.hex.entryDetailsGroup === 'HEX') {
+    return {...state}
+  }
+  // Hex was not using the global hex group, so delete
+  return {
+    ...state,
+    [action.payload.hex.entryDetailsGroup]: undefined
+  }
+}
+
 function byIdAddTableEntry(state, action) {
   return {
     ...state,
     [action.payload.entryDetailsGroupId]: {
       entryDetails: []
     }
+  }
+}
+
+function byIdDeleteTableEntry(state, action) {
+  // Delete the entryDetailsGroup associated with the tableEntry
+  const tableEntry = action.payload.tableEntry
+  return {
+    ...state,
+    [tableEntry.entryDetailsGroup]: undefined
   }
 }
 
@@ -138,6 +169,18 @@ function byIdUpdateTableEntry(state, action) {
   return newState
 }
 
+function byIdDeleteTable(state, action) {
+  // Delete the entryDetailsGroup associated with each tableEntry in the table
+  const table = action.payload.table
+  const newState = {...state}
+  table.tableEntries.forEach(
+    te => {
+      newState[te.entryDetailsGroup] = undefined
+    }
+  )
+  return newState
+}
+
 function allIdsUpdateHex(state, action) {
   /*
   1. Either add, remove, or update depending on difference in entryDetailsGroup between hex and prevHex
@@ -171,8 +214,36 @@ function allIdsUpdateHex(state, action) {
   return state
 }
 
+function allIdsDeleteHex(state, action) {
+  /*
+  If hex was using global 'HEX' definitions group, do nothing. Otherwise, delete the entryDetailsGroup
+  */
+  if (action.payload.hex.entryDetailsGroup === 'HEX') {
+    return [...state]
+  }
+  else {
+    return arrayWithItemRemoved(state, action.payload.hex.entryDetailsGroup)
+  }
+}
+
 function allIdsAddTableEntry(state, action) {
   return arrayWithPush(state, action.payload.entryDetailsGroupId)
+}
+
+function allIdsDeleteTableEntry(state, action) {
+  return arrayWithItemRemoved(state, action.payload.tableEntry.entryDetailsGroup)
+}
+
+function allIdsDeleteTable(state, action) {
+  // Delete the entryDetailsGroup associated with each tableEntry in the table
+  const table = action.payload.table
+  let newState = [...state]
+  table.tableEntries.forEach(
+    te => {
+      newState = arrayWithItemRemoved(newState, te.entryDetailsGroup)
+    }
+  )
+  return newState
 }
 
 export default combineReducers({byId: byId, allIds: allIds})

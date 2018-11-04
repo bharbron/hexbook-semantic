@@ -8,7 +8,7 @@ import {TableDetailsSegment} from '../components/tabledetails'
 import {TableEntriesSegment} from '../components/tableentries'
 import {TableEntryEditModal} from '../components/tableentry'
 import {updateTable} from '../actions/tables'
-import {addTableEntry, updateTableEntry} from '../actions/tabledetails'
+import {addTableEntry, updateTableEntry} from '../actions/tableentries'
 import {getByCodeTables, getFullTableById} from '../selectors/tables'
 import {getTableIdFromRoute} from '../selectors/tabledetails'
 import {getFullTableEntriesLookup} from '../selectors/tableentries'
@@ -38,8 +38,8 @@ class TableDetailsWorkspace extends Component {
       editingTableEntryId: null
   }
 
- handleSubmitEditDetails = (name, code, description) => {
-    this.props.updateTable(name, code, description, this.props.table)
+ handleSubmitEditDetails = (newTable) => {
+    this.props.updateTable(newTable, this.props.table)
   }
 
   handleSubmitAddEntry = (value) => {

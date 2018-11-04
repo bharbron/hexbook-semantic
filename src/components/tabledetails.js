@@ -189,7 +189,13 @@ class TableDetailsSegment extends Component {
         editMode: {name: false, code: false, description: false},
         value: {name: contents.name, code: contents.code, description: contents.description}
       })
-      this.props.onSubmit(contents.name, contents.code, contents.description)
+      const newTable = {
+        id: this.props.table.id,
+        name: contents.name,
+        code: contents.code,
+        description: contents.description
+      }
+      this.props.onSubmit(newTable)
     }
   }
 
