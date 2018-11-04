@@ -16,6 +16,7 @@ function byId(state=null, action) {
     case UPDATE_TABLE: return byIdUpdateTable(state, action)
     case ADD_TABLE_ENTRY: return byIdAddTableEntry(state, action)
     case ADD_TEMPLATE: return byIdAddTemplate(state, action)
+    case DELETE_TEMPLATE: return byIdDeleteTemplate(state, action)
     default: return state
   }
 }
@@ -109,6 +110,18 @@ function byIdAddTemplate(state, action) {
       templates: arrayWithUniquePush(state[action.payload.table].templates, action.payload.id)
     }
   })
+}
+
+function byIdDeleteTemplate(state, action) {
+  // Remove the teplate from the table associate with the template
+  const template = action.payload.template
+  return {
+    ...state,
+    [template.table.id]: {
+      ...state[template.table.id],
+      templates: arrayWithItemRemoved(state[template.table.id].templates, template.id)
+    }
+  }
 }
 
 function allIdsAddTable(state, action) {
